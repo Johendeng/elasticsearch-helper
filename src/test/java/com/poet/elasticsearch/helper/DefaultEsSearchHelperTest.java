@@ -36,11 +36,11 @@ public class DefaultEsSearchHelperTest {
     @Test
     public void testEsSearchLike() throws IOException {
 //        EsSearchHelper.build(client, _TEST_INDEX);
-        EsSearchHelper helper = DefaultEsSearchHelper.build(client, _TEST_INDEX);
-        helper.term("name", "zhang xue you").should().term("age", 23);
-
-        SearchResponse search = client.search(helper.getRequest(), RequestOptions.DEFAULT);
-        System.out.println(111);
+//        EsSearchHelper helper = DefaultEsSearchHelper.build(client, _TEST_INDEX);
+//        helper.term("name", "zhang xue you").should().term("age", 23);
+//
+//        SearchResponse search = client.search(helper.getRequest(), RequestOptions.DEFAULT);
+//        System.out.println(111);
     }
 
 

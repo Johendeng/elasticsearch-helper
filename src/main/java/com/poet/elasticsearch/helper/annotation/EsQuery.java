@@ -1,5 +1,8 @@
 package com.poet.elasticsearch.helper.annotation;
 
+import com.poet.elasticsearch.helper.enums.Meta;
+import com.poet.elasticsearch.helper.enums.QueryType;
+
 import java.lang.annotation.*;
 
 /**
@@ -15,9 +18,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsQuery {
 
-    String column() default "";
+    String name() default "";
 
-    String queryType() default "";
+    QueryType queryType();
 
+    Meta type();
 
 }

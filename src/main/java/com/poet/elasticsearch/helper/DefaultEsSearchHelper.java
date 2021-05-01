@@ -1,7 +1,5 @@
 package com.poet.elasticsearch.helper;
 
-import org.elasticsearch.client.RestHighLevelClient;
-
 /**
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper
@@ -11,7 +9,4 @@ import org.elasticsearch.client.RestHighLevelClient;
  **/
 public class DefaultEsSearchHelper extends EsSearchHelper {
 
-    public DefaultEsSearchHelper(String indexName, RestHighLevelClient client) {
-        super(indexName, client);
-    }
 }

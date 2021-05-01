@@ -5,10 +5,12 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.management.Query;
 import java.util.List;
 
 /**
@@ -36,10 +38,7 @@ public abstract class EsSearchHelper {
      */
     private List<QueryBuilder> currentQueryBuilderList;
 
-    public EsSearchHelper(String indexName, RestHighLevelClient client) {
-        this.indexName = indexName;
-        this.client = client;
-    }
+
 
     protected EsSearchHelper init(RestHighLevelClient client, String index) {
         this.indexName = index;
@@ -99,11 +98,31 @@ public abstract class EsSearchHelper {
         return this;
     }
 
+    public EsSearchHelper match (String column, Object value) {
+        this.currentQueryBuilderList.add(QueryBuilders.matchQuery(column, value));
+        return this;
+    }
+
+    public EsSearchHelper fuzzyQuery (String column, Object value) {
+        this.currentQueryBuilderList.add(QueryBuilders.fuzzyQuery(column, value));
+        return this;
+    }
+
+
     public EsSearchHelper like(String column, String value) {
 
 
         return this;
     }
+
+
+    public EsSearchHelper agg(AggregationBuilder aggBuilder) {
+        source.aggregation(aggBuilder);
+        return this;
+    }
+
+
+
 
 
 }
