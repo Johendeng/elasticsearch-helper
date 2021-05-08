@@ -9,4 +9,17 @@ package com.poet.elasticsearch.helper.enums;
  * Description:
  */
 public enum QueryType {
+
+    TERM(1),
+    ;
+
+    private int code;
+
+    QueryType(int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
 }
