@@ -10,6 +10,17 @@ package com.poet.elasticsearch.helper.enums;
  */
 public enum  Meta {
 
-    KEYWORK;
+    KEYWORD(1),
+    TEXT(2)
+    ;
 
+    private int code;
+
+    Meta(int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
 }
