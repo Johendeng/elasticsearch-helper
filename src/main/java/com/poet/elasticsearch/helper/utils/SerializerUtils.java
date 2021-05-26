@@ -18,11 +18,24 @@ public class SerializerUtils {
     private static final Logger log = LoggerFactory.getLogger(SerializerUtils.class);
 
 
-    private static final ObjectMapper _NORMAL_MAPPER = new ObjectMapper();
+    private static final ObjectMapper _NORMAL_MAPPER = initDefaultMapper();
 
 
     private static final ObjectMapper _UNMATCH_NULL_MAPPER = new ObjectMapper()
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+                            .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+
+    private static ObjectMapper initDefaultMapper () {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+
+
+
+
+        return mapper;
+    }
+
+
 
 
     public static <T>T jsonToBean (String json, Class<T> clazz) {
