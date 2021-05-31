@@ -11,10 +11,16 @@ package com.poet.elasticsearch.helper.enums;
 public enum  Meta {
 
     KEYWORD(1),
-    TEXT(2)
+    TEXT(2),
+    NUMERIC(3),
+    DATE(4),
+    OBJECT(10),
+    ARRAY(11),
     ;
 
     private int code;
+
+
 
     Meta(int code) {
         this.code = code;

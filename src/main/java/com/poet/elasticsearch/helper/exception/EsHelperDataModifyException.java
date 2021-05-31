@@ -2,22 +2,22 @@ package com.poet.elasticsearch.helper.exception;
 
 /**
  * Project Name:elasticsearch-helper
- * File Name:EsHelperDDLException
+ * File Name:EsHelperDataModifyException
  * Package Name:com.poet.elasticsearch.helper.exception
  * Date:2021/4/30 11:55
  * Author:dengtianjia
  * Description:
  */
-public class EsHelperDDLException extends RuntimeException {
+public class EsHelperDataModifyException extends RuntimeException {
 
-    public EsHelperDDLException() {
+    public EsHelperDataModifyException() {
     }
 
-    public EsHelperDDLException(String message) {
+    public EsHelperDataModifyException(String message) {
         super(message);
     }
 
-    public EsHelperDDLException(String message, Throwable cause) {
+    public EsHelperDataModifyException(String message, Throwable cause) {
         super(message, cause);
     }
 

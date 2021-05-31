@@ -11,6 +11,8 @@ package com.poet.elasticsearch.helper.enums;
 public enum QueryType {
 
     TERM(1),
+
+
     ;
 
     private int code;
