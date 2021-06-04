@@ -10,9 +10,11 @@ import org.slf4j.LoggerFactory;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public abstract class EsDDLHelper {
+public abstract class EsDataModifyHelper {
 
-    private static final Logger log = LoggerFactory.getLogger(EsDDLHelper.class);
+    private static final Logger log = LoggerFactory.getLogger(EsDataModifyHelper.class);
+
+
 
 
 
