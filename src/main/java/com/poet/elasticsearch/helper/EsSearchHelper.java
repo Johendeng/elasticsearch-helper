@@ -1,5 +1,6 @@
 package com.poet.elasticsearch.helper;
 
+import com.poet.elasticsearch.helper.exception.EsHelperQueryException;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -33,11 +34,22 @@ public abstract class EsSearchHelper {
     private BoolQueryBuilder bool;
 
     /**
+     *  base query builder list
+     */
+    private List<QueryBuilder> baseQueryBuilderList;
+    /**
      *  current search about collections, default is MUST
      */
     private List<QueryBuilder> currentQueryBuilderList;
 
-
+    /**
+     *  inner query builder
+     */
+    private BoolQueryBuilder innerQueryBuilder;
+    /**
+     *  middle search-builder-list rel
+     */
+    private List<QueryBuilder> tempQueryBuilderList;
 
     protected EsSearchHelper init(RestHighLevelClient client, String index) {
         this.indexName = index;
@@ -48,6 +60,7 @@ public abstract class EsSearchHelper {
         source.query(bool);
         request.source(source);
         this.currentQueryBuilderList = bool.must();
+        this.baseQueryBuilderList = currentQueryBuilderList;
         return this;
     }
 
@@ -64,53 +77,117 @@ public abstract class EsSearchHelper {
     }
 
 
-
     // change the logic connects of action request
     public EsSearchHelper should(){
         this.currentQueryBuilderList = bool.should();
-        bool.minimumShouldMatch();
+        this.baseQueryBuilderList = currentQueryBuilderList;
+        bool.minimumShouldMatch(1);
         return this;
     }
 
     public EsSearchHelper filter() {
         this.currentQueryBuilderList = bool.filter();
+        this.baseQueryBuilderList = currentQueryBuilderList;
         return this;
     }
 
     public EsSearchHelper must() {
         this.currentQueryBuilderList = bool.must();
+        this.baseQueryBuilderList = currentQueryBuilderList;
         return this;
     }
 
     public EsSearchHelper mustNot() {
         this.currentQueryBuilderList = bool.mustNot();
+        this.baseQueryBuilderList = currentQueryBuilderList;
         return this;
     }
 
-    public EsSearchHelper term(String column, Object value) {
-        this.currentQueryBuilderList.add(QueryBuilders.termQuery(column, value));
+    public EsSearchHelper term(String field, Object value) {
+        this.currentQueryBuilderList.add(QueryBuilders.termQuery(field, value));
         return this;
     }
 
-    public EsSearchHelper terms(String column, Object[] values) {
-        this.currentQueryBuilderList.add(QueryBuilders.termQuery(column, values));
-        return this;
-    }
-
-    public EsSearchHelper match (String column, Object value) {
-        this.currentQueryBuilderList.add(QueryBuilders.matchQuery(column, value));
-        return this;
-    }
-
-    public EsSearchHelper fuzzyQuery (String column, Object value) {
-        this.currentQueryBuilderList.add(QueryBuilders.fuzzyQuery(column, value));
+    public EsSearchHelper terms(String field, Object[] values) {
+        this.currentQueryBuilderList.add(QueryBuilders.termsQuery(field, values));
         return this;
     }
 
 
-    public EsSearchHelper like(String column, String value) {
+    public EsSearchHelper match (String field, Object value) {
+        this.currentQueryBuilderList.add(QueryBuilders.matchQuery(field, value));
+        return this;
+    }
+
+    public EsSearchHelper fuzzyQuery (String field, Object value) {
+        this.currentQueryBuilderList.add(QueryBuilders.fuzzyQuery(field, value));
+        return this;
+    }
+
+    public EsSearchHelper gt(String field, Number value) {
+        this.currentQueryBuilderList.add(QueryBuilders.rangeQuery(field).gt(value));
+        return this;
+    }
+
+    public EsSearchHelper gte(String field, Number value) {
+        this.currentQueryBuilderList.add(QueryBuilders.rangeQuery(field).gte(value));
+        return this;
+    }
+
+    public EsSearchHelper lt(String field, Number value) {
+        this.currentQueryBuilderList.add(QueryBuilders.rangeQuery(field).lt(value));
+        return this;
+    }
+
+    public EsSearchHelper lte(String field, Number value) {
+        this.currentQueryBuilderList.add(QueryBuilders.rangeQuery(field).lte(value));
+        return this;
+    }
+
+    public EsSearchHelper like(String field, String value) {
+        this.currentQueryBuilderList.add(QueryBuilders.wildcardQuery(field, "*" + value + "*"));
+        return this;
+    }
 
 
+    /**
+     *  use to realize a query-mode like
+     *  must : {
+     *      **:**,
+     *      **:**,
+     *      bool: {
+     *          should: {
+     *              **:**,
+     *              **:**
+     *          }
+     *      }
+     *  }
+     * @return
+     */
+    public EsSearchHelper innerShould() {
+        if (innerQueryBuilder == null) {
+            innerQueryBuilder = QueryBuilders.boolQuery();
+        }
+        if (tempQueryBuilderList != null) {
+            throw new EsHelperQueryException("inner query not end, cant initialize a new inner query-chain");
+        }
+        tempQueryBuilderList = innerQueryBuilder.should();
+        baseQueryBuilderList.add(innerQueryBuilder);
+        this.currentQueryBuilderList = tempQueryBuilderList;
+        return this;
+    }
+
+
+    public EsSearchHelper innerEnd() {
+        this.currentQueryBuilderList = this.baseQueryBuilderList;
+        this.tempQueryBuilderList = null;
+        this.innerQueryBuilder = null;
+        return this;
+    }
+
+
+    public EsSearchHelper limit(int exclude, int size) {
+        this.source.from(exclude).size(size);
         return this;
     }
 
@@ -120,7 +197,10 @@ public abstract class EsSearchHelper {
         return this;
     }
 
-
+    public EsSearchHelper chain(QueryBuilder queryBuilder) {
+        this.currentQueryBuilderList.add(queryBuilder);
+        return this;
+    }
 
 
 

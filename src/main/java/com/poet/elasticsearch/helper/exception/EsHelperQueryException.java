@@ -5,7 +5,7 @@ package com.poet.elasticsearch.helper.exception;
  * File Name:EsHelperQueryException
  * Package Name:com.poet.elasticsearch.helper.exception
  * Date:2021/4/30 11:55
- * Author:dengtianjia
+ * Author:JohenTeng
  * Description:
  */
 public class EsHelperQueryException extends RuntimeException {
@@ -19,5 +19,13 @@ public class EsHelperQueryException extends RuntimeException {
 
     public EsHelperQueryException(String message, Throwable cause) {
         super(message, cause);
+    }
+
+    public EsHelperQueryException(Throwable cause) {
+        super(cause);
+    }
+
+    public EsHelperQueryException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

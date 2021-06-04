@@ -5,7 +5,7 @@ package com.poet.elasticsearch.helper.exception;
  * File Name:EsHelperDDLException
  * Package Name:com.poet.elasticsearch.helper.exception
  * Date:2021/4/30 11:55
- * Author:dengtianjia
+ * Author:JohenTeng
  * Description:
  */
 public class EsHelperDDLException extends RuntimeException {
@@ -21,4 +21,11 @@ public class EsHelperDDLException extends RuntimeException {
         super(message, cause);
     }
 
+    public EsHelperDDLException(Throwable cause) {
+        super(cause);
+    }
+
+    public EsHelperDDLException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
+    }
 }

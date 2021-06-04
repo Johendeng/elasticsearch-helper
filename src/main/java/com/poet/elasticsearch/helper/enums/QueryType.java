@@ -5,7 +5,7 @@ package com.poet.elasticsearch.helper.enums;
  * File Name:QueryType
  * Package Name:com.poet.elasticsearch.helper.enums
  * Date:2021/4/30 12:02
- * Author:dengtianjia
+ * Author:JohenTeng
  * Description:
  */
 public enum QueryType {

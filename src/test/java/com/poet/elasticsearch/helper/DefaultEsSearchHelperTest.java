@@ -1,15 +1,14 @@
 package com.poet.elasticsearch.helper;
 
-import junit.framework.TestCase;
-import junit.textui.TestRunner;
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.search.SearchScrollRequest;
+import org.elasticsearch.action.search.SearchScrollRequestBuilder;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.IOException;
 
@@ -36,12 +35,25 @@ public class DefaultEsSearchHelperTest {
     @Test
     public void testEsSearchLike() throws IOException {
 //        EsSearchHelper.build(client, _TEST_INDEX);
-//        EsSearchHelper helper = DefaultEsSearchHelper.build(client, _TEST_INDEX);
-//        helper.term("name", "zhang xue you").should().term("age", 23);
-//
-//        SearchResponse search = client.search(helper.getRequest(), RequestOptions.DEFAULT);
-//        System.out.println(111);
+        EsSearchHelper helper = new DefaultEsSearchHelper();
+        helper.init(client, _TEST_INDEX);
+        helper.like("name", "ang");
+//        helper.terms("age", new Object[]{34,32,15});
+
+        SearchResponse search = client.search(helper.getRequest(), RequestOptions.DEFAULT);
+        System.out.println(EsResponseParseHelper.read(search));
     }
+
+    @Test
+    public void testEsApi() {
+
+        SearchScrollRequest request = new SearchScrollRequest();
+
+
+
+    }
+
+
 
 
 }

@@ -5,13 +5,15 @@ package com.poet.elasticsearch.helper.enums;
  * File Name:Meta
  * Package Name:com.poet.elasticsearch.helper.enums
  * Date:2021/4/30 12:01
- * Author:dengtianjia
+ * Author:JohenTeng
  * Description:
  */
 public enum  Meta {
 
     KEYWORD(1),
-    TEXT(2)
+    TEXT(2),
+    INT(3),
+    DATETIME(4)
     ;
 
     private int code;
