@@ -1,6 +1,10 @@
 package com.poet.elasticsearch.helper.web;
 
+import com.google.common.collect.Maps;
 import com.poet.elasticsearch.helper.EsSearchHelper;
+import com.poet.elasticsearch.helper.enums.QueryType;
+
+import java.util.Map;
 
 /**
  * project: elasticsearch-helper
@@ -11,13 +15,30 @@ import com.poet.elasticsearch.helper.EsSearchHelper;
  **/
 public abstract class AbstractQueryHandle {
 
+
+    private static final Map<QueryType, Class<? extends AbstractQueryHandle>> _M_QUERY_HANDLER = Maps.newHashMap();
+
+
+    protected void handlerRegistering(){
+
+
+
+    }
+
+
+
     /**
      *
      */
     private EsSearchHelper searchHelper;
 
 
-    public abstract void handle ();
+    public AbstractQueryHandle(EsSearchHelper searchHelper) {
+        this.searchHelper = searchHelper;
+
+    }
+
+    public abstract void handle (QueryDes queryDes);
 
 
 

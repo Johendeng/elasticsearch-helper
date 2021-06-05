@@ -10,8 +10,9 @@ package com.poet.elasticsearch.helper.enums;
  */
 public enum QueryType {
 
-    TERM(1),
-
+    LIKE(100),
+    TERM(101),
+    FUZZY(102),
 
     ;
 

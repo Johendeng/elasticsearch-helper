@@ -14,8 +14,8 @@ public enum  Meta {
     TEXT(2),
     NUMERIC(3),
     DATE(4),
-    OBJECT(10),
-    ARRAY(11),
+    OBJECT(100),
+    ARRAY(101),
     ;
 
     private int code;
