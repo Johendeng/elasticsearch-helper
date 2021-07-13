@@ -13,6 +13,8 @@
         <module>elasticsearch-helper-beans</module>
         <module>elasticsearch-helper-core</module>
         <module>elasticsearch-helper-parent</module>
+        <module>elasticsearch-helper-view</module>
+        <module>elasticsearch-helper-sample</module>
         <module>elasticsearch-helper-boot-starter</module>
     </modules>
 

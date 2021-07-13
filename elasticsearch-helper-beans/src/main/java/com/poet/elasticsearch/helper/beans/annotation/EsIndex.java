@@ -15,8 +15,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsIndex {
 
-    String value();
-
     // same as value
     String name();
 

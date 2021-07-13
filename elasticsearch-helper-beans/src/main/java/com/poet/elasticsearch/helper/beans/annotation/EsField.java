@@ -17,16 +17,16 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsField {
 
-    String value();
-
-    String name();
+    String name() default "";
 
     /**
      *  data-type
      * @return
      */
-    Meta   type();
+    Meta   type() default Meta.UN_COVER;
 
-    String analyzer();
+    String typeStringify() default "";
+
+    String analyzer() default "";
 
 }

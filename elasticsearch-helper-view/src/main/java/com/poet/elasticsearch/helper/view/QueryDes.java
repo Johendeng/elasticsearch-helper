@@ -1,4 +1,4 @@
-package com.poet.elasticsearch.helper.core.web;
+package com.poet.elasticsearch.helper.view;
 
 
 import com.poet.elasticsearch.helper.beans.enums.Meta;

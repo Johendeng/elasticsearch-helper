@@ -24,4 +24,7 @@ public @interface EsQuery {
 
     Meta type();
 
+
+
+
 }
