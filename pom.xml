@@ -6,96 +6,18 @@
 
     <groupId>com.poet</groupId>
     <artifactId>elasticsearch-helper</artifactId>
+    <packaging>pom</packaging>
     <version>1.0.0</version>
 
+    <modules>
+        <module>elasticsearch-helper-beans</module>
+        <module>elasticsearch-helper-core</module>
+        <module>elasticsearch-helper-parent</module>
+        <module>elasticsearch-helper-view</module>
+        <module>elasticsearch-helper-sample</module>
+        <module>elasticsearch-helper-boot-starter</module>
+    </modules>
 
-    <properties>
-        <java.version>1.8</java.version>
-        <plugin.maven.compiler.version>3.8.1</plugin.maven.compiler.version>
-        <elasticsearch.client.version>7.8.1</elasticsearch.client.version>
-        <jackson.core.version>2.10.1</jackson.core.version>
-        <slf4j.api.version>1.7.28</slf4j.api.version>
-        <junit.version>4.12</junit.version>
-    </properties>
-
-
-
-
-    <dependencies>
-
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>${elasticsearch.client.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.core.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.core.version}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-            <version>${jackson.core.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>23.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.5</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${plugin.maven.compiler.version}</version>
-                <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
-                </configuration>
-            </plugin>
-
-        </plugins>
-
-
-    </build>
 
 
 </project>
