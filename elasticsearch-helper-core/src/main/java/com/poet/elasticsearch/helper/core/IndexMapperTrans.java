@@ -3,7 +3,9 @@ package com.poet.elasticsearch.helper.core;
 import com.poet.elasticsearch.helper.beans.annotation.EsField;
 import com.poet.elasticsearch.helper.beans.annotation.EsIndex;
 import com.poet.elasticsearch.helper.beans.enums.Meta;
+import com.poet.elasticsearch.helper.beans.exception.EsHelperConfigException;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 /**
@@ -15,20 +17,18 @@ import java.util.Map;
  **/
 public class IndexMapperTrans {
 
-
-
-
-
-
     /**
      *  translate target Index-mapper-class to initialize Index mapper-json
      * @param target
      * @return
      */
-    public String handle(Class<?> target) {
+    public String handle(Class<?> target, boolean excFormat) {
+        EsIndex indexDes = target.getAnnotation(EsIndex.class);
+        if (indexDes == null) throw new EsHelperConfigException("undefine @EsIndex ann here,please have a check");
+        int shards = indexDes.shards();
+        int replicas = indexDes.replicas();
 
-
-
+        Field[] fieldArr = target.getDeclaredFields();
 
 
 
@@ -54,7 +54,9 @@ public class IndexMapperTrans {
 
 
 
-    class IndexDefinition {
+
+
+    protected static class IndexDefinition {
 
         private Settings settings;
 
@@ -84,9 +86,35 @@ public class IndexMapperTrans {
             this.mappings = mappings;
         }
 
+        public IndexDefinition genDefinition() {
+            IndexDefinition definition = new IndexDefinition();
+            Settings settings = new Settings();
+            Mappings mappings = new Mappings();
+            definition.setSettings(settings);
+            definition.setMappings(mappings);
+            return definition;
+        }
+
+        public IndexDefinition genDefinition(int shards, int replicas) {
+            IndexDefinition definition = new IndexDefinition();
+            Settings settings = new Settings();
+            settings.setNumber_of_shards(shards);
+            settings.setNumber_of_replicas(replicas);
+            definition.setSettings(settings);
+            return definition;
+        }
+
+        public IndexDefinition setSetting(int shards, int replicas) {
+            Settings settings = this.getSettings();
+            settings.setNumber_of_shards(shards);
+            settings.setNumber_of_replicas(replicas);
+            return this;
+        }
+
+
     }
 
-    class Settings {
+    protected static class Settings {
         private int number_of_shards;
         private int number_of_replicas;
 
@@ -115,7 +143,7 @@ public class IndexMapperTrans {
         }
     }
 
-    class Mappings {
+    protected static class Mappings {
 
         private Map<String, Object> properties;
 
