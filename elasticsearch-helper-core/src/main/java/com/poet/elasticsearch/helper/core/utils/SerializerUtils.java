@@ -3,6 +3,7 @@ package com.poet.elasticsearch.helper.core.utils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.poet.elasticsearch.helper.beans.exception.SerializeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +42,7 @@ public class SerializerUtils {
         try {
            return  _NORMAL_MAPPER.readValue(json, clazz);
         } catch (JsonProcessingException e) {
-            log.error("Json-String trans to Java-Bean error, cause:", e);
-            return null;
+            throw new SerializeException("Json-String trans to Java-Bean error, cause:", e);
         }
     }
 
@@ -51,18 +51,25 @@ public class SerializerUtils {
         try {
             return _NORMAL_MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            log.error("Object normal trans to Json-String error, cause:", e);
-            return null;
+            throw new SerializeException("Object normal trans to Json-String error, cause:", e);
         }
     }
+
+    public static String parseObjToJsonPretty(Object obj) {
+        try {
+            return _NORMAL_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            throw new SerializeException("Object normal trans to Json-String error, cause:", e);
+        }
+    }
+
 
 
     public static String parseObjToJsonSkipNull (Object obj) {
         try {
             return  _UNMATCH_NULL_MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            log.error("Object trans to json-string error, cause:", e);
-            return null;
+            throw new SerializeException("Object trans to json-string error, cause:", e);
         }
     }
 
