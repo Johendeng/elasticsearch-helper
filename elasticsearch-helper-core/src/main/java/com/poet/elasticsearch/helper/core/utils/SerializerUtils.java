@@ -58,6 +58,15 @@ public class SerializerUtils {
         }
     }
 
+    public static String parseObjToJsonPretty(Object obj) {
+        try {
+            return _NORMAL_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            throw new SerializeException("Object normal trans to Json-String error, cause:", e);
+        }
+    }
+
+
 
     public static String parseObjToJsonSkipNull (Object obj) {
         try {

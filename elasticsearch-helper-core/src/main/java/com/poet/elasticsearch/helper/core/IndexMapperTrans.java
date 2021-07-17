@@ -1,11 +1,15 @@
 package com.poet.elasticsearch.helper.core;
 
+import com.google.common.collect.Maps;
 import com.poet.elasticsearch.helper.beans.annotation.EsField;
 import com.poet.elasticsearch.helper.beans.annotation.EsIndex;
 import com.poet.elasticsearch.helper.beans.enums.Meta;
 import com.poet.elasticsearch.helper.beans.exception.EsHelperConfigException;
+import com.poet.elasticsearch.helper.core.utils.SerializerUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,41 +21,32 @@ import java.util.Map;
  **/
 public class IndexMapperTrans {
 
+
+    private static final String _TYPE_KEY = "type";
+    private static final String _ANALYZER = "analyzer";
+    private static final String _SEARCH_ANALYZER = "search_analyzer";
+
     /**
      *  translate target Index-mapper-class to initialize Index mapper-json
      * @param target
      * @return
      */
-    public String handle(Class<?> target, boolean excFormat) {
+    public String read(Class<?> target, boolean prettyExport) {
         EsIndex indexDes = target.getAnnotation(EsIndex.class);
         if (indexDes == null) throw new EsHelperConfigException("undefine @EsIndex ann here,please have a check");
         int shards = indexDes.shards();
         int replicas = indexDes.replicas();
-
+        IndexDefinition indexDefinition = IndexDefinition.builder().init(shards, replicas);
         Field[] fieldArr = target.getDeclaredFields();
+        for (Field field : fieldArr) {
+            indexDefinition.appendPropertie(field);
+        }
+        if (prettyExport) {
+            return SerializerUtils.parseObjToJsonPretty(indexDefinition);
+        }
 
-
-
-
-        return null;
+        return SerializerUtils.parseObjToJson(indexDefinition);
     }
-
-    @EsIndex(name = "demo", shards = 5, replicas = 1)
-    static class Demo {
-
-        @EsField(name = "name", type = Meta.KEYWORD)
-        private String name;
-
-        @EsField(type = Meta.INTEGER)
-        private int age;
-
-
-    }
-
-
-
-
-
 
 
 
@@ -63,6 +58,10 @@ public class IndexMapperTrans {
         private Mappings mappings;
 
         public IndexDefinition() {
+        }
+
+        public static IndexDefinition builder(){
+            return new IndexDefinition();
         }
 
         public IndexDefinition(Settings settings, Mappings mappings) {
@@ -86,28 +85,51 @@ public class IndexMapperTrans {
             this.mappings = mappings;
         }
 
-        public IndexDefinition genDefinition() {
-            IndexDefinition definition = new IndexDefinition();
+        public IndexDefinition init() {
             Settings settings = new Settings();
             Mappings mappings = new Mappings();
-            definition.setSettings(settings);
-            definition.setMappings(mappings);
-            return definition;
+            this.setSettings(settings);
+            this.setMappings(mappings);
+            return this;
         }
 
-        public IndexDefinition genDefinition(int shards, int replicas) {
-            IndexDefinition definition = new IndexDefinition();
-            Settings settings = new Settings();
-            settings.setNumber_of_shards(shards);
-            settings.setNumber_of_replicas(replicas);
-            definition.setSettings(settings);
-            return definition;
+        public IndexDefinition init(int shards, int replicas) {
+            this.init();
+            this.getSettings().setNumber_of_shards(shards);
+            this.getSettings().setNumber_of_replicas(replicas);
+            return this;
         }
 
         public IndexDefinition setSetting(int shards, int replicas) {
             Settings settings = this.getSettings();
             settings.setNumber_of_shards(shards);
             settings.setNumber_of_replicas(replicas);
+            return this;
+        }
+
+        public IndexDefinition appendPropertie (Field field) {
+            Mappings mappings = this.getMappings();
+            EsField esField = field.getAnnotation(EsField.class);
+            if (esField != null) {
+                String esFieldName = esField.name();
+                if (StringUtils.isBlank(esFieldName)) esFieldName = field.getName();
+                Map<String, Object> esFieldDes = Maps.newHashMap();
+                String typeName ;
+                Meta type = esField.type();
+                if (type == null) typeName = esField.typeStringify();
+                else typeName = type.getType();
+                if (StringUtils.isBlank(typeName)) throw new EsHelperConfigException("@EsField type is undefine");
+
+                esFieldDes.put(_TYPE_KEY, typeName);
+
+                String analyzer = esField.analyzer();
+                if (StringUtils.isNotBlank(analyzer)) {
+                    esFieldDes.put(_ANALYZER, analyzer);
+                    esFieldDes.put(_SEARCH_ANALYZER, analyzer);
+                }
+
+                mappings.getProperties().put(esFieldName, esFieldDes);
+            }
             return this;
         }
 
@@ -148,6 +170,7 @@ public class IndexMapperTrans {
         private Map<String, Object> properties;
 
         public Mappings() {
+            properties = new HashMap<>();
         }
 
         public Mappings(Map<String, Object> properties) {
