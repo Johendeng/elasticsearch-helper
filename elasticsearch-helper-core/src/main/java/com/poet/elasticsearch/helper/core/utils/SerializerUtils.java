@@ -3,8 +3,12 @@ package com.poet.elasticsearch.helper.core.utils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.poet.elasticsearch.helper.beans.exception.SerializeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.yaml.snakeyaml.serializer.SerializerException;
+
+import javax.sql.rowset.serial.SerialException;
 
 /**
  * project: elasticsearch-helper
@@ -21,7 +25,7 @@ public class SerializerUtils {
     private static final ObjectMapper _NORMAL_MAPPER = initDefaultMapper();
 
 
-    private static final ObjectMapper _UNMATCH_NULL_MAPPER = new ObjectMapper()
+    private static final ObjectMapper _UN_MATCH_NULL_MAPPER = new ObjectMapper()
                             .setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
     private static ObjectMapper initDefaultMapper () {
@@ -41,8 +45,7 @@ public class SerializerUtils {
         try {
            return  _NORMAL_MAPPER.readValue(json, clazz);
         } catch (JsonProcessingException e) {
-            log.error("Json-String trans to Java-Bean error, cause:", e);
-            return null;
+            throw new SerializeException("Json-String trans to Java-Bean error, cause:", e);
         }
     }
 
@@ -51,18 +54,16 @@ public class SerializerUtils {
         try {
             return _NORMAL_MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            log.error("Object normal trans to Json-String error, cause:", e);
-            return null;
+            throw new SerializeException("Object normal trans to Json-String error, cause:", e);
         }
     }
 
 
     public static String parseObjToJsonSkipNull (Object obj) {
         try {
-            return  _UNMATCH_NULL_MAPPER.writeValueAsString(obj);
+            return  _UN_MATCH_NULL_MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            log.error("Object trans to json-string error, cause:", e);
-            return null;
+            throw new SerializeException("Object trans to json-string error, cause:", e);
         }
     }
 
