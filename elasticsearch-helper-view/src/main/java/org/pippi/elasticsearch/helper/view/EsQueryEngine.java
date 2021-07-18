@@ -17,7 +17,21 @@ import java.util.Map;
  **/
 public class EsQueryEngine {
 
+    private static final Map<String, Class<? extends AbstractQueryHandle>> QUERY_HANDLE_CLAZZ_MAP = new HashMap<>();
+
     private static final Map<String, AbstractQueryHandle> QUERY_HANDLE_MAP = new HashMap<>();
+
+    {
+
+
+
+
+
+    }
+
+    public static void addHandleClazz (String handleName, Class<? extends AbstractQueryHandle> clazz) {
+        QUERY_HANDLE_CLAZZ_MAP.put(handleName, clazz);
+    }
 
     public static void addHandle(String handleName, AbstractQueryHandle handler) {
         QUERY_HANDLE_MAP.put(handleName, handler);
