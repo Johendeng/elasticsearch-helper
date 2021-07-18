@@ -3,7 +3,8 @@ package org.pippi.elasticsearch.helper.view;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.beans.QueryDes;
-import org.pippi.elasticsearch.helper.beans.annotation.EsQuery;
+import org.pippi.elasticsearch.helper.beans.annotation.EsQueryFiled;
+import org.pippi.elasticsearch.helper.beans.annotation.EsQueryIndex;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.utils.ReflectUtils;
 
@@ -13,6 +14,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * project: elasticsearch-helper
@@ -38,6 +40,19 @@ public class QueryViewObjTranslator {
         return INSTANCE;
     }
 
+    public String getIndex(Object view) {
+
+        Class<?> clazz = view.getClass();
+        EsQueryIndex ann = clazz.getAnnotation(EsQueryIndex.class);
+
+        if (ann == null) throw new EsHelperQueryException("undefine query-index @EsQueryIndex");
+
+
+        String index = ann.index();
+        return index;
+
+    }
+
     /**
      *  read query-view-pojo define by user,
      *  support java-base type, collections and
@@ -53,10 +68,12 @@ public class QueryViewObjTranslator {
         List<Field> fieldList = this.getFields(clazz, visitParent);
         List<QueryDes> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
-
-
+            if (field.isAnnotationPresent(EsQueryFiled.class)) {
+                QueryDes queryDes = this.mapFieldAnn(field, view);
+                queryDesList.add(queryDes);
+            }
         }
-        return null;
+        return queryDesList;
     }
 
     private List<Field> getFields(Class<?> clazz, boolean visitParent) {
@@ -77,7 +94,8 @@ public class QueryViewObjTranslator {
     }
 
     private QueryDes mapFieldAnn(Field field, Object viewObj) {
-        EsQuery ann = field.getAnnotation(EsQuery.class);
+
+        EsQueryFiled ann = field.getAnnotation(EsQueryFiled.class);
 
         String column = ann.name();
         if (StringUtils.isBlank(column)) column = field.getName();
@@ -98,17 +116,29 @@ public class QueryViewObjTranslator {
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
             Object val = field.get(viewObj);
+
             if (ReflectUtils.isBaseType(fieldType)) {
                 queryDes.setValue(val);
             }
-            if (val instanceof Collection) {
+
+            if (val instanceof Collection && ! (val instanceof Map)) {
 
                 ParameterizedType genericType = (ParameterizedType) field.getGenericType();
                 Type[] actualTypeArguments = genericType.getActualTypeArguments();
 
+                if (actualTypeArguments.length > 1 || actualTypeArguments.length < 1 )
+                    throw new EsHelperQueryException("Just support single parameterized-type");
+
+                Type paramerizeType = actualTypeArguments[0];
+
+                if (!ReflectUtils.isBaseType(paramerizeType.getClass()))
+                    throw new EsHelperQueryException("Just support Collection<@JavaBaseType>");
+
+                queryDes.setValues( ((Collection)val).toArray() );
 
             }
 
+            if (val instanceof EsQueryComplexDefine) queryDes.setValue(val);
 
             return queryDes;
         } catch (IllegalAccessException e) {

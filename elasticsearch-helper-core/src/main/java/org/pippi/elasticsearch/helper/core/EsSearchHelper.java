@@ -26,7 +26,6 @@ public abstract class EsSearchHelper {
 
 
     private String indexName;
-    private RestHighLevelClient client;
 
 
     private SearchRequest request;
@@ -51,9 +50,8 @@ public abstract class EsSearchHelper {
      */
     private List<QueryBuilder> tempQueryBuilderList;
 
-    protected EsSearchHelper init(RestHighLevelClient client, String index) {
+    protected EsSearchHelper init(String index) {
         this.indexName = index;
-        this.client = client;
         request = new SearchRequest(index);
         source = request.source();
         bool = QueryBuilders.boolQuery();
