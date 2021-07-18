@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>elasticsearch-helper</artifactId>
-        <groupId>com.poet</groupId>
+        <groupId>org.pippi</groupId>
         <version>1.0.0</version>
     </parent>
 
@@ -29,17 +29,17 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.poet</groupId>
+                <groupId>org.pippi</groupId>
                 <artifactId>elasticsearch-helper-beans</artifactId>
                 <version>${root.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.poet</groupId>
+                <groupId>org.pippi</groupId>
                 <artifactId>elasticsearch-helper-core</artifactId>
                 <version>${root.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.poet</groupId>
+                <groupId>org.pippi</groupId>
                 <artifactId>elasticsearch-helper-view</artifactId>
                 <version>${root.version}</version>
             </dependency>

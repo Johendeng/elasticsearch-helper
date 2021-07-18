@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <groupId>org.pippi</groupId>
         <artifactId>elasticsearch-helper-parent</artifactId>
-        <groupId>com.poet</groupId>
         <version>1.0.0</version>
         <relativePath>../elasticsearch-helper-parent/pom.xml</relativePath>
     </parent>
@@ -15,15 +15,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.poet</groupId>
+            <groupId>org.pippi</groupId>
             <artifactId>elasticsearch-helper-view</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.poet</groupId>
+            <groupId>org.pippi</groupId>
             <artifactId>elasticsearch-helper-beans</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.poet</groupId>
+            <groupId>org.pippi</groupId>
             <artifactId>elasticsearch-helper-core</artifactId>
         </dependency>
         <dependency>
