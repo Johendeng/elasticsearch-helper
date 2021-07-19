@@ -1,6 +1,9 @@
 package org.pippi.elasticsearch.helper.view.handler;
 
+import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.beans.QueryDes;
+import org.pippi.elasticsearch.helper.beans.annotation.EsQueryHandle;
+import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 import org.pippi.elasticsearch.helper.view.EsQueryEngine;
 
@@ -13,14 +16,10 @@ import org.pippi.elasticsearch.helper.view.EsQueryEngine;
  **/
 public abstract class AbstractQueryHandle {
 
-    {
-        Class<? extends AbstractQueryHandle> targetClazz = this.getClass();
 
-        //        EsQueryEngine.addHandleClazz();
-    }
 
-    private AbstractQueryHandle(){}
 
+    protected AbstractQueryHandle(){}
 
     public abstract EsSearchHelper handle (QueryDes queryDes, EsSearchHelper searchHelper);
 

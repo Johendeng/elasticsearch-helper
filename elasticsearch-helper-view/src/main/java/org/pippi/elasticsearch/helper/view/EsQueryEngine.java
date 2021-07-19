@@ -1,12 +1,16 @@
 package org.pippi.elasticsearch.helper.view;
 
+import com.google.common.collect.Lists;
+import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.beans.QueryDes;
+import org.pippi.elasticsearch.helper.beans.annotation.EsQueryHandle;
+import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 import org.pippi.elasticsearch.helper.view.handler.AbstractQueryHandle;
+import org.reflections.Reflections;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * project: elasticsearch-helper
@@ -17,19 +21,21 @@ import java.util.Map;
  **/
 public class EsQueryEngine {
 
+    /**
+     * user define config, { System.getProperty(_EXT_DEFINE_QUERY_HANDLE_KEY) }
+     * format : es.helper.ext.handles=com.***.loc1,com.***.loc2
+     * just the package loc, but it's also support define a declare path
+     */
+    private static final String _EXT_DEFINE_QUERY_HANDLE_KEY = "es.helper.ext.handles";
+
+    private static final String _BASE_SCAN_PACKAGE = "org.pippi.elasticsearch.helper.view.handler";
+
     private static final Map<String, Class<? extends AbstractQueryHandle>> QUERY_HANDLE_CLAZZ_MAP = new HashMap<>();
 
     private static final Map<String, AbstractQueryHandle> QUERY_HANDLE_MAP = new HashMap<>();
 
-    {
 
-
-
-
-
-    }
-
-    public static void addHandleClazz (String handleName, Class<? extends AbstractQueryHandle> clazz) {
+    public static void addHandleClazz(String handleName, Class<? extends AbstractQueryHandle> clazz) {
         QUERY_HANDLE_CLAZZ_MAP.put(handleName, clazz);
     }
 
@@ -39,7 +45,6 @@ public class EsQueryEngine {
 
 
     /**
-     *
      * @param helper
      * @param queryViewObj
      * @param visitParent
@@ -58,5 +63,42 @@ public class EsQueryEngine {
 
         return helper;
     }
+
+
+    public void scanAllQueryHandle() {
+
+        LinkedList<String> packageList = Lists.newLinkedList();
+        packageList.add(_BASE_SCAN_PACKAGE);
+
+        String extHandlePath = System.getProperty(_EXT_DEFINE_QUERY_HANDLE_KEY);
+        String[] packages = extHandlePath.split(",");
+
+        List<String> extPackageList = Arrays.stream(Optional.ofNullable(packages).orElse(new String[0]))
+                .filter(StringUtils::isNoneBlank)
+                .collect(Collectors.toList());
+        packageList.addAll(extPackageList);
+
+        Reflections reflections = new Reflections(packageList);
+        Set<Class<? extends AbstractQueryHandle>> subQueryClazz = reflections.getSubTypesOf(AbstractQueryHandle.class);
+
+
+        for (Class<? extends AbstractQueryHandle> targetClazz : subQueryClazz) {
+
+            boolean flag = targetClazz.isAnnotationPresent(EsQueryHandle.class);
+            if (!flag) {
+                throw new EsHelperConfigException("query handle have to ann by @EsQueryHandle");
+            }
+            EsQueryHandle ann = targetClazz.getAnnotation(EsQueryHandle.class);
+            String handleName = ann.name();
+            if (StringUtils.isBlank(handleName)) handleName = ann.handleEnum().getQuery();
+            if (StringUtils.isBlank(handleName)) {
+                throw new EsHelperConfigException("handle-name is undefine");
+            }
+            EsQueryEngine.addHandleClazz(handleName, targetClazz);
+
+        }
+
+    }
+
 
 }

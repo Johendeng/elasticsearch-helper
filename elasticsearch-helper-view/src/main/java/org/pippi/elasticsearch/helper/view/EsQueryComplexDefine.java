@@ -7,5 +7,7 @@ package org.pippi.elasticsearch.helper.view;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public class EsQueryComplexDefine {
+public abstract class EsQueryComplexDefine {
+
+
 }

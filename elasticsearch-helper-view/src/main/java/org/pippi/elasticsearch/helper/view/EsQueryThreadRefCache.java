@@ -1,5 +1,7 @@
 package org.pippi.elasticsearch.helper.view;
 
+import org.pippi.elasticsearch.helper.core.EsSearchHelper;
+
 /**
  * project: elasticsearch-helper
  * package: org.pippi.elasticsearch.helper.view
@@ -9,8 +11,19 @@ package org.pippi.elasticsearch.helper.view;
  **/
 public class EsQueryThreadRefCache {
 
+    public static final ThreadLocal<EsSearchHelper> THREAD_LOCAL_QUERY_HANDLE_CACHE = new ThreadLocal<>();
 
 
+    public static void load(EsSearchHelper helper) {
+        THREAD_LOCAL_QUERY_HANDLE_CACHE.set(helper);
+    }
 
+    public static EsSearchHelper get(){
+        return THREAD_LOCAL_QUERY_HANDLE_CACHE.get();
+    }
+
+    public static void remove(){
+        THREAD_LOCAL_QUERY_HANDLE_CACHE.remove();
+    }
 
 }
