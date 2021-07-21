@@ -1,7 +1,11 @@
 package org.pippi.elasticsearch.helper.core.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.pippi.elasticsearch.helper.beans.exception.SerializeException;
 import org.slf4j.Logger;
@@ -23,11 +27,12 @@ public class SerializerUtils {
 
 
     private static final ObjectMapper _UN_MATCH_NULL_MAPPER = initDefaultMapper()
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+                                    .setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
     private static ObjectMapper initDefaultMapper() {
-        ObjectMapper mapper = new ObjectMapper();
-
+        ObjectMapper mapper = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         return mapper;
     }
 
@@ -39,6 +44,15 @@ public class SerializerUtils {
             throw new SerializeException("Json-String trans to Java-Bean error, cause:", e);
         }
     }
+
+    public static <T>T jsonToBeans(String json, TypeReference<T> reference) {
+        try {
+            return  _UN_MATCH_NULL_MAPPER.readValue(json, reference);
+        } catch (JsonProcessingException e) {
+            throw new SerializeException("Json-String trans to Java-Bean error, cause:", e);
+        }
+    }
+
 
 
     public static String parseObjToJson(Object obj) {

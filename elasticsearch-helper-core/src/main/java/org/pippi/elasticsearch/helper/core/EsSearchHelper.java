@@ -1,11 +1,9 @@
 package org.pippi.elasticsearch.helper.core;
 
-import com.sun.tools.corba.se.idl.StringGen;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.beans.enums.Meta;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
 import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;

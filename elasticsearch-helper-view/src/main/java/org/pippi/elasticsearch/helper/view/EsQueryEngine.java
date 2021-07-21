@@ -6,6 +6,7 @@ import org.pippi.elasticsearch.helper.beans.QueryDes;
 import org.pippi.elasticsearch.helper.beans.annotation.EsQueryHandle;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
+import org.pippi.elasticsearch.helper.core.EsSearchHelperFactory;
 import org.pippi.elasticsearch.helper.view.handler.AbstractQueryHandle;
 import org.reflections.Reflections;
 
@@ -50,16 +51,16 @@ public class EsQueryEngine {
 
 
     /**
-     * @param helper
      * @param queryViewObj
      * @param visitParent
      * @return
      */
-    public EsSearchHelper execute(EsSearchHelper helper, Object queryViewObj, boolean visitParent) {
+    public static EsSearchHelper execute(Object queryViewObj, boolean visitParent) {
 
         QueryViewObjTranslator translator = QueryViewObjTranslator.instance();
         List<QueryDes> queryDesList = translator.read(queryViewObj, visitParent);
-
+        String index = translator.getIndex(queryViewObj);
+        EsSearchHelper helper = EsSearchHelperFactory.newHelper(index);
         for (QueryDes queryDes : queryDesList) {
             String queryKey = queryDes.getQueryType();
             AbstractQueryHandle queryHandle = QUERY_HANDLE_MAP.get(queryKey);

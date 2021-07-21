@@ -6,7 +6,7 @@ import org.pippi.elasticsearch.helper.beans.QueryDes;
 import org.pippi.elasticsearch.helper.beans.annotation.EsQueryFiled;
 import org.pippi.elasticsearch.helper.beans.annotation.EsQueryIndex;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.utils.ReflectUtils;
+import org.pippi.elasticsearch.helper.core.utils.TypeUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -119,7 +119,7 @@ public class QueryViewObjTranslator {
             field.setAccessible(true);
             Object val = field.get(viewObj);
 
-            if (ReflectUtils.isBaseType(fieldType)) {
+            if (TypeUtils.isBaseType(fieldType)) {
                 queryDes.setValue(val);
             }
 
@@ -133,7 +133,7 @@ public class QueryViewObjTranslator {
 
                 Type paramerizeType = actualTypeArguments[0];
 
-                if (!ReflectUtils.isBaseType(paramerizeType.getClass()))
+                if (!TypeUtils.isBaseType(paramerizeType.getClass()))
                     throw new EsHelperQueryException("Just support Collection<@JavaBaseType>");
 
                 queryDes.setValues( ((Collection)val).toArray() );

@@ -7,7 +7,7 @@ package org.pippi.elasticsearch.helper.core.utils;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public class ReflectUtils {
+public class TypeUtils {
 
     public static boolean isBaseType (Class<?> type) {
         if (
