@@ -11,7 +11,7 @@ import org.pippi.elasticsearch.helper.beans.enums.QueryType;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public class QueryDes {
+public class QueryDes<T> {
 
     private String column;
 
@@ -25,6 +25,9 @@ public class QueryDes {
 
     private String script;
 
+    private String extendDefine;
+
+    private T extendBean;
 
     public QueryDes() {
     }
@@ -85,5 +88,21 @@ public class QueryDes {
 
     public void setScript(String script) {
         this.script = script;
+    }
+
+    public String getExtendDefine() {
+        return extendDefine;
+    }
+
+    public void setExtendDefine(String extendDefine) {
+        this.extendDefine = extendDefine;
+    }
+
+    public T getExtendBean() {
+        return extendBean;
+    }
+
+    public void setExtendBean(T extendBean) {
+        this.extendBean = extendBean;
     }
 }

@@ -34,5 +34,10 @@ public @interface EsQueryFiled {
 
     String script() default "";
 
+    /**
+     *  对于查询的自定义描述，需要根据不同查询实现不同的解析器
+     * @return
+     */
+    String extendDefine() default "";
 
 }

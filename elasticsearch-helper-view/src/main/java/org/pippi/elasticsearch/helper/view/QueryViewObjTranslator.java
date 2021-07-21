@@ -109,8 +109,10 @@ public class QueryViewObjTranslator {
         if (StringUtils.isBlank(meta)) throw new EsHelperQueryException("META-TYPE missing, it's necessary");
 
         String script = ann.script();
+        String extendDefine = ann.extendDefine();
 
         QueryDes queryDes = new QueryDes(column, query, meta, script);
+        queryDes.setExtendDefine(extendDefine);
 
         try {
             Class<?> fieldType = field.getType();

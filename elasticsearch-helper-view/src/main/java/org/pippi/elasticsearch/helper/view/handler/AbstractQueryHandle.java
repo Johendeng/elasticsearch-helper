@@ -1,11 +1,7 @@
 package org.pippi.elasticsearch.helper.view.handler;
 
-import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.beans.QueryDes;
-import org.pippi.elasticsearch.helper.beans.annotation.EsQueryHandle;
-import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
-import org.pippi.elasticsearch.helper.view.EsQueryEngine;
 
 /**
  * project: elasticsearch-helper
@@ -16,12 +12,21 @@ import org.pippi.elasticsearch.helper.view.EsQueryEngine;
  **/
 public abstract class AbstractQueryHandle {
 
+    AbstractQueryHandle(){}
 
+    public EsSearchHelper execute(QueryDes queryDes, EsSearchHelper searchHelper){
+        QueryDes handledDes = explainExtendDefine(queryDes);
+        return handle(queryDes, searchHelper);
+    }
 
+    public QueryDes explainExtendDefine (QueryDes queryDes) {
+        // do nothing, if need translate QueryDes.extendDefine, you need implement this method
+        return queryDes;
+    }
 
-    protected AbstractQueryHandle(){}
 
     public abstract EsSearchHelper handle (QueryDes queryDes, EsSearchHelper searchHelper);
+
 
 
 

@@ -1,5 +1,8 @@
 package org.pippi.elasticsearch.helper.core;
 
+import com.sun.tools.corba.se.idl.StringGen;
+import org.apache.commons.lang3.StringUtils;
+import org.pippi.elasticsearch.helper.beans.enums.Meta;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -143,9 +146,37 @@ public abstract class EsSearchHelper {
     }
 
     public EsSearchHelper like(String field, String value) {
+
         this.currentQueryBuilderList.add(QueryBuilders.wildcardQuery(field, "*" + value + "*"));
         return this;
     }
+
+
+    public EsSearchHelper like(String field, String value, String type) {
+
+        if (type.equals(Meta.KEYWORD.getType())){
+
+
+
+        }
+
+        if (type.equals(Meta.TEXT.getType())) {
+
+
+
+
+        }
+
+        if (StringUtils.isBlank(type)) {
+
+
+
+        }
+
+        return this;
+    }
+
+
 
 
     /**

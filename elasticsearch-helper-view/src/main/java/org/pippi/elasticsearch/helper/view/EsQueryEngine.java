@@ -39,6 +39,11 @@ public class EsQueryEngine {
         QUERY_HANDLE_CLAZZ_MAP.put(handleName, clazz);
     }
 
+    /**
+     *  handle instance map
+     * @param handleName
+     * @param handler
+     */
     public static void addHandle(String handleName, AbstractQueryHandle handler) {
         QUERY_HANDLE_MAP.put(handleName, handler);
     }
@@ -58,7 +63,7 @@ public class EsQueryEngine {
         for (QueryDes queryDes : queryDesList) {
             String queryKey = queryDes.getQueryType();
             AbstractQueryHandle queryHandle = QUERY_HANDLE_MAP.get(queryKey);
-            queryHandle.handle(queryDes, helper);
+            queryHandle.execute(queryDes, helper);
         }
 
         return helper;
