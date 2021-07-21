@@ -1,8 +1,8 @@
-package org.pippi.elasticsearch.helper.core;
+package org.pippi.elasticsearch.helper.core.utils;
 
 import com.google.common.collect.Maps;
-import org.pippi.elasticsearch.helper.beans.annotation.EsField;
-import org.pippi.elasticsearch.helper.beans.annotation.EsIndex;
+import org.pippi.elasticsearch.helper.beans.annotation.meta.EsField;
+import org.pippi.elasticsearch.helper.beans.annotation.meta.EsIndex;
 import org.pippi.elasticsearch.helper.beans.enums.Meta;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperIOException;
@@ -24,7 +24,7 @@ import java.util.Map;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public class IndexMapperTrans {
+public class IndexMappingUtils {
 
 
     private static final String _TYPE_KEY = "type";

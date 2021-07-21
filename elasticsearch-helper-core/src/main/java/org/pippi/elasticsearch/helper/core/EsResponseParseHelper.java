@@ -35,6 +35,11 @@ public class EsResponseParseHelper {
         return res;
     }
 
+    public static String getListStringify (SearchResponse resp) {
+        List<Map<String, Object>> resMap = getList(resp);
+        return SerializerUtils.parseObjToJson(resMap);
+    }
+
     public static <T> List<T> getList(SearchResponse resp, Class<T> type) {
         SearchHits hits = resp.getHits();
         SearchHit[] hitArr = hits.getHits();
@@ -60,10 +65,7 @@ public class EsResponseParseHelper {
         return null;
     }
 
-    public static String getListStringify (SearchResponse resp) {
-        List<Map<String, Object>> resMap = getList(resp);
-        return SerializerUtils.parseObjToJson(resMap);
-    }
+
 
 
 }

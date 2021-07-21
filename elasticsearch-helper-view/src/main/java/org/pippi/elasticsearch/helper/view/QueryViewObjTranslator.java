@@ -3,8 +3,8 @@ package org.pippi.elasticsearch.helper.view;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.beans.QueryDes;
-import org.pippi.elasticsearch.helper.beans.annotation.EsQueryFiled;
-import org.pippi.elasticsearch.helper.beans.annotation.EsQueryIndex;
+import org.pippi.elasticsearch.helper.beans.annotation.view.EsQueryFiled;
+import org.pippi.elasticsearch.helper.beans.annotation.view.EsQueryIndex;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.utils.TypeUtils;
 

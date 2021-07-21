@@ -2,8 +2,8 @@ package org.pippi.elasticsearch.helper.view;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.pippi.elasticsearch.helper.beans.annotation.RequestHook;
-import org.pippi.elasticsearch.helper.beans.annotation.ResponseHook;
+import org.pippi.elasticsearch.helper.beans.annotation.hook.RequestHook;
+import org.pippi.elasticsearch.helper.beans.annotation.hook.ResponseHook;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 import org.pippi.elasticsearch.helper.core.HighLevelRestClientHolder;
@@ -52,9 +52,11 @@ public class EsQueryProxy<T> implements InvocationHandler {
             SearchResponse resp = HighLevelRestClientHolder.client().search(esHelper.getRequest(), RequestOptions.DEFAULT);
             if (method.isAnnotationPresent(ResponseHook.class)) {
                 ResponseHook respHookAnn = method.getAnnotation(ResponseHook.class);
+                return EsHookRegedit.useRespHook(respHookAnn.value(), resp);
+            } else {
+
 
             }
-
         }
         return null;
     }

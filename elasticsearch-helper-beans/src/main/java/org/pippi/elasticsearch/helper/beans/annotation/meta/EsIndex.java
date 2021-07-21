@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.beans.annotation;
+package org.pippi.elasticsearch.helper.beans.annotation.meta;
 
 import java.lang.annotation.*;
 

@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.helper.view;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.beans.QueryDes;
-import org.pippi.elasticsearch.helper.beans.annotation.EsQueryHandle;
+import org.pippi.elasticsearch.helper.beans.annotation.view.EsQueryHandle;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 import org.pippi.elasticsearch.helper.core.EsSearchHelperFactory;
@@ -71,7 +71,7 @@ public class EsQueryEngine {
     }
 
 
-    public void scanAllQueryHandle() {
+    public void QueryHandleScan() {
 
         LinkedList<String> packageList = Lists.newLinkedList();
         packageList.add(_BASE_SCAN_PACKAGE);
@@ -87,7 +87,6 @@ public class EsQueryEngine {
         Reflections reflections = new Reflections(packageList);
         Set<Class<? extends AbstractQueryHandle>> subQueryClazz = reflections.getSubTypesOf(AbstractQueryHandle.class);
 
-
         for (Class<? extends AbstractQueryHandle> targetClazz : subQueryClazz) {
 
             boolean flag = targetClazz.isAnnotationPresent(EsQueryHandle.class);
@@ -96,7 +95,9 @@ public class EsQueryEngine {
             }
             EsQueryHandle ann = targetClazz.getAnnotation(EsQueryHandle.class);
             String handleName = ann.name();
-            if (StringUtils.isBlank(handleName)) handleName = ann.handleEnum().getQuery();
+            if (StringUtils.isBlank(handleName)) {
+                handleName = ann.handleEnum().getQuery();
+            }
             if (StringUtils.isBlank(handleName)) {
                 throw new EsHelperConfigException("handle-name is undefine");
             }

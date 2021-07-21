@@ -1,20 +1,20 @@
-package org.pippi.elasticsearch.helper.beans.annotation;
+package org.pippi.elasticsearch.helper.beans.annotation.hook;
 
 import java.lang.annotation.*;
 
 /**
  * Project Name:elasticsearch-helper
- * File Name:EsQueryIndex
+ * File Name:RequestHook
  * Package Name:org.pippi.elasticsearch.helper.beans.annotation
- * Date:2021/7/18 15:26
+ * Date:2021/7/21 00:31
  * Author:dengtianjia
  * Description:
  */
 @Documented
-@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EsQueryIndex {
+@Target({ElementType.METHOD, ElementType.TYPE})
+public @interface RequestHook {
 
-    String index() ;
+    String value() ;
 
 }
