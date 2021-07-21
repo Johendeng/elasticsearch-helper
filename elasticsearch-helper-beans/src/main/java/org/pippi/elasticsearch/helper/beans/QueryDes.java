@@ -1,9 +1,6 @@
 package org.pippi.elasticsearch.helper.beans;
 
 
-import org.pippi.elasticsearch.helper.beans.enums.Meta;
-import org.pippi.elasticsearch.helper.beans.enums.QueryType;
-
 /**
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper.core.web
