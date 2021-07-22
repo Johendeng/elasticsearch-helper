@@ -54,7 +54,7 @@ public abstract class EsSearchHelper {
     protected EsSearchHelper init(String index) {
         this.indexName = index;
         request = new SearchRequest(index);
-        source = request.source();
+        source = new SearchSourceBuilder();
         bool = QueryBuilders.boolQuery();
         source.query(bool);
         request.source(source);

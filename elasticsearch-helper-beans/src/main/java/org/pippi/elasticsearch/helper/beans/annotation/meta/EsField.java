@@ -29,4 +29,5 @@ public @interface EsField {
 
     String analyzer() default "";
 
+    String format() default "";
 }

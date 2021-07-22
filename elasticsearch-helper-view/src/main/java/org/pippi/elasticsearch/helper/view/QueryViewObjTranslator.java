@@ -95,26 +95,9 @@ public class QueryViewObjTranslator {
 
     private QueryDes mapFieldAnn(Field field, Object viewObj) {
 
-        EsQueryFiled ann = field.getAnnotation(EsQueryFiled.class);
-
-        String column = ann.name();
-        if (StringUtils.isBlank(column)) column = field.getName();
-
-        String query = ann.query();
-        if (StringUtils.isBlank(query)) query =  ann.queryEnum().getQuery();
-        if (StringUtils.isBlank(query)) throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
-
-        String meta = ann.metaTypeStringify();
-        if (StringUtils.isBlank(meta)) meta =  ann.metaType().getType();
-        if (StringUtils.isBlank(meta)) throw new EsHelperQueryException("META-TYPE missing, it's necessary");
-
-        String script = ann.script();
-        String extendDefine = ann.extendDefine();
-
-        QueryDes queryDes = new QueryDes(column, query, meta, script);
-        queryDes.setExtendDefine(extendDefine);
-
         try {
+            QueryDes queryDes = new QueryDes<>();
+
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
             Object val = field.get(viewObj);
@@ -141,6 +124,28 @@ public class QueryViewObjTranslator {
             }
 
             if (val instanceof EsQueryComplexDefine) queryDes.setValue(val);
+
+            EsQueryFiled ann = field.getAnnotation(EsQueryFiled.class);
+
+            String column = ann.name();
+            if (StringUtils.isBlank(column)) column = field.getName();
+
+            String query = ann.query();
+            if (StringUtils.isBlank(query)) query =  ann.queryEnum().getQuery();
+            if (StringUtils.isBlank(query)) throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
+
+            String meta = ann.metaTypeStringify();
+            if (StringUtils.isBlank(meta)) meta =  ann.metaType().getType();
+            if (StringUtils.isBlank(meta)) throw new EsHelperQueryException("META-TYPE missing, it's necessary");
+
+            String script = ann.script();
+            String extendDefine = ann.extendDefine();
+
+            queryDes.setColumn(column);
+            queryDes.setQueryType(query);
+            queryDes.setMeta(meta);
+            queryDes.setScript(script);
+            queryDes.setExtendDefine(extendDefine);
 
             return queryDes;
         } catch (IllegalAccessException e) {

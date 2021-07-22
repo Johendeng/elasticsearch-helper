@@ -29,6 +29,7 @@ public class IndexMappingUtils {
 
     private static final String _TYPE_KEY = "type";
     private static final String _ANALYZER = "analyzer";
+    private static final String _FORMAT = "format";
     private static final String _SEARCH_ANALYZER = "search_analyzer";
 
     private String exportLoc = "out/";
@@ -164,6 +165,10 @@ public class IndexMappingUtils {
                 if (StringUtils.isNotBlank(analyzer)) {
                     esFieldDes.put(_ANALYZER, analyzer);
                     esFieldDes.put(_SEARCH_ANALYZER, analyzer);
+                }
+                String format = esField.format();
+                if (StringUtils.isNotBlank(format)) {
+                    esFieldDes.put(_FORMAT, format);
                 }
 
                 mappings.getProperties().put(esFieldName, esFieldDes);
