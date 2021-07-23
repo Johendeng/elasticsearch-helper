@@ -28,6 +28,16 @@ public class NewsRecord {
     @EsField(type = Meta.INTEGER)
     private Integer visitCount;
 
+    public NewsRecord() {
+    }
+
+    public NewsRecord(String title, String content, Date reportDate, Integer visitCount) {
+        this.title = title;
+        this.content = content;
+        this.reportDate = reportDate;
+        this.visitCount = visitCount;
+    }
+
     public String getTitle() {
         return title;
     }
