@@ -1,6 +1,11 @@
 package org.pippi.elasticsearch.helper.core;
 
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.common.xcontent.XContentParser;
+import org.elasticsearch.common.xcontent.XContentParserUtils;
+import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.beans.enums.Meta;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
 import org.elasticsearch.action.search.SearchRequest;
@@ -13,8 +18,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.Map;
 
 /**
+ *  应该支持 function_score, script
+ *  支持es的 种子评分字段   衰减函数
+ *  支持 script_score
+ *
+ *
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper
  * date:    2021/3/12
@@ -76,7 +87,10 @@ public abstract class EsSearchHelper {
     }
 
 
-    // change the logic connects of action request
+    /**
+     *  切换逻辑连接符
+     * @return
+     */
     public EsSearchHelper should(){
         this.currentQueryBuilderList = bool.should();
         this.baseQueryBuilderList = currentQueryBuilderList;
@@ -217,6 +231,40 @@ public abstract class EsSearchHelper {
         this.source.from(exclude).size(size);
         return this;
     }
+
+    /**
+     *  脚本查询
+     * @return
+     */
+    public EsSearchHelper script(String scriptStr){
+        Script script = new Script(scriptStr);
+        this.currentQueryBuilderList.add(QueryBuilders.scriptQuery(script));
+        return this;
+    }
+
+    /**
+     *  Script(ScriptType type, String lang, String idOrCode, Map<String, Object> params)
+     * @return
+     */
+    public EsSearchHelper script(ScriptType type,
+                                 String lang,
+                                 String idOrCode,
+                                 Map<String, Object> params) {
+        Script script = new Script(type, lang, idOrCode, params);
+        this.currentQueryBuilderList.add(QueryBuilders.scriptQuery(script));
+        return this;
+    }
+
+    /**
+     * 自定义评分方法
+     * @return
+     */
+    public EsSearchHelper functionScoreQuery () {
+        QueryBuilders.functionScoreQuery(QueryBuilders.termQuery("",""));
+        return this;
+    }
+
+
 
 
     public EsSearchHelper agg(AggregationBuilder aggBuilder) {
