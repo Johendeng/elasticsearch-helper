@@ -24,6 +24,8 @@ public class QueryDes<T> {
 
     private String extendDefine;
 
+    private Float boost;
+
     private T extendBean;
 
     public QueryDes() {
@@ -101,5 +103,13 @@ public class QueryDes<T> {
 
     public void setExtendBean(T extendBean) {
         this.extendBean = extendBean;
+    }
+
+    public Float getBoost() {
+        return boost;
+    }
+
+    public void setBoost(Float boost) {
+        this.boost = boost;
     }
 }

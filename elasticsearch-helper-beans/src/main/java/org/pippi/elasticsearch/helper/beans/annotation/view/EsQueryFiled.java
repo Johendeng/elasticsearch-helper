@@ -40,4 +40,10 @@ public @interface EsQueryFiled {
      */
     String extendDefine() default "";
 
+    /**
+     *  自定义匹配分值
+     * @return
+     */
+    float boost() default 1;
+
 }

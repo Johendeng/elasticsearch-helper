@@ -3,6 +3,7 @@ package org.pippi.elasticsearch.helper.core;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.common.xcontent.XContentParser;
 import org.elasticsearch.common.xcontent.XContentParserUtils;
+import org.elasticsearch.index.query.TermQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
@@ -45,10 +46,6 @@ public abstract class EsSearchHelper {
     private BoolQueryBuilder bool;
 
     /**
-     *  base query builder list
-     */
-    private List<QueryBuilder> baseQueryBuilderList;
-    /**
      *  current search about collections, default is MUST
      */
     private List<QueryBuilder> currentQueryBuilderList;
@@ -70,7 +67,6 @@ public abstract class EsSearchHelper {
         source.query(bool);
         request.source(source);
         this.currentQueryBuilderList = bool.must();
-        this.baseQueryBuilderList = currentQueryBuilderList;
         return this;
     }
 
@@ -93,38 +89,62 @@ public abstract class EsSearchHelper {
      */
     public EsSearchHelper should(){
         this.currentQueryBuilderList = bool.should();
-        this.baseQueryBuilderList = currentQueryBuilderList;
         bool.minimumShouldMatch(1);
         return this;
     }
 
     public EsSearchHelper filter() {
         this.currentQueryBuilderList = bool.filter();
-        this.baseQueryBuilderList = currentQueryBuilderList;
         return this;
     }
 
     public EsSearchHelper must() {
         this.currentQueryBuilderList = bool.must();
-        this.baseQueryBuilderList = currentQueryBuilderList;
         return this;
     }
 
     public EsSearchHelper mustNot() {
         this.currentQueryBuilderList = bool.mustNot();
-        this.baseQueryBuilderList = currentQueryBuilderList;
         return this;
     }
 
+    /**
+     *  关键字匹配查询，默认得分为1
+     * @param field
+     * @param value
+     * @return
+     */
     public EsSearchHelper term(String field, Object value) {
         this.currentQueryBuilderList.add(QueryBuilders.termQuery(field, value));
         return this;
     }
 
+    /**
+     *  关键字匹配查询，自定义得分
+     * @param field
+     * @param value
+     * @param boost
+     * @return
+     */
+    public EsSearchHelper term(String field, Object value, Float boost){
+        TermQueryBuilder termQuery = QueryBuilders.termQuery(field, value).boost(boost);
+        this.currentQueryBuilderList.add(termQuery);
+        return this;
+    }
+
+
     public EsSearchHelper terms(String field, Object[] values) {
         this.currentQueryBuilderList.add(QueryBuilders.termsQuery(field, values));
         return this;
     }
+
+
+
+    public EsSearchHelper terms(String field, Object[] values, Float boost) {
+        this.currentQueryBuilderList.add(QueryBuilders.termsQuery(field, values).boost(boost));
+        return this;
+    }
+
 
 
     public EsSearchHelper match (String field, Object value) {
@@ -185,44 +205,6 @@ public abstract class EsSearchHelper {
 
         }
 
-        return this;
-    }
-
-
-
-
-    /**
-     *  use to realize a query-mode like
-     *  must : {
-     *      **:**,
-     *      **:**,
-     *      bool: {
-     *          should: {
-     *              **:**,
-     *              **:**
-     *          }
-     *      }
-     *  }
-     * @return
-     */
-    public EsSearchHelper innerShould() {
-        if (innerQueryBuilder == null) {
-            innerQueryBuilder = QueryBuilders.boolQuery();
-        }
-        if (tempQueryBuilderList != null) {
-            throw new EsHelperQueryException("inner query not end, cant initialize a new inner query-chain");
-        }
-        tempQueryBuilderList = innerQueryBuilder.should();
-        baseQueryBuilderList.add(innerQueryBuilder);
-        this.currentQueryBuilderList = tempQueryBuilderList;
-        return this;
-    }
-
-
-    public EsSearchHelper innerEnd() {
-        this.currentQueryBuilderList = this.baseQueryBuilderList;
-        this.tempQueryBuilderList = null;
-        this.innerQueryBuilder = null;
         return this;
     }
 
