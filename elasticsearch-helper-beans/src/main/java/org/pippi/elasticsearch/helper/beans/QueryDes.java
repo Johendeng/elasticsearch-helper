@@ -10,6 +10,7 @@ package org.pippi.elasticsearch.helper.beans;
  **/
 public class QueryDes<T> {
 
+
     private String column;
 
     private Object value;
@@ -22,10 +23,15 @@ public class QueryDes<T> {
 
     private String script;
 
-    private String extendDefine;
-
     private Float boost;
 
+    /**
+     *  自定义扩展信息
+     */
+    private String extendDefine;
+    /**
+     *  自定义扩展信息映射对象
+     */
     private T extendBean;
 
     public QueryDes() {

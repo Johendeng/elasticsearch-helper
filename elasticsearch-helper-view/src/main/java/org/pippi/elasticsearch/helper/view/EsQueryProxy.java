@@ -54,6 +54,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
                 ResponseHook respHookAnn = method.getAnnotation(ResponseHook.class);
                 return EsHookRegedit.useRespHook(respHookAnn.value(), resp);
             } else {
+                Class<?> returnType = method.getReturnType();
 
 
             }

@@ -20,6 +20,12 @@ import java.util.Map;
 public class EsResponseParseHelper {
 
 
+    public <R> R  parse(SearchResponse resp, Class<R> clazz) {
+
+        return null;
+    }
+
+
     /**
      *  simple read es response
      * @param resp

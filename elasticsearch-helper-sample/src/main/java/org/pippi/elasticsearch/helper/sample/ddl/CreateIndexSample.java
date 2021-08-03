@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.sample.modify;
+package org.pippi.elasticsearch.helper.sample.ddl;
 
 import org.apache.http.HttpHost;
 import org.elasticsearch.action.index.IndexRequest;

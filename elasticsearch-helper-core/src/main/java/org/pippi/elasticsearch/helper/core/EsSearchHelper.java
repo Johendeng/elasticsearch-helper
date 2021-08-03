@@ -18,6 +18,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,7 @@ public abstract class EsSearchHelper {
      */
     private List<QueryBuilder> tempQueryBuilderList;
 
-    protected EsSearchHelper init(String index) {
+    public EsSearchHelper init(String index) {
         this.indexName = index;
         request = new SearchRequest(index);
         source = new SearchSourceBuilder();
@@ -257,6 +258,47 @@ public abstract class EsSearchHelper {
     public EsSearchHelper chain(QueryBuilder queryBuilder) {
         this.currentQueryBuilderList.add(queryBuilder);
         return this;
+    }
+
+    public static EsSearchHelperBuilder builder(){
+        return new EsSearchHelperBuilder();
+    }
+
+
+    public static class EsSearchHelperBuilder {
+
+        public EsSearchHelper helper;
+
+        public String indexName;
+
+        public Class<? extends EsSearchHelper> clazz;
+
+        public EsSearchHelperBuilder clazz(Class<? extends EsSearchHelper> clazz) {
+            this.clazz = clazz;
+            return this;
+        }
+
+        public EsSearchHelperBuilder index(String indexName) {
+            this.indexName = indexName;
+            return this;
+        }
+
+        public <R extends EsSearchHelper>R build(){
+            try {
+                helper = clazz.getDeclaredConstructor().newInstance();
+                helper.init(indexName);
+            } catch (InstantiationException e) {
+                throw new EsHelperQueryException("实例化异常", e);
+            } catch (IllegalAccessException e) {
+                throw new EsHelperQueryException("构造函数未设置为public", e);
+            } catch (InvocationTargetException e) {
+                throw new EsHelperQueryException("目标构造函数执行异常", e);
+            } catch (NoSuchMethodException e) {
+                throw new EsHelperQueryException("没有找到无参构造函数", e);
+            }
+            return (R)helper;
+        }
+
     }
 
 

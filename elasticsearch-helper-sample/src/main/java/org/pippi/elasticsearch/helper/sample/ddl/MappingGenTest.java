@@ -5,6 +5,7 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.joda.time.DateTimeUtils;
 import org.junit.Test;
+import org.pippi.elasticsearch.helper.core.EsDataModifyHelper;
 import org.pippi.elasticsearch.helper.core.utils.IndexMappingUtils;
 
 import java.util.Date;
@@ -20,9 +21,10 @@ public class MappingGenTest {
 
     private static RestHighLevelClient client;
 
+    private static final String _LOCAL_DEV = "localhost";
 
     static {
-        client = new RestHighLevelClient(RestClient.builder(new HttpHost("local.dev1", 9200)));
+        client = new RestHighLevelClient(RestClient.builder(new HttpHost(_LOCAL_DEV, 9200)));
     }
 
     @Test
@@ -38,8 +40,12 @@ public class MappingGenTest {
         NewsRecord record3 = new NewsRecord("黄瓜", "葫芦科一年生蔓生或攀援草本植物。茎、枝伸长，有棱沟，被白色的糙硬毛。卷须细。叶柄稍粗糙，有糙硬毛；叶片宽卵状心形，膜质，裂片三角形，有齿", new Date(), 12);
         NewsRecord record4 = new NewsRecord("西红柿", "西红柿一般指番茄。番茄（学名：Lycopersicon esculentum），即西红柿，是管状花目、茄科、番茄属的一种一年生或多年生草本植物", new Date(), 12);
         NewsRecord record5 = new NewsRecord("大葱", "葱种下一变种，区别于分葱（小葱）变种与红葱（楼葱）变种。大葱植株地上部的外形很象洋葱", new Date(), 12);
-
-
+        EsDataModifyHelper helper = new EsDataModifyHelper(client);
+        helper.insert("news_record","1", record1);
+        helper.insert("news_record","2", record2);
+        helper.insert("news_record","3", record3);
+        helper.insert("news_record","4", record4);
+        helper.insert("news_record","5", record5);
     }
 
 

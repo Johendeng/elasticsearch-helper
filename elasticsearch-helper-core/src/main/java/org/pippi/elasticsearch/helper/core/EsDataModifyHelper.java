@@ -40,7 +40,7 @@ public class EsDataModifyHelper {
      */
     public void insert(String indexName, Object obj) {
         IndexRequest request = new IndexRequest(indexName);
-        request.source(XContentType.JSON, SerializerUtils.parseObjToJsonSkipNull(obj));
+        request.source(SerializerUtils.parseObjToJsonSkipNull(obj), XContentType.JSON);
         try {
             client.index(request, RequestOptions.DEFAULT);
         } catch (IOException e) {
@@ -48,7 +48,15 @@ public class EsDataModifyHelper {
         }
     }
 
-
+    public void insert(String indexName, String id, Object obj) {
+        IndexRequest request = new IndexRequest(indexName);
+        request.id(id).source(SerializerUtils.parseObjToJsonSkipNull(obj), XContentType.JSON);
+        try {
+            client.index(request, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 
