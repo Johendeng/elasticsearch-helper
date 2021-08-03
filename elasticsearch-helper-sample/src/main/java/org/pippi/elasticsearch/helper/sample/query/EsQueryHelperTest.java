@@ -49,9 +49,7 @@ public class EsQueryHelperTest {
                 .index(_TEST_INDEX)
                 .clazz(DefaultEsSearchHelper.class)
                 .build();
-        EsSearchHelper helper = esSearchHelper.match("content", "花目");
-
-
+        EsSearchHelper helper = esSearchHelper.fuzzyQuery("content", "西虹");
 
         SearchResponse resp = client.search(helper.getRequest(), RequestOptions.DEFAULT);
         List<Map<String, Object>> res = EsResponseParseHelper.getList(resp);

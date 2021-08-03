@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.core;
 
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.XContentParser;
 import org.elasticsearch.common.xcontent.XContentParserUtils;
 import org.elasticsearch.index.query.*;
@@ -35,7 +36,6 @@ public abstract class EsSearchHelper {
 
     private static final Logger log = LoggerFactory.getLogger(EsSearchHelper.class);
 
-    private String defaultAnalyze = "ik_smart";
 
     private String indexName;
 
@@ -79,10 +79,6 @@ public abstract class EsSearchHelper {
 
     public BoolQueryBuilder getBool() {
         return bool;
-    }
-
-    public void setDefaultAnalyze(String DefaultAnalyze) {
-        defaultAnalyze = DefaultAnalyze;
     }
 
     /**
@@ -155,7 +151,7 @@ public abstract class EsSearchHelper {
      * @return
      */
     public EsSearchHelper match (String field, Object value) {
-        return this.match(field, value, 1.0f, defaultAnalyze);
+        return this.match(field, value, 1.0f, 50, null);
     }
 
     /**
@@ -169,28 +165,44 @@ public abstract class EsSearchHelper {
     public EsSearchHelper match(String field,
                                 Object value,
                                 Float boost,
+                                Integer maxExpansions,
                                 String analyzer) {
         MatchQueryBuilder matchQuery = QueryBuilders.matchQuery(field, value);
         if (null != boost) matchQuery.boost(boost);
+        if (null != maxExpansions) matchQuery.maxExpansions(maxExpansions);
         if (StringUtils.isNoneBlank(analyzer)) matchQuery.analyzer(analyzer);
         this.currentQueryBuilderList.add(matchQuery);
         return this;
     }
 
 
+
     public EsSearchHelper fuzzyQuery (String field, Object value) {
-        this.currentQueryBuilderList.add(QueryBuilders.fuzzyQuery(field, value));
-        return this;
+        return this.fuzzyQuery(field, value ,1f, Fuzziness.AUTO, 50, 0);
     }
 
-    public EsSearchHelper fuzzyQuery(String field, Object value, int maxExpansions) {
-        QueryBuilders.fuzzyQuery(field, value)
-                .maxExpansions(maxExpansions);
-
-
+    /**
+     *  模糊搜索
+     *
+     * @param field
+     * @param value
+     * @param fuzzUnit 拼写错误的字符数
+     * @param maxExpansions
+     * @return
+     */
+    public EsSearchHelper fuzzyQuery(String field, Object value,
+                                     Float boost,
+                                     Fuzziness fuzzUnit,
+                                     Integer maxExpansions,
+                                     Integer maxPrefix) {
+        FuzzyQueryBuilder fuzzyQueryBUilder = QueryBuilders.fuzzyQuery(field, value);
+        if (fuzzUnit != null) fuzzyQueryBUilder.fuzziness(fuzzUnit);
+        if (maxExpansions != null) fuzzyQueryBUilder.maxExpansions(maxExpansions);
+        if (boost != null) fuzzyQueryBUilder.boost(boost);
+        if (maxPrefix != null) fuzzyQueryBUilder.prefixLength(maxExpansions);
+        this.currentQueryBuilderList.add(fuzzyQueryBUilder);
         return this;
     }
-
 
 
 
