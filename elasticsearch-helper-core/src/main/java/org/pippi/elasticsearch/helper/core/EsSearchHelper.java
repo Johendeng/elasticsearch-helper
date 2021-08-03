@@ -3,16 +3,13 @@ package org.pippi.elasticsearch.helper.core;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.common.xcontent.XContentParser;
 import org.elasticsearch.common.xcontent.XContentParserUtils;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.beans.enums.Meta;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
 import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.slf4j.Logger;
@@ -38,6 +35,7 @@ public abstract class EsSearchHelper {
 
     private static final Logger log = LoggerFactory.getLogger(EsSearchHelper.class);
 
+    private String defaultAnalyze = "ik_smart";
 
     private String indexName;
 
@@ -83,6 +81,9 @@ public abstract class EsSearchHelper {
         return bool;
     }
 
+    public void setDefaultAnalyze(String DefaultAnalyze) {
+        defaultAnalyze = DefaultAnalyze;
+    }
 
     /**
      *  切换逻辑连接符
@@ -146,12 +147,36 @@ public abstract class EsSearchHelper {
         return this;
     }
 
-
-
+    /**
+     *  默认文档命中评分 1，
+     *  默认使用分词器 ik_smart
+     * @param field
+     * @param value
+     * @return
+     */
     public EsSearchHelper match (String field, Object value) {
-        this.currentQueryBuilderList.add(QueryBuilders.matchQuery(field, value));
+        return this.match(field, value, 1.0f, defaultAnalyze);
+    }
+
+    /**
+     *
+     * @param field
+     * @param value
+     * @param boost
+     * @param analyzer
+     * @return
+     */
+    public EsSearchHelper match(String field,
+                                Object value,
+                                Float boost,
+                                String analyzer) {
+        MatchQueryBuilder matchQuery = QueryBuilders.matchQuery(field, value);
+        if (null != boost) matchQuery.boost(boost);
+        if (StringUtils.isNoneBlank(analyzer)) matchQuery.analyzer(analyzer);
+        this.currentQueryBuilderList.add(matchQuery);
         return this;
     }
+
 
     public EsSearchHelper fuzzyQuery (String field, Object value) {
         this.currentQueryBuilderList.add(QueryBuilders.fuzzyQuery(field, value));

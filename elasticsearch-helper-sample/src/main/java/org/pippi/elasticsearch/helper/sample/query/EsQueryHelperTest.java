@@ -37,18 +37,19 @@ public class EsQueryHelperTest {
         client = new RestHighLevelClient(RestClient.builder(new HttpHost(_LOCAL_DEV, 9200)));
     }
 
+    /**
+     *  默认的中文分词将 中文直接拆分为单个汉字，没有词汇匹配，
+     *  因此会导致 matchQuery 以及 fuzzyQuery 失效
+     *
+     * @throws IOException
+     */
     @Test
     public void testQueryHelper () throws IOException {
         DefaultEsSearchHelper esSearchHelper = EsSearchHelper.builder()
                 .index(_TEST_INDEX)
                 .clazz(DefaultEsSearchHelper.class)
                 .build();
-        EsSearchHelper helper = esSearchHelper.chain(
-                QueryBuilders.fuzzyQuery("title.keyword", "黄")
-                .maxExpansions(10)
-                .prefixLength(1)
-                .transpositions(true)
-        );
+        EsSearchHelper helper = esSearchHelper.match("content", "花目");
 
 
 
