@@ -158,6 +158,17 @@ public abstract class EsSearchHelper {
         return this;
     }
 
+    public EsSearchHelper fuzzyQuery(String field, Object value, int maxExpansions) {
+        QueryBuilders.fuzzyQuery(field, value)
+                .maxExpansions(maxExpansions);
+
+
+        return this;
+    }
+
+
+
+
     public EsSearchHelper gt(String field, Number value) {
         this.currentQueryBuilderList.add(QueryBuilders.rangeQuery(field).gt(value));
         return this;

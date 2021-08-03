@@ -5,12 +5,18 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
 import org.pippi.elasticsearch.helper.core.DefaultEsSearchHelper;
 import org.pippi.elasticsearch.helper.core.EsResponseParseHelper;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
+import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 描述
@@ -19,6 +25,8 @@ import java.io.IOException;
  * @date 2021/8/3
  */
 public class EsQueryHelperTest {
+
+    private static final Logger log = LoggerFactory.getLogger(EsQueryHelperTest.class);
 
     private static RestHighLevelClient client;
 
@@ -35,9 +43,18 @@ public class EsQueryHelperTest {
                 .index(_TEST_INDEX)
                 .clazz(DefaultEsSearchHelper.class)
                 .build();
-        EsSearchHelper helper = esSearchHelper.term("title", "黄瓜");
+        EsSearchHelper helper = esSearchHelper.chain(
+                QueryBuilders.fuzzyQuery("title.keyword", "黄")
+                .maxExpansions(10)
+                .prefixLength(1)
+                .transpositions(true)
+        );
+
+
+
         SearchResponse resp = client.search(helper.getRequest(), RequestOptions.DEFAULT);
-        EsResponseParseHelper.getList(resp);
+        List<Map<String, Object>> res = EsResponseParseHelper.getList(resp);
+        log.info(SerializerUtils.parseObjToJsonPretty(res));
     }
 
 
