@@ -5,8 +5,10 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.Test;
+import org.pippi.elasticsearch.helper.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.DefaultEsSearchHelper;
 import org.pippi.elasticsearch.helper.core.EsResponseParseHelper;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
@@ -15,8 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 描述
@@ -31,29 +31,36 @@ public class EsQueryHelperTest {
     private static RestHighLevelClient client;
 
     private static final String _LOCAL_DEV = "localhost";
-    private static final String _TEST_INDEX = "news_record";
+    private static final String _TEST_INDEX = "content";
 
     static {
         client = new RestHighLevelClient(RestClient.builder(new HttpHost(_LOCAL_DEV, 9200)));
     }
 
     /**
-     *  默认的中文分词将 中文直接拆分为单个汉字，没有词汇匹配，
-     *  因此会导致 matchQuery 以及 fuzzyQuery 失效
+     * 默认的中文分词将 中文直接拆分为单个汉字，没有词汇匹配，
+     * 因此会导致 matchQuery 以及 fuzzyQuery 失效
      *
      * @throws IOException
      */
     @Test
-    public void testQueryHelper () throws IOException {
+    public void testQueryHelper() throws IOException {
         DefaultEsSearchHelper esSearchHelper = EsSearchHelper.builder()
                 .index(_TEST_INDEX)
                 .clazz(DefaultEsSearchHelper.class)
                 .build();
-        EsSearchHelper helper = esSearchHelper.fuzzyQuery("content", "西虹");
 
-        SearchResponse resp = client.search(helper.getRequest(), RequestOptions.DEFAULT);
-        List<Map<String, Object>> res = EsResponseParseHelper.getList(resp);
-        log.info(SerializerUtils.parseObjToJsonPretty(res));
+        esSearchHelper.getBool()
+                .filter(QueryBuilders.rangeQuery("intensity").gt(50))
+                .must(QueryBuilders.multiMatchQuery("燃脂燃脂瑜伽", "describe", "title").analyzer("ik_smart"))
+
+//                .should(QueryBuilders.functionScoreQuery(QueryBuilders.matchQuery("hit", "title")).scoreMode(FunctionScoreQuery.ScoreMode.MULTIPLY));
+        ;
+        System.out.println(esSearchHelper.getSource().toString());
+
+        SearchResponse resp = client.search(esSearchHelper.getRequest(), RequestOptions.DEFAULT);
+        BaseResp parseRes = EsResponseParseHelper.getList(resp);
+        log.info(SerializerUtils.parseObjToJsonPretty(parseRes));
     }
 
 

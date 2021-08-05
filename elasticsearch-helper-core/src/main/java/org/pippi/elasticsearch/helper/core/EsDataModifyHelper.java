@@ -2,9 +2,13 @@ package org.pippi.elasticsearch.helper.core;
 
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.persistent.StartPersistentTaskAction;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +57,16 @@ public class EsDataModifyHelper {
         request.id(id).source(SerializerUtils.parseObjToJsonSkipNull(obj), XContentType.JSON);
         try {
             client.index(request, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void update(String indexName, String id, Object obj) {
+        UpdateRequest request = new UpdateRequest();
+        request.index(indexName).id(id).doc(SerializerUtils.parseObjToJsonSkipNull(obj), XContentType.JSON);
+        try {
+            client.update(request, RequestOptions.DEFAULT);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.xcontent.XContentParser;
 import org.elasticsearch.common.xcontent.XContentParserUtils;
+import org.elasticsearch.index.analysis.AnalyzerProvider;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.script.Script;
@@ -50,14 +51,10 @@ public abstract class EsSearchHelper {
     private List<QueryBuilder> currentQueryBuilderList;
 
     /**
-     *  inner query builder
+     *
+     * @param index
+     * @return
      */
-    private BoolQueryBuilder innerQueryBuilder;
-    /**
-     *  middle search-builder-list rel
-     */
-    private List<QueryBuilder> tempQueryBuilderList;
-
     public EsSearchHelper init(String index) {
         this.indexName = index;
         request = new SearchRequest(index);
@@ -82,12 +79,33 @@ public abstract class EsSearchHelper {
     }
 
     /**
+     *  默认最小匹配1个条件，与mysql的or保持一致
      *  切换逻辑连接符
      * @return
      */
     public EsSearchHelper should(){
+        return this.should(1);
+    }
+
+    /**
+     *  should 最小匹配的条件个数
+     * @param minMatch
+     * @return
+     */
+    public EsSearchHelper should(Integer minMatch){
         this.currentQueryBuilderList = bool.should();
-        bool.minimumShouldMatch(1);
+        bool.minimumShouldMatch(minMatch);
+        return this;
+    }
+
+    /**
+     *  匹配一定比例的条件
+     * @param percentStr
+     * @return
+     */
+    public EsSearchHelper should(String percentStr){
+        this.currentQueryBuilderList = bool.should();
+        bool.minimumShouldMatch(percentStr);
         return this;
     }
 
@@ -106,6 +124,9 @@ public abstract class EsSearchHelper {
         return this;
     }
 
+
+
+
     /**
      *  关键字匹配查询，默认得分为1
      * @param field
@@ -113,7 +134,8 @@ public abstract class EsSearchHelper {
      * @return
      */
     public EsSearchHelper term(String field, Object value) {
-        this.currentQueryBuilderList.add(QueryBuilders.termQuery(field, value));
+        TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery(field, value);
+        this.currentQueryBuilderList.add(termQueryBuilder);
         return this;
     }
 
@@ -168,18 +190,30 @@ public abstract class EsSearchHelper {
                                 Integer maxExpansions,
                                 String analyzer) {
         MatchQueryBuilder matchQuery = QueryBuilders.matchQuery(field, value);
-        if (null != boost) matchQuery.boost(boost);
-        if (null != maxExpansions) matchQuery.maxExpansions(maxExpansions);
-        if (StringUtils.isNoneBlank(analyzer)) matchQuery.analyzer(analyzer);
+        if(null != boost){
+            matchQuery.boost(boost);
+        }
+        if(null != maxExpansions){
+            matchQuery.maxExpansions(maxExpansions);
+        }
+        if(StringUtils.isNoneBlank(analyzer)){
+            matchQuery.analyzer(analyzer);
+        }
         this.currentQueryBuilderList.add(matchQuery);
         return this;
     }
 
 
-
+    /**
+     *
+     * @param field
+     * @param value
+     * @return
+     */
     public EsSearchHelper fuzzyQuery (String field, Object value) {
         return this.fuzzyQuery(field, value ,1f, Fuzziness.AUTO, 50, 0);
     }
+
 
     /**
      *  模糊搜索
@@ -196,10 +230,10 @@ public abstract class EsSearchHelper {
                                      Integer maxExpansions,
                                      Integer maxPrefix) {
         FuzzyQueryBuilder fuzzyQueryBUilder = QueryBuilders.fuzzyQuery(field, value);
-        if (fuzzUnit != null) fuzzyQueryBUilder.fuzziness(fuzzUnit);
-        if (maxExpansions != null) fuzzyQueryBUilder.maxExpansions(maxExpansions);
-        if (boost != null) fuzzyQueryBUilder.boost(boost);
-        if (maxPrefix != null) fuzzyQueryBUilder.prefixLength(maxExpansions);
+        if (fuzzUnit != null){ fuzzyQueryBUilder.fuzziness(fuzzUnit); }
+        if (maxExpansions != null){ fuzzyQueryBUilder.maxExpansions(maxExpansions);}
+        if (boost != null){ fuzzyQueryBUilder.boost(boost);}
+        if (maxPrefix != null){ fuzzyQueryBUilder.prefixLength(maxPrefix);}
         this.currentQueryBuilderList.add(fuzzyQueryBUilder);
         return this;
     }
@@ -296,8 +330,6 @@ public abstract class EsSearchHelper {
     }
 
 
-
-
     public EsSearchHelper agg(AggregationBuilder aggBuilder) {
         source.aggregation(aggBuilder);
         return this;
@@ -311,7 +343,6 @@ public abstract class EsSearchHelper {
     public static EsSearchHelperBuilder builder(){
         return new EsSearchHelperBuilder();
     }
-
 
     public static class EsSearchHelperBuilder {
 
@@ -348,6 +379,10 @@ public abstract class EsSearchHelper {
         }
 
     }
+
+
+
+
 
 
 

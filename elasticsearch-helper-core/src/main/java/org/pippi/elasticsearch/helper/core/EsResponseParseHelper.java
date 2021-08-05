@@ -1,6 +1,8 @@
 package org.pippi.elasticsearch.helper.core;
 
+import org.apache.lucene.search.TotalHits;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
@@ -26,34 +28,49 @@ public class EsResponseParseHelper {
     }
 
 
+    public static String getListStringify (SearchResponse resp) {
+        BaseResp back = getList(resp);
+        return SerializerUtils.parseObjToJson(back);
+    }
+
     /**
      *  simple read es response
      * @param resp
      * @return
      */
-    public static List<Map<String, Object>> getList(SearchResponse resp){
+    public static BaseResp getList(SearchResponse resp){
+        BaseResp res = new BaseResp();
         SearchHits hits = resp.getHits();
+        res.setMaxScore(hits.getMaxScore());
+        res.setTotalHit(hits.getTotalHits().value);
+
         SearchHit[] hitArr = hits.getHits();
-        List<Map<String, Object>> res = new ArrayList<>(hitArr.length);
+        List<Map<String, Object>> records = new ArrayList<>(hitArr.length);
         for (SearchHit hit : hitArr) {
-            res.add(hit.getSourceAsMap());
+            Map<String, Object> sourceMap = hit.getSourceAsMap();
+            sourceMap.put("docId", hit.getId());
+            sourceMap.put("hitScore", hit.getScore());
+            records.add(sourceMap);
         }
+
+        res.setRecords(records);
         return res;
     }
 
-    public static String getListStringify (SearchResponse resp) {
-        List<Map<String, Object>> resMap = getList(resp);
-        return SerializerUtils.parseObjToJson(resMap);
-    }
-
-    public static <T> List<T> getList(SearchResponse resp, Class<T> type) {
+    public static <T extends BaseResp.BaseHit>BaseResp<T> getList(SearchResponse resp, Class<T> type) {
+        BaseResp res = new BaseResp();
         SearchHits hits = resp.getHits();
+        res.setMaxScore(hits.getMaxScore());
+        res.setTotalHit(hits.getTotalHits().value);
+
         SearchHit[] hitArr = hits.getHits();
-        List<T> res = new ArrayList<>(hitArr.length);
+        List<T> records = new ArrayList<>(hitArr.length);
         for (SearchHit hit : hitArr) {
             String recordJson = hit.getSourceAsString();
             T record = SerializerUtils.jsonToBean(recordJson, type);
-            res.add(record);
+            record.setDocId(hit.getId());
+            record.setHitScore(hit.getScore());
+            records.add(record);
         }
         return res;
     }
