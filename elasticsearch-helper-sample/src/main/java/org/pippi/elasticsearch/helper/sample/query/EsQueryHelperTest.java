@@ -7,6 +7,8 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
+import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.junit.Test;
 import org.pippi.elasticsearch.helper.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.DefaultEsSearchHelper;
@@ -51,11 +53,11 @@ public class EsQueryHelperTest {
                 .build();
 
         esSearchHelper.getBool()
-                .filter(QueryBuilders.rangeQuery("intensity").gt(50))
                 .must(QueryBuilders.multiMatchQuery("燃脂燃脂瑜伽", "describe", "title").analyzer("ik_smart"))
+                .must(QueryBuilders.functionScoreQuery(ScoreFunctionBuilders.linearDecayFunction("intensity", "10","10")));
 
-//                .should(QueryBuilders.functionScoreQuery(QueryBuilders.matchQuery("hit", "title")).scoreMode(FunctionScoreQuery.ScoreMode.MULTIPLY));
-        ;
+
+
         System.out.println(esSearchHelper.getSource().toString());
 
         SearchResponse resp = client.search(esSearchHelper.getRequest(), RequestOptions.DEFAULT);

@@ -14,17 +14,33 @@ public abstract class AbstractQueryHandle {
 
     AbstractQueryHandle(){}
 
+    /**
+     *  执行方法
+     * @param queryDes
+     * @param searchHelper
+     * @return
+     */
     public EsSearchHelper execute(QueryDes queryDes, EsSearchHelper searchHelper){
         QueryDes handledDes = explainExtendDefine(queryDes);
-        return handle(queryDes, searchHelper);
+        return handle(handledDes, searchHelper);
     }
 
+    /**
+     *
+     * @param queryDes
+     * @return
+     */
     public QueryDes explainExtendDefine (QueryDes queryDes) {
         // do nothing, if need translate QueryDes.extendDefine, you need implement this method
         return queryDes;
     }
 
-
+    /**
+     *
+     * @param queryDes
+     * @param searchHelper
+     * @return
+     */
     public abstract EsSearchHelper handle (QueryDes queryDes, EsSearchHelper searchHelper);
 
 
