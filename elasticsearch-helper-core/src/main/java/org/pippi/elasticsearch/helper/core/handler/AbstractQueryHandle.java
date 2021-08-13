@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
-import org.pippi.elasticsearch.helper.beans.QueryDes;
+import org.pippi.elasticsearch.helper.beans.mapping.QueryDes;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 
 /**

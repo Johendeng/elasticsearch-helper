@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.beans;
+package org.pippi.elasticsearch.helper.beans.mapping;
 
 
 /**

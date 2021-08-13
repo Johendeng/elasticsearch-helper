@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.helper.sample.ddl;
 
 import org.pippi.elasticsearch.helper.beans.annotation.meta.EsField;
 import org.pippi.elasticsearch.helper.beans.annotation.meta.EsIndex;
-import org.pippi.elasticsearch.helper.beans.enums.Meta;
+import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
 
 import java.util.Date;
 
@@ -16,16 +16,16 @@ import java.util.Date;
 @EsIndex(name = "new_records")
 public class NewsRecord {
 
-    @EsField(type = Meta.KEYWORD)
+    @EsField(type = EsMeta.KEYWORD)
     private String title;
 
-    @EsField(type = Meta.TEXT)
+    @EsField(type = EsMeta.TEXT)
     private String content;
 
-    @EsField(type = Meta.DATE, format = "yyyy-MM-dd HH:mm:ss")
+    @EsField(type = EsMeta.DATE, format = "yyyy-MM-dd HH:mm:ss")
     private Date reportDate;
 
-    @EsField(type = Meta.INTEGER)
+    @EsField(type = EsMeta.INTEGER)
     private Integer visitCount;
 
     public NewsRecord() {

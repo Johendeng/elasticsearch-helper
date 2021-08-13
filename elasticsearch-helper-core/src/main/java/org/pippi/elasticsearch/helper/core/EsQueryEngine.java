@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.beans.QueryDes;
+import org.pippi.elasticsearch.helper.beans.mapping.QueryDes;
 import org.pippi.elasticsearch.helper.beans.annotation.view.EsQueryHandle;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandle;

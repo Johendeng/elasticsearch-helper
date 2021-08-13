@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.beans.annotation.view;
 
-import org.pippi.elasticsearch.helper.beans.enums.Meta;
+import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
 import org.pippi.elasticsearch.helper.beans.enums.QueryType;
 
 import java.lang.annotation.*;
@@ -28,7 +28,7 @@ public @interface EsQueryFiled {
      */
     String query() default "";
 
-    Meta metaType();
+    EsMeta metaType();
 
     String metaTypeStringify() default "";
 

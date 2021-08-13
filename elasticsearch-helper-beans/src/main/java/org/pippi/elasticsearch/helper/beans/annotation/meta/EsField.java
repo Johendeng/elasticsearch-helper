@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.beans.annotation.meta;
 
-import org.pippi.elasticsearch.helper.beans.enums.Meta;
+import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
 
 import java.lang.annotation.*;
 
@@ -23,7 +23,7 @@ public @interface EsField {
      *  data-type
      * @return
      */
-    Meta   type() default Meta.UN_COVER;
+    EsMeta type() default EsMeta.UN_COVER;
 
     String typeStringify() default "";
 

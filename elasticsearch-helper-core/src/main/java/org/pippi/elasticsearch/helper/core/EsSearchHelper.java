@@ -2,14 +2,10 @@ package org.pippi.elasticsearch.helper.core;
 
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.common.unit.Fuzziness;
-import org.elasticsearch.common.xcontent.XContentParser;
-import org.elasticsearch.common.xcontent.XContentParserUtils;
-import org.elasticsearch.index.analysis.AnalyzerProvider;
 import org.elasticsearch.index.query.*;
-import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
-import org.pippi.elasticsearch.helper.beans.enums.Meta;
+import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
@@ -269,13 +265,13 @@ public abstract class EsSearchHelper {
 
     public EsSearchHelper like(String field, String value, String type) {
 
-        if (type.equals(Meta.KEYWORD.getType())){
+        if (type.equals(EsMeta.KEYWORD.getType())){
 
 
 
         }
 
-        if (type.equals(Meta.TEXT.getType())) {
+        if (type.equals(EsMeta.TEXT.getType())) {
 
 
 

@@ -3,10 +3,9 @@ package org.pippi.elasticsearch.helper.core.utils;
 import com.google.common.collect.Maps;
 import org.pippi.elasticsearch.helper.beans.annotation.meta.EsField;
 import org.pippi.elasticsearch.helper.beans.annotation.meta.EsIndex;
-import org.pippi.elasticsearch.helper.beans.enums.Meta;
+import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperIOException;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -154,7 +153,7 @@ public class IndexMappingUtils {
                 if (StringUtils.isBlank(esFieldName)) esFieldName = field.getName();
                 Map<String, Object> esFieldDes = Maps.newHashMap();
                 String typeName ;
-                Meta type = esField.type();
+                EsMeta type = esField.type();
                 if (type == null) typeName = esField.typeStringify();
                 else typeName = type.getType();
                 if (StringUtils.isBlank(typeName)) throw new EsHelperConfigException("@EsField type is undefine");

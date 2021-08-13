@@ -8,11 +8,11 @@ package org.pippi.elasticsearch.helper.beans.enums;
  * Author:JohenTeng
  * Description:
  */
-public enum  Meta {
+public enum EsMeta {
 
     KEYWORD("keyword", 1),
-    TEXT("text", 2),
 
+    BOOLEAN("boolean",2),
     INTEGER("integer",3),
     LONG("long",4),
     SHORT("short",5),
@@ -23,11 +23,12 @@ public enum  Meta {
     HALF_FLOAT("half_float",9),
     SCALED_FLOAT("scaled_float",10),
 
+    TEXT("text", 11),
+
     DATE("date",100),
     RANGE("range",101),
     BINARY("binary",102),
 
-    ARRAY("array",201),
     OBJECT("object",202),
     NESTED("nested",203),
     GEO_POINT("geo_point",204),
@@ -43,7 +44,7 @@ public enum  Meta {
     private String type;
     private int code;
 
-    Meta(String type, int code) {
+    EsMeta(String type, int code) {
         this.type = type;
         this.code = code;
     }

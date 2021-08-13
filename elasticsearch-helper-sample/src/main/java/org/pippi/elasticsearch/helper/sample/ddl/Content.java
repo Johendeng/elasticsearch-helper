@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.helper.sample.ddl;
 
 import org.pippi.elasticsearch.helper.beans.annotation.meta.EsField;
 import org.pippi.elasticsearch.helper.beans.annotation.meta.EsIndex;
-import org.pippi.elasticsearch.helper.beans.enums.Meta;
+import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
 
 import java.util.List;
 
@@ -15,16 +15,16 @@ import java.util.List;
 @EsIndex(name = "content")
 public class Content {
 
-    @EsField(name = "bodyPart", type = Meta.ARRAY)
+    @EsField(name = "bodyPart", type = EsMeta.KEYWORD)
     private List<String> bodyPart;
 
-    @EsField(type = Meta.INTEGER)
+    @EsField(type = EsMeta.INTEGER)
     private int intensity;
 
-    @EsField(type = Meta.TEXT, analyzer = "ik_smart")
+    @EsField(type = EsMeta.TEXT, analyzer = "ik_smart")
     private String describe;
 
-    @EsField(type = Meta.TEXT, analyzer = "ik_smart")
+    @EsField(type = EsMeta.TEXT, analyzer = "ik_smart")
     private String title;
 
     public Content() {
