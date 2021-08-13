@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.view.hook;
+package org.pippi.elasticsearch.helper.core.hook;
 
 import org.elasticsearch.action.search.SearchResponse;
 

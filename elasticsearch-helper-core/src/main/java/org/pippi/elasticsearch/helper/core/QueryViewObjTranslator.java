@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.view;
+package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;

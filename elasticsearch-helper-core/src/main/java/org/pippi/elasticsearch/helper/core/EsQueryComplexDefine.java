@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.view;
+package org.pippi.elasticsearch.helper.core;
 
 /**
  * project: elasticsearch-helper

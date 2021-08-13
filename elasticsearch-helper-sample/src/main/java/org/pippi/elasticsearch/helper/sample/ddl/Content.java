@@ -15,7 +15,7 @@ import java.util.List;
 @EsIndex(name = "content")
 public class Content {
 
-    @EsField(name = "body_part", type = Meta.ARRAY)
+    @EsField(name = "bodyPart", type = Meta.ARRAY)
     private List<String> bodyPart;
 
     @EsField(type = Meta.INTEGER)

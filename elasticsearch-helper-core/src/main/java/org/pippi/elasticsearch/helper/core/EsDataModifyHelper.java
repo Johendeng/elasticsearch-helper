@@ -1,19 +1,26 @@
 package org.pippi.elasticsearch.helper.core;
 
+import org.elasticsearch.action.DocWriteRequest;
+import org.elasticsearch.action.admin.indices.upgrade.post.UpgradeRequest;
 import org.elasticsearch.action.bulk.BulkProcessor;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.update.UpdateHelper;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateRequestBuilder;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.Requests;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.persistent.StartPersistentTaskAction;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.core.utils.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  * project: elasticsearch-helper
@@ -64,9 +71,24 @@ public class EsDataModifyHelper {
 
     public void update(String indexName, String id, Object obj) {
         UpdateRequest request = new UpdateRequest();
-        request.index(indexName).id(id).doc(SerializerUtils.parseObjToJsonSkipNull(obj), XContentType.JSON);
+        String s = SerializerUtils.parseObjToJsonSkipNull(obj);
+        request.index(indexName).id(id).doc(s, XContentType.JSON);
         try {
             client.update(request, RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void batchUpdate(String indexName, List records){
+        BulkRequest bulkRequest = new BulkRequest();
+        for (Object record: records){
+            UpdateRequest tempReq = new UpdateRequest();
+            tempReq.doc(SerializerUtils.parseObjToJsonSkipNull(record), XContentType.JSON);
+            bulkRequest.add(tempReq);
+        }
+        try {
+            client.bulk(bulkRequest, RequestOptions.DEFAULT);
         } catch (IOException e) {
             e.printStackTrace();
         }

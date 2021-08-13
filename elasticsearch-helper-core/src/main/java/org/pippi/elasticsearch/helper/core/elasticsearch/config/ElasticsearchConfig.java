@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.helper.core.elasticsearch.config;
 
 import org.elasticsearch.client.RestHighLevelClient;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.context.annotation.Bean;
+//import org.springframework.beans.factory.annotation.Configurable;
+//import org.springframework.context.annotation.Bean;
 
 /**
  * 描述
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
  * @author dengtianjia@fiture.com
  * @date 2021/8/10
  */
-@Configurable
+//@Configurable
 public class ElasticsearchConfig {
 
 
@@ -19,7 +19,7 @@ public class ElasticsearchConfig {
 	 *  elasticsearch 客户端实例
 	 * @return
 	 */
-	@Bean
+//	@Bean
 	public RestHighLevelClient restHighLevelClient(){
 
 

@@ -5,10 +5,12 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Test;
 import org.pippi.elasticsearch.helper.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.DefaultEsSearchHelper;
@@ -33,7 +35,7 @@ public class EsQueryHelperTest {
     private static RestHighLevelClient client;
 
     private static final String _LOCAL_DEV = "localhost";
-    private static final String _TEST_INDEX = "content";
+    private static final String _TEST_INDEX = "content_s";
 
     static {
         client = new RestHighLevelClient(RestClient.builder(new HttpHost(_LOCAL_DEV, 9200)));
@@ -53,10 +55,16 @@ public class EsQueryHelperTest {
                 .build();
 
         esSearchHelper.getBool()
-                .must(QueryBuilders.multiMatchQuery("燃脂燃脂瑜伽", "describe", "title").analyzer("ik_smart"))
-                .must(QueryBuilders.functionScoreQuery(ScoreFunctionBuilders.linearDecayFunction("intensity", "10","10")));
+                .filter(QueryBuilders.termQuery("bodyPart.keyword", "小腿"))
+                .should(QueryBuilders.multiMatchQuery("快乐的跳跃", "describe", "title"))
+//      .should(QueryBuilders.rangeQuery("intensity").gt(0))
+//      .should(QueryBuilders.rangeQuery("intensity").lt(100))
+        .should(
+                QueryBuilders.functionScoreQuery(ScoreFunctionBuilders.gaussDecayFunction("intensity", 5, 1, 5))
+        )
+        ;
 
-
+//        esSearchHelper.getSource().sort("intensity", SortOrder.DESC);
 
         System.out.println(esSearchHelper.getSource().toString());
 

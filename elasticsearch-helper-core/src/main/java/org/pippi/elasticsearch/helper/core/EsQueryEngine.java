@@ -1,13 +1,11 @@
-package org.pippi.elasticsearch.helper.view;
+package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.beans.QueryDes;
 import org.pippi.elasticsearch.helper.beans.annotation.view.EsQueryHandle;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
-import org.pippi.elasticsearch.helper.core.EsSearchHelper;
-import org.pippi.elasticsearch.helper.core.EsSearchHelperFactory;
-import org.pippi.elasticsearch.helper.view.handler.AbstractQueryHandle;
+import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandle;
 import org.reflections.Reflections;
 
 import java.util.*;
@@ -29,7 +27,7 @@ public class EsQueryEngine {
      */
     private static final String _EXT_DEFINE_QUERY_HANDLE_KEY = "es.helper.ext.handles";
 
-    private static final String _BASE_SCAN_PACKAGE = "org.pippi.elasticsearch.helper.view.handler";
+    private static final String _BASE_SCAN_PACKAGE = "org.pippi.elasticsearch.helper.core.handler";
 
     private static final Map<String, Class<? extends AbstractQueryHandle>> QUERY_HANDLE_CLAZZ_MAP = new HashMap<>();
 
