@@ -1,10 +1,5 @@
 //package org.pippi.elasticsearch.helper.core.elasticsearch.engine;
 //
-//import com.fiture.content.search.common.elasticsearch.engine.beans.EsQueryFieldBean;
-//import com.fiture.content.search.common.elasticsearch.engine.beans.EsQueryIndexBean;
-//import com.fiture.content.search.common.elasticsearch.engine.handler.AbstractQueryHandle;
-//import com.fiture.content.search.common.elasticsearch.engine.holder.AbstractEsRequestHolder;
-//import com.fiture.content.search.common.elasticsearch.engine.parser.EsQueryBeanParser;
 //import com.google.common.collect.Maps;
 //
 //import java.util.List;

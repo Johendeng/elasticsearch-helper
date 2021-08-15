@@ -2,7 +2,7 @@
 //
 //import org.pippi.elasticsearch.helper.core.elasticsearch.engine.EsQueryEngine;
 //import org.pippi.elasticsearch.helper.core.elasticsearch.engine.beans.EsQueryFieldBean;
-//import org.pippi.elasticsearch.helper.core.elasticsearch.engine.holder.AbstractEsRequestHolder;
+//import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 ////import org.springframework.beans.factory.InitializingBean;
 //
 ///**

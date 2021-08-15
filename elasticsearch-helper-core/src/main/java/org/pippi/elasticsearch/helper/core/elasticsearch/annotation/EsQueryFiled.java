@@ -1,8 +1,6 @@
 //package org.pippi.elasticsearch.helper.core.elasticsearch.annotation;
 //
-//import com.fiture.content.search.common.elasticsearch.enums.LogicConnector;
-//import com.fiture.content.search.common.elasticsearch.enums.Meta;
-//import com.fiture.content.search.common.elasticsearch.enums.QueryType;
+
 //
 //import java.lang.annotation.*;
 //

@@ -1,8 +1,5 @@
 //package org.pippi.elasticsearch.helper.core.elasticsearch.engine.handler;
 //
-//import com.fiture.content.search.common.elasticsearch.engine.beans.EsQueryFieldBean;
-//import com.fiture.content.search.common.elasticsearch.engine.holder.AbstractEsRequestHolder;
-//import com.fiture.content.search.common.elasticsearch.enums.QueryType;
 //import lombok.extern.slf4j.Slf4j;
 //import org.elasticsearch.index.query.QueryBuilders;
 //import org.springframework.stereotype.Component;

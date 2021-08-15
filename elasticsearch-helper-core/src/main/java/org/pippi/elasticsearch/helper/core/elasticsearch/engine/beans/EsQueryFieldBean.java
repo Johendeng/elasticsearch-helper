@@ -1,7 +1,5 @@
 //package org.pippi.elasticsearch.helper.core.elasticsearch.engine.beans;
 //
-//import com.fiture.content.search.common.elasticsearch.enums.LogicConnector;
-//
 //import java.io.Serializable;
 //
 ///**

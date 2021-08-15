@@ -14,8 +14,15 @@ public abstract class AbstractQueryHandle {
 
     AbstractQueryHandle(){}
 
+
     /**
-     *  执行方法
+     *  define the Query-Type
+     * @return
+     */
+    public abstract String getQueryType();
+
+    /**
+     *  execute param-explain
      * @param queryDes
      * @param searchHelper
      * @return
@@ -28,22 +35,21 @@ public abstract class AbstractQueryHandle {
     /**
      *
      * @param queryDes
-     * @return
-     */
-    public QueryDes explainExtendDefine (QueryDes queryDes) {
-        // do nothing, if need translate QueryDes.extendDefine, you need implement this method
-        return queryDes;
-    }
-
-    /**
-     *
-     * @param queryDes
      * @param searchHelper
      * @return
      */
     public abstract EsSearchHelper handle (QueryDes queryDes, EsSearchHelper searchHelper);
 
 
+    /**
+     *  explain the extend-params
+     * @param queryDes
+     * @return
+     */
+    public QueryDes explainExtendDefine (QueryDes queryDes) {
+        // do nothing, if need translate QueryDes.extendDefine, you need implement this method
+        return queryDes;
+    }
 
 
 }

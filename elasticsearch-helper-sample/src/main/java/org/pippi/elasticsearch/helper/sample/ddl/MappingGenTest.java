@@ -2,30 +2,18 @@ package org.pippi.elasticsearch.helper.sample.ddl;
 
 import com.google.common.collect.Lists;
 import org.apache.http.HttpHost;
-import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContent;
-import org.elasticsearch.common.xcontent.XContentBuilder;
 import org.elasticsearch.common.xcontent.XContentFactory;
-import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.reindex.UpdateByQueryRequest;
-import org.elasticsearch.index.reindex.UpdateByQueryRequestBuilder;
 import org.junit.Test;
-import org.pippi.elasticsearch.helper.core.EsDataModifyHelper;
+import org.pippi.elasticsearch.helper.core.helper.EsDataModifyHelper;
 import org.pippi.elasticsearch.helper.core.utils.IndexMappingUtils;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.sql.*;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 /**
  * project: elasticsearch-helper

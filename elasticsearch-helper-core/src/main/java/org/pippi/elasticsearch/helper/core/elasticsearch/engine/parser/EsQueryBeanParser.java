@@ -1,12 +1,5 @@
 //package org.pippi.elasticsearch.helper.core.elasticsearch.engine.parser;
 //
-//import com.fiture.content.search.common.elasticsearch.annotation.EsQueryFiled;
-//import com.fiture.content.search.common.elasticsearch.annotation.EsQueryIndex;
-//import com.fiture.content.search.common.elasticsearch.engine.beans.ComplexDefine;
-//import com.fiture.content.search.common.elasticsearch.engine.beans.EsQueryFieldBean;
-//import com.fiture.content.search.common.elasticsearch.engine.beans.EsQueryIndexBean;
-//import com.fiture.content.search.common.elasticsearch.enums.EsQueryModel;
-//import com.fiture.content.search.common.elasticsearch.enums.LogicConnector;
 //import com.google.common.collect.Lists;
 //import org.apache.commons.lang3.StringUtils;
 //

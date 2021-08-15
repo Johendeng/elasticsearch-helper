@@ -1,6 +1,5 @@
 //package org.pippi.elasticsearch.helper.core.elasticsearch.annotation;
 //
-//import com.fiture.content.search.common.elasticsearch.enums.EsQueryModel;
 //
 //import java.lang.annotation.*;
 //
