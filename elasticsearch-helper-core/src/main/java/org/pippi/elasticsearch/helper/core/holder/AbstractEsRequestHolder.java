@@ -56,9 +56,6 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 	 */
 	protected abstract void defineDefaultLogicConnector();
 
-
-
-
 	public AbstractEsRequestHolder chain(QueryBuilder queryCell){
 		this.currentQueryBuilderList.add(queryCell);
 		return this;
@@ -117,12 +114,17 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		public String indexName;
 		public QueryModel esQueryModel;
 
-		public EsRequestHolderBuilder define(String indexName, QueryModel model) {
+		public EsRequestHolderBuilder indexName(String indexName, QueryModel model) {
 			this.indexName = indexName;
+			return this;
+		}
+
+		public EsRequestHolderBuilder queryModel(QueryModel model){
 			this.esQueryModel = model;
 			return this;
 		}
 
+		//TODO: 此处应该修改实现，避免新增 holder 还要修改此处代码
 		public <R extends AbstractEsRequestHolder>R build(){
 			if (StringUtils.isBlank(indexName) || esQueryModel == null){
 				throw new RuntimeException("index and query model cant be null");

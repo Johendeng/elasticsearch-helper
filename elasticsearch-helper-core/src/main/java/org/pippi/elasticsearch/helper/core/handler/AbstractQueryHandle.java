@@ -1,5 +1,8 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
+import org.apache.commons.lang3.StringUtils;
+import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryHandle;
+import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 
@@ -16,10 +19,20 @@ public abstract class AbstractQueryHandle {
 
 
     /**
-     *  define the Query-Type
+     *  define the Query-Type use for finding a Query-handle to handle a field-query-bean
      * @return
      */
-    public abstract String getQueryType();
+    protected final String getQueryType() {
+        EsQueryHandle annotation = this.getClass().getAnnotation(EsQueryHandle.class);
+        String name = annotation.name();
+        if (StringUtils.isBlank(name)) {
+            name = annotation.handleEnum().getQuery();
+        }
+        if (StringUtils.isBlank(name)) {
+            throw new EsHelperConfigException("ES-Query-handle's name is undefine");
+        }
+        return name;
+    }
 
     /**
      *  execute param-explain

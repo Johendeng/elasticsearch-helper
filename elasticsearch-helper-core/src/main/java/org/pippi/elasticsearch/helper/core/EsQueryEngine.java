@@ -24,7 +24,7 @@ public class EsQueryEngine {
     /**
      * user define config, { System.getProperty(_EXT_DEFINE_QUERY_HANDLE_KEY) }
      * format : es.helper.ext.handles=com.***.loc1,com.***.loc2
-     * just the package loc, but it's also support define a declare path
+     * just the package loc, but it's also support define a explicit path like：com.XXX.xxx.TestQueryHandle
      */
     private static final String _EXT_DEFINE_QUERY_HANDLE_KEY = "es.helper.ext.handles";
 
