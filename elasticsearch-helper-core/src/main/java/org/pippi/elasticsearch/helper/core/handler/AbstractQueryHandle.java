@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
-import org.pippi.elasticsearch.helper.beans.mapping.QueryDes;
+import org.pippi.elasticsearch.helper.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 
 /**
@@ -27,8 +27,8 @@ public abstract class AbstractQueryHandle {
      * @param searchHelper
      * @return
      */
-    public EsSearchHelper execute(QueryDes queryDes, EsSearchHelper searchHelper){
-        QueryDes handledDes = explainExtendDefine(queryDes);
+    public EsSearchHelper execute(EsQueryFieldBean queryDes, EsSearchHelper searchHelper){
+        EsQueryFieldBean handledDes = explainExtendDefine(queryDes);
         return handle(handledDes, searchHelper);
     }
 
@@ -38,7 +38,7 @@ public abstract class AbstractQueryHandle {
      * @param searchHelper
      * @return
      */
-    public abstract EsSearchHelper handle (QueryDes queryDes, EsSearchHelper searchHelper);
+    public abstract EsSearchHelper handle (EsQueryFieldBean queryDes, EsSearchHelper searchHelper);
 
 
     /**
@@ -46,7 +46,7 @@ public abstract class AbstractQueryHandle {
      * @param queryDes
      * @return
      */
-    public QueryDes explainExtendDefine (QueryDes queryDes) {
+    public EsQueryFieldBean explainExtendDefine (EsQueryFieldBean queryDes) {
         // do nothing, if need translate QueryDes.extendDefine, you need implement this method
         return queryDes;
     }

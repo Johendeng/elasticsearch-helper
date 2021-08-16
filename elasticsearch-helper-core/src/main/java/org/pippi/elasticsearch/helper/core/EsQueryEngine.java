@@ -2,9 +2,10 @@ package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.beans.mapping.QueryDes;
-import org.pippi.elasticsearch.helper.beans.annotation.view.EsQueryHandle;
+import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.beans.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.beans.mapping.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandle;
 import org.reflections.Reflections;
 
@@ -56,10 +57,11 @@ public class EsQueryEngine {
     public static EsSearchHelper execute(Object queryViewObj, boolean visitParent) {
 
         QueryViewObjTranslator translator = QueryViewObjTranslator.instance();
-        List<QueryDes> queryDesList = translator.read(queryViewObj, visitParent);
-        String index = translator.getIndex(queryViewObj);
-        EsSearchHelper helper = EsSearchHelperFactory.newHelper(index);
-        for (QueryDes queryDes : queryDesList) {
+        EsQueryIndexBean indexQueryBean = translator.getIndex(queryViewObj);
+        List<EsQueryFieldBean> queryDesList = translator.read(queryViewObj, visitParent);
+        // TODO: 2021/08/16 change the EsSearchHelper to *holder
+        EsSearchHelper helper = EsSearchHelperFactory.newHelper(indexQueryBean.getIndexName());
+        for (EsQueryFieldBean queryDes : queryDesList) {
             String queryKey = queryDes.getQueryType();
             AbstractQueryHandle queryHandle = QUERY_HANDLE_MAP.get(queryKey);
             queryHandle.execute(queryDes, helper);

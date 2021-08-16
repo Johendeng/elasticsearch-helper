@@ -2,10 +2,13 @@ package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.beans.mapping.QueryDes;
-import org.pippi.elasticsearch.helper.beans.annotation.view.EsQueryFiled;
-import org.pippi.elasticsearch.helper.beans.annotation.view.EsQueryIndex;
+import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryFiled;
+import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryIndex;
+import org.pippi.elasticsearch.helper.beans.enums.EsConnector;
+import org.pippi.elasticsearch.helper.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.beans.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.beans.mapping.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.utils.TypeUtils;
 
 import java.lang.reflect.Field;
@@ -40,16 +43,19 @@ public class QueryViewObjTranslator {
         return INSTANCE;
     }
 
-    public String getIndex(Object view) {
+    public EsQueryIndexBean getIndex(Object view) {
 
         Class<?> clazz = view.getClass();
         EsQueryIndex ann = clazz.getAnnotation(EsQueryIndex.class);
 
-        if (ann == null) throw new EsHelperQueryException("undefine query-index @EsQueryIndex");
-
+        if (ann == null) {
+            throw new EsHelperQueryException("undefine query-index @EsQueryIndex");
+        }
 
         String index = ann.index();
-        return index;
+        QueryModel model = ann.model();
+
+        return new EsQueryIndexBean(index, model);
 
     }
 
@@ -62,14 +68,14 @@ public class QueryViewObjTranslator {
      * @param visitParent
      * @return
      */
-    public List<QueryDes> read(Object view, boolean visitParent) {
+    public List<EsQueryFieldBean> read(Object view, boolean visitParent) {
         Class<?> clazz = view.getClass();
 
         List<Field> fieldList = this.getFields(clazz, visitParent);
-        List<QueryDes> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
+        List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
             if (field.isAnnotationPresent(EsQueryFiled.class)) {
-                QueryDes queryDes = this.mapFieldAnn(field, view);
+                EsQueryFieldBean queryDes = this.mapFieldAnn(field, view);
                 queryDesList.add(queryDes);
             }
         }
@@ -93,10 +99,10 @@ public class QueryViewObjTranslator {
         return callBackList;
     }
 
-    private QueryDes mapFieldAnn(Field field, Object viewObj) {
+    private EsQueryFieldBean mapFieldAnn(Field field, Object viewObj) {
 
         try {
-            QueryDes queryDes = new QueryDes<>();
+            EsQueryFieldBean queryDes = new EsQueryFieldBean<>();
 
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
@@ -111,35 +117,55 @@ public class QueryViewObjTranslator {
                 ParameterizedType genericType = (ParameterizedType) field.getGenericType();
                 Type[] actualTypeArguments = genericType.getActualTypeArguments();
 
-                if (actualTypeArguments.length > 1 || actualTypeArguments.length < 1 )
+                if (actualTypeArguments.length <= 1 && actualTypeArguments.length >= 1) {
+                    Type paramerizeType = actualTypeArguments[0];
+
+                    if (!TypeUtils.isBaseType(paramerizeType.getClass())) {
+                        throw new EsHelperQueryException("Just support Collection<@JavaBaseType>");
+                    }
+
+                    queryDes.setValues(((Collection) val).toArray());
+                } else {
                     throw new EsHelperQueryException("Just support single parameterized-type");
-
-                Type paramerizeType = actualTypeArguments[0];
-
-                if (!TypeUtils.isBaseType(paramerizeType.getClass()))
-                    throw new EsHelperQueryException("Just support Collection<@JavaBaseType>");
-
-                queryDes.setValues( ((Collection)val).toArray() );
+                }
 
             }
 
-            if (val instanceof EsQueryComplexDefine) queryDes.setValue(val);
+            if (val instanceof EsQueryComplexDefine) {
+                queryDes.setValue(val);
+            }
 
             EsQueryFiled ann = field.getAnnotation(EsQueryFiled.class);
 
+            EsConnector esConnector = ann.logicConnector();
+            if (esConnector == null) {
+                throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");
+            }
+
             String column = ann.name();
-            if (StringUtils.isBlank(column)) column = field.getName();
+            if (StringUtils.isBlank(column)) {
+                column = field.getName();
+            }
 
-            String query = ann.query();
-            if (StringUtils.isBlank(query)) query =  ann.queryEnum().getQuery();
-            if (StringUtils.isBlank(query)) throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
+            String query = ann.queryKey();
+            if (StringUtils.isBlank(query)) {
+                query =  ann.queryType().getQuery();
+            }
+            if (StringUtils.isBlank(query)) {
+                throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
+            }
 
-            String meta = ann.metaTypeStringify();
-            if (StringUtils.isBlank(meta)) meta =  ann.metaType().getType();
-            if (StringUtils.isBlank(meta)) throw new EsHelperQueryException("META-TYPE missing, it's necessary");
+            String meta = ann.metaStringify();
+            if (StringUtils.isBlank(meta)) {
+                meta =  ann.meta().getType();
+            }
+            if (StringUtils.isBlank(meta)) {
+                throw new EsHelperQueryException("META-TYPE missing, it's necessary");
+            }
 
             String script = ann.script();
             String extendDefine = ann.extendDefine();
+
 
             queryDes.setColumn(column);
             queryDes.setQueryType(query);

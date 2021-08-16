@@ -56,12 +56,12 @@ public class EsQueryHelperTest {
 
         esSearchHelper.getBool()
                 .filter(QueryBuilders.termQuery("bodyPart.keyword", "小腿"))
-                .should(QueryBuilders.multiMatchQuery("快乐的跳跃", "describe", "title"))
+                .should(QueryBuilders.multiMatchQuery("", "describe", "title"))
 //      .should(QueryBuilders.rangeQuery("intensity").gt(0))
 //      .should(QueryBuilders.rangeQuery("intensity").lt(100))
-        .should(
-                QueryBuilders.functionScoreQuery(ScoreFunctionBuilders.gaussDecayFunction("intensity", 5, 1, 5))
-        )
+//        .should(
+//                QueryBuilders.functionScoreQuery(ScoreFunctionBuilders.gaussDecayFunction("intensity", 5, 1, 5))
+//        )
         ;
 
 //        esSearchHelper.getSource().sort("intensity", SortOrder.DESC);

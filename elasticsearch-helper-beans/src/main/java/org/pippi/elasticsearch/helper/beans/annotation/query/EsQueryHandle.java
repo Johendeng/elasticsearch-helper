@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.beans.annotation.view;
+package org.pippi.elasticsearch.helper.beans.annotation.query;
 
 import org.pippi.elasticsearch.helper.beans.enums.QueryType;
 
