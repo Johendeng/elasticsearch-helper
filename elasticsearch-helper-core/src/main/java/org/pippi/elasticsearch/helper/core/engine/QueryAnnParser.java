@@ -45,6 +45,11 @@ public class QueryAnnParser {
         return INSTANCE;
     }
 
+    /**
+     *  parse Index-information
+     * @param view
+     * @return
+     */
     public EsQueryIndexBean getIndex(Object view) {
 
         Class<?> clazz = view.getClass();
