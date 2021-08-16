@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core;
+package org.pippi.elasticsearch.helper.beans.mapping;
 
 /**
  * project: elasticsearch-helper
@@ -7,7 +7,7 @@ package org.pippi.elasticsearch.helper.core;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public abstract class EsQueryComplexDefine {
+public interface EsComplexParam<S, T> {
 
 
 }

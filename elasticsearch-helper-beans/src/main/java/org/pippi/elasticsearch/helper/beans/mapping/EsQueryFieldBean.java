@@ -1,12 +1,13 @@
 package org.pippi.elasticsearch.helper.beans.mapping;
 
+import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryField;
 import org.pippi.elasticsearch.helper.beans.enums.EsConnector;
 
 import java.io.Serializable;
 
 /**
  * mapping the annotation information of @EsQueryFiled
- * @see org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryFiled
+ * @see EsQueryField
  * @author JohenTeng
  * @date 2021/8/9
  */

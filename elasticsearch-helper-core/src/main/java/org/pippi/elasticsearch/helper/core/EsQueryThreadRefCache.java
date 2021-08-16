@@ -9,6 +9,7 @@ import org.pippi.elasticsearch.helper.core.EsSearchHelper;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
+@Deprecated
 public class EsQueryThreadRefCache {
 
     public static final ThreadLocal<EsSearchHelper> THREAD_LOCAL_QUERY_HANDLE_CACHE = new ThreadLocal<>();

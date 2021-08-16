@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core;
+package org.pippi.elasticsearch.helper.core.helper;
 
 import org.apache.lucene.search.TotalHits;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;

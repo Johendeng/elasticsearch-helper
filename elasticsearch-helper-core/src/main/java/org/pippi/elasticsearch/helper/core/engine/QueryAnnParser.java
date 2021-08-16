@@ -1,12 +1,13 @@
-package org.pippi.elasticsearch.helper.core;
+package org.pippi.elasticsearch.helper.core.engine;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryFiled;
+import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryField;
 import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.beans.mapping.EsComplexParam;
 import org.pippi.elasticsearch.helper.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.beans.mapping.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.utils.TypeUtils;
@@ -26,17 +27,18 @@ import java.util.Map;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public class QueryViewObjTranslator {
+public class QueryAnnParser {
 
-    private volatile static QueryViewObjTranslator INSTANCE ;
+    private volatile static QueryAnnParser INSTANCE ;
 
-    private QueryViewObjTranslator(){}
+    private QueryAnnParser(){}
 
-    public static QueryViewObjTranslator instance(){
+    public static QueryAnnParser instance(){
         if (INSTANCE == null) {
             synchronized (INSTANCE) {
                 if (INSTANCE == null) {
-                    return new QueryViewObjTranslator();
+                    INSTANCE = new QueryAnnParser();
+                    return INSTANCE;
                 }
             }
         }
@@ -74,7 +76,7 @@ public class QueryViewObjTranslator {
         List<Field> fieldList = this.getFields(clazz, visitParent);
         List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
-            if (field.isAnnotationPresent(EsQueryFiled.class)) {
+            if (field.isAnnotationPresent(EsQueryField.class)) {
                 EsQueryFieldBean queryDes = this.mapFieldAnn(field, view);
                 queryDesList.add(queryDes);
             }
@@ -131,52 +133,53 @@ public class QueryViewObjTranslator {
 
             }
 
-            if (val instanceof EsQueryComplexDefine) {
+            if (val instanceof EsComplexParam) {
                 queryDes.setValue(val);
             }
 
-            EsQueryFiled ann = field.getAnnotation(EsQueryFiled.class);
-
-            EsConnector esConnector = ann.logicConnector();
-            if (esConnector == null) {
-                throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");
-            }
-
-            String column = ann.name();
-            if (StringUtils.isBlank(column)) {
-                column = field.getName();
-            }
-
-            String query = ann.queryKey();
-            if (StringUtils.isBlank(query)) {
-                query =  ann.queryType().getQuery();
-            }
-            if (StringUtils.isBlank(query)) {
-                throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
-            }
-
-            String meta = ann.metaStringify();
-            if (StringUtils.isBlank(meta)) {
-                meta =  ann.meta().getType();
-            }
-            if (StringUtils.isBlank(meta)) {
-                throw new EsHelperQueryException("META-TYPE missing, it's necessary");
-            }
-
-            String script = ann.script();
-            String extendDefine = ann.extendDefine();
-
-
-            queryDes.setColumn(column);
-            queryDes.setQueryType(query);
-            queryDes.setMeta(meta);
-            queryDes.setScript(script);
-            queryDes.setExtendDefine(extendDefine);
-
+            this.parseAnn(queryDes, field);
             return queryDes;
         } catch (IllegalAccessException e) {
             throw new EsHelperQueryException("unable reach target field ", e);
         }
+    }
+
+    private void parseAnn(EsQueryFieldBean queryDes, Field field) {
+        EsQueryField ann = field.getAnnotation(EsQueryField.class);
+        EsConnector esConnector = ann.logicConnector();
+        if (esConnector == null) {
+            throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");
+        }
+
+        String column = ann.name();
+        if (StringUtils.isBlank(column)) {
+            column = field.getName();
+        }
+
+        String query = ann.queryKey();
+        if (StringUtils.isBlank(query)) {
+            query =  ann.queryType().getQuery();
+        }
+        if (StringUtils.isBlank(query)) {
+            throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
+        }
+
+        String meta = ann.metaStringify();
+        if (StringUtils.isBlank(meta)) {
+            meta =  ann.meta().getType();
+        }
+        if (StringUtils.isBlank(meta)) {
+            throw new EsHelperQueryException("META-TYPE missing, it's necessary");
+        }
+
+        String script = ann.script();
+        String extendDefine = ann.extendDefine();
+
+        queryDes.setColumn(column);
+        queryDes.setQueryType(query);
+        queryDes.setMeta(meta);
+        queryDes.setScript(script);
+        queryDes.setExtendDefine(extendDefine);
     }
 
 

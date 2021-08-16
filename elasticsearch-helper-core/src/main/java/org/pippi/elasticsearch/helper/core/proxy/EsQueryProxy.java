@@ -1,10 +1,13 @@
-package org.pippi.elasticsearch.helper.core;
+package org.pippi.elasticsearch.helper.core.proxy;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.pippi.elasticsearch.helper.beans.annotation.hook.RequestHook;
 import org.pippi.elasticsearch.helper.beans.annotation.hook.ResponseHook;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.core.EsSearchHelper;
+import org.pippi.elasticsearch.helper.core.HighLevelRestClientHolder;
+import org.pippi.elasticsearch.helper.core.engine.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.hook.EsHookRegedit;
 
 import java.lang.reflect.InvocationHandler;

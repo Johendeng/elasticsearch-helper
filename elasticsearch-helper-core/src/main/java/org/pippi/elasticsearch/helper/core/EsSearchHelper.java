@@ -29,6 +29,7 @@ import java.util.Map;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
+@Deprecated
 public abstract class EsSearchHelper {
 
     private static final Logger log = LoggerFactory.getLogger(EsSearchHelper.class);

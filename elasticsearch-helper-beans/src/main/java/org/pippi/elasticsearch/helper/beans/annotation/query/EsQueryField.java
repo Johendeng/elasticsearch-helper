@@ -18,7 +18,7 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EsQueryFiled {
+public @interface EsQueryField {
 
     /**
      *  es索引字段，如果不定义则默认使用当前 Field 名

@@ -7,6 +7,7 @@ package org.pippi.elasticsearch.helper.core;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
+@Deprecated
 public class DefaultEsSearchHelper extends EsSearchHelper {
 
 }

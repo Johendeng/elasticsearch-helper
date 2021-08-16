@@ -6,6 +6,7 @@ package org.pippi.elasticsearch.helper.core;
  * @author JohenTeng
  * @date 2021/7/21
  */
+@Deprecated
 public class EsSearchHelperFactory {
 
     /**

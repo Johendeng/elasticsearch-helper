@@ -8,6 +8,7 @@ import org.elasticsearch.client.RestHighLevelClient;
  * @author dengtianjia@fiture.com
  * @date 2021/7/21
  */
+@Deprecated
 public class HighLevelRestClientHolder {
 
 
