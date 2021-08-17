@@ -10,7 +10,7 @@ import java.util.Map;
  * @author JohenTeng
  * @date 2021/7/21
  */
-public class BaseResp<T extends BaseResp.BaseHit> implements Serializable {
+public class BaseResp<T> implements Serializable {
 
     private Long totalHit;
 

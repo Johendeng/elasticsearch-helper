@@ -29,7 +29,7 @@ public class EsResponseParseHelper {
 
 
     public static String getListStringify (SearchResponse resp) {
-        BaseResp back = getList(resp);
+        BaseResp back = getListMap(resp);
         return SerializerUtils.parseObjToJson(back);
     }
 
@@ -38,7 +38,7 @@ public class EsResponseParseHelper {
      * @param resp
      * @return
      */
-    public static BaseResp getList(SearchResponse resp){
+    public static BaseResp<Map<String, Object>> getListMap(SearchResponse resp){
         BaseResp res = new BaseResp();
         SearchHits hits = resp.getHits();
         res.setMaxScore(hits.getMaxScore());
