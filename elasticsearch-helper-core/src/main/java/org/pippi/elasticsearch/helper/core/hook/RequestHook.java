@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.core.hook;
 
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
+import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
  * 描述
@@ -11,6 +12,6 @@ import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 @FunctionalInterface
 public interface RequestHook {
 
-    <R>EsSearchHelper apply(EsSearchHelper helper, R param);
+    <R> AbstractEsRequestHolder apply(AbstractEsRequestHolder helper, R param);
 
 }

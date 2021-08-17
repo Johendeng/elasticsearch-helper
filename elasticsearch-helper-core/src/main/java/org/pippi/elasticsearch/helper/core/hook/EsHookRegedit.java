@@ -4,6 +4,7 @@ import java.util.Map;
 import org.elasticsearch.action.search.SearchResponse;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 import com.google.common.collect.Maps;
+import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
  * Project Name:elasticsearch-helper
@@ -27,7 +28,7 @@ public class EsHookRegedit {
         RESP_FUNC_REGEDIT.put(key, responseHook);
     }
 
-    public static <P>EsSearchHelper useReqHook(String key, EsSearchHelper helper, P param) {
+    public static <P> AbstractEsRequestHolder useReqHook(String key, AbstractEsRequestHolder helper, P param) {
         return REP_FUNC_REGEDIT.get(key).apply(helper, param);
     }
 

@@ -2,12 +2,12 @@ package org.pippi.elasticsearch.helper.core.proxy;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.pippi.elasticsearch.helper.beans.annotation.hook.RequestHook;
 import org.pippi.elasticsearch.helper.beans.annotation.hook.ResponseHook;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.EsSearchHelper;
-import org.pippi.elasticsearch.helper.core.HighLevelRestClientHolder;
 import org.pippi.elasticsearch.helper.core.engine.EsQueryEngine;
+import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.hook.EsHookRegedit;
 
 import java.lang.reflect.InvocationHandler;
@@ -26,16 +26,12 @@ public class EsQueryProxy<T> implements InvocationHandler {
 
     private boolean visitQueryBeanParent = true;
 
-    public EsQueryProxy() {
-    }
+    private RestHighLevelClient client;
 
-    public EsQueryProxy(Class<T> targetInterface) {
-        this.targetInterface = targetInterface;
-    }
-
-    public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent) {
+    public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client) {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
+        this.client = client;
     }
 
     @Override
@@ -45,12 +41,12 @@ public class EsQueryProxy<T> implements InvocationHandler {
         }
         if (args != null && args.length == 1) {
             Object param = args[0];
-            EsSearchHelper esHelper = EsQueryEngine.execute(param, visitQueryBeanParent);
+            AbstractEsRequestHolder esHelper = EsQueryEngine.execute(param, visitQueryBeanParent);
             if (method.isAnnotationPresent(RequestHook.class)) {
                 RequestHook reqHookAnn = method.getAnnotation(RequestHook.class);
                 esHelper = EsHookRegedit.useReqHook(reqHookAnn.value(), esHelper, param);
             }
-            SearchResponse resp = HighLevelRestClientHolder.client().search(esHelper.getRequest(), RequestOptions.DEFAULT);
+            SearchResponse resp = client.search(esHelper.getRequest(), RequestOptions.DEFAULT);
             if (method.isAnnotationPresent(ResponseHook.class)) {
                 ResponseHook respHookAnn = method.getAnnotation(ResponseHook.class);
                 return EsHookRegedit.useRespHook(respHookAnn.value(), resp);

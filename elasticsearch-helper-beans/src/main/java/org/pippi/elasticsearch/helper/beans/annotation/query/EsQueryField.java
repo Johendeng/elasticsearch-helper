@@ -1,7 +1,5 @@
 package org.pippi.elasticsearch.helper.beans.annotation.query;
 
-
-
 import org.pippi.elasticsearch.helper.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
 import org.pippi.elasticsearch.helper.beans.enums.QueryType;

@@ -114,7 +114,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		public String indexName;
 		public QueryModel esQueryModel;
 
-		public EsRequestHolderBuilder indexName(String indexName, QueryModel model) {
+		public EsRequestHolderBuilder indexName(String indexName) {
 			this.indexName = indexName;
 			return this;
 		}

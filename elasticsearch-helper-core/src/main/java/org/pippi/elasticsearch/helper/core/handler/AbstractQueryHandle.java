@@ -5,6 +5,7 @@ import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
+import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
  * project: elasticsearch-helper
@@ -40,7 +41,7 @@ public abstract class AbstractQueryHandle {
      * @param searchHelper
      * @return
      */
-    public EsSearchHelper execute(EsQueryFieldBean queryDes, EsSearchHelper searchHelper){
+    public AbstractEsRequestHolder execute(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper){
         EsQueryFieldBean handledDes = explainExtendDefine(queryDes);
         return handle(handledDes, searchHelper);
     }
@@ -51,7 +52,7 @@ public abstract class AbstractQueryHandle {
      * @param searchHelper
      * @return
      */
-    public abstract EsSearchHelper handle (EsQueryFieldBean queryDes, EsSearchHelper searchHelper);
+    public abstract AbstractEsRequestHolder handle (EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper);
 
 
     /**
