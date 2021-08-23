@@ -19,6 +19,6 @@ public @interface EsQueryHandle {
 
     String name() default "";
 
-    QueryType handleEnum() default QueryType.UN_DEFINE;
+    QueryType handleEnum() default QueryType.MATCH;
 
 }

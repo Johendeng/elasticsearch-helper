@@ -14,9 +14,9 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public abstract class AbstractQueryHandle {
+public abstract class AbstractQueryHandler {
 
-    AbstractQueryHandle(){}
+    AbstractQueryHandler(){}
 
 
     /**
@@ -43,6 +43,7 @@ public abstract class AbstractQueryHandle {
      */
     public AbstractEsRequestHolder execute(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper){
         EsQueryFieldBean handledDes = explainExtendDefine(queryDes);
+        searchHelper.changeLogicConnector(queryDes.getLogicConnector());
         return handle(handledDes, searchHelper);
     }
 

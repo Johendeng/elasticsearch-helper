@@ -65,7 +65,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
                         BaseResp<? extends BaseResp.BaseHit> baseResp = EsResponseParseHelper.getList(resp, ((Class<? extends BaseResp.BaseHit>) paramClazz));
                         return baseResp;
                     } else {
-                        throw new EsHelperQueryException("BaseResp's ParameterizedType have to be <? extends BaseResp.BaseHit>");
+                        throw new EsHelperQueryException("BaseResponse's ParameterizedType has to be <? extends BaseResp.BaseHit>");
                     }
                 }
                 if (returnType.equals(StandAggResp.class)) {

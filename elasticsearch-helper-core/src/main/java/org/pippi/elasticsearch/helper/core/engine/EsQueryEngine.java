@@ -6,9 +6,7 @@ import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.beans.mapping.EsQueryIndexBean;
-import org.pippi.elasticsearch.helper.core.EsSearchHelper;
-import org.pippi.elasticsearch.helper.core.EsSearchHelperFactory;
-import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandle;
+import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandler;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import org.reflections.Reflections;
 
@@ -33,12 +31,12 @@ public class EsQueryEngine {
 
     private static final String _BASE_SCAN_PACKAGE = "org.pippi.elasticsearch.helper.core.handler";
 
-    private static final Map<String, Class<? extends AbstractQueryHandle>> QUERY_HANDLE_CLAZZ_MAP = new HashMap<>();
+    private static final Map<String, Class<? extends AbstractQueryHandler>> QUERY_HANDLE_CLAZZ_MAP = new HashMap<>();
 
-    private static final Map<String, AbstractQueryHandle> QUERY_HANDLE_MAP = new HashMap<>();
+    private static final Map<String, AbstractQueryHandler> QUERY_HANDLE_MAP = new HashMap<>();
 
 
-    public static void addHandleClazz(String handleName, Class<? extends AbstractQueryHandle> clazz) {
+    public static void addHandleClazz(String handleName, Class<? extends AbstractQueryHandler> clazz) {
         QUERY_HANDLE_CLAZZ_MAP.put(handleName, clazz);
     }
 
@@ -47,7 +45,7 @@ public class EsQueryEngine {
      * @param handleName
      * @param handler
      */
-    public static void addHandle(String handleName, AbstractQueryHandle handler) {
+    public static void addHandle(String handleName, AbstractQueryHandler handler) {
         QUERY_HANDLE_MAP.put(handleName, handler);
     }
 
@@ -62,13 +60,13 @@ public class EsQueryEngine {
         QueryAnnParser translator = QueryAnnParser.instance();
         EsQueryIndexBean indexQueryBean = translator.getIndex(queryViewObj);
         List<EsQueryFieldBean> queryDesList = translator.read(queryViewObj, visitParent);
-        // TODO: 2021/08/16 change the EsSearchHelper to *holder
-        AbstractEsRequestHolder helper = AbstractEsRequestHolder
-                .builder().indexName(indexQueryBean.getIndexName())
-                .queryModel(indexQueryBean.getEsQueryModel()).build();
+        AbstractEsRequestHolder helper = AbstractEsRequestHolder.builder()
+                                                                .indexName(indexQueryBean.getIndexName())
+                                                                .queryModel(indexQueryBean.getEsQueryModel())
+                                                                .build();
         for (EsQueryFieldBean queryDes : queryDesList) {
             String queryKey = queryDes.getQueryType();
-            AbstractQueryHandle queryHandle = QUERY_HANDLE_MAP.get(queryKey);
+            AbstractQueryHandler queryHandle = QUERY_HANDLE_MAP.get(queryKey);
             queryHandle.execute(queryDes, helper);
         }
         return helper;
@@ -89,9 +87,9 @@ public class EsQueryEngine {
         packageList.addAll(extPackageList);
 
         Reflections reflections = new Reflections(packageList);
-        Set<Class<? extends AbstractQueryHandle>> subQueryClazz = reflections.getSubTypesOf(AbstractQueryHandle.class);
+        Set<Class<? extends AbstractQueryHandler>> subQueryClazz = reflections.getSubTypesOf(AbstractQueryHandler.class);
 
-        for (Class<? extends AbstractQueryHandle> targetClazz : subQueryClazz) {
+        for (Class<? extends AbstractQueryHandler> targetClazz : subQueryClazz) {
 
             boolean flag = targetClazz.isAnnotationPresent(EsQueryHandle.class);
             if (!flag) {

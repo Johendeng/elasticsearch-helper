@@ -1,11 +1,28 @@
 package org.pippi.elasticsearch.helper.sample.query;
 
 import org.apache.http.HttpHost;
+import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Rescorer;
+import org.apache.lucene.search.TopDocs;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentParser;
+import org.elasticsearch.common.xcontent.XContentParserUtils;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
+import org.elasticsearch.script.Script;
+import org.elasticsearch.search.rescore.QueryRescorer;
+import org.elasticsearch.search.rescore.QueryRescorerBuilder;
+import org.elasticsearch.search.rescore.RescorePhase;
+import org.elasticsearch.search.rescore.RescorerBuilder;
+import org.elasticsearch.search.sort.ScriptSortBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Test;
 import org.pippi.elasticsearch.helper.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.DefaultEsSearchHelper;
@@ -48,23 +65,36 @@ public class EsQueryHelperTest {
                 .index(_TEST_INDEX)
                 .clazz(DefaultEsSearchHelper.class)
                 .build();
-
+//        "title"
         esSearchHelper.getBool()
-                .filter(QueryBuilders.termQuery("bodyPart.keyword", "小腿"))
-                .should(QueryBuilders.multiMatchQuery("", "describe", "title"))
-//      .should(QueryBuilders.rangeQuery("intensity").gt(0))
-//      .should(QueryBuilders.rangeQuery("intensity").lt(100))
-//        .should(
-//                QueryBuilders.functionScoreQuery(ScoreFunctionBuilders.gaussDecayFunction("intensity", 5, 1, 5))
-//        )
+                .should(QueryBuilders.termQuery("intensity", 6))
+                .should(
+                        QueryBuilders.multiMatchQuery("燃脂", "title")
+                )
+//                .must(
+//                        QueryBuilders.functionScoreQuery(
+//                                ScoreFunctionBuilders.scriptFunction(
+//                                        "(_doc['intensity'].value + _doc['title'].value) * 2"
+//                                )
+//                        )
+//                )
         ;
 
-//        esSearchHelper.getSource().sort("intensity", SortOrder.DESC);
+        esSearchHelper.getSource()
+                .trackScores(true)
+                .sort(SortBuilders.scriptSort(
+                new Script("return Math.round(_score)"),
+                ScriptSortBuilder.ScriptSortType.NUMBER
+        ).order(SortOrder.DESC));
+
+//        esSearchHelper.getSource().trackScores(true)
+////                      .sort("_score", SortOrder.DESC)
+//                      .sort("intensity", SortOrder.DESC);
 
         System.out.println(esSearchHelper.getSource().toString());
 
         SearchResponse resp = client.search(esSearchHelper.getRequest(), RequestOptions.DEFAULT);
-        BaseResp parseRes = EsResponseParseHelper.getList(resp);
+        BaseResp parseRes = EsResponseParseHelper.getListMap(resp);
         log.info(SerializerUtils.parseObjToJsonPretty(parseRes));
     }
 

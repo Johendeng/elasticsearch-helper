@@ -72,6 +72,6 @@ public @interface EsQueryField {
      *  自定义匹配分值
      * @return
      */
-    float boost() default 1;
+    float boost() default 1.0f;
 
 }
