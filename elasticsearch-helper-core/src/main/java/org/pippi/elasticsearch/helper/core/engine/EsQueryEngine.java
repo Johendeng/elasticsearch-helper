@@ -73,7 +73,7 @@ public class EsQueryEngine {
     }
 
 
-    public void QueryHandleScan() {
+    public void queryHandleScan() {
 
         LinkedList<String> packageList = Lists.newLinkedList();
         packageList.add(_BASE_SCAN_PACKAGE);
@@ -82,8 +82,8 @@ public class EsQueryEngine {
         String[] packages = extHandlePath.split(",");
 
         List<String> extPackageList = Arrays.stream(Optional.ofNullable(packages).orElse(new String[0]))
-                .filter(StringUtils::isNoneBlank)
-                .collect(Collectors.toList());
+                                            .filter(StringUtils::isNoneBlank)
+                                            .collect(Collectors.toList());
         packageList.addAll(extPackageList);
 
         Reflections reflections = new Reflections(packageList);
