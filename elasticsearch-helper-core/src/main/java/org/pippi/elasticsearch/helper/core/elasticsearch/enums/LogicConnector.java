@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.helper.core.elasticsearch.enums;
 /**
  * 描述 ES 涉及的查询逻辑连接符
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/8/9
  */
 public enum LogicConnector {

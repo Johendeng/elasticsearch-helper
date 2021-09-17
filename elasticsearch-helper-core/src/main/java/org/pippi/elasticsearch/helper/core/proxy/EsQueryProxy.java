@@ -3,15 +3,15 @@ package org.pippi.elasticsearch.helper.core.proxy;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.pippi.elasticsearch.helper.beans.annotation.hook.RequestHook;
-import org.pippi.elasticsearch.helper.beans.annotation.hook.ResponseHook;
-import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.beans.resp.BaseResp;
-import org.pippi.elasticsearch.helper.beans.resp.StandAggResp;
-import org.pippi.elasticsearch.helper.core.engine.EsQueryEngine;
+import org.pippi.elasticsearch.helper.core.beans.annotation.hook.RequestHook;
+import org.pippi.elasticsearch.helper.core.beans.annotation.hook.ResponseHook;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
+import org.pippi.elasticsearch.helper.core.beans.resp.StandAggResp;
+import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
-import org.pippi.elasticsearch.helper.core.hook.EsHookRegedit;
+import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -49,12 +49,12 @@ public class EsQueryProxy<T> implements InvocationHandler {
             AbstractEsRequestHolder esHolder = EsQueryEngine.execute(param, visitQueryBeanParent);
             if (method.isAnnotationPresent(RequestHook.class)) {
                 RequestHook reqHookAnn = method.getAnnotation(RequestHook.class);
-                esHolder = EsHookRegedit.useReqHook(reqHookAnn.value(), esHolder, param);
+                esHolder = EsHookReedits.useReqHook(reqHookAnn.value(), esHolder, param);
             }
             SearchResponse resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
             if (method.isAnnotationPresent(ResponseHook.class)) {
                 ResponseHook respHookAnn = method.getAnnotation(ResponseHook.class);
-                return EsHookRegedit.useRespHook(respHookAnn.value(), resp);
+                return EsHookReedits.useRespHook(respHookAnn.value(), resp);
             } else {
                 Class<?> returnType = method.getReturnType();
                 if (returnType.equals(BaseResp.class)) {

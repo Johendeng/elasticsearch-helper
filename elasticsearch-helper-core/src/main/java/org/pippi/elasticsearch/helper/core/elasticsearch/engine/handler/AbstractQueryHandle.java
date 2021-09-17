@@ -7,7 +7,7 @@
 //
 ///**
 // * date:    2021/5/3
-// * @author: dengtianjia@fiture.com
+// * @author: JohenTeng
 // **/
 //public abstract class AbstractQueryHandle {//implements InitializingBean {
 //

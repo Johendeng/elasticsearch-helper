@@ -5,8 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.pippi.elasticsearch.helper.beans.enums.EsConnector;
-import org.pippi.elasticsearch.helper.beans.enums.QueryModel;
+import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
+import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 
 import java.util.List;
 

@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
-import org.pippi.elasticsearch.helper.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.beans.enums.QueryType;
-import org.pippi.elasticsearch.helper.beans.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
+import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
+import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**

@@ -31,11 +31,6 @@
         <dependencies>
             <dependency>
                 <groupId>org.pippi</groupId>
-                <artifactId>elasticsearch-helper-beans</artifactId>
-                <version>${root.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>org.pippi</groupId>
                 <artifactId>elasticsearch-helper-core</artifactId>
                 <version>${root.version}</version>
             </dependency>

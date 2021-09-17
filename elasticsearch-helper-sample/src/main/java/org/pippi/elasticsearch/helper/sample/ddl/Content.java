@@ -1,15 +1,15 @@
 package org.pippi.elasticsearch.helper.sample.ddl;
 
-import org.pippi.elasticsearch.helper.beans.annotation.meta.EsField;
-import org.pippi.elasticsearch.helper.beans.annotation.meta.EsIndex;
-import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
+import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsField;
+import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsIndex;
+import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
 
 import java.util.List;
 
 /**
  * 描述
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/8/4
  */
 @EsIndex(name = "content")

@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.helper.sample.ddl;
 
-import org.pippi.elasticsearch.helper.beans.annotation.meta.EsField;
-import org.pippi.elasticsearch.helper.beans.annotation.meta.EsIndex;
-import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
+import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsField;
+import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsIndex;
+import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
 
 import java.util.Date;
 

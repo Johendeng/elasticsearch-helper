@@ -1,11 +1,11 @@
 package org.pippi.elasticsearch.helper.core.utils;
 
 import com.google.common.collect.Maps;
-import org.pippi.elasticsearch.helper.beans.annotation.meta.EsField;
-import org.pippi.elasticsearch.helper.beans.annotation.meta.EsIndex;
-import org.pippi.elasticsearch.helper.beans.enums.EsMeta;
-import org.pippi.elasticsearch.helper.beans.exception.EsHelperConfigException;
-import org.pippi.elasticsearch.helper.beans.exception.EsHelperIOException;
+import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsField;
+import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsIndex;
+import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperIOException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -84,10 +84,6 @@ public class IndexMappingUtils {
             throw new EsHelperIOException("export ES-MAPPING-JSON-FILE ERROR", e);
         }
     }
-
-
-
-
 
     protected static class IndexDefinition {
 

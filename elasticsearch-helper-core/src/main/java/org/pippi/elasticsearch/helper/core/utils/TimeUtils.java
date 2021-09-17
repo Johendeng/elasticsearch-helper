@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * 描述
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/7/23
  */
 public class TimeUtils {

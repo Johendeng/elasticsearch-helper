@@ -13,7 +13,4 @@ public class TypeUtils {
         return type.isPrimitive() || type.equals(String.class);
     }
 
-
-
-
 }

@@ -10,7 +10,6 @@
     <version>1.0.0</version>
 
     <modules>
-        <module>elasticsearch-helper-beans</module>
         <module>elasticsearch-helper-core</module>
         <module>elasticsearch-helper-parent</module>
         <module>elasticsearch-helper-sample</module>

@@ -1,30 +1,17 @@
 package org.pippi.elasticsearch.helper.sample.query;
 
 import org.apache.http.HttpHost;
-import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Rescorer;
-import org.apache.lucene.search.TopDocs;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentParser;
-import org.elasticsearch.common.xcontent.XContentParserUtils;
-import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.script.Script;
-import org.elasticsearch.search.rescore.QueryRescorer;
-import org.elasticsearch.search.rescore.QueryRescorerBuilder;
-import org.elasticsearch.search.rescore.RescorePhase;
-import org.elasticsearch.search.rescore.RescorerBuilder;
 import org.elasticsearch.search.sort.ScriptSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Test;
-import org.pippi.elasticsearch.helper.beans.resp.BaseResp;
+import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.DefaultEsSearchHelper;
 import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
 import org.pippi.elasticsearch.helper.core.EsSearchHelper;
@@ -37,7 +24,7 @@ import java.io.IOException;
 /**
  * 描述
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/8/3
  */
 public class EsQueryHelperTest {

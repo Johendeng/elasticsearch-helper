@@ -1,8 +1,7 @@
 package org.pippi.elasticsearch.helper.core.helper;
 
-import org.apache.lucene.search.TotalHits;
-import org.pippi.elasticsearch.helper.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.beans.resp.BaseResp;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
