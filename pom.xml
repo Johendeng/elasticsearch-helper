@@ -7,15 +7,32 @@
     <groupId>org.pippi</groupId>
     <artifactId>elasticsearch-helper</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.0.SNAPSHOT</version>
 
     <modules>
         <module>elasticsearch-helper-core</module>
         <module>elasticsearch-helper-parent</module>
-        <module>elasticsearch-helper-sample</module>
         <module>elasticsearch-helper-boot-starter</module>
     </modules>
 
+    <properties>
+        <root.version>1.0.0.SNAPSHOT</root.version>
+        <java.version>1.8</java.version>
+        <plugin.maven.compiler.version>3.8.1</plugin.maven.compiler.version>
+    </properties>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${plugin.maven.compiler.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

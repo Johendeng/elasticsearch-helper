@@ -5,7 +5,7 @@
     <parent>
         <artifactId>elasticsearch-helper</artifactId>
         <groupId>org.pippi</groupId>
-        <version>1.0.0</version>
+        <version>1.0.0.SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <root.version>1.0.0</root.version>
+        <root.version>1.0.0.SNAPSHOT</root.version>
         <java.version>1.8</java.version>
         <plugin.maven.compiler.version>3.8.1</plugin.maven.compiler.version>
         <elasticsearch.client.version>7.8.1</elasticsearch.client.version>
@@ -32,6 +32,11 @@
             <dependency>
                 <groupId>org.pippi</groupId>
                 <artifactId>elasticsearch-helper-core</artifactId>
+                <version>${root.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.pippi</groupId>
+                <artifactId>elasticsearch-helper-boot-starter</artifactId>
                 <version>${root.version}</version>
             </dependency>
             <dependency>
@@ -74,7 +79,6 @@
                 <version>${apache.collections4.version}</version>
             </dependency>
 
-
             <!-- utils-->
             <dependency>
                 <groupId>org.reflections</groupId>
@@ -93,16 +97,10 @@
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
-
-
-
-
         </dependencies>
     </dependencyManagement>
 
-
     <build>
-
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -113,11 +111,7 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-
-
         </plugins>
-
     </build>
-
-
+    
 </project>
