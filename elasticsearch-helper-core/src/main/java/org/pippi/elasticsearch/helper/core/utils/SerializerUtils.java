@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper.core.utils
  * date:    2021/3/16
- * developer: JohenTeng
+ * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
 public class SerializerUtils {

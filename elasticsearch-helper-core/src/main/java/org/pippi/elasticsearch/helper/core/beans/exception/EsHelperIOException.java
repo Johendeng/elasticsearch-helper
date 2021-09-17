@@ -4,7 +4,7 @@ package org.pippi.elasticsearch.helper.core.beans.exception;
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper.beans.exception
  * date:    2021/7/17
- * developer: JohenTeng
+ * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
 public class EsHelperIOException extends RuntimeException {

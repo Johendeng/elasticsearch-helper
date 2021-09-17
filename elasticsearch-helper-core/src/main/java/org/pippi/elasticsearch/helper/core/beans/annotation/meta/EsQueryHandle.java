@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.beans.annotation.query;
+package org.pippi.elasticsearch.helper.core.beans.annotation.meta;
 
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 
@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  * project: elasticsearch-helper
  * package: org.pippi.elasticsearch.helper.beans.annotation
  * date:    2021/7/18
- * developer: JohenTeng
+ * @author: JohenTeng
  * email: 1078481395@qq.com
  **/
 @Inherited

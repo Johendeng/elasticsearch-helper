@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper.annotation
  * date:    2021/5/12
- * developer: JohenTeng
+ * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
 @Inherited

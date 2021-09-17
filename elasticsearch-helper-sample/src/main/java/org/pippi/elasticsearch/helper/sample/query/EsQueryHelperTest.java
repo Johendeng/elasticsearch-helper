@@ -5,7 +5,9 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.search.sort.ScriptSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -52,32 +54,13 @@ public class EsQueryHelperTest {
                 .index(_TEST_INDEX)
                 .clazz(DefaultEsSearchHelper.class)
                 .build();
-//        "title"
         esSearchHelper.getBool()
-                .should(QueryBuilders.termQuery("intensity", 6))
                 .should(
-                        QueryBuilders.multiMatchQuery("燃脂", "title")
+                        QueryBuilders.multiMatchQuery("hi", "title", "describe")
+                        .zeroTermsQuery(MatchQuery.ZeroTermsQuery.NONE)
+                        .fuzziness(Fuzziness.ONE)
                 )
-//                .must(
-//                        QueryBuilders.functionScoreQuery(
-//                                ScoreFunctionBuilders.scriptFunction(
-//                                        "(_doc['intensity'].value + _doc['title'].value) * 2"
-//                                )
-//                        )
-//                )
         ;
-
-        esSearchHelper.getSource()
-                .trackScores(true)
-                .sort(SortBuilders.scriptSort(
-                new Script("return Math.round(_score)"),
-                ScriptSortBuilder.ScriptSortType.NUMBER
-        ).order(SortOrder.DESC));
-
-//        esSearchHelper.getSource().trackScores(true)
-////                      .sort("_score", SortOrder.DESC)
-//                      .sort("intensity", SortOrder.DESC);
-
         System.out.println(esSearchHelper.getSource().toString());
 
         SearchResponse resp = client.search(esSearchHelper.getRequest(), RequestOptions.DEFAULT);

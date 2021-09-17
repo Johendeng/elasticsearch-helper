@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryField;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.MultiQueryField;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
@@ -24,7 +25,7 @@ import java.util.Map;
  * project: elasticsearch-helper
  * package: org.pippi.elasticsearch.helper.view
  * date:    2021/7/18
- * developer: JohenTeng
+ * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
 public class QueryAnnParser {
@@ -81,7 +82,7 @@ public class QueryAnnParser {
         List<Field> fieldList = this.getFields(clazz, visitParent);
         List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
-            if (field.isAnnotationPresent(EsQueryField.class)) {
+            if (field.isAnnotationPresent(EsQueryField.class) || field.isAnnotationPresent(MultiQueryField.class)){
                 EsQueryFieldBean queryDes = this.mapFieldAnn(field, view);
                 queryDesList.add(queryDes);
             }
@@ -107,41 +108,30 @@ public class QueryAnnParser {
     }
 
     private EsQueryFieldBean mapFieldAnn(Field field, Object viewObj) {
-
         try {
             EsQueryFieldBean queryDes = new EsQueryFieldBean<>();
-
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
             Object val = field.get(viewObj);
-
             if (TypeUtils.isBaseType(fieldType)) {
                 queryDes.setValue(val);
             }
-
             if (val instanceof Collection && ! (val instanceof Map)) {
-
                 ParameterizedType genericType = (ParameterizedType) field.getGenericType();
                 Type[] actualTypeArguments = genericType.getActualTypeArguments();
-
                 if (actualTypeArguments.length <= 1 && actualTypeArguments.length >= 1) {
-                    Type paramerizeType = actualTypeArguments[0];
-
-                    if (!TypeUtils.isBaseType(paramerizeType.getClass())) {
+                    Type parameterizeType = actualTypeArguments[0];
+                    if (!TypeUtils.isBaseType(parameterizeType.getClass())) {
                         throw new EsHelperQueryException("Just support Collection<@JavaBaseType>");
                     }
-
                     queryDes.setValues(((Collection) val).toArray());
                 } else {
                     throw new EsHelperQueryException("Just support single parameterized-type");
                 }
-
             }
-
             if (val instanceof EsComplexParam) {
                 queryDes.setValue(val);
             }
-
             this.parseAnn(queryDes, field);
             return queryDes;
         } catch (IllegalAccessException e) {
@@ -150,7 +140,20 @@ public class QueryAnnParser {
     }
 
     private void parseAnn(EsQueryFieldBean queryDes, Field field) {
-        EsQueryField ann = field.getAnnotation(EsQueryField.class);
+        MultiQueryField multiQueryField = field.getAnnotation(MultiQueryField.class);
+        if (multiQueryField != null) {
+            EsQueryField[] queryFieldArr = multiQueryField.value();
+            for (EsQueryField esQueryField : queryFieldArr) {
+                this.readSingleAnn(queryDes, esQueryField, field);
+            }
+        } else {
+            EsQueryField esQueryField = field.getAnnotation(EsQueryField.class);
+            this.readSingleAnn(queryDes, esQueryField, field);
+        }
+    }
+
+
+    private void readSingleAnn(EsQueryFieldBean queryDes, EsQueryField ann, Field field) {
         EsConnector esConnector = ann.logicConnector();
         if (esConnector == null) {
             throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");

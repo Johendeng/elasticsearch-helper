@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
+import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
@@ -10,7 +10,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper.core.web
  * date:    2021/5/3
- * developer: JohenTeng
+ * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
 public abstract class AbstractQueryHandler {

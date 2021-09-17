@@ -15,7 +15,7 @@ import java.util.Map;
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper
  * date:    2021/5/8
- * developer: JohenTeng
+ * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
 public class EsResponseParseHelper {

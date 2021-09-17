@@ -4,7 +4,7 @@ package org.pippi.elasticsearch.helper.core.utils;
  * project: elasticsearch-helper
  * package: org.pippi.elasticsearch.helper.core.utils
  * date:    2021/7/18
- * developer: JohenTeng
+ * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
 public class TypeUtils {
