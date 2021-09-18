@@ -1,10 +1,11 @@
-package org.pippi.elasticsearch.helper.core.beans.annotation.meta;
+package org.pippi.elasticsearch.helper.core.beans.annotation.query;
 
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 
 import java.lang.annotation.*;
 
 /**
+ *  define the query handle
  * project: elasticsearch-helper
  * package: org.pippi.elasticsearch.helper.beans.annotation
  * date:    2021/7/18

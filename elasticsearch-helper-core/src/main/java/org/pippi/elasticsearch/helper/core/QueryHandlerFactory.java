@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsQueryHandle;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandler;
@@ -65,7 +65,7 @@ public class QueryHandlerFactory {
         LinkedList<String> packageList = Lists.newLinkedList();
         packageList.add(_BASE_SCAN_PACKAGE);
         // LOAD THE CONFIGURATION FROM SYSTEM_PROPERTY
-        String extHandlePath = System.getProperty(_EXT_DEFINE_QUERY_HANDLE_PROPERTY);
+        String extHandlePath = Objects.requireNonNullElse(System.getProperty(_EXT_DEFINE_QUERY_HANDLE_PROPERTY), "");
         String[] packages = extHandlePath.split(",");
 
         List<String> extPackageList = Arrays.stream(Optional.ofNullable(packages)
@@ -95,11 +95,12 @@ public class QueryHandlerFactory {
             QueryHandlerFactory.addHandleClazz(handleName, targetClazz);
 
             QUERY_HANDLE_MAP.put(handleName, QueryHandlerFactory.getTargetHandleInstance(targetClazz));
-
-            log.debug("es-helper-query-handler-scanner load handles : \n{}",
-                QUERY_HANDLE_CLAZZ_MAP.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining("\n"))
-            );
         }
+        log.info("es-helper-query-handler-scanner load handles : \n\n{}\n\n",
+                QUERY_HANDLE_CLAZZ_MAP.entrySet().stream().map(
+                        e -> "[es-helper]---" + e.getKey() + ":" + e.getValue()
+                ).collect(Collectors.joining("\n"))
+        );
     }
 
     private static AbstractQueryHandler getTargetHandleInstance(Class<? extends AbstractQueryHandler> targetClazz) {

@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsQueryHandle;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
@@ -19,6 +19,6 @@ public class MatchQueryHandler extends AbstractQueryHandler {
 
 
 
-        return null;
+        return searchHelper;
     }
 }

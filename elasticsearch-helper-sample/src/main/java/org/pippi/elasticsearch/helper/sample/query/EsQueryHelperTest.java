@@ -33,10 +33,10 @@ public class EsQueryHelperTest {
 
     private static final Logger log = LoggerFactory.getLogger(EsQueryHelperTest.class);
 
-    private static RestHighLevelClient client;
-
     private static final String _LOCAL_DEV = "localhost";
     private static final String _TEST_INDEX = "content_s";
+
+    private static RestHighLevelClient client;
 
     static {
         client = new RestHighLevelClient(RestClient.builder(new HttpHost(_LOCAL_DEV, 9200)));

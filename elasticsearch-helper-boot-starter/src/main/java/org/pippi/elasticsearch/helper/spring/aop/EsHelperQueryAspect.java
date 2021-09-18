@@ -1,4 +1,4 @@
-package com.pippi.elasticsearch.helper.spring.aop;
+package org.pippi.elasticsearch.helper.spring.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -15,24 +15,27 @@ import org.springframework.stereotype.Component;
  * @author JohenTeng
  * @date 2021/9/17
  */
-@Aspect
-@Component
+//@Aspect
+//@Component
 public class EsHelperQueryAspect {
 
     private static final Logger log = LoggerFactory.getLogger(EsHelperQueryAspect.class);
 
-    //TODO: NEED DIFERENT KIND OF ANN
-    @Pointcut("@annotation(org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex)")
+    @Pointcut("@annotation(org.pippi.elasticsearch.helper.spring.annotation.EsHelperMethod)")
     private void cutPoint(){}
 
     @Around("cutPoint()")
     public Object around(ProceedingJoinPoint joinPoint){
         Object targetObject = joinPoint.getTarget();
-
         log.debug("");
 
 
-        return null;
+        try {
+            return joinPoint.proceed();
+        } catch (Throwable e) {
+            log.error("esHelperProxy execute error:", e);
+            throw new RuntimeException(e);
+        }
     }
 
 }

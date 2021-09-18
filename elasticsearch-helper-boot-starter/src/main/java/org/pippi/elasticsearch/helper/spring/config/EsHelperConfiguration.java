@@ -1,4 +1,4 @@
-package com.pippi.elasticsearch.helper.spring.config;
+package org.pippi.elasticsearch.helper.spring.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;

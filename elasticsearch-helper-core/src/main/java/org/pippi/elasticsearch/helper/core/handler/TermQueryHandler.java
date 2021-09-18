@@ -1,8 +1,9 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
+import org.apache.http.util.Asserts;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsQueryHandle;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
@@ -25,7 +26,6 @@ import java.util.Objects;
 @EsQueryHandle(handleEnum = QueryType.TERM)
 public class TermQueryHandler extends AbstractQueryHandler {
 
-
     /**
      *
      * @param queryDes
@@ -44,8 +44,9 @@ public class TermQueryHandler extends AbstractQueryHandler {
         if (Objects.nonNull(queryDes.getBoost())) {
             termQueryBuilder.boost(queryDes.getBoost());
         }
-
+        Asserts.notNull(termQueryBuilder, "un-generate useful termQuery");
         searchHelper.chain(termQueryBuilder);
         return searchHelper;
     }
+
 }

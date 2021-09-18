@@ -1,4 +1,4 @@
-package com.pippi.elasticsearch.helper.spring;
+package org.pippi.elasticsearch.helper.spring;
 
 import org.elasticsearch.client.RestHighLevelClient;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;

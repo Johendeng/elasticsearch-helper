@@ -36,7 +36,7 @@ public class QueryAnnParser {
 
     public static QueryAnnParser instance(){
         if (INSTANCE == null) {
-            synchronized (INSTANCE) {
+            synchronized (QueryAnnParser.class) {
                 if (INSTANCE == null) {
                     INSTANCE = new QueryAnnParser();
                     return INSTANCE;

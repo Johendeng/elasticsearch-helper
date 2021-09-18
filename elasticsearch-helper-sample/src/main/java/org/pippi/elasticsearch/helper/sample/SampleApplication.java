@@ -1,7 +1,9 @@
 package org.pippi.elasticsearch.helper.sample;
 
+import org.pippi.elasticsearch.helper.spring.annotation.EnableEsHelper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 /**
  * SampleApplication
@@ -9,11 +11,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author johen
  * @date 2021/9/17
  */
-@SpringBootApplication
+@EnableEsHelper
+@SpringBootApplication(scanBasePackages = "com.sun")
 public class SampleApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SampleApplication.class, args);
+        ConfigurableApplicationContext context = SpringApplication.run(SampleApplication.class, args);
+
     }
 
 }

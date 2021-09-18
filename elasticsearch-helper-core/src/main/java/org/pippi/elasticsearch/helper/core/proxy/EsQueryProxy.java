@@ -61,7 +61,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
                     ParameterizedType paramReturnType = (ParameterizedType)method.getGenericReturnType();
                     Type[] paramTypes = paramReturnType.getActualTypeArguments();
                     Class paramClazz = (Class) paramTypes[0];
-                    if (paramClazz.isAssignableFrom(BaseResp.BaseHit.class)){
+                    if (BaseResp.BaseHit.class.isAssignableFrom(paramClazz)){
                         BaseResp<? extends BaseResp.BaseHit> baseResp = EsResponseParseHelper.getList(resp, ((Class<? extends BaseResp.BaseHit>) paramClazz));
                         return baseResp;
                     } else {

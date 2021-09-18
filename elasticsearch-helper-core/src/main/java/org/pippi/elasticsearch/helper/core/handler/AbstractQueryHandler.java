@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsQueryHandle;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
@@ -16,7 +16,6 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 public abstract class AbstractQueryHandler {
 
     AbstractQueryHandler(){}
-
 
     /**
      *  define the Query-Type use for finding a Query-handle to handle a field-query-bean

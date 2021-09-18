@@ -16,9 +16,6 @@ import java.util.*;
  **/
 public class EsQueryEngine {
 
-
-    private static final QueryHandlerFactory queryHandlerFactory = new QueryHandlerFactory();
-
     /**
      * @param queryViewObj
      * @param visitParent
@@ -35,7 +32,7 @@ public class EsQueryEngine {
                                                                 .build();
         for (EsQueryFieldBean queryDes : queryDesList) {
             String queryKey = queryDes.getQueryType();
-            AbstractQueryHandler queryHandle = queryHandlerFactory.getTargetHandleInstance(queryKey);
+            AbstractQueryHandler queryHandle = QueryHandlerFactory.getTargetHandleInstance(queryKey);
             queryHandle.execute(queryDes, helper);
         }
         return helper;

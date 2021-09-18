@@ -61,7 +61,6 @@ public class EsResponseParseHelper {
         SearchHits hits = resp.getHits();
         res.setMaxScore(hits.getMaxScore());
         res.setTotalHit(hits.getTotalHits().value);
-
         SearchHit[] hitArr = hits.getHits();
         List<T> records = new ArrayList<>(hitArr.length);
         for (SearchHit hit : hitArr) {
@@ -71,6 +70,7 @@ public class EsResponseParseHelper {
             record.setHitScore(hit.getScore());
             records.add(record);
         }
+        res.setRecords(records);
         return res;
     }
 
