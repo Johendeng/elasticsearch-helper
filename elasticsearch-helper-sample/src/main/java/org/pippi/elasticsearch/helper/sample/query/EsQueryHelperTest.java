@@ -10,6 +10,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.ScriptSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -63,7 +65,7 @@ public class EsQueryHelperTest {
                 )
         ;
 
-//        esSearchHelper.getSource().aggregation(AggregationBuilders.)
+        esSearchHelper.getSource().highlighter(SearchSourceBuilder.highlight().field("title").field("describe"));
 
 
         System.out.println(esSearchHelper.getSource().toString());

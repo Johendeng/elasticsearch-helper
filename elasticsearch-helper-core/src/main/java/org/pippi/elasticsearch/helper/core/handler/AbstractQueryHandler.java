@@ -1,9 +1,11 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.config.GlobalEsQueryConfig;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
@@ -14,6 +16,8 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * email: 1078481395@qq.com
  **/
 public abstract class AbstractQueryHandler {
+
+    protected static final String _SEPARATOR = ",";
 
     AbstractQueryHandler(){}
 
@@ -42,7 +46,20 @@ public abstract class AbstractQueryHandler {
     public AbstractEsRequestHolder execute(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper){
         EsQueryFieldBean handledDes = explainExtendDefine(queryDes);
         searchHelper.changeLogicConnector(queryDes.getLogicConnector());
+        handleHighLight(queryDes, searchHelper);
         return handle(handledDes, searchHelper);
+    }
+
+    protected void handleHighLight(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper){
+        EsQueryFieldBean.HighLight highLight = queryDes.getHighLight();
+        String targetField = queryDes.getField();
+        String[] fieldArr = targetField.split(_SEPARATOR);
+        if (highLight != null) {
+            HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(highLight.getKey());
+            for (String currentField : fieldArr) {
+                searchHelper.getSource().highlighter(highlightBuilder.field(currentField));
+            }
+        }
     }
 
     /**
@@ -59,7 +76,7 @@ public abstract class AbstractQueryHandler {
      * @param queryDes
      * @return
      */
-    public EsQueryFieldBean explainExtendDefine (EsQueryFieldBean queryDes) {
+    protected EsQueryFieldBean explainExtendDefine (EsQueryFieldBean queryDes) {
         // do nothing, if need translate QueryDes.extendDefine, you need implement this method
         return queryDes;
     }

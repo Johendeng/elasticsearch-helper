@@ -29,7 +29,7 @@ public class TestQueryServiceTest {
     @Test
     public void testQueryService(){
         ContentSearchParam param = new ContentSearchParam();
-        param.setIntensity(11);
+        param.setTitle("课程");
         BaseResp<Content> baseResp = testQueryService.queryRecordByIntensity(param);
         System.out.println(SerializerUtils.parseObjToJson(baseResp));
     }

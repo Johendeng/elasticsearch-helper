@@ -22,12 +22,10 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 @EsQueryHandle(handleEnum = QueryType.MULTI_MATCH)
 public class MultiMatchQueryHandler extends AbstractQueryHandler{
 
-    private static final String _SEPARATOR = ",";
-
     @Override
     public AbstractEsRequestHolder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
 
-        String column = queryDes.getColumn();
+        String column = queryDes.getField();
         String[] columns = column.split(_SEPARATOR);
 
         Object value = queryDes.getValue();

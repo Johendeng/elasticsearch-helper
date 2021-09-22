@@ -12,6 +12,8 @@ import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -27,16 +29,27 @@ import java.lang.reflect.Type;
 
 public class EsQueryProxy<T> implements InvocationHandler {
 
+    private static final Logger log = LoggerFactory.getLogger(EsQueryProxy.class);
+
     private Class<T> targetInterface;
 
     private boolean visitQueryBeanParent = true;
 
     private RestHighLevelClient client;
 
+    private boolean enableLogOutEsQueryJson = false;
+
     public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client) {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
         this.client = client;
+    }
+
+    public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, boolean enableLogOutEsQueryJson) {
+        this.targetInterface = targetInterface;
+        this.visitQueryBeanParent = visitQueryBeanParent;
+        this.client = client;
+        this.enableLogOutEsQueryJson = enableLogOutEsQueryJson;
     }
 
     @Override
@@ -50,6 +63,9 @@ public class EsQueryProxy<T> implements InvocationHandler {
             if (method.isAnnotationPresent(RequestHook.class)) {
                 RequestHook reqHookAnn = method.getAnnotation(RequestHook.class);
                 esHolder = EsHookReedits.useReqHook(reqHookAnn.value(), esHolder, param);
+            }
+            if (enableLogOutEsQueryJson) {
+                log.info("{} # {} execute-es-query-json is \n {} \n", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
             }
             SearchResponse resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
             if (method.isAnnotationPresent(ResponseHook.class)) {

@@ -27,6 +27,10 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
 
     private ApplicationContext applicationContext;
 
+    private static final String ENABLE_LOG_OUT_PROPERTIES = "es.helper.queryLogOut.enable";
+
+    private boolean enableLogOut = false;
+
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
@@ -48,7 +52,7 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
         return (T) Proxy.newProxyInstance(
                 targetInterfaceClazz.getClassLoader(),
                 new Class[]{targetInterfaceClazz},
-                new EsQueryProxy<T>(targetInterfaceClazz, visitQueryBeanParent, client)
+                new EsQueryProxy<T>(targetInterfaceClazz, visitQueryBeanParent, client, enableLogOut)
         );
     }
 
@@ -67,5 +71,6 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
         RestHighLevelClient restClient = applicationContext.getBean(RestHighLevelClient.class);
         Objects.requireNonNull(restClient, "SpringContext haven't RestHighLevelClient, config it");
         this.client = restClient;
+        this.enableLogOut =  applicationContext.getEnvironment().getProperty(ENABLE_LOG_OUT_PROPERTIES, Boolean.class);
     }
 }

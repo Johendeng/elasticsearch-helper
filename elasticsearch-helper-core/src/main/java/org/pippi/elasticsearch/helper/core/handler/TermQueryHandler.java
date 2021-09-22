@@ -36,10 +36,10 @@ public class TermQueryHandler extends AbstractQueryHandler {
     public AbstractEsRequestHolder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
         QueryBuilder termQueryBuilder = null;
         if (Objects.nonNull(queryDes.getValue())) {
-            termQueryBuilder = QueryBuilders.termQuery(queryDes.getColumn(), queryDes.getValue());
+            termQueryBuilder = QueryBuilders.termQuery(queryDes.getField(), queryDes.getValue());
         }
         if (Objects.nonNull(queryDes.getValues())) {
-            termQueryBuilder = QueryBuilders.termsQuery(queryDes.getColumn(), queryDes.getValues());
+            termQueryBuilder = QueryBuilders.termsQuery(queryDes.getField(), queryDes.getValues());
         }
         if (Objects.nonNull(queryDes.getBoost())) {
             termQueryBuilder.boost(queryDes.getBoost());

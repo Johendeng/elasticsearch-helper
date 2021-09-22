@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryField;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.MultiQueryField;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
@@ -83,7 +84,9 @@ public class QueryAnnParser {
         for (Field field : fieldList) {
             if (field.isAnnotationPresent(EsQueryField.class) || field.isAnnotationPresent(MultiQueryField.class)){
                 EsQueryFieldBean queryDes = this.mapFieldAnn(field, view);
-                queryDesList.add(queryDes);
+                if (Objects.nonNull(queryDes)) {
+                    queryDesList.add(queryDes);
+                }
             }
         }
         return queryDesList;
@@ -112,6 +115,9 @@ public class QueryAnnParser {
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
             Object val = field.get(viewObj);
+            if (Objects.isNull(val)) {
+                return null;
+            }
             if (TypeUtils.isBaseType(fieldType)) {
                 queryDes.setValue(val);
             } else if (val instanceof Collection && ! (val instanceof Map)) {
@@ -180,15 +186,24 @@ public class QueryAnnParser {
         }
 
         String script = ann.script();
-        String extendDefine = ann.extendDefine();
+        String extendDefine = ann.detail();
         Float  boost = ann.boost();
 
-        queryDes.setColumn(column);
+        queryDes.setField(column);
         queryDes.setQueryType(query);
         queryDes.setMeta(meta);
         queryDes.setScript(script);
-        queryDes.setExtendDefine(extendDefine);
+        queryDes.setDetail(extendDefine);
         queryDes.setBoost(boost);
+
+        this.readHighLight(queryDes, field);
+    }
+
+    private void readHighLight(EsQueryFieldBean queryDes, Field field){
+        HighLight highLightAnn = field.getAnnotation(HighLight.class);
+        if (Objects.nonNull(highLightAnn)) {
+            queryDes.setHighLight(true, highLightAnn.value());
+        }
     }
 
 
