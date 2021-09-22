@@ -23,7 +23,7 @@ import javax.annotation.Resource;
 @SpringBootTest(classes = SampleApplication.class)
 public class TestQueryServiceTest {
 
-    @Autowired
+    @Resource
     private TestQueryService testQueryService;
 
     @Test

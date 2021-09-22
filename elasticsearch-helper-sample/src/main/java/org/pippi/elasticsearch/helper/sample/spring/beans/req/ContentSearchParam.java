@@ -18,7 +18,7 @@ public class ContentSearchParam {
     @EsQueryField(queryType = QueryType.TERM, meta = EsMeta.INTEGER)
     private Integer intensity;
 
-    @EsQueryField(queryType = QueryType.MATCH, meta = EsMeta.TEXT )
+    @EsQueryField(queryType = QueryType.MATCH, meta = EsMeta.TEXT)
     private String title;
 
     public Integer getIntensity() {

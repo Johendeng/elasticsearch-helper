@@ -12,7 +12,6 @@ public enum QueryType {
 
     UN_DEFINE("un_match", -1),
 
-    LIKE("like",100),
     TERM("term",101),
     FUZZY("fuzzy",102),
     MATCH("match",103),

@@ -1,12 +1,10 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query;
 
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 
 import java.lang.annotation.*;
-import java.util.function.Supplier;
 
 /**
  * 描述 持有es查询相关的对象实例，进行统一调用和管理
@@ -37,14 +35,13 @@ public @interface EsQueryField {
      *  （ queryType和queryKey只需要定义一个）
      * @return
      */
-    String queryKey() default "";
-
+    String queryTypeStringify() default "";
 
     /**
      *  查询逻辑连接符
      * @return
      */
-    EsConnector logicConnector() default EsConnector.MUST;
+    EsConnector connect() default EsConnector.MUST;
 
     /**
      *  元数据类型
@@ -59,6 +56,12 @@ public @interface EsQueryField {
     String metaStringify() default "";
 
     /**
+     *  自定义匹配分值
+     * @return
+     */
+    float boost() default 1.0f;
+
+    /**
      *  查询脚本
      * @return
      */
@@ -70,10 +73,5 @@ public @interface EsQueryField {
      */
     String detail() default "";
 
-    /**
-     *  自定义匹配分值
-     * @return
-     */
-    float boost() default 1.0f;
 
 }

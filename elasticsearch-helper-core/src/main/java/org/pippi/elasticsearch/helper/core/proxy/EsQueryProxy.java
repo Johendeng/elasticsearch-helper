@@ -65,7 +65,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
                 esHolder = EsHookReedits.useReqHook(reqHookAnn.value(), esHolder, param);
             }
             if (enableLogOutEsQueryJson) {
-                log.info("{} # {} execute-es-query-json is \n {} \n", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
+                log.info("{} # {} execute-es-query-json is \n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
             }
             SearchResponse resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
             if (method.isAnnotationPresent(ResponseHook.class)) {

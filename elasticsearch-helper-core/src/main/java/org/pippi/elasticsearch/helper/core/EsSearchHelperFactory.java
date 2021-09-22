@@ -10,7 +10,6 @@ package org.pippi.elasticsearch.helper.core;
 public class EsSearchHelperFactory {
 
     /**
-     *  TODO: WAIT IMPL
      * @param indexName
      * @return
      */

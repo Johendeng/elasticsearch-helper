@@ -13,7 +13,6 @@ public class HighLevelRestClientHolder {
 
 
     /**
-     *  TODO WAIT IMPL
      * @return
      */
     public static RestHighLevelClient client() {

@@ -159,7 +159,7 @@ public class QueryAnnParser {
 
 
     private void readSingleAnn(EsQueryFieldBean queryDes, EsQueryField ann, Field field) {
-        EsConnector esConnector = ann.logicConnector();
+        EsConnector esConnector = ann.connect();
         if (esConnector == null) {
             throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");
         }
@@ -169,7 +169,7 @@ public class QueryAnnParser {
             column = field.getName();
         }
 
-        String query = ann.queryKey();
+        String query = ann.queryTypeStringify();
         if (StringUtils.isBlank(query)) {
             query =  ann.queryType().getQuery();
         }
