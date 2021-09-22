@@ -17,16 +17,27 @@ import java.lang.annotation.*;
 public @interface EsQueryIndex {
 
     /**
-     *  索引 (required)
+     *  query index name (required)
      * @return
      */
     String index() ;
 
     /**
-     *  查询模式 (required)
+     *  query model {@link QueryModel} (required)
      * @see QueryModel
      * @return
      */
     QueryModel model();
 
+    /**
+     *  fetch need fields from ES, reduce data-package of I/O
+     * @return
+     */
+    String[] fetch() default {};
+
+    /**
+     * exclude unuseful fields from ES
+     * @return
+     */
+    String[] exclude() default {};
 }

@@ -9,13 +9,13 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 /**
  * ContentSearchParam
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/9/18
  */
 @EsQueryIndex(index = "test", model = QueryModel.BOOL)
 public class ContentSearchParam {
 
-    @EsQueryField(queryType = QueryType.TERM, meta = EsMeta.INTEGER, name = "intensity")
+    @EsQueryField(queryType = QueryType.TERM, meta = EsMeta.INTEGER)
     private Integer intensity;
 
     public Integer getIntensity() {

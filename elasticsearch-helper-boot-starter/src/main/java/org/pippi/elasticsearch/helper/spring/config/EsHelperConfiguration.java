@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * EsHelperConfiguration
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/9/17
  */
 @Configuration

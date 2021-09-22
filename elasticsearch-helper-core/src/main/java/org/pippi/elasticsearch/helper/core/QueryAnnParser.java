@@ -62,8 +62,10 @@ public class QueryAnnParser {
 
         String index = ann.index();
         QueryModel model = ann.model();
+        String[] fetchFields = ann.fetch();
+        String[] excludeFields = ann.exclude();
 
-        return new EsQueryIndexBean(index, model);
+        return new EsQueryIndexBean(index, model, fetchFields, excludeFields);
 
     }
 

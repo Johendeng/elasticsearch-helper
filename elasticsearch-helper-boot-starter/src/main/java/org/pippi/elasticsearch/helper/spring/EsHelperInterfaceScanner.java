@@ -40,7 +40,7 @@ import java.util.Set;
 
 /**
  * EsHelperInterfaceScanner
- *  read all Interface which annotated  {@link org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy @EsHelperProxy}
+ *  read all Interface which annotated by {@link org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy @EsHelperProxy}
  *  and  load a proxy instance for it
  * @author JohenTeng
  * @date 2021/9/18
@@ -55,14 +55,6 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware, BeanDe
     private ApplicationContext applicationContext;
     private MetadataReaderFactory metadataReaderFactory;
     private ResourcePatternResolver resourcePatternResolver;
-
-    private static final Set<Class<?>> _HELPER_PROXY_SET = Sets.newHashSet();
-
-    //todo
-    private static RestHighLevelClient client;
-    static {
-        client = new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200)));
-    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -79,22 +71,20 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware, BeanDe
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
 
         List<String> packages = AutoConfigurationPackages.get(applicationContext);
-        // 开始扫描包，获取字节码
+        // scan packages get all Class that annotation by @EsHelperProxy
         Set<Class<?>> beanClazzSet = findAllQueryHelperProxyInterfaces(packages.get(0));
         for (Class beanClazz : beanClazzSet) {
-            // 判断是否是需要被代理的接口
             if (isNotNeedProxy(beanClazz)) {
                 continue;
             }
-            // BeanDefinition构建器
+            // BeanDefinition builder
             BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(beanClazz);
             GenericBeanDefinition definition = (GenericBeanDefinition) builder.getRawBeanDefinition();
-            definition.getConstructorArgumentValues()
-                      .addGenericArgumentValue(beanClazz);
-//            definition.setBeanClass(EsHelperProxyBeanFactory.class);
+            definition.getConstructorArgumentValues().addGenericArgumentValue(beanClazz);
+            definition.setBeanClass(beanClazz);
             definition.setLazyInit(true);
             definition.setInstanceSupplier(()->
-                new EsHelperProxyBeanFactory(beanClazz, true, client)
+                new EsHelperProxyBeanFactory(beanClazz, true)
             );
             definition.setAutowireMode(GenericBeanDefinition.AUTOWIRE_BY_TYPE);
             String simpleName = beanClazz.getSimpleName();
@@ -118,15 +108,12 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware, BeanDe
                 if (resource.isReadable()) {
                     MetadataReader metadataReader = this.metadataReaderFactory.getMetadataReader(resource);
                     String className = metadataReader.getClassMetadata().getClassName();
-                    Class<?> clazz;
-                    try {
-                        clazz = Class.forName(className);
-                        set.add(clazz);
-                    } catch (ClassNotFoundException e) {
-                        e.printStackTrace();
-                    }
+                    Class<?> clazz = Class.forName(className);
+                    set.add(clazz);
                 }
             }
+        }catch (ClassNotFoundException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

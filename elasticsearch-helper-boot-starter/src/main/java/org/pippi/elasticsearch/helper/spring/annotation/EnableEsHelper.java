@@ -9,7 +9,7 @@ import java.lang.annotation.*;
 /**
  * EnableEsHelper
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/9/18
  */
 @Documented

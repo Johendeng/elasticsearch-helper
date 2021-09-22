@@ -15,12 +15,18 @@ public class EsQueryIndexBean {
 
 	private QueryModel esQueryModel;
 
+	private String[] fetchFields;
+
+	private String[] excludeFields;
+
 	public EsQueryIndexBean() {
 	}
 
-	public EsQueryIndexBean(String indexName, QueryModel esQueryModel) {
+	public EsQueryIndexBean(String indexName, QueryModel esQueryModel, String[] fetchFields, String[] excludeFields) {
 		this.indexName = indexName;
 		this.esQueryModel = esQueryModel;
+		this.fetchFields = fetchFields;
+		this.excludeFields = excludeFields;
 	}
 
 	public String getIndexName() {
@@ -37,5 +43,13 @@ public class EsQueryIndexBean {
 
 	public void setEsQueryModel(QueryModel esQueryModel) {
 		this.esQueryModel = esQueryModel;
+	}
+
+	public String[] getFetchFields() {
+		return fetchFields;
+	}
+
+	public void setFetchFields(String[] fetchFields) {
+		this.fetchFields = fetchFields;
 	}
 }

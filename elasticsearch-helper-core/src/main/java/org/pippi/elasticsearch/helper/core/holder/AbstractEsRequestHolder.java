@@ -1,13 +1,17 @@
 package org.pippi.elasticsearch.helper.core.holder;
 
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
+import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryIndexBean;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -113,6 +117,15 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 
 		public String indexName;
 		public QueryModel esQueryModel;
+		public String[] fetchFields;
+		public String[] excludeFields;
+
+		public EsRequestHolderBuilder indexBean(EsQueryIndexBean indexBean) {
+			this.indexName = indexBean.getIndexName();
+			this.esQueryModel = indexBean.getEsQueryModel();
+			this.fetchFields = indexBean.getFetchFields();
+			return this;
+		}
 
 		public EsRequestHolderBuilder indexName(String indexName) {
 			this.indexName = indexName;
@@ -132,6 +145,9 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			if (esQueryModel == QueryModel.BOOL) {
 				BoolEsRequestHolder boolEsRequestHolder = new BoolEsRequestHolder();
 				boolEsRequestHolder.init(indexName);
+				if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
+					boolEsRequestHolder.getSource().fetchSource(this.fetchFields, this.excludeFields);
+				}
 				return (R)boolEsRequestHolder;
 			}
 			throw new RuntimeException("unsupport this query model");

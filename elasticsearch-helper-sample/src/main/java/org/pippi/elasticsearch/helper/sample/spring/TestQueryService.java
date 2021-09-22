@@ -8,7 +8,7 @@ import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
 /**
  * TestQueryService
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/9/18
  */
 @EsHelperProxy
