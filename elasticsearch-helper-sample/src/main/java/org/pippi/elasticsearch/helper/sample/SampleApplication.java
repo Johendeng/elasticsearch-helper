@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.helper.sample;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.pippi.elasticsearch.helper.spring.annotation.EnableEsHelper;
+import org.pippi.elasticsearch.helper.spring.EnableEsHelper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;

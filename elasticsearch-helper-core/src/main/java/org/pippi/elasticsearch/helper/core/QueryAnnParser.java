@@ -16,10 +16,7 @@ import org.pippi.elasticsearch.helper.core.utils.TypeUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * project: elasticsearch-helper
@@ -117,8 +114,7 @@ public class QueryAnnParser {
             Object val = field.get(viewObj);
             if (TypeUtils.isBaseType(fieldType)) {
                 queryDes.setValue(val);
-            }
-            if (val instanceof Collection && ! (val instanceof Map)) {
+            } else if (val instanceof Collection && ! (val instanceof Map)) {
                 ParameterizedType genericType = (ParameterizedType) field.getGenericType();
                 Type[] actualTypeArguments = genericType.getActualTypeArguments();
                 if (actualTypeArguments.length <= 1 && actualTypeArguments.length >= 1) {
@@ -130,9 +126,10 @@ public class QueryAnnParser {
                 } else {
                     throw new EsHelperQueryException("Just support single parameterized-type");
                 }
-            }
-            if (val instanceof EsComplexParam) {
+            } else if (val instanceof EsComplexParam) {
                 queryDes.setValue(val);
+            } else {
+                throw new EsHelperQueryException("config @EsQueryField at an Error-Type Field, Just support Primitive-type (exclude void.class) or their Decorate-type or Collection or Map or EsComplexParam");
             }
             this.parseAnn(queryDes, field);
             return queryDes;
@@ -184,12 +181,14 @@ public class QueryAnnParser {
 
         String script = ann.script();
         String extendDefine = ann.extendDefine();
+        Float  boost = ann.boost();
 
         queryDes.setColumn(column);
         queryDes.setQueryType(query);
         queryDes.setMeta(meta);
         queryDes.setScript(script);
         queryDes.setExtendDefine(extendDefine);
+        queryDes.setBoost(boost);
     }
 
 

@@ -26,7 +26,8 @@ public class EsHelperAutoConfiguration {
 
     @PostConstruct
     public void load(){
-        Assert.notNull(restHighLevelClient, "Application-Context has no RestHighLevelClient-instance,you have config it first");
+        //TODO: 应该放出数个配置点 可以供用户进行扩展 配置？？？？   如何提供？ 提供几个？？   怎么提供？？
+        Assert.notNull(restHighLevelClient, "Application-Context has no RestHighLevelClient-instance,you have to config it at first");
         QueryHandlerFactory.doQueryHandleScan();
     }
 

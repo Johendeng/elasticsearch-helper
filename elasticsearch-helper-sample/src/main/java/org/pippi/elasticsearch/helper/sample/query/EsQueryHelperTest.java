@@ -9,6 +9,7 @@ import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.search.MatchQuery;
 import org.elasticsearch.script.Script;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.ScriptSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -61,6 +62,10 @@ public class EsQueryHelperTest {
                         .fuzziness(Fuzziness.ONE)
                 )
         ;
+
+//        esSearchHelper.getSource().aggregation(AggregationBuilders.)
+
+
         System.out.println(esSearchHelper.getSource().toString());
 
         SearchResponse resp = client.search(esSearchHelper.getRequest(), RequestOptions.DEFAULT);

@@ -13,4 +13,11 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface EsHelperProxy {
+
+    /**
+     * When phrase query-Define bean will visit it's parent
+     * @return
+     */
+    boolean visitParent() default true;
+
 }

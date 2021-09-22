@@ -1,6 +1,5 @@
-package org.pippi.elasticsearch.helper.spring.annotation;
+package org.pippi.elasticsearch.helper.spring;
 
-import org.pippi.elasticsearch.helper.spring.EsHelperAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 
@@ -13,8 +12,8 @@ import java.lang.annotation.*;
  * @date 2021/9/18
  */
 @Documented
-@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
 @Import({EsHelperAutoConfiguration.class})
 @ComponentScan(basePackages = {"org.pippi.elasticsearch.helper.spring"})
 public @interface EnableEsHelper {

@@ -1,10 +1,10 @@
 package org.pippi.elasticsearch.helper.spring;
 
 import com.google.common.collect.Sets;
-import org.apache.commons.lang3.AnnotationUtils;
 import org.apache.http.HttpHost;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
 import org.pippi.elasticsearch.helper.spring.proxy.EsHelperProxyBeanFactory;
 import org.slf4j.Logger;
@@ -23,6 +23,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.ResourcePatternResolver;
@@ -39,7 +40,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * EsHelperInterfaceScanner
+ * EsHelperInterfaceScanner  TODO: 扫描过程缺失注解 RequestHook ResponseHook
  *  read all Interface which annotated by {@link org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy @EsHelperProxy}
  *  and  load a proxy instance for it
  * @author JohenTeng
@@ -69,7 +70,6 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware, BeanDe
 
     @Override
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
-
         List<String> packages = AutoConfigurationPackages.get(applicationContext);
         // scan packages get all Class that annotation by @EsHelperProxy
         Set<Class<?>> beanClazzSet = findAllQueryHelperProxyInterfaces(packages.get(0));
@@ -77,6 +77,7 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware, BeanDe
             if (isNotNeedProxy(beanClazz)) {
                 continue;
             }
+            EsHelperProxy proxyAnn = AnnotationUtils.findAnnotation(beanClazz, EsHelperProxy.class);
             // BeanDefinition builder
             BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(beanClazz);
             GenericBeanDefinition definition = (GenericBeanDefinition) builder.getRawBeanDefinition();
@@ -84,7 +85,7 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware, BeanDe
             definition.setBeanClass(beanClazz);
             definition.setLazyInit(true);
             definition.setInstanceSupplier(()->
-                new EsHelperProxyBeanFactory(beanClazz, true)
+                new EsHelperProxyBeanFactory(beanClazz, proxyAnn.visitParent())
             );
             definition.setAutowireMode(GenericBeanDefinition.AUTOWIRE_BY_TYPE);
             String simpleName = beanClazz.getSimpleName();
@@ -100,7 +101,6 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware, BeanDe
 
     private Set<Class<?>> findAllQueryHelperProxyInterfaces(String basePackage){
         Set<Class<?>> set = new LinkedHashSet<>();
-        // 此处固定写法即可,含义就是包及子包下的所有类
         String packageSearchPath = ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + resolveBasePackage(basePackage) + '/' + DEFAULT_RESOURCE_PATTERN;
         try {
             Resource[] resources = this.resourcePatternResolver.getResources(packageSearchPath);
@@ -113,9 +113,9 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware, BeanDe
                 }
             }
         }catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new EsHelperConfigException("Es-helper init Reflection ERROR, cause", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new EsHelperConfigException("Es-helper init I/O ERROR, cause", e);
         }
         return set;
     }
