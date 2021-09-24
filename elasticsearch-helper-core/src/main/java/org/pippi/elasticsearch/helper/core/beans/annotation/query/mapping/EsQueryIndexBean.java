@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.beans.mapping;
+package org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping;
 
 
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;

@@ -85,9 +85,9 @@ public class QueryHandlerFactory {
                 throw new EsHelperConfigException("query handle have to ann by @EsQueryHandle");
             }
             EsQueryHandle ann = targetClazz.getAnnotation(EsQueryHandle.class);
-            String handleName = ann.name();
+            String handleName = ann.queryTypeStringify();
             if (StringUtils.isBlank(handleName)) {
-                handleName = ann.handleEnum().getQuery();
+                handleName = ann.queryType().getQuery();
             }
             if (StringUtils.isBlank(handleName)) {
                 throw new EsHelperConfigException("handle-name is undefine");
@@ -96,7 +96,7 @@ public class QueryHandlerFactory {
 
             QUERY_HANDLE_MAP.put(handleName, QueryHandlerFactory.getTargetHandleInstance(targetClazz));
         }
-        log.info("es-helper-query-handler-scanner load handles : \n\n{}\n\n",
+        log.info("es-helper-query-handler-scanner load handles:\n{}\n",
                 QUERY_HANDLE_CLAZZ_MAP.entrySet().stream().map(
                         e -> "[es-helper]---" + e.getKey() + ":" + e.getValue()
                 ).collect(Collectors.joining("\n"))

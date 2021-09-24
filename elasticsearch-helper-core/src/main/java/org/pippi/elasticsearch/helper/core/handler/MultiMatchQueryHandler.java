@@ -1,10 +1,11 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
-import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
@@ -19,23 +20,19 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * @author dengtianjia
  * @date 2021/8/20
  */
-@EsQueryHandle(handleEnum = QueryType.MULTI_MATCH)
+@EsQueryHandle(queryType = QueryType.MULTI_MATCH)
 public class MultiMatchQueryHandler extends AbstractQueryHandler{
 
     @Override
-    public AbstractEsRequestHolder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
 
         String column = queryDes.getField();
         String[] columns = column.split(_SEPARATOR);
 
         Object value = queryDes.getValue();
-        MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(value, columns);
-        if (queryDes.getBoost() != null) {
-            multiMatchQueryBuilder.boost(queryDes.getBoost());
-        }
-
+        MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(value, columns).boost(queryDes.getBoost());
         searchHelper.chain(multiMatchQueryBuilder);
-        return searchHelper;
+        return multiMatchQueryBuilder;
     }
 
 }

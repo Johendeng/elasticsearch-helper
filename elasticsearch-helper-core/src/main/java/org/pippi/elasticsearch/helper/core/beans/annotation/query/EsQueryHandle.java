@@ -18,8 +18,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsQueryHandle {
 
-    String name() default "";
+    String queryTypeStringify() default "";
 
-    QueryType handleEnum() default QueryType.MATCH;
+    QueryType queryType() default QueryType.MATCH;
 
 }

@@ -8,10 +8,8 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
-import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**

@@ -1,9 +1,12 @@
-package org.pippi.elasticsearch.helper.core.beans.mapping;
+package org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping;
 
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryField;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.mapping.Ext;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 
 import java.io.Serializable;
+import java.lang.annotation.Annotation;
+import java.util.Set;
 
 /**
  * mapping the annotation information of @EsQueryFiled
@@ -11,7 +14,7 @@ import java.io.Serializable;
  * @author JohenTeng
  * @date 2021/8/9
  */
-public class EsQueryFieldBean<T> implements Serializable {
+public class EsQueryFieldBean<T extends Ext> implements Serializable {
 
 	/**
 	 *  对应查询字段
@@ -44,11 +47,6 @@ public class EsQueryFieldBean<T> implements Serializable {
 	private String meta;
 
 	/**
-	 *  查询脚本
-	 */
-	private String script;
-
-	/**
 	 *  评分底分
 	 */
 	private Float boost;
@@ -56,17 +54,18 @@ public class EsQueryFieldBean<T> implements Serializable {
 	/**
 	 *  自定义扩展信息映射对象
 	 */
-	private T extendBean;
+	private T extBean;
 
 	/**
-	 *  自定义扩展信息
+	 *  extend @Ext*** annotation
 	 */
-	private String detail;
+	private Set<Annotation> extAnnotations;
 
 	/**
 	 *  定义字段是否需要高亮
 	 */
 	private HighLight highLight;
+
 
 	public EsQueryFieldBean() {
 	}
@@ -74,13 +73,11 @@ public class EsQueryFieldBean<T> implements Serializable {
 	public EsQueryFieldBean(String field,
 							String queryType,
 							EsConnector logicConnector,
-							String meta,
-							String script){
+							String meta){
 		this.field = field;
 		this.queryType = queryType;
 		this.logicConnector = logicConnector;
 		this.meta = meta;
-		this.script = script;
 	}
 
 	public String getField() {
@@ -123,20 +120,20 @@ public class EsQueryFieldBean<T> implements Serializable {
 		this.meta = meta;
 	}
 
-	public String getScript() {
-		return script;
+	public T getExtBean() {
+		return extBean;
 	}
 
-	public void setScript(String script) {
-		this.script = script;
+	public void setExtBean(T extBean) {
+		this.extBean = extBean;
 	}
 
-	public T getExtendBean() {
-		return extendBean;
+	public Set<Annotation> getExtAnnotations() {
+		return extAnnotations;
 	}
 
-	public void setExtendBean(T extendBean) {
-		this.extendBean = extendBean;
+	public void setExtAnnotations(Set<Annotation> extAnnotations) {
+		this.extAnnotations = extAnnotations;
 	}
 
 	public Float getBoost() {
@@ -153,14 +150,6 @@ public class EsQueryFieldBean<T> implements Serializable {
 
 	public void setLogicConnector(EsConnector logicConnector) {
 		this.logicConnector = logicConnector;
-	}
-
-	public String getDetail() {
-		return detail;
-	}
-
-	public void setDetail(String detail) {
-		this.detail = detail;
 	}
 
 	public void setHighLight(boolean enable, String key) {

@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query;
 
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.Ext;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
@@ -60,18 +61,5 @@ public @interface EsQueryField {
      * @return
      */
     float boost() default 1.0f;
-
-    /**
-     *  查询脚本
-     * @return
-     */
-    String script() default "";
-
-    /**
-     *  对于查询的自定义描述，需要根据不同查询实现不同的解析器
-     * @return
-     */
-    String detail() default "";
-
 
 }

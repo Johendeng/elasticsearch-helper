@@ -18,6 +18,7 @@ public enum QueryType {
     MULTI_MATCH("multi_match", 104),
     WILD_CARD("wildcard", 105),
     RANGE("range", 106),
+    NESTED("nested", 201),
     ;
 
     private String query;

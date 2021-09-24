@@ -1,13 +1,14 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.ExtMatch;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.mapping.ExtMatchBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
-import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
-
-import java.util.Objects;
 
 /**
  * MutchQueryHandler
@@ -15,23 +16,18 @@ import java.util.Objects;
  * @author dengtianjia
  * @date 2021/8/20
  */
-@EsQueryHandle(handleEnum = QueryType.MATCH)
-public class MatchQueryHandler extends AbstractQueryHandler {
+@EsQueryHandle(queryType = QueryType.MATCH)
+public class MatchQueryHandler extends AbstractQueryHandler<ExtMatchBean, ExtMatch> {
 
     @Override
-    public AbstractEsRequestHolder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
-        MatchQueryBuilder matchQuery = QueryBuilders.matchQuery(queryDes.getField(), queryDes.getValue());
-        Float boost = queryDes.getBoost();
-        if (Objects.nonNull(boost)) {
-            matchQuery.boost(boost);
-        }
+    public QueryBuilder handle(EsQueryFieldBean<ExtMatchBean> queryDes, AbstractEsRequestHolder searchHelper) {
+        MatchQueryBuilder matchQuery = QueryBuilders.matchQuery(queryDes.getField(), queryDes.getValue()).boost(queryDes.getBoost());
         searchHelper.chain(matchQuery);
-        return searchHelper;
+        return matchQuery;
     }
 
     @Override
-    protected EsQueryFieldBean explainExtendDefine(EsQueryFieldBean queryDes) {
-        return super.explainExtendDefine(queryDes);
+    protected void handleExtConfig(QueryBuilder queryBuilder, EsQueryFieldBean<ExtMatchBean> queryDes) {
+        super.annotationMapper(queryDes, ExtMatch.class, queryBuilder);
     }
-
 }

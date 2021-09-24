@@ -8,18 +8,13 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.search.MatchQuery;
-import org.elasticsearch.script.Script;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.sort.ScriptSortBuilder;
-import org.elasticsearch.search.sort.SortBuilders;
-import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Test;
+import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
-import org.pippi.elasticsearch.helper.core.DefaultEsSearchHelper;
 import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
-import org.pippi.elasticsearch.helper.core.EsSearchHelper;
+import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.holder.BoolEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,14 +48,15 @@ public class EsQueryHelperTest {
      */
     @Test
     public void testQueryHelper() throws IOException {
-        DefaultEsSearchHelper esSearchHelper = EsSearchHelper.builder()
-                .index(_TEST_INDEX)
-                .clazz(DefaultEsSearchHelper.class)
+        BoolEsRequestHolder esSearchHelper = AbstractEsRequestHolder.builder()
+                .queryModel(QueryModel.BOOL)
+                .indexName(_TEST_INDEX)
                 .build();
-        esSearchHelper.getBool()
+
+        esSearchHelper.getQueryBuilder()
                 .should(
                         QueryBuilders.multiMatchQuery("hi", "title", "describe")
-                        .zeroTermsQuery(MatchQuery.ZeroTermsQuery.NONE)
+                        .zeroTermsQuery(MatchQuery.ZeroTermsQuery.ALL)
                         .fuzziness(Fuzziness.ONE)
                 )
         ;

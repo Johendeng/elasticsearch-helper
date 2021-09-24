@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.core.hook;
 
-import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**

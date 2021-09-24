@@ -11,4 +11,5 @@ import java.io.Serializable;
 public class StandAggResp implements Serializable {
 
 
+
 }

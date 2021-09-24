@@ -5,7 +5,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
-import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 import java.util.Objects;
@@ -23,7 +23,7 @@ import java.util.Objects;
  * @author dengtianjia
  * @date 2021/8/17
  */
-@EsQueryHandle(handleEnum = QueryType.TERM)
+@EsQueryHandle(queryType = QueryType.TERM)
 public class TermQueryHandler extends AbstractQueryHandler {
 
     /**
@@ -33,7 +33,7 @@ public class TermQueryHandler extends AbstractQueryHandler {
      * @return
      */
     @Override
-    public AbstractEsRequestHolder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
         QueryBuilder termQueryBuilder = null;
         if (Objects.nonNull(queryDes.getValue())) {
             termQueryBuilder = QueryBuilders.termQuery(queryDes.getField(), queryDes.getValue());
@@ -41,12 +41,10 @@ public class TermQueryHandler extends AbstractQueryHandler {
         if (Objects.nonNull(queryDes.getValues())) {
             termQueryBuilder = QueryBuilders.termsQuery(queryDes.getField(), queryDes.getValues());
         }
-        if (Objects.nonNull(queryDes.getBoost())) {
-            termQueryBuilder.boost(queryDes.getBoost());
-        }
-        Asserts.notNull(termQueryBuilder, "un-generate useful termQuery");
+        termQueryBuilder.boost(queryDes.getBoost());
+        Asserts.notNull(termQueryBuilder, "[TermQueryHandler]un-generate useful termQuery");
         searchHelper.chain(termQueryBuilder);
-        return searchHelper;
+        return termQueryBuilder;
     }
 
 }

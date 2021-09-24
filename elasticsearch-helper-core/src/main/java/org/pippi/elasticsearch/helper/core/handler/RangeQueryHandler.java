@@ -1,8 +1,9 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
+import org.elasticsearch.index.query.QueryBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
-import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
@@ -11,12 +12,12 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * @author JohenTeng
  * @date 2021/8/23
  */
-@EsQueryHandle(handleEnum = QueryType.RANGE)
+@EsQueryHandle(queryType = QueryType.RANGE)
 public class RangeQueryHandler extends AbstractQueryHandler{
 
     @Override
-    public AbstractEsRequestHolder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
 
-        return searchHelper;
+        return null;
     }
 }

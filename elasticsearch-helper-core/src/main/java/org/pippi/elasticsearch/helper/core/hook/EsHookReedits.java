@@ -2,7 +2,6 @@ package org.pippi.elasticsearch.helper.core.hook;
 
 import java.util.Map;
 import org.elasticsearch.action.search.SearchResponse;
-import org.pippi.elasticsearch.helper.core.EsSearchHelper;
 import com.google.common.collect.Maps;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 

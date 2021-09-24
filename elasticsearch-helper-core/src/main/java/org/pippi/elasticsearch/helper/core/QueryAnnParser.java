@@ -6,18 +6,21 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryField;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.MultiQueryField;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.Ext;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.beans.mapping.EsComplexParam;
-import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.mapping.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsComplexParam;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.utils.TypeUtils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * project: elasticsearch-helper
@@ -85,6 +88,10 @@ public class QueryAnnParser {
             if (field.isAnnotationPresent(EsQueryField.class) || field.isAnnotationPresent(MultiQueryField.class)){
                 EsQueryFieldBean queryDes = this.mapFieldAnn(field, view);
                 if (Objects.nonNull(queryDes)) {
+                    Set<Annotation> annotationList = Arrays.stream(field.getAnnotations())
+                            .filter(ann -> ann.annotationType().isAnnotationPresent(Ext.class))
+                            .collect(Collectors.toSet());
+                    queryDes.setExtAnnotations(annotationList);
                     queryDesList.add(queryDes);
                 }
             }
@@ -185,15 +192,11 @@ public class QueryAnnParser {
             throw new EsHelperQueryException("META-TYPE missing, it's necessary");
         }
 
-        String script = ann.script();
-        String extendDefine = ann.detail();
         Float  boost = ann.boost();
 
         queryDes.setField(column);
         queryDes.setQueryType(query);
         queryDes.setMeta(meta);
-        queryDes.setScript(script);
-        queryDes.setDetail(extendDefine);
         queryDes.setBoost(boost);
 
         this.readHighLight(queryDes, field);
