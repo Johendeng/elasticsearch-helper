@@ -22,14 +22,13 @@ public class ExtAnnBeanMapUtils {
      *  phrase annotation to JavaBean
      * @param annotation target Annotation
      * @param clazz mapping class
-     * @param <T> targetClass
      * @return target JavaBean(T)
      */
-    public static <T>T mapping(Annotation annotation, Class<T> clazz) {
+    public static Object mapping(Annotation annotation, Class<?> clazz) {
         Field[] extBeanFields = clazz.getDeclaredFields();
         try {
-            Constructor<T> constructor = clazz.getConstructor(ArrayUtils.EMPTY_CLASS_ARRAY);
-            T extBean = constructor.newInstance(ArrayUtils.EMPTY_OBJECT_ARRAY);
+            Constructor<?> constructor = clazz.getConstructor(ArrayUtils.EMPTY_CLASS_ARRAY);
+            Object extBean = constructor.newInstance(ArrayUtils.EMPTY_OBJECT_ARRAY);
             Map<String, Object> annMapping = AnnotationUtils.toMap(annotation);
             for (Field field : extBeanFields) {
                 field.setAccessible(true);

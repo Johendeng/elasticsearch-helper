@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.mapping;
+package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.search.MatchQuery;
@@ -10,7 +10,7 @@ import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
  * @author JohenTeng
  * @date 2021/9/24
  */
-public class ExtMatchBean extends Ext<MatchQueryBuilder> {
+public class MatchQueryBean extends QueryBean<MatchQueryBuilder> {
 
     private int prefixLength;
 
@@ -86,11 +86,11 @@ public class ExtMatchBean extends Ext<MatchQueryBuilder> {
         this.fuzziness = fuzziness;
     }
 
-    public MatchQuery.ZeroTermsQuery getZerTermsQuery() {
+    public org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery getZerTermsQuery() {
         return zerTermsQuery;
     }
 
-    public void setZerTermsQuery(MatchQuery.ZeroTermsQuery zerTermsQuery) {
+    public void setZerTermsQuery(org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery zerTermsQuery) {
         this.zerTermsQuery = zerTermsQuery;
     }
 }

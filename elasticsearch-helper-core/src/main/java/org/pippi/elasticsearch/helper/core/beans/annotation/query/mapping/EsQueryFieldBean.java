@@ -1,20 +1,30 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryField;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.mapping.Ext;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryBean;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
-import java.util.Set;
 
 /**
- * mapping the annotation information of @EsQueryFiled
- * @see EsQueryField
+ * mapping the annotation information of
+ * annotated by {@link org.pippi.elasticsearch.helper.core.beans.annotation.query.Query}
+ *
+ * ex:
+ * 	{@link org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match}
+ * 	{@link org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Fuzzy}
+ * 	{@link org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term}
+ * 	{@link org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Terms}
+ * 	{@link org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Nested}
+ * 	{@link org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MultiMatch}
+ *    ......
+ *
+ * @see Base
  * @author JohenTeng
  * @date 2021/8/9
  */
-public class EsQueryFieldBean<T extends Ext> implements Serializable {
+public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 
 	/**
 	 *  对应查询字段
@@ -25,11 +35,6 @@ public class EsQueryFieldBean<T extends Ext> implements Serializable {
 	 *  查询参数值
 	 */
 	private Object value;
-
-	/**
-	 *  多个查询参数值
-	 */
-	private Object[] values;
 
 	/**
 	 *  查询类型 (required)
@@ -57,15 +62,17 @@ public class EsQueryFieldBean<T extends Ext> implements Serializable {
 	private T extBean;
 
 	/**
-	 *  extend @Ext*** annotation
+	 * annotation that annotated by @Query
 	 */
-	private Set<Annotation> extAnnotations;
+	private Annotation extAnnotation;
 
 	/**
 	 *  定义字段是否需要高亮
 	 */
-	private HighLight highLight;
+	private boolean highLight;
 
+
+	private String highLightKey;
 
 	public EsQueryFieldBean() {
 	}
@@ -96,14 +103,6 @@ public class EsQueryFieldBean<T extends Ext> implements Serializable {
 		this.value = value;
 	}
 
-	public Object[] getValues() {
-		return values;
-	}
-
-	public void setValues(Object[] values) {
-		this.values = values;
-	}
-
 	public String getQueryType() {
 		return queryType;
 	}
@@ -128,12 +127,12 @@ public class EsQueryFieldBean<T extends Ext> implements Serializable {
 		this.extBean = extBean;
 	}
 
-	public Set<Annotation> getExtAnnotations() {
-		return extAnnotations;
+	public Annotation getExtAnnotation() {
+		return extAnnotation;
 	}
 
-	public void setExtAnnotations(Set<Annotation> extAnnotations) {
-		this.extAnnotations = extAnnotations;
+	public void setExtAnnotation(Annotation extAnnotation) {
+		this.extAnnotation = extAnnotation;
 	}
 
 	public Float getBoost() {
@@ -152,39 +151,19 @@ public class EsQueryFieldBean<T extends Ext> implements Serializable {
 		this.logicConnector = logicConnector;
 	}
 
-	public void setHighLight(boolean enable, String key) {
-		this.highLight = new HighLight(enable, key);
-	}
-
-	public HighLight getHighLight() {
+	public boolean isHighLight() {
 		return highLight;
 	}
 
-	public static class HighLight {
-
-		private boolean enable;
-		private String key;
-
-		public HighLight(boolean enable, String key) {
-			this.enable = enable;
-			this.key = key;
-		}
-
-		public boolean isEnable() {
-			return enable;
-		}
-
-		public void setEnable(boolean enable) {
-			this.enable = enable;
-		}
-
-		public String getKey() {
-			return key;
-		}
-
-		public void setKey(String key) {
-			this.key = key;
-		}
+	public void setHighLight(boolean highLight) {
+		this.highLight = highLight;
 	}
 
+	public String getHighLightKey() {
+		return highLightKey;
+	}
+
+	public void setHighLightKey(String highLightKey) {
+		this.highLightKey = highLightKey;
+	}
 }

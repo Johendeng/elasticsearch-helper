@@ -1,11 +1,11 @@
 package org.pippi.elasticsearch.helper.sample.spring.beans.req;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryField;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.Ext;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.ExtMatch;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
+import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 
@@ -18,10 +18,13 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 @EsQueryIndex(index = "test", model = QueryModel.BOOL)
 public class ContentSearchParam {
 
-    @EsQueryField(queryType = QueryType.TERM, meta = EsMeta.INTEGER)
+    @Match(@Base( meta = EsMeta.INTEGER))
     private Integer intensity;
 
-    @EsQueryField(queryType = QueryType.MATCH, meta = EsMeta.TEXT
+    @Match(
+            value = @Base(meta = EsMeta.TEXT, highLight = true),
+            fuzziness = Fuzzy.ONE,
+            prefixLength = 1
     )
     private String title;
 

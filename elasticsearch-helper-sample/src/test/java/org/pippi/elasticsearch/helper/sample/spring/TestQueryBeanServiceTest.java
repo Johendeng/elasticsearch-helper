@@ -21,7 +21,7 @@ import javax.annotation.Resource;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SampleApplication.class)
-public class TestQueryServiceTest {
+public class TestQueryBeanServiceTest {
 
     @Resource
     private TestQueryService testQueryService;
@@ -29,7 +29,7 @@ public class TestQueryServiceTest {
     @Test
     public void testQueryService(){
         ContentSearchParam param = new ContentSearchParam();
-        param.setTitle("课程");
+        param.setTitle("课呈");
         BaseResp<Content> baseResp = testQueryService.queryRecordByIntensity(param);
         System.out.println(SerializerUtils.parseObjToJson(baseResp));
     }

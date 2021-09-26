@@ -6,11 +6,11 @@ import java.lang.annotation.*;
 
 /**
  *  define the query handle
- * project: elasticsearch-helper
- * package: org.pippi.elasticsearch.helper.beans.annotation
- * date:    2021/7/18
+ * @project: elasticsearch-helper
+ * @package: org.pippi.elasticsearch.helper.beans.annotation
+ * @date:    2021/7/18
  * @author: JohenTeng
- * email: 1078481395@qq.com
+ * @email: 1078481395@qq.com
  **/
 @Inherited
 @Documented
@@ -18,8 +18,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsQueryHandle {
 
-    String queryTypeStringify() default "";
+    String queryType() default "";
 
-    QueryType queryType() default QueryType.MATCH;
-
+    Class<? extends Annotation> value() default Annotation.class;
 }

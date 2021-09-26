@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.sample.spring.beans.resp;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsField;
 import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsIndex;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;

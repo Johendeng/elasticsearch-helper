@@ -85,9 +85,9 @@ public class QueryHandlerFactory {
                 throw new EsHelperConfigException("query handle have to ann by @EsQueryHandle");
             }
             EsQueryHandle ann = targetClazz.getAnnotation(EsQueryHandle.class);
-            String handleName = ann.queryTypeStringify();
+            String handleName = ann.queryType();
             if (StringUtils.isBlank(handleName)) {
-                handleName = ann.queryType().getQuery();
+                handleName = ann.value().getSimpleName();
             }
             if (StringUtils.isBlank(handleName)) {
                 throw new EsHelperConfigException("handle-name is undefine");

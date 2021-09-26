@@ -19,14 +19,17 @@ public class EsQueryIndexBean {
 
 	private String[] excludeFields;
 
+	private float minScore;
+
 	public EsQueryIndexBean() {
 	}
 
-	public EsQueryIndexBean(String indexName, QueryModel esQueryModel, String[] fetchFields, String[] excludeFields) {
+	public EsQueryIndexBean(String indexName, QueryModel esQueryModel, String[] fetchFields, String[] excludeFields, float minScore) {
 		this.indexName = indexName;
 		this.esQueryModel = esQueryModel;
 		this.fetchFields = fetchFields;
 		this.excludeFields = excludeFields;
+		this.minScore = minScore;
 	}
 
 	public String getIndexName() {
@@ -51,5 +54,21 @@ public class EsQueryIndexBean {
 
 	public void setFetchFields(String[] fetchFields) {
 		this.fetchFields = fetchFields;
+	}
+
+	public String[] getExcludeFields() {
+		return excludeFields;
+	}
+
+	public void setExcludeFields(String[] excludeFields) {
+		this.excludeFields = excludeFields;
+	}
+
+	public float getMinScore() {
+		return minScore;
+	}
+
+	public void setMinScore(float minScore) {
+		this.minScore = minScore;
 	}
 }

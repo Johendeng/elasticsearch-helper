@@ -27,9 +27,9 @@ import java.io.IOException;
  * @author JohenTeng
  * @date 2021/8/3
  */
-public class EsQueryHelperTest {
+public class EsQueryBeanHelperTest {
 
-    private static final Logger log = LoggerFactory.getLogger(EsQueryHelperTest.class);
+    private static final Logger log = LoggerFactory.getLogger(EsQueryBeanHelperTest.class);
 
     private static final String _LOCAL_DEV = "localhost";
     private static final String _TEST_INDEX = "content_s";

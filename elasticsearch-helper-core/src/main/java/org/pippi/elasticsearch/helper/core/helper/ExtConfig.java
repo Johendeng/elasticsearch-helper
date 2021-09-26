@@ -11,6 +11,7 @@ import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
  * @author JohenTeng
  * @date 2021/9/22
  */
+@Deprecated
 public class ExtConfig {
 
     private Fuzzy fuzzy;

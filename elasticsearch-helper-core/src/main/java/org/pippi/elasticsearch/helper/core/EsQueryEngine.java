@@ -30,6 +30,7 @@ public class EsQueryEngine {
                                                                 .indexName(indexQueryBean.getIndexName())
                                                                 .queryModel(indexQueryBean.getEsQueryModel())
                                                                 .build();
+
         for (EsQueryFieldBean queryDes : queryDesList) {
             String queryKey = queryDes.getQueryType();
             AbstractQueryHandler queryHandle = QueryHandlerFactory.getTargetHandleInstance(queryKey);

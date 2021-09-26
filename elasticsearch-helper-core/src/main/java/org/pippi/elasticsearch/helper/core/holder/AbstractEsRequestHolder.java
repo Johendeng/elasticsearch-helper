@@ -117,6 +117,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		public QueryModel esQueryModel;
 		public String[] fetchFields;
 		public String[] excludeFields;
+		public float minScore;
 
 		public EsRequestHolderBuilder indexBean(EsQueryIndexBean indexBean) {
 			this.indexName = indexBean.getIndexName();
@@ -135,6 +136,11 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			return this;
 		}
 
+		public EsRequestHolderBuilder minScore(float minScore){
+			this.minScore = minScore;
+			return this;
+		}
+
 		//TODO: 此处应该修改实现，避免新增 holder 还要修改此处代码
 		public <R extends AbstractEsRequestHolder>R build(){
 			if (StringUtils.isBlank(indexName) || esQueryModel == null){
@@ -145,6 +151,9 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 				boolEsRequestHolder.init(indexName);
 				if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
 					boolEsRequestHolder.getSource().fetchSource(this.fetchFields, this.excludeFields);
+				}
+				if (minScore > 0) {
+					boolEsRequestHolder.getSource().minScore(minScore);
 				}
 				return (R)boolEsRequestHolder;
 			}

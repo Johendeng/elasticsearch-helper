@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * phrase Es-response to required JavaBean-Response
+ *
  * project: elasticsearch-helper
  * package: com.poet.elasticsearch.helper
  * date:    2021/5/8

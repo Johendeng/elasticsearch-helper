@@ -1,6 +1,8 @@
-package org.pippi.elasticsearch.helper.core.beans.annotation.query.ext;
+package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
 import org.elasticsearch.index.search.MatchQuery;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
 
 import java.lang.annotation.*;
@@ -11,12 +13,14 @@ import java.lang.annotation.*;
  * @author JohenTeng
  * @date 2021/9/23
  */
-@Ext
+@Query
 @Inherited
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExtMatch {
+public @interface Match {
+
+    Base value();
 
     int prefixLength() default 0;
 

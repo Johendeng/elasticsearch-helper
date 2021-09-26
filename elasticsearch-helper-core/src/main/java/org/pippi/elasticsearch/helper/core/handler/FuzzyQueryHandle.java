@@ -1,9 +1,12 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
+import org.elasticsearch.index.query.FuzzyQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Fuzzy;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.FuzzyQueryBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
@@ -12,13 +15,15 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * @author JohenTeng
  * @date 2021/9/22
  */
-@EsQueryHandle(queryType = QueryType.FUZZY)
-public class FuzzyQueryHandle extends AbstractQueryHandler{
+@EsQueryHandle(Fuzzy.class)
+public class FuzzyQueryHandle extends AbstractQueryHandler<FuzzyQueryBean>{
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
-
-
-        return null;
+        FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery(queryDes.getField(), queryDes.getValue())
+                .boost(queryDes.getBoost());
+        searchHelper.chain(fuzzyQueryBuilder);
+        return fuzzyQueryBuilder;
     }
+
 }

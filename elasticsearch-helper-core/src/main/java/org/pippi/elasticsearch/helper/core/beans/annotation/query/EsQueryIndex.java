@@ -40,4 +40,10 @@ public @interface EsQueryIndex {
      * @return
      */
     String[] exclude() default {};
+
+    /**
+     * min fetch doc-score, default is 0.0
+     * @return
+     */
+    float minScore() default 0f;
 }

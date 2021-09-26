@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.beans.annotation.query.ext;
+package org.pippi.elasticsearch.helper.core.beans.annotation.query;
 
 import java.lang.annotation.*;
 
@@ -12,5 +12,5 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Ext {
+public @interface Query {
 }

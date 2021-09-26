@@ -1,12 +1,11 @@
 package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryField;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.MultiQueryField;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.ext.Ext;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
@@ -16,20 +15,20 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQuer
 import org.pippi.elasticsearch.helper.core.utils.TypeUtils;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
+import java.lang.reflect.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * project: elasticsearch-helper
- * package: org.pippi.elasticsearch.helper.view
- * date:    2021/7/18
+ * @project: elasticsearch-helper
+ * @package: org.pippi.elasticsearch.helper.view
+ * @date:    2021/7/18
  * @Author:  JohenTeng
- * email: 1078481395@qq.com
+ * @email: 1078481395@qq.com
  **/
 public class QueryAnnParser {
+
+    private static final String BASE_FILED = "value";
 
     private volatile static QueryAnnParser INSTANCE ;
 
@@ -65,8 +64,8 @@ public class QueryAnnParser {
         QueryModel model = ann.model();
         String[] fetchFields = ann.fetch();
         String[] excludeFields = ann.exclude();
-
-        return new EsQueryIndexBean(index, model, fetchFields, excludeFields);
+        float minScore = ann.minScore();
+        return new EsQueryIndexBean(index, model, fetchFields, excludeFields, minScore);
 
     }
 
@@ -85,15 +84,12 @@ public class QueryAnnParser {
         List<Field> fieldList = this.getFields(clazz, visitParent);
         List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
-            if (field.isAnnotationPresent(EsQueryField.class) || field.isAnnotationPresent(MultiQueryField.class)){
-                EsQueryFieldBean queryDes = this.mapFieldAnn(field, view);
-                if (Objects.nonNull(queryDes)) {
-                    Set<Annotation> annotationList = Arrays.stream(field.getAnnotations())
-                            .filter(ann -> ann.annotationType().isAnnotationPresent(Ext.class))
-                            .collect(Collectors.toSet());
-                    queryDes.setExtAnnotations(annotationList);
-                    queryDesList.add(queryDes);
-                }
+            Set<Annotation> annotationSet = Arrays.stream(field.getAnnotations())
+                    .filter(ann -> ann.annotationType().isAnnotationPresent(Query.class))
+                    .collect(Collectors.toSet());
+            if (CollectionUtils.isNotEmpty(annotationSet)){
+                List<EsQueryFieldBean> queryDes = this.mapFieldAnn(field, view, annotationSet);
+                queryDesList.addAll(queryDes);
             }
         }
         return queryDesList;
@@ -116,7 +112,18 @@ public class QueryAnnParser {
         return callBackList;
     }
 
-    private EsQueryFieldBean mapFieldAnn(Field field, Object viewObj) {
+    private List<EsQueryFieldBean> mapFieldAnn(Field field, Object viewObj, Set<Annotation> annotationSet) {
+        final List<EsQueryFieldBean> res = Lists.newArrayList();
+        for (Annotation ann : annotationSet) {
+            Optional.ofNullable(parseValue(field, viewObj)).ifPresent(queryDes ->{
+                this.parseAnn(queryDes, field, ann);
+                res.add(queryDes);
+            });
+        }
+        return res;
+    }
+
+    private EsQueryFieldBean parseValue(Field field, Object viewObj){
         try {
             EsQueryFieldBean queryDes = new EsQueryFieldBean<>();
             Class<?> fieldType = field.getType();
@@ -135,7 +142,7 @@ public class QueryAnnParser {
                     if (!TypeUtils.isBaseType(parameterizeType.getClass())) {
                         throw new EsHelperQueryException("Just support Collection<@JavaBaseType>");
                     }
-                    queryDes.setValues(((Collection) val).toArray());
+                    queryDes.setValue(val);
                 } else {
                     throw new EsHelperQueryException("Just support single parameterized-type");
                 }
@@ -144,70 +151,60 @@ public class QueryAnnParser {
             } else {
                 throw new EsHelperQueryException("config @EsQueryField at an Error-Type Field, Just support Primitive-type (exclude void.class) or their Decorate-type or Collection or Map or EsComplexParam");
             }
-            this.parseAnn(queryDes, field);
             return queryDes;
         } catch (IllegalAccessException e) {
             throw new EsHelperQueryException("unable reach target field ", e);
         }
     }
 
-    private void parseAnn(EsQueryFieldBean queryDes, Field field) {
-        MultiQueryField multiQueryField = field.getAnnotation(MultiQueryField.class);
-        if (multiQueryField != null) {
-            EsQueryField[] queryFieldArr = multiQueryField.value();
-            for (EsQueryField esQueryField : queryFieldArr) {
-                this.readSingleAnn(queryDes, esQueryField, field);
+    private void parseAnn(EsQueryFieldBean queryDes, Field field, Annotation targetAnn) {
+        try {
+            queryDes.setExtAnnotation(targetAnn);
+            Method baseMethod = targetAnn.getClass().getDeclaredMethod(BASE_FILED);
+            Base ann = (Base) baseMethod.invoke(targetAnn);
+            EsConnector esConnector = ann.connect();
+            if (esConnector == null) {
+                throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");
             }
-        } else {
-            EsQueryField esQueryField = field.getAnnotation(EsQueryField.class);
-            this.readSingleAnn(queryDes, esQueryField, field);
+
+            String column = ann.name();
+            if (StringUtils.isBlank(column)) {
+                column = field.getName();
+            }
+
+            String query = ann.queryType();
+            if (StringUtils.isBlank(query)) {
+                query =  targetAnn.annotationType().getSimpleName();
+            }
+            if (StringUtils.isBlank(query)) {
+                throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
+            }
+
+            String meta = ann.metaStringify();
+            if (StringUtils.isBlank(meta)) {
+                meta =  ann.meta().getType();
+            }
+            if (StringUtils.isBlank(meta)) {
+                throw new EsHelperQueryException("META-TYPE missing, it's necessary");
+            }
+
+            queryDes.setField(column);
+            queryDes.setQueryType(query);
+            queryDes.setMeta(meta);
+            queryDes.setBoost(ann.boost());
+            queryDes.setHighLight(ann.highLight());
+            queryDes.setHighLightKey(ann.highLightKey());
+
+            //TODO 处理该异常
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 
-
-    private void readSingleAnn(EsQueryFieldBean queryDes, EsQueryField ann, Field field) {
-        EsConnector esConnector = ann.connect();
-        if (esConnector == null) {
-            throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");
-        }
-
-        String column = ann.name();
-        if (StringUtils.isBlank(column)) {
-            column = field.getName();
-        }
-
-        String query = ann.queryTypeStringify();
-        if (StringUtils.isBlank(query)) {
-            query =  ann.queryType().getQuery();
-        }
-        if (StringUtils.isBlank(query)) {
-            throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
-        }
-
-        String meta = ann.metaStringify();
-        if (StringUtils.isBlank(meta)) {
-            meta =  ann.meta().getType();
-        }
-        if (StringUtils.isBlank(meta)) {
-            throw new EsHelperQueryException("META-TYPE missing, it's necessary");
-        }
-
-        Float  boost = ann.boost();
-
-        queryDes.setField(column);
-        queryDes.setQueryType(query);
-        queryDes.setMeta(meta);
-        queryDes.setBoost(boost);
-
-        this.readHighLight(queryDes, field);
-    }
-
-    private void readHighLight(EsQueryFieldBean queryDes, Field field){
-        HighLight highLightAnn = field.getAnnotation(HighLight.class);
-        if (Objects.nonNull(highLightAnn)) {
-            queryDes.setHighLight(true, highLightAnn.value());
-        }
-    }
 
 
 }
