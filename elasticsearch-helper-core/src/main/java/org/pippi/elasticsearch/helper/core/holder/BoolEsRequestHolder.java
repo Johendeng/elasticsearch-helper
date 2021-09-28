@@ -3,9 +3,10 @@ package org.pippi.elasticsearch.helper.core.holder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
+import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 
 /**
- * 描述 es组合查询 请求持有对象
+ * bool query builder holder
  *
  * @author JohenTeng
  * @date 2021/8/9

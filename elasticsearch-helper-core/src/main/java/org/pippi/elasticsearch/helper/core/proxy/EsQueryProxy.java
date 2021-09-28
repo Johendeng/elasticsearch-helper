@@ -3,8 +3,8 @@ package org.pippi.elasticsearch.helper.core.proxy;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.pippi.elasticsearch.helper.core.beans.annotation.hook.RequestHook;
-import org.pippi.elasticsearch.helper.core.beans.annotation.hook.ResponseHook;
+import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseRequestHook;
+import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.beans.resp.StandAggResp;
@@ -43,6 +43,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
         this.client = client;
+        EsHookReedits.loadHooksFromTargetInterface(targetInterface);
     }
 
     public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, boolean enableLogOutEsQueryJson) {
@@ -50,6 +51,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
         this.visitQueryBeanParent = visitQueryBeanParent;
         this.client = client;
         this.enableLogOutEsQueryJson = enableLogOutEsQueryJson;
+        EsHookReedits.loadHooksFromTargetInterface(targetInterface);
     }
 
     @Override
@@ -60,16 +62,16 @@ public class EsQueryProxy<T> implements InvocationHandler {
         if (args != null && args.length == 1) {
             Object param = args[0];
             AbstractEsRequestHolder esHolder = EsQueryEngine.execute(param, visitQueryBeanParent);
-            if (method.isAnnotationPresent(RequestHook.class)) {
-                RequestHook reqHookAnn = method.getAnnotation(RequestHook.class);
+            if (method.isAnnotationPresent(UseRequestHook.class)) {
+                UseRequestHook reqHookAnn = method.getAnnotation(UseRequestHook.class);
                 esHolder = EsHookReedits.useReqHook(reqHookAnn.value(), esHolder, param);
             }
             if (enableLogOutEsQueryJson) {
                 log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
             }
             SearchResponse resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
-            if (method.isAnnotationPresent(ResponseHook.class)) {
-                ResponseHook respHookAnn = method.getAnnotation(ResponseHook.class);
+            if (method.isAnnotationPresent(UseResponseHook.class)) {
+                UseResponseHook respHookAnn = method.getAnnotation(UseResponseHook.class);
                 return EsHookReedits.useRespHook(respHookAnn.value(), resp);
             } else {
                 Class<?> returnType = method.getReturnType();

@@ -10,6 +10,9 @@ package org.pippi.elasticsearch.helper.core.beans.enums;
  */
 public enum EsMeta {
 
+    /**
+     *
+     */
     KEYWORD("keyword", 1),
 
     BOOLEAN("boolean",2),
@@ -36,7 +39,7 @@ public enum EsMeta {
     IP("ip",206),
     TOKEN_COUNT("token_count",207),
 
-    UN_COVER("un_cover", -1);
+    COMPLEX("complex", -1);
     ;
 
 

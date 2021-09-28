@@ -4,10 +4,13 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryBean;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.config.GlobalEsQueryConfig;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.utils.ExtAnnBeanMapUtils;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
@@ -22,8 +25,6 @@ import java.util.Objects;
 public abstract class AbstractQueryHandler<T extends QueryBean> {
 
     protected static final String _SEPARATOR = ",";
-
-    private static final String EXT_BEAN_FIELD_NAME = "extBean";
 
     AbstractQueryHandler(){}
 
@@ -71,12 +72,17 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
      */
     protected final EsQueryFieldBean<T> handleExtBean(EsQueryFieldBean<T> queryDes) {
         try {
-            Class<?> extBeanClazz = queryDes.getClass().getDeclaredField(EXT_BEAN_FIELD_NAME).getType();
-            T extBean = (T) ExtAnnBeanMapUtils.mapping(queryDes.getExtAnnotation(), extBeanClazz);
+            Type[] actualTypeArguments = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
+            if (actualTypeArguments.length == 0) {
+                throw new EsHelperConfigException("the AbstractQueryHandler<T>, T is un-define");
+            }
+            String fullClassPath = actualTypeArguments[0].getTypeName();
+            Class<?> aClass = Class.forName(fullClassPath);
+            T extBean = (T) ExtAnnBeanMapUtils.mapping(queryDes.getExtAnnotation(), aClass);
             queryDes.setExtBean(extBean);
             return queryDes;
-        } catch (NoSuchFieldException e) {
-            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new EsHelperConfigException("queryHandle-actualType class not found, cause:", e);
         }
     }
 

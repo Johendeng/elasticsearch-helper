@@ -24,7 +24,7 @@ public @interface EsField {
      *  data-type
      * @return
      */
-    EsMeta type() default EsMeta.UN_COVER;
+    EsMeta type() default EsMeta.TEXT;
 
     String typeStringify() default "";
 

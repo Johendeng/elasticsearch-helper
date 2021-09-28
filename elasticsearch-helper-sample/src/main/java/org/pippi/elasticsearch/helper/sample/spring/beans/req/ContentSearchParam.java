@@ -18,7 +18,6 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 @EsQueryIndex(index = "test", model = QueryModel.BOOL)
 public class ContentSearchParam {
 
-    @Match(@Base( meta = EsMeta.INTEGER))
     private Integer intensity;
 
     @Match(
@@ -27,6 +26,9 @@ public class ContentSearchParam {
             prefixLength = 1
     )
     private String title;
+
+
+
 
     public Integer getIntensity() {
         return intensity;

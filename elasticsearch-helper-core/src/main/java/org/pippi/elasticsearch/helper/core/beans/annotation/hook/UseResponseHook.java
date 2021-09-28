@@ -4,17 +4,17 @@ import java.lang.annotation.*;
 
 /**
  * Project Name:elasticsearch-helper
- * File Name:RequestHook
+ * File Name:ResponseHook
  * Package Name:org.pippi.elasticsearch.helper.beans.annotation
- * Date:2021/7/21 00:31
- * @Author: dengtianjia
+ * Date:2021/7/21 00:33
+ * @Author:dengtianjia
  * Description:
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
-public @interface RequestHook {
+public @interface UseResponseHook {
 
-    String value() ;
+    String value();
 
 }

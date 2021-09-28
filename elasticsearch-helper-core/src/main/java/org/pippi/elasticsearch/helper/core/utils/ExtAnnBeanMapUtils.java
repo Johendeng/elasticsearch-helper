@@ -27,8 +27,8 @@ public class ExtAnnBeanMapUtils {
     public static Object mapping(Annotation annotation, Class<?> clazz) {
         Field[] extBeanFields = clazz.getDeclaredFields();
         try {
-            Constructor<?> constructor = clazz.getConstructor(ArrayUtils.EMPTY_CLASS_ARRAY);
-            Object extBean = constructor.newInstance(ArrayUtils.EMPTY_OBJECT_ARRAY);
+            Constructor<?> constructor = clazz.getConstructor();
+            Object extBean = constructor.newInstance();
             Map<String, Object> annMapping = AnnotationUtils.toMap(annotation);
             for (Field field : extBeanFields) {
                 field.setAccessible(true);

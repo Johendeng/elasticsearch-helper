@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  * @author JohenTeng
  * @date 2021/9/17
  */
-//@Aspect
+//@Aspect TODO: It's use for adapter springboot-data-elasticsearch's api
 //@Component
 public class EsHelperQueryAspect {
 

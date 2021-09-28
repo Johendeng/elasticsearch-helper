@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.Objects;
 
 /**
  * EsHelperAutoConfiguration

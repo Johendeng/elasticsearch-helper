@@ -22,15 +22,10 @@ public class EsQueryEngine {
      * @return
      */
     public static AbstractEsRequestHolder execute(Object queryViewObj, boolean visitParent) {
-
         QueryAnnParser translator = QueryAnnParser.instance();
         EsQueryIndexBean indexQueryBean = translator.getIndex(queryViewObj);
         List<EsQueryFieldBean> queryDesList = translator.read(queryViewObj, visitParent);
-        AbstractEsRequestHolder helper = AbstractEsRequestHolder.builder()
-                                                                .indexName(indexQueryBean.getIndexName())
-                                                                .queryModel(indexQueryBean.getEsQueryModel())
-                                                                .build();
-
+        AbstractEsRequestHolder helper = AbstractEsRequestHolder.builder().config(indexQueryBean).build();
         for (EsQueryFieldBean queryDes : queryDesList) {
             String queryKey = queryDes.getQueryType();
             AbstractQueryHandler queryHandle = QueryHandlerFactory.getTargetHandleInstance(queryKey);

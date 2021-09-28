@@ -1,16 +1,24 @@
 package org.pippi.elasticsearch.helper.core.holder;
 
 
+import com.google.common.collect.Maps;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
+import org.reflections.Reflections;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  *  hold es request bean
@@ -19,6 +27,17 @@ import java.util.List;
  * @date 2021/8/8
  */
 public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
+
+
+	private static final Map<QueryModel, Class<? extends AbstractEsRequestHolder>> HOLDER_CLAZZ_MAP = Maps.newHashMap();
+
+	static {
+		/**
+		 *  implements *EsRequestHolder load on this place
+		 */
+		AbstractEsRequestHolder.regisHolder(QueryModel.BOOL, BoolEsRequestHolder.class);
+
+	}
 
 	private String indexName;
 
@@ -44,6 +63,16 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		request.source(source);
 		this.defineDefaultLogicConnector();
 		return this;
+	}
+
+	public AbstractEsRequestHolder simpleInitialize() {
+		this.defineQueryBuilder();
+		this.defineDefaultLogicConnector();
+		return this;
+	}
+
+	public static void regisHolder(QueryModel model, Class<? extends AbstractEsRequestHolder> clazz) {
+		HOLDER_CLAZZ_MAP.put(model, clazz);
 	}
 
 	/**
@@ -119,10 +148,11 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		public String[] excludeFields;
 		public float minScore;
 
-		public EsRequestHolderBuilder indexBean(EsQueryIndexBean indexBean) {
+		public EsRequestHolderBuilder config(EsQueryIndexBean indexBean) {
 			this.indexName = indexBean.getIndexName();
 			this.esQueryModel = indexBean.getEsQueryModel();
 			this.fetchFields = indexBean.getFetchFields();
+			this.minScore = indexBean.getMinScore();
 			return this;
 		}
 
@@ -141,24 +171,51 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			return this;
 		}
 
-		//TODO: 此处应该修改实现，避免新增 holder 还要修改此处代码
 		public <R extends AbstractEsRequestHolder>R build(){
 			if (StringUtils.isBlank(indexName) || esQueryModel == null){
 				throw new RuntimeException("index and query model cant be null");
 			}
-			if (esQueryModel == QueryModel.BOOL) {
-				BoolEsRequestHolder boolEsRequestHolder = new BoolEsRequestHolder();
-				boolEsRequestHolder.init(indexName);
-				if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
-					boolEsRequestHolder.getSource().fetchSource(this.fetchFields, this.excludeFields);
+			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(esQueryModel);
+			if (Objects.nonNull(targetClazz)) {
+				try {
+					Constructor<? extends AbstractEsRequestHolder> targetConstructor = targetClazz.getConstructor(new Class[]{});
+					AbstractEsRequestHolder holder = targetConstructor.newInstance(new Object[]{});
+					holder.init(indexName);
+					if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
+						holder.getSource().fetchSource(this.fetchFields, this.excludeFields);
+					}
+					if (minScore > 0) {
+						holder.getSource().minScore(minScore);
+					}
+					return (R)holder;
+				} catch (Exception e) {
+					throw new EsHelperConfigException("generate query-holder Error,cause:", e);
 				}
-				if (minScore > 0) {
-					boolEsRequestHolder.getSource().minScore(minScore);
-				}
-				return (R)boolEsRequestHolder;
 			}
 			throw new RuntimeException("unsupport this query model");
 		}
+
+
+		public <R extends AbstractEsRequestHolder>R simpleBuild(){
+			if (esQueryModel == null){
+				throw new RuntimeException("index and query model cant be null");
+			}
+			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(esQueryModel);
+			if (Objects.nonNull(targetClazz)) {
+				try {
+					Constructor<? extends AbstractEsRequestHolder> targetConstructor = targetClazz.getConstructor();
+					AbstractEsRequestHolder holder = targetConstructor.newInstance();
+					holder.simpleInitialize();
+					return (R)holder;
+				} catch (Exception e) {
+					throw new EsHelperConfigException("generate query-holder Error,cause:", e);
+				}
+			}
+			throw new RuntimeException("unsupport this query model");
+		}
+
+
+
 	}
 
 }

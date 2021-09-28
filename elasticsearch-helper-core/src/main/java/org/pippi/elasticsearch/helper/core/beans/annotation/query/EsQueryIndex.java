@@ -6,7 +6,7 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import java.lang.annotation.*;
 
 /**
- * 描述 持有es查询相关的对象实例，进行统一调用和管理
+ * Define the esQueryHolder's index-name, queryModel ... information
  *
  * @author JohenTeng
  * @date 2021/8/8
@@ -20,7 +20,7 @@ public @interface EsQueryIndex {
      *  query index name (required)
      * @return
      */
-    String index() ;
+    String index();
 
     /**
      *  query model {@link QueryModel} (required)

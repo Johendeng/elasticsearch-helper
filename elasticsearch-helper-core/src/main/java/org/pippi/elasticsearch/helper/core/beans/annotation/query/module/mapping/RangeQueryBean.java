@@ -32,10 +32,10 @@ public class RangeQueryBean  extends QueryBean<RangeQueryBuilder>{
     public void configQueryBuilder(RangeQueryBuilder queryBuilder) {
         // TODO: 需要查看默认配置
         queryBuilder.format(format)
-                    .relation(relation)
-                    .includeLower(includeLower)
-                    .includeUpper(includeUpper)
-                    .timeZone(timeZone);
+                .relation(relation)
+                .includeLower(includeLower)
+                .includeUpper(includeUpper)
+                .timeZone(timeZone);
     }
 
     public String getTag() {

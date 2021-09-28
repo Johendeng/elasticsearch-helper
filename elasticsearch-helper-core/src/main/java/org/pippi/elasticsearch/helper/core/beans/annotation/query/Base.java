@@ -38,7 +38,7 @@ public @interface Base {
     EsConnector connect() default EsConnector.MUST;
 
     /**
-     *  元数据类型
+     *  TODO META define may be un-useful
      * @return
      */
     EsMeta meta();
