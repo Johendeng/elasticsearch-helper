@@ -1,9 +1,9 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
-import org.elasticsearch.index.search.MatchQuery;
+import org.elasticsearch.index.query.ZeroTermsQueryOption;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
-import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
 import java.lang.annotation.*;
 
@@ -32,8 +32,8 @@ public @interface Match {
 
     boolean autoGenerateSynonymsPhraseQuery() default true;
 
-    Fuzzy fuzziness() default Fuzzy.AUTO;
+    FuzzinessEnum fuzziness() default FuzzinessEnum.AUTO;
 
-    MatchQuery.ZeroTermsQuery zerTermsQuery() default MatchQuery.ZeroTermsQuery.NONE;
+    ZeroTermsQueryOption zerTermsQuery() default ZeroTermsQueryOption.NONE;
 
 }

@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
 import org.elasticsearch.index.query.FuzzyQueryBuilder;
-import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
 /**
  * ExtFuzzyBean
@@ -11,7 +11,7 @@ import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
  */
 public class FuzzyQueryBean extends QueryBean<FuzzyQueryBuilder> {
 
-    private Fuzzy fuzziness;
+    private FuzzinessEnum fuzziness;
     private int prefixLength;
     private int maxExpansions;
     private boolean transpositions;
@@ -28,11 +28,11 @@ public class FuzzyQueryBean extends QueryBean<FuzzyQueryBuilder> {
                     .transpositions(transpositions);
     }
 
-    public Fuzzy getFuzziness() {
+    public FuzzinessEnum getFuzziness() {
         return fuzziness;
     }
 
-    public void setFuzziness(Fuzzy fuzziness) {
+    public void setFuzziness(FuzzinessEnum fuzziness) {
         this.fuzziness = fuzziness;
     }
 

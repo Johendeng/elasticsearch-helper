@@ -2,12 +2,12 @@ package org.pippi.elasticsearch.helper.sample.spring.beans.req;
 
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
-import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 
 /**
  * ContentSearchParam
@@ -18,23 +18,22 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 @EsQueryIndex(index = "test", model = QueryModel.BOOL)
 public class ContentSearchParam {
 
-    private Integer intensity;
+    @Range(value = @Base(meta = EsMeta.INTEGER), tag = Range.LE_GE)
+    private RangeParam intensity;
 
     @Match(
             value = @Base(meta = EsMeta.TEXT, highLight = true),
-            fuzziness = Fuzzy.ONE,
+            fuzziness = FuzzinessEnum.ONE,
             prefixLength = 1
     )
     private String title;
 
 
-
-
-    public Integer getIntensity() {
+    public RangeParam getIntensity() {
         return intensity;
     }
 
-    public void setIntensity(Integer intensity) {
+    public void setIntensity(RangeParam intensity) {
         this.intensity = intensity;
     }
 

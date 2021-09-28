@@ -12,7 +12,7 @@ package org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping;
  * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
-public interface EsComplexParam<S, T> {
+public interface EsComplexParam {
 
 
 }

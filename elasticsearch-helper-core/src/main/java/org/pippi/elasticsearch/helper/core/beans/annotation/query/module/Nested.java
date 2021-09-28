@@ -27,6 +27,7 @@ public @interface Nested {
 
     ScoreMode scoreMode();
 
+    boolean ignoreUnmapped() default false;
 
 
 }

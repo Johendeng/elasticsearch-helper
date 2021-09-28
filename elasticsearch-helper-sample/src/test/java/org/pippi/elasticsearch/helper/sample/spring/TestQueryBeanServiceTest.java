@@ -2,6 +2,7 @@ package org.pippi.elasticsearch.helper.sample.spring;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.sample.SampleApplication;
@@ -29,7 +30,11 @@ public class TestQueryBeanServiceTest {
     @Test
     public void testQueryService(){
         ContentSearchParam param = new ContentSearchParam();
-        param.setTitle("课呈");
+        RangeParam rangeParam = new RangeParam();
+        rangeParam.setLeft(12);
+        rangeParam.setRight(15);
+        param.setIntensity(rangeParam);
+//        param.setTitle("课呈");
         BaseResp<Content> baseResp = testQueryService.queryRecordByIntensity(param);
         System.out.println(SerializerUtils.parseObjToJson(baseResp));
     }

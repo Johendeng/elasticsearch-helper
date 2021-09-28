@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.core.helper;
 
 import org.elasticsearch.common.unit.Fuzziness;
-import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 
 /**
@@ -14,7 +14,7 @@ import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 @Deprecated
 public class ExtConfig {
 
-    private Fuzzy fuzzy;
+    private FuzzinessEnum fuzzinessEnum;
 
     private Integer   prefixLength;
     private Integer   maxExpansions;
@@ -26,8 +26,8 @@ public class ExtConfig {
         return new ExtConfig();
     }
 
-    public ExtConfig fuzzyType(Fuzzy fuzzy) {
-        this.fuzzy = fuzzy;
+    public ExtConfig fuzzyType(FuzzinessEnum fuzzinessEnum) {
+        this.fuzzinessEnum = fuzzinessEnum;
         return this;
     }
 
@@ -51,8 +51,8 @@ public class ExtConfig {
         return this;
     }
 
-    public void setFuzzy(Fuzzy fuzzy) {
-        this.fuzzy = fuzzy;
+    public void setFuzzy(FuzzinessEnum fuzzinessEnum) {
+        this.fuzzinessEnum = fuzzinessEnum;
     }
 
     public void setFuzziness(Fuzziness fuzziness) {
@@ -66,9 +66,9 @@ public class ExtConfig {
 
     public static ExtConfig read(String extendJson){
         ExtConfig extConfig = SerializerUtils.jsonToBean(extendJson, ExtConfig.class);
-        Fuzzy fuzzy = extConfig.fuzzy;
-        if (fuzzy != null) {
-            extConfig.setFuzziness(fuzzy.getFuzziness());
+        FuzzinessEnum fuzzinessEnum = extConfig.fuzzinessEnum;
+        if (fuzzinessEnum != null) {
+            extConfig.setFuzziness(fuzzinessEnum.getFuzziness());
         }
         return extConfig;
     }

@@ -20,22 +20,12 @@ import java.util.function.Function;
 @EsHelperProxy
 public interface TestQueryService {
 
-    /**
-     * diy request
-     */
-    RequestHook<ContentSearchParam> intensityReqHook = (h, r) -> h.chain(QueryBuilders.rangeQuery("intensity").gt(14));
-
-    /**
-     * diy response
-     */
-    ResponseHook<String> testQueryBack = r -> "hello";
 
     /**
      *  query records by intensity-field
      * @param param mapping query param bean
      * @return
      */
-    @UseRequestHook("intensityReqHook")
     BaseResp<Content> queryRecordByIntensity(ContentSearchParam param);
 
 

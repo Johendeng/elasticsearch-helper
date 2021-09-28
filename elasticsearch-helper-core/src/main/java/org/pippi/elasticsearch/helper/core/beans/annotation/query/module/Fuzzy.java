@@ -2,6 +2,7 @@ package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
 import java.lang.annotation.*;
 
@@ -20,9 +21,12 @@ public @interface Fuzzy {
 
     Base value();
 
-    org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy fuzziness() default org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy.AUTO;
+    FuzzinessEnum fuzziness() default FuzzinessEnum.AUTO;
+
     int prefixLength() default 0;
+
     int maxExpansions() default 50;
+
     boolean transpositions() default true;
 
 

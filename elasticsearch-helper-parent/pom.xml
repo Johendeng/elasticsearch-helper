@@ -16,7 +16,7 @@
         <root.version>1.0.0.SNAPSHOT</root.version>
         <java.version>1.8</java.version>
         <plugin.maven.compiler.version>3.8.1</plugin.maven.compiler.version>
-        <elasticsearch.client.version>7.8.1</elasticsearch.client.version>
+        <elasticsearch.client.version>7.13.3</elasticsearch.client.version>
         <jackson.core.version>2.10.1</jackson.core.version>
         <google.guava.version>23.0</google.guava.version>
         <apache.collections4.version>4.1</apache.collections4.version>

@@ -12,7 +12,7 @@ import java.lang.annotation.*;
  *  '*': multi-words holder
  *  '?': single-words holder
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/9/25
  */
 @Query

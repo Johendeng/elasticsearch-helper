@@ -1,10 +1,7 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
 import org.apache.lucene.search.join.ScoreMode;
-import org.elasticsearch.index.query.InnerHitBuilder;
-import org.elasticsearch.index.query.InnerHitContextBuilder;
 import org.elasticsearch.index.query.NestedQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 
 /**
  * ExtNestedBean
@@ -23,7 +20,6 @@ public class NestedQueryBean extends QueryBean<NestedQueryBuilder> {
     @Override
     public void configQueryBuilder(NestedQueryBuilder queryBuilder) {
         queryBuilder.ignoreUnmapped(ignoreUnmapped);
-
     }
 
     public String getPath() {

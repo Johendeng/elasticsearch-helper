@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
+import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 
 /**
@@ -30,12 +31,15 @@ public class RangeQueryBean  extends QueryBean<RangeQueryBuilder>{
 
     @Override
     public void configQueryBuilder(RangeQueryBuilder queryBuilder) {
-        // TODO: 需要查看默认配置
-        queryBuilder.format(format)
-                .relation(relation)
-                .includeLower(includeLower)
-                .includeUpper(includeUpper)
-                .timeZone(timeZone);
+        if (StringUtils.isNotBlank(format)) {
+            queryBuilder.format(format);
+        }
+        if (StringUtils.isNotBlank(relation)) {
+            queryBuilder.relation(relation);
+        }
+        if (StringUtils.isNotBlank(timeZone)) {
+            queryBuilder.timeZone(timeZone);
+        }
     }
 
     public String getTag() {

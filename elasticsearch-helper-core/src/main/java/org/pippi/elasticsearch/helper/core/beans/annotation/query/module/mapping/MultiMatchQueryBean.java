@@ -1,15 +1,12 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
 import com.google.common.collect.Maps;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
-import org.elasticsearch.index.search.MatchQuery;
-import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
+import org.elasticsearch.index.query.ZeroTermsQueryOption;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -24,13 +21,13 @@ public class MultiMatchQueryBean extends QueryBean<MultiMatchQueryBuilder> {
     private static final String MIDDLE = ":";
 
     private MultiMatchQueryBuilder.Type type;
-    private MatchQuery.ZeroTermsQuery zeroTermsQuery;
+    private ZeroTermsQueryOption zeroTermsQuery;
     /**
      *  filed1:1.0,field2:2.0
      */
     private String boostFields;
     private boolean autoGenerateSynonymsPhraseQuery;
-    private Fuzzy fuzziness;
+    private FuzzinessEnum fuzziness;
     private boolean fuzzyTranspositions;
     private boolean lenient;
     private int prefixLength;
@@ -50,10 +47,14 @@ public class MultiMatchQueryBean extends QueryBean<MultiMatchQueryBuilder> {
                     .lenient(lenient)
                     .prefixLength(prefixLength)
                     .maxExpansions(maxExpansions)
-                    .analyzer(analyzer)
                     .operator(operator)
-                    .minimumShouldMatch(minimumShouldMatch)
                     .slop(slop);
+        if (StringUtils.isNotBlank(analyzer)) {
+            queryBuilder.analyzer(analyzer);
+        }
+        if (StringUtils.isNotBlank(minimumShouldMatch)) {
+            queryBuilder.minimumShouldMatch(minimumShouldMatch);
+        }
         if (StringUtils.isNotBlank(boostFields)) {
             String[] sectionArr = boostFields.split(SEPARATOR);
             Map<String, Float> filedBoostMap = Maps.newHashMap();

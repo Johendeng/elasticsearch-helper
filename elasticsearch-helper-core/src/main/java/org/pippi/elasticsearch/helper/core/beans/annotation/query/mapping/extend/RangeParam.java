@@ -24,19 +24,21 @@ public class RangeParam implements EsComplexParam {
     @Nullable
     private Object right;
 
+    @Nullable
     public Object getLeft() {
         return left;
     }
 
-    public void setLeft(Object left) {
+    public void setLeft(@Nullable Object left) {
         this.left = left;
     }
 
+    @Nullable
     public Object getRight() {
         return right;
     }
 
-    public void setRight(Object right) {
+    public void setRight(@Nullable Object right) {
         this.right = right;
     }
 }

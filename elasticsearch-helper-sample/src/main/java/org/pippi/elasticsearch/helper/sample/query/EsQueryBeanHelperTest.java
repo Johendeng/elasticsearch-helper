@@ -7,7 +7,7 @@ import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.search.MatchQuery;
+import org.elasticsearch.index.query.ZeroTermsQueryOption;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.Test;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
@@ -56,7 +56,7 @@ public class EsQueryBeanHelperTest {
         esSearchHelper.getQueryBuilder()
                 .should(
                         QueryBuilders.multiMatchQuery("hi", "title", "describe")
-                        .zeroTermsQuery(MatchQuery.ZeroTermsQuery.ALL)
+                        .zeroTermsQuery(ZeroTermsQueryOption.ALL)
                         .fuzziness(Fuzziness.ONE)
                 )
         ;

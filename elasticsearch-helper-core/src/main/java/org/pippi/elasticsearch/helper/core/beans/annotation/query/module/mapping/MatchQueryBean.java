@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
 import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.search.MatchQuery;
-import org.pippi.elasticsearch.helper.core.beans.enums.Fuzzy;
+import org.elasticsearch.index.query.ZeroTermsQueryOption;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
 /**
  * ExtMatchBean
@@ -22,9 +22,9 @@ public class MatchQueryBean extends QueryBean<MatchQueryBuilder> {
 
     private boolean autoGenerateSynonymsPhraseQuery;
 
-    private Fuzzy fuzziness;
+    private FuzzinessEnum fuzziness;
 
-    private MatchQuery.ZeroTermsQuery zerTermsQuery;
+    private ZeroTermsQueryOption zerTermsQuery;
 
     @Override
     public void configQueryBuilder(MatchQueryBuilder match) {
@@ -78,19 +78,19 @@ public class MatchQueryBean extends QueryBean<MatchQueryBuilder> {
         this.autoGenerateSynonymsPhraseQuery = autoGenerateSynonymsPhraseQuery;
     }
 
-    public Fuzzy getFuzziness() {
+    public FuzzinessEnum getFuzziness() {
         return fuzziness;
     }
 
-    public void setFuzziness(Fuzzy fuzziness) {
+    public void setFuzziness(FuzzinessEnum fuzziness) {
         this.fuzziness = fuzziness;
     }
 
-    public org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery getZerTermsQuery() {
+    public ZeroTermsQueryOption getZerTermsQuery() {
         return zerTermsQuery;
     }
 
-    public void setZerTermsQuery(org.elasticsearch.index.search.MatchQuery.ZeroTermsQuery zerTermsQuery) {
+    public void setZerTermsQuery(ZeroTermsQueryOption zerTermsQuery) {
         this.zerTermsQuery = zerTermsQuery;
     }
 }

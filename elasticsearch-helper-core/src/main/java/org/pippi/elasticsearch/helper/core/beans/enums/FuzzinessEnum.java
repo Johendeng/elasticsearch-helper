@@ -10,7 +10,7 @@ import org.elasticsearch.common.unit.Fuzziness;
  * @author JohenTeng
  * @date 2021/9/22
  */
-public enum Fuzzy {
+public enum FuzzinessEnum {
 
     /**
      * elasticsearch fuzziness type
@@ -23,7 +23,7 @@ public enum Fuzzy {
 
     private Fuzziness fuzziness;
 
-    Fuzzy(Fuzziness fuzziness) {
+    FuzzinessEnum(Fuzziness fuzziness) {
         this.fuzziness = fuzziness;
     }
 
