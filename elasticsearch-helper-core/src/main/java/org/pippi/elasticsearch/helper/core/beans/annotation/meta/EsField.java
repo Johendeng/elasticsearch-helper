@@ -15,7 +15,6 @@ import java.lang.annotation.*;
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Deprecated
 public @interface EsField {
 
     String name() default "";

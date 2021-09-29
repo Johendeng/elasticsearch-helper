@@ -23,11 +23,11 @@ import org.pippi.elasticsearch.helper.core.hook.RequestHook;
 @HighLight(fields = {"title", "describe"})
 public class ContentSearchParam {
 
-    @Range(value = @Base(meta = EsMeta.INTEGER), tag = Range.LE_GE)
+    @Range(value = @Base, tag = Range.LE_GE)
     private RangeParam intensity;
 
     @MultiMatch(
-            value = @Base(meta = EsMeta.TEXT),
+            value = @Base,
             fields = {"title", "describe"},
             fuzziness = FuzzinessEnum.ONE,
             prefixLength = 1

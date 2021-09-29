@@ -6,7 +6,10 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 import java.lang.annotation.*;
 
 /**
- * 近似文档查询
+ * more like this query,
+ * search the most similar _doc
+ *
+ *  the Field should be define to MoreLikeThisParam.class
  *
  * @author JohenTeng
  * @date 2021/9/28

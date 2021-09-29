@@ -38,6 +38,10 @@ import java.util.zip.Deflater;
 public @interface MultiMatch {
 
     Base value();
+
+    /**
+     * the fields that need to query
+     */
     String[] fields();
     /**
      *  define the extrude fields:

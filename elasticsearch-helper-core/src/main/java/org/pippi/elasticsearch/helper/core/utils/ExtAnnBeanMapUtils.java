@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.core.utils;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.pippi.elasticsearch.helper.core.beans.exception.SerializeException;
 
 import java.lang.annotation.Annotation;
