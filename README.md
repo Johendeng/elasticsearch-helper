@@ -174,9 +174,14 @@ class AutoConfiguration {
     void config {
     // 定义
         GlobalEsQueryConfig.configHighLight(DEFAULT_KEY ,() -> SearchSourceBuilder.highlight());
+        GlobalEsQueryConfig.configHighLight("html" ,() ->
+                SearchSourceBuilder.highlight().fragmentSize(10).numOfFragments(5)
+        );
     }
-
 }
+
+可以使用 @HighLight(fields = {"title", "describe"}, highLightKey = "html")
+中的 highLightKey 来定义使用的HightLight配置
 
 ```
 
