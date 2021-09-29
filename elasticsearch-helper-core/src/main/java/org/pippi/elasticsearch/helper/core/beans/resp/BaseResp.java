@@ -1,14 +1,11 @@
 package org.pippi.elasticsearch.helper.core.beans.resp;
 
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 描述
- *
+ * User define Response's JavaBean
  * @author JohenTeng
  * @date 2021/7/21
  */

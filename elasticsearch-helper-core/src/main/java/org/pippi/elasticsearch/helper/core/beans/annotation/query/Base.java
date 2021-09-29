@@ -2,14 +2,12 @@ package org.pippi.elasticsearch.helper.core.beans.annotation.query;
 
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 
 import java.lang.annotation.*;
 
 
 /**
- * 描述 持有es查询相关的对象实例，进行统一调用和管理
- *
+ * base define of a Es-query-bean
  * @author JohenTeng
  * @date 2021/8/8
  */
@@ -20,38 +18,35 @@ import java.lang.annotation.*;
 public @interface Base {
 
     /**
-     *  es索引字段，如果不定义则默认使用当前 Field 名
+     * index-filed name, default is Field's name
      * @return
      */
     String name() default "";
 
     /**
-     *  查询类型-使用枚举定义
+     * Query-Type: Match,MultiMatch
      * @return
      */
     String queryType() default "";
 
     /**
-     *  查询逻辑连接符
+     * query's logic connector (boolQuery: must,must_not,should,filter)
      * @return
      */
     EsConnector connect() default EsConnector.MUST;
 
     /**
-     *  TODO META define may be un-useful
-     * @return
+     * meta-define may be un-useful
      */
-    EsMeta meta();
+    EsMeta meta() default EsMeta.COMPLEX;
 
     /**
-     *  字符串化定义元数据类型
-     * @return
+     * use a string define a meta
      */
     String metaStringify() default "";
 
     /**
-     *  自定义匹配分值
-     * @return
+     * user define boost-score
      */
     float boost() default 1.0f;
 

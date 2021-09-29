@@ -40,11 +40,11 @@ public class EsHookReedits {
     }
 
     public static <P> AbstractEsRequestHolder useReqHook(String key, AbstractEsRequestHolder helper, P param) {
-        return REP_FUNC_REGEDIT.get(key).apply(helper, param);
+        return REP_FUNC_REGEDIT.get(key).handleRequest(helper, param);
     }
 
     public static <R>R useRespHook (String key, SearchResponse resp) {
-        return (R)RESP_FUNC_REGEDIT.get(key).apply(resp);
+        return (R)RESP_FUNC_REGEDIT.get(key).handleResponse(resp);
     }
 
     public static void loadHooksFromTargetInterface(Class<?> targetInterface) {
@@ -66,7 +66,6 @@ public class EsHookReedits {
                 throw new Error("Hook-Func has a illegal access, please define it as #public static final");
             }
         }
-
     }
 
 

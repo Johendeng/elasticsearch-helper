@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 import java.lang.annotation.*;
 
 /**
- * EnableEsHelper
+ * Enable ElasticSearch Handler
  *
  * @author JohenTeng
  * @date 2021/9/18

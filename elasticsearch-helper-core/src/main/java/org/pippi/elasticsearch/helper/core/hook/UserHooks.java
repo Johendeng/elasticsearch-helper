@@ -7,7 +7,7 @@ package org.pippi.elasticsearch.helper.core.hook;
  * @Author:  JohenTeng
  * email: 1078481395@qq.com
  **/
-public interface IUserHooks {
+public interface UserHooks {
 
 
 

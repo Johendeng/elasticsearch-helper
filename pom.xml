@@ -11,7 +11,6 @@
 
     <modules>
         <module>elasticsearch-helper-core</module>
-        <module>elasticsearch-helper-parent</module>
         <module>elasticsearch-helper-boot-starter</module>
     </modules>
 
@@ -19,7 +18,91 @@
         <root.version>1.0.0.SNAPSHOT</root.version>
         <java.version>1.8</java.version>
         <plugin.maven.compiler.version>3.8.1</plugin.maven.compiler.version>
+
+        <elasticsearch.client.version>7.13.3</elasticsearch.client.version>
+        <jackson.core.version>2.10.1</jackson.core.version>
+        <google.guava.version>23.0</google.guava.version>
+        <apache.collections4.version>4.1</apache.collections4.version>
+        <apache.common.lang3.version>3.5</apache.common.lang3.version>
+        <org.reflections.version>0.9.12</org.reflections.version>
+        <slf4j.api.version>1.7.28</slf4j.api.version>
+
+        <junit.version>4.12</junit.version>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.pippi</groupId>
+                <artifactId>elasticsearch-helper-core</artifactId>
+                <version>${root.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.pippi</groupId>
+                <artifactId>elasticsearch-helper-boot-starter</artifactId>
+                <version>${root.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.elasticsearch.client</groupId>
+                <artifactId>elasticsearch-rest-high-level-client</artifactId>
+                <version>${elasticsearch.client.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.core.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.core.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${apache.common.lang3.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${google.guava.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>${apache.collections4.version}</version>
+            </dependency>
+
+            <!-- utils-->
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${org.reflections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j.api.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 
     <build>
         <plugins>

@@ -12,6 +12,9 @@ import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
+import org.pippi.elasticsearch.helper.core.hook.HookQuery;
+import org.pippi.elasticsearch.helper.core.hook.RequestHook;
+import org.pippi.elasticsearch.helper.core.hook.ResponseHook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +22,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 /**
  * @author JohenTeng
@@ -41,7 +45,6 @@ public class EsQueryProxy<T> implements InvocationHandler {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
         this.client = client;
-        EsHookReedits.loadHooksFromTargetInterface(targetInterface);
     }
 
     public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, boolean enableLogOutEsQueryJson) {
@@ -49,7 +52,6 @@ public class EsQueryProxy<T> implements InvocationHandler {
         this.visitQueryBeanParent = visitQueryBeanParent;
         this.client = client;
         this.enableLogOutEsQueryJson = enableLogOutEsQueryJson;
-        EsHookReedits.loadHooksFromTargetInterface(targetInterface);
     }
 
     @Override
@@ -60,38 +62,48 @@ public class EsQueryProxy<T> implements InvocationHandler {
         if (args != null && args.length == 1) {
             Object param = args[0];
             AbstractEsRequestHolder esHolder = EsQueryEngine.execute(param, visitQueryBeanParent);
-            if (method.isAnnotationPresent(UseRequestHook.class)) {
-                UseRequestHook reqHookAnn = method.getAnnotation(UseRequestHook.class);
-                esHolder = EsHookReedits.useReqHook(reqHookAnn.value(), esHolder, param);
+            RequestHook requestHook = null;
+            if ((requestHook = checkRequestHook(param, method)) != null) {
+                esHolder = requestHook.handleRequest(esHolder, param);
             }
             if (enableLogOutEsQueryJson) {
                 log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
             }
             SearchResponse resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
-            if (method.isAnnotationPresent(UseResponseHook.class)) {
-                UseResponseHook respHookAnn = method.getAnnotation(UseResponseHook.class);
-                return EsHookReedits.useRespHook(respHookAnn.value(), resp);
+            ResponseHook responseHook = null;
+            if ((responseHook = checkResponseHook(param, method)) != null) {
+                return responseHook.handleResponse(resp);
             } else {
-                Class<?> returnType = method.getReturnType();
-                if (returnType.equals(BaseResp.class)) {
-                    ParameterizedType paramReturnType = (ParameterizedType)method.getGenericReturnType();
-                    Type[] paramTypes = paramReturnType.getActualTypeArguments();
-                    Class paramClazz = (Class) paramTypes[0];
-                    if (BaseResp.BaseHit.class.isAssignableFrom(paramClazz)){
-                        BaseResp<? extends BaseResp.BaseHit> baseResp = EsResponseParseHelper.getList(resp, ((Class<? extends BaseResp.BaseHit>) paramClazz));
-                        return baseResp;
-                    } else {
-                        throw new EsHelperQueryException("BaseResponse's ParameterizedType has to be <? extends BaseResp.BaseHit>");
-                    }
-                }
-                if (returnType.equals(StandAggResp.class)) {
-                    // TODO: 解析返回结果
-
-                }
-                throw new EsHelperQueryException("un-support this kind of return-type,please define @ResponseHook or change type to BaseResp/StandAggResp");
+                return this.returnDefaultResult(method, resp);
             }
         }
         return null;
+    }
+
+    /**
+     * phrase SearchResponse and return Result
+     * @param method
+     * @param resp
+     * @return
+     */
+    private Object returnDefaultResult(Method method, SearchResponse resp) {
+        Class<?> returnType = method.getReturnType();
+        if (returnType.isAssignableFrom(BaseResp.class)) {
+            ParameterizedType paramReturnType = (ParameterizedType)method.getGenericReturnType();
+            Type[] paramTypes = paramReturnType.getActualTypeArguments();
+            Class paramClazz = (Class) paramTypes[0];
+            if (BaseResp.BaseHit.class.isAssignableFrom(paramClazz)){
+                BaseResp<? extends BaseResp.BaseHit> baseResp = EsResponseParseHelper.getList(resp, ((Class<? extends BaseResp.BaseHit>) paramClazz));
+                return baseResp;
+            } else {
+                throw new EsHelperQueryException("BaseResponse's ParameterizedType has to be <? extends BaseResp.BaseHit>");
+            }
+        }
+        if (returnType.equals(StandAggResp.class)) {
+            // TODO: 解析返回结果,聚合结果
+
+        }
+        throw new EsHelperQueryException("un-support this kind of return-type,please define @ResponseHook or change type to BaseResp/StandAggResp");
     }
 
     public Class<T> getTargetInterface() {
@@ -109,4 +121,39 @@ public class EsQueryProxy<T> implements InvocationHandler {
     public void setVisitQueryBeanParent(boolean visitQueryBeanParent) {
         this.visitQueryBeanParent = visitQueryBeanParent;
     }
+
+    private RequestHook checkRequestHook (Object param, Method method) {
+        if (param.getClass().isAssignableFrom(RequestHook.class)) {
+            HookQuery hookQuery = (HookQuery) param;
+            RequestHook reqHook = null;
+            if (Objects.nonNull(hookQuery.getRequestHook())) {
+                reqHook = hookQuery.getRequestHook();
+            }
+            if (method.isAnnotationPresent(UseRequestHook.class)) {
+                UseRequestHook useReqHookAnn = method.getAnnotation(UseRequestHook.class);
+                String reqHookKey = useReqHookAnn.value();
+                reqHook = EsHookReedits.REP_FUNC_REGEDIT.get(reqHookKey);
+            }
+            return reqHook;
+        }
+        return null;
+    }
+
+    private ResponseHook checkResponseHook(Object param, Method method) {
+        if (param.getClass().isAssignableFrom(ResponseHook.class)) {
+            HookQuery hookQuery = (HookQuery) param;
+            ResponseHook reqHook = null;
+            if (Objects.nonNull(hookQuery.getResponseHook())) {
+                reqHook = hookQuery.getResponseHook();
+            }
+            if (method.isAnnotationPresent(UseResponseHook.class)) {
+                UseResponseHook useResponseHookAnn = method.getAnnotation(UseResponseHook.class);
+                String responseHookKey = useResponseHookAnn.value();
+                reqHook = EsHookReedits.RESP_FUNC_REGEDIT.get(responseHookKey);
+            }
+            return reqHook;
+        }
+        return null;
+    }
+
 }

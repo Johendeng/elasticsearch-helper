@@ -14,13 +14,13 @@ import javax.annotation.Resource;
 /**
  * EsHelperAutoConfiguration
  *
- * @author johen
+ * @author JohenTeng
  * @date 2021/9/17
  */
 @Configuration
 public class EsHelperAutoConfiguration {
 
-    @Value("${es.helper.ext.handle.packages:''}")
+    @Value("${es.helper.ext.handle-packages:''}")
     private String esQueryExtHandlePackages;
 
     @Resource
@@ -30,10 +30,10 @@ public class EsHelperAutoConfiguration {
 
     @PostConstruct
     public void load(){
-        //TODO: 应该放出数个配置点 可以供用户进行扩展 配置？？？？   如何提供？ 提供几个？？   怎么提供？？
         Assert.notNull(restHighLevelClient, "Application-Context has no RestHighLevelClient-instance,you have to config it at first");
         QueryHandlerFactory.doQueryHandleScan();
-        // if user undefine global-highlight style, will use default (es default highlight style) // TODO: ERROR USE
+        // if user undefine global-highlight style,
+        // will use default (es default highlight style)
         GlobalEsQueryConfig.configHighLight(DEFAULT_KEY ,() -> SearchSourceBuilder.highlight());
     }
 

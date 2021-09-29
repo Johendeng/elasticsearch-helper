@@ -79,7 +79,6 @@ public class QueryHandlerFactory {
         Set<Class<? extends AbstractQueryHandler>> subQueryClazz = reflections.getSubTypesOf(AbstractQueryHandler.class);
 
         for (Class<? extends AbstractQueryHandler> targetClazz : subQueryClazz) {
-
             boolean flag = targetClazz.isAnnotationPresent(EsQueryHandle.class);
             if (!flag) {
                 throw new EsHelperConfigException("query handle have to ann by @EsQueryHandle");
@@ -98,7 +97,7 @@ public class QueryHandlerFactory {
         }
         log.info("es-helper-query-handler-scanner load handles:\n{}\n",
                 QUERY_HANDLE_CLAZZ_MAP.entrySet().stream().map(
-                        e -> "[es-helper]---" + e.getKey() + ":" + e.getValue()
+                        e -> "[\tes-helper] " + e.getKey() + ":" + e.getValue()
                 ).collect(Collectors.joining("\n"))
         );
     }

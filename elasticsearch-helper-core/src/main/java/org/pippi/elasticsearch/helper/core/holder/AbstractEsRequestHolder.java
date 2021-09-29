@@ -40,6 +40,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		 *  implements *EsRequestHolder load on this place
 		 */
 		AbstractEsRequestHolder.regisHolder(QueryModel.BOOL, BoolEsRequestHolder.class);
+		AbstractEsRequestHolder.regisHolder(QueryModel.DIS_MAX, DisMaxEsRequestHolder.class);
 
 	}
 

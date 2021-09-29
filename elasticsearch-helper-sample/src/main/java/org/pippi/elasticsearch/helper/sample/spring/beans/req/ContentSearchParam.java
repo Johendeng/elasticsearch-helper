@@ -10,6 +10,8 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
+import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.hook.RequestHook;
 
 /**
  * ContentSearchParam
@@ -31,7 +33,6 @@ public class ContentSearchParam {
             prefixLength = 1
     )
     private String title;
-
 
     public RangeParam getIntensity() {
         return intensity;

@@ -11,6 +11,7 @@ public enum QueryModel {
 	/**
 	 *  bool 组合查询
 	 */
-	BOOL
+	BOOL,
+	DIS_MAX,
 
 }
