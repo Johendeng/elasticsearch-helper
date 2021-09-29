@@ -7,7 +7,6 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
-import org.pippi.elasticsearch.helper.core.beans.resp.StandAggResp;
 import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
@@ -98,10 +97,6 @@ public class EsQueryProxy<T> implements InvocationHandler {
             } else {
                 throw new EsHelperQueryException("BaseResponse's ParameterizedType has to be <? extends BaseResp.BaseHit>");
             }
-        }
-        if (returnType.equals(StandAggResp.class)) {
-            // TODO: 解析返回结果,聚合结果
-
         }
         throw new EsHelperQueryException("un-support this kind of return-type,please define @ResponseHook or change type to BaseResp/StandAggResp");
     }
