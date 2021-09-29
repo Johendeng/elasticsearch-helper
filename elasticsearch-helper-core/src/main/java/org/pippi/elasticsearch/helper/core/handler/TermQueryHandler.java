@@ -18,7 +18,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  *      private String userName;
  *
  *  }
- * @author dengtianjia
+ * @author  JohenTeng
  * @date 2021/8/17
  */
 @EsQueryHandle(Term.class)

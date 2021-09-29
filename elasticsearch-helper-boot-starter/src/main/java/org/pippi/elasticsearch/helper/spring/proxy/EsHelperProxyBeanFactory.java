@@ -48,7 +48,7 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
     }
 
     @Override
-    public T getObject() throws Exception {
+    public T getObject() {
         return (T) Proxy.newProxyInstance(
                 targetInterfaceClazz.getClassLoader(),
                 new Class[]{targetInterfaceClazz},
@@ -67,7 +67,7 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         RestHighLevelClient restClient = applicationContext.getBean(RestHighLevelClient.class);
         Objects.requireNonNull(restClient, "SpringContext haven't RestHighLevelClient, config it");
         this.client = restClient;

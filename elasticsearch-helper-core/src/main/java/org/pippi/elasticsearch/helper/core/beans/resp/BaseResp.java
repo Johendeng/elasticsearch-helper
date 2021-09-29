@@ -1,5 +1,7 @@
 package org.pippi.elasticsearch.helper.core.beans.resp;
 
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +57,7 @@ public class BaseResp<T> implements Serializable {
 
         private String  docId;
         private Float hitScore;
+        private Map<String, List<String>> highLightMap;
 
         public BaseHit() {
         }
@@ -79,6 +82,15 @@ public class BaseResp<T> implements Serializable {
         public void setDocId(String docId) {
             this.docId = docId;
         }
+
+        public Map<String, List<String>> getHighLightMap() {
+            return highLightMap;
+        }
+
+        public void setHighLightMap(Map<String, List<String>> highLightMap) {
+            this.highLightMap = highLightMap;
+        }
     }
+
 
 }

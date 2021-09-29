@@ -8,6 +8,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * ExtAnnBeanMapUtils
@@ -34,7 +35,9 @@ public class ExtAnnBeanMapUtils {
                 field.setAccessible(true);
                 String key = field.getName();
                 Object val = annMapping.get(key);
-                field.set(extBean, val);
+                if (Objects.nonNull(val)) {
+                    field.set(extBean, val);
+                }
             }
             return extBean;
         } catch (NoSuchMethodException e) {

@@ -55,16 +55,4 @@ public @interface Base {
      */
     float boost() default 1.0f;
 
-    /**
-     *  highLight enable ?
-     * @return
-     */
-    boolean highLight() default false;
-
-    /**
-     *  which kind of highLight-key
-     * @return
-     */
-    String highLightKey() default "default";
-
 }

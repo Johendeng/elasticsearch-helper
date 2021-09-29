@@ -12,7 +12,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 /**
  * MutchQueryHandler
  *
- * @author dengtianjia
+ * @author  JohenTeng
  * @date 2021/8/20
  */
 @EsQueryHandle(Match.class)

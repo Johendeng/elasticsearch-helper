@@ -1,7 +1,5 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query;
 
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
-
 import java.lang.annotation.*;
 
 /**

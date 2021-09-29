@@ -1,12 +1,14 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
 import com.google.common.collect.Maps;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.ZeroTermsQueryOption;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
+import java.sql.Array;
 import java.util.Map;
 
 /**
@@ -17,15 +19,15 @@ import java.util.Map;
  */
 public class MultiMatchQueryBean extends QueryBean<MultiMatchQueryBuilder> {
 
-    private static final String SEPARATOR = ",";
     private static final String MIDDLE = ":";
 
+    private String[] fields;
     private MultiMatchQueryBuilder.Type type;
     private ZeroTermsQueryOption zeroTermsQuery;
     /**
      *  filed1:1.0,field2:2.0
      */
-    private String boostFields;
+    private String[] boostFields;
     private boolean autoGenerateSynonymsPhraseQuery;
     private FuzzinessEnum fuzziness;
     private boolean fuzzyTranspositions;
@@ -55,18 +57,127 @@ public class MultiMatchQueryBean extends QueryBean<MultiMatchQueryBuilder> {
         if (StringUtils.isNotBlank(minimumShouldMatch)) {
             queryBuilder.minimumShouldMatch(minimumShouldMatch);
         }
-        if (StringUtils.isNotBlank(boostFields)) {
-            String[] sectionArr = boostFields.split(SEPARATOR);
+        if (ArrayUtils.isNotEmpty(boostFields)) {
             Map<String, Float> filedBoostMap = Maps.newHashMap();
-            for (String section: sectionArr) {
+            for (String section : boostFields) {
                 String[] cell = section.split(MIDDLE);
                 String key = cell[0];
                 Float val = Float.valueOf(cell[1]);
                 filedBoostMap.put(key, val);
             }
-            if (filedBoostMap.size() != 0) {
-                queryBuilder.fields(filedBoostMap);
-            }
+            queryBuilder.fields(filedBoostMap);
         }
+    }
+
+    public String[] getFields() {
+        return fields;
+    }
+
+    public void setFields(String[] fields) {
+        this.fields = fields;
+    }
+
+    public MultiMatchQueryBuilder.Type getType() {
+        return type;
+    }
+
+    public void setType(MultiMatchQueryBuilder.Type type) {
+        this.type = type;
+    }
+
+    public ZeroTermsQueryOption getZeroTermsQuery() {
+        return zeroTermsQuery;
+    }
+
+    public void setZeroTermsQuery(ZeroTermsQueryOption zeroTermsQuery) {
+        this.zeroTermsQuery = zeroTermsQuery;
+    }
+
+    public String[] getBoostFields() {
+        return boostFields;
+    }
+
+    public void setBoostFields(String[] boostFields) {
+        this.boostFields = boostFields;
+    }
+
+    public boolean isAutoGenerateSynonymsPhraseQuery() {
+        return autoGenerateSynonymsPhraseQuery;
+    }
+
+    public void setAutoGenerateSynonymsPhraseQuery(boolean autoGenerateSynonymsPhraseQuery) {
+        this.autoGenerateSynonymsPhraseQuery = autoGenerateSynonymsPhraseQuery;
+    }
+
+    public FuzzinessEnum getFuzziness() {
+        return fuzziness;
+    }
+
+    public void setFuzziness(FuzzinessEnum fuzziness) {
+        this.fuzziness = fuzziness;
+    }
+
+    public boolean isFuzzyTranspositions() {
+        return fuzzyTranspositions;
+    }
+
+    public void setFuzzyTranspositions(boolean fuzzyTranspositions) {
+        this.fuzzyTranspositions = fuzzyTranspositions;
+    }
+
+    public boolean isLenient() {
+        return lenient;
+    }
+
+    public void setLenient(boolean lenient) {
+        this.lenient = lenient;
+    }
+
+    public int getPrefixLength() {
+        return prefixLength;
+    }
+
+    public void setPrefixLength(int prefixLength) {
+        this.prefixLength = prefixLength;
+    }
+
+    public int getMaxExpansions() {
+        return maxExpansions;
+    }
+
+    public void setMaxExpansions(int maxExpansions) {
+        this.maxExpansions = maxExpansions;
+    }
+
+    public String getAnalyzer() {
+        return analyzer;
+    }
+
+    public void setAnalyzer(String analyzer) {
+        this.analyzer = analyzer;
+    }
+
+    public Operator getOperator() {
+        return operator;
+    }
+
+    public void setOperator(Operator operator) {
+        this.operator = operator;
+    }
+
+    public String getMinimumShouldMatch() {
+        return minimumShouldMatch;
+    }
+
+    public void setMinimumShouldMatch(String minimumShouldMatch) {
+        this.minimumShouldMatch = minimumShouldMatch;
+    }
+
+    public int getSlop() {
+        return slop;
+    }
+
+    public void setSlop(int slop) {
+        this.slop = slop;
     }
 }

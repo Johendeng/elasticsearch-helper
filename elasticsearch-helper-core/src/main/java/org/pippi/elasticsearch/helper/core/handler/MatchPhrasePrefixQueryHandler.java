@@ -20,7 +20,8 @@ public class MatchPhrasePrefixQueryHandler extends AbstractQueryHandler<MatchPhr
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean<MatchPhrasePrefixQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
-        MatchPhrasePrefixQueryBuilder matchPhrasePrefixQueryBuilder = QueryBuilders.matchPhrasePrefixQuery(queryDes.getField(), queryDes.getValue()).boost(queryDes.getBoost());
+        MatchPhrasePrefixQueryBuilder matchPhrasePrefixQueryBuilder = QueryBuilders.matchPhrasePrefixQuery(
+                queryDes.getField(), queryDes.getValue()).boost(queryDes.getBoost());
         searchHelper.chain(matchPhrasePrefixQueryBuilder);
         return matchPhrasePrefixQueryBuilder;
     }

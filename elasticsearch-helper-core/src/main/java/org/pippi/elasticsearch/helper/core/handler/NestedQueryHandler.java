@@ -42,7 +42,7 @@ import java.util.List;
  * @date 2021/9/22
  */
 @EsQueryHandle(Nested.class)
-public class NestedQueryHandle extends AbstractQueryHandler<NestedQueryBean> {
+public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {
 
 
     @Override

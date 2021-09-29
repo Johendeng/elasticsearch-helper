@@ -30,11 +30,11 @@ public class TestQueryBeanServiceTest {
     @Test
     public void testQueryService(){
         ContentSearchParam param = new ContentSearchParam();
-        RangeParam rangeParam = new RangeParam();
-        rangeParam.setLeft(12);
-        rangeParam.setRight(15);
-        param.setIntensity(rangeParam);
-//        param.setTitle("课呈");
+//        RangeParam rangeParam = new RangeParam();
+//        rangeParam.setLeft(12);
+//        rangeParam.setRight(15);
+//        param.setIntensity(rangeParam);
+        param.setTitle("高然hit课呈");
         BaseResp<Content> baseResp = testQueryService.queryRecordByIntensity(param);
         System.out.println(SerializerUtils.parseObjToJson(baseResp));
     }

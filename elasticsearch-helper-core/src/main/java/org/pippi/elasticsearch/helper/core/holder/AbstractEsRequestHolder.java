@@ -6,11 +6,15 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.core.config.GlobalEsQueryConfig;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
@@ -147,12 +151,14 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		public String[] fetchFields;
 		public String[] excludeFields;
 		public float minScore;
+		public HighLightBean highLightBean;
 
 		public EsRequestHolderBuilder config(EsQueryIndexBean indexBean) {
 			this.indexName = indexBean.getIndexName();
 			this.esQueryModel = indexBean.getEsQueryModel();
 			this.fetchFields = indexBean.getFetchFields();
 			this.minScore = indexBean.getMinScore();
+			this.highLightBean = indexBean.getHighLight();
 			return this;
 		}
 
@@ -181,8 +187,15 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 					Constructor<? extends AbstractEsRequestHolder> targetConstructor = targetClazz.getConstructor(new Class[]{});
 					AbstractEsRequestHolder holder = targetConstructor.newInstance(new Object[]{});
 					holder.init(indexName);
+					SearchSourceBuilder source = holder.getSource();
 					if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
-						holder.getSource().fetchSource(this.fetchFields, this.excludeFields);
+						source.fetchSource(this.fetchFields, this.excludeFields);
+					}
+					if (Objects.nonNull(highLightBean)) {
+						HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(highLightBean.getHighLightKey());
+						for (String field : highLightBean.getFields()) {
+							source.highlighter(highlightBuilder.field(field));
+						}
 					}
 					if (minScore > 0) {
 						holder.getSource().minScore(minScore);

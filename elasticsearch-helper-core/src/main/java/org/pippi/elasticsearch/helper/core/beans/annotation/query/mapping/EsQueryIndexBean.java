@@ -21,6 +21,8 @@ public class EsQueryIndexBean {
 
 	private float minScore;
 
+	private HighLightBean highLight;
+
 	public EsQueryIndexBean() {
 	}
 
@@ -30,6 +32,14 @@ public class EsQueryIndexBean {
 		this.fetchFields = fetchFields;
 		this.excludeFields = excludeFields;
 		this.minScore = minScore;
+	}
+
+	public HighLightBean getHighLight() {
+		return highLight;
+	}
+
+	public void setHighLight(HighLightBean highLight) {
+		this.highLight = highLight;
 	}
 
 	public String getIndexName() {

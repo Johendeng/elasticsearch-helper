@@ -16,7 +16,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * @date 2021/9/22
  */
 @EsQueryHandle(Fuzzy.class)
-public class FuzzyQueryHandle extends AbstractQueryHandler<FuzzyQueryBean>{
+public class FuzzyQueryHandler extends AbstractQueryHandler<FuzzyQueryBean>{
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {

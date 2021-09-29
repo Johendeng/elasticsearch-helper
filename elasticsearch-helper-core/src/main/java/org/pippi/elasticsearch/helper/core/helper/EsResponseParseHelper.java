@@ -1,5 +1,9 @@
 package org.pippi.elasticsearch.helper.core.helper;
 
+import com.google.common.collect.Maps;
+import org.apache.commons.collections4.MapUtils;
+import org.elasticsearch.common.text.Text;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
@@ -8,8 +12,10 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * phrase Es-response to required JavaBean-Response
@@ -22,11 +28,6 @@ import java.util.Map;
  **/
 public class EsResponseParseHelper {
 
-
-    public <R> R  parse(SearchResponse resp, Class<R> clazz) {
-
-        return null;
-    }
 
 
     public static String getListStringify (SearchResponse resp) {
@@ -51,6 +52,16 @@ public class EsResponseParseHelper {
             Map<String, Object> sourceMap = hit.getSourceAsMap();
             sourceMap.put("docId", hit.getId());
             sourceMap.put("hitScore", hit.getScore());
+            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+            if (MapUtils.isNotEmpty(highlightFields)) {
+                Map<String, List<String>> highLightMap = Maps.newHashMap();
+                for (Map.Entry<String, HighlightField> en : highlightFields.entrySet()) {
+                    String key = en.getKey();
+                    List<String> value = Arrays.stream(en.getValue().fragments()).map(Text::toString).collect(Collectors.toList());
+                    highLightMap.put(key, value);
+                }
+                sourceMap.put("highLight", highLightMap);
+            }
             records.add(sourceMap);
         }
 
@@ -71,6 +82,16 @@ public class EsResponseParseHelper {
             record.setDocId(hit.getId());
             record.setHitScore(hit.getScore());
             records.add(record);
+            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+            if (MapUtils.isNotEmpty(highlightFields)) {
+                Map<String, List<String>> highLightMap = Maps.newHashMap();
+                for (Map.Entry<String, HighlightField> en : highlightFields.entrySet()) {
+                    String key = en.getKey();
+                    List<String> value = Arrays.stream(en.getValue().fragments()).map(Text::toString).collect(Collectors.toList());
+                    highLightMap.put(key, value);
+                }
+                record.setHighLightMap(highLightMap);
+            }
         }
         res.setRecords(records);
         return res;

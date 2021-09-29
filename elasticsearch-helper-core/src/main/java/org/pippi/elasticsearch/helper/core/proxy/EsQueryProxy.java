@@ -21,8 +21,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 /**
- * 描述
- *
  * @author JohenTeng
  * @date 2021/7/21
  */

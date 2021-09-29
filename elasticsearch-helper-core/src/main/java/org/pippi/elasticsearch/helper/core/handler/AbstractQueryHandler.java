@@ -37,7 +37,6 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
     public final AbstractEsRequestHolder execute(EsQueryFieldBean<T> queryDes, AbstractEsRequestHolder searchHelper){
         searchHelper.changeLogicConnector(queryDes.getLogicConnector());
         handleExtBean(queryDes);
-        handleHighLight(queryDes, searchHelper);
         QueryBuilder queryBuilder = handle(queryDes, searchHelper);
         if (Objects.nonNull(queryBuilder)) {
             queryDes.getExtBean().configQueryBuilder(queryBuilder);
@@ -74,7 +73,7 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
         try {
             Type[] actualTypeArguments = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
             if (actualTypeArguments.length == 0) {
-                throw new EsHelperConfigException("the AbstractQueryHandler<T>, T is un-define");
+                return queryDes;
             }
             String fullClassPath = actualTypeArguments[0].getTypeName();
             Class<?> aClass = Class.forName(fullClassPath);
@@ -85,22 +84,5 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
             throw new EsHelperConfigException("queryHandle-actualType class not found, cause:", e);
         }
     }
-
-    /**
-     * define the filed enable highLight
-     * @param queryDes
-     * @param searchHelper
-     */
-    protected final void handleHighLight(EsQueryFieldBean<T> queryDes, AbstractEsRequestHolder searchHelper){
-        String targetField = queryDes.getField();
-        String[] fieldArr = targetField.split(_SEPARATOR);
-        if (queryDes.isHighLight()) {
-            HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(queryDes.getHighLightKey());
-            for (String currentField : fieldArr) {
-                searchHelper.getSource().highlighter(highlightBuilder.field(currentField));
-            }
-        }
-    }
-
 
 }

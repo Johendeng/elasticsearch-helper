@@ -5,7 +5,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
@@ -65,7 +67,12 @@ public class QueryAnnParser {
         String[] fetchFields = ann.fetch();
         String[] excludeFields = ann.exclude();
         float minScore = ann.minScore();
-        return new EsQueryIndexBean(index, model, fetchFields, excludeFields, minScore);
+        EsQueryIndexBean indexBean = new EsQueryIndexBean(index, model, fetchFields, excludeFields, minScore);
+        HighLight highLightAnn = clazz.getAnnotation(HighLight.class);
+        if (Objects.nonNull(highLightAnn)) {
+            indexBean.setHighLight(HighLightBean.phrase(highLightAnn));
+        }
+        return indexBean;
 
     }
 
@@ -192,8 +199,6 @@ public class QueryAnnParser {
             queryDes.setQueryType(query);
             queryDes.setMeta(meta);
             queryDes.setBoost(ann.boost());
-            queryDes.setHighLight(ann.highLight());
-            queryDes.setHighLightKey(ann.highLightKey());
 
             //TODO 处理该异常
         } catch (NoSuchMethodException e) {

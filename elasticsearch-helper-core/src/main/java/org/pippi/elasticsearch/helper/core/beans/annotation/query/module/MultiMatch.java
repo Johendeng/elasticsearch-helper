@@ -8,6 +8,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
 import java.lang.annotation.*;
+import java.util.zip.Deflater;
 
 /**
  * default configuration:
@@ -37,6 +38,16 @@ import java.lang.annotation.*;
 public @interface MultiMatch {
 
     Base value();
+    String[] fields();
+    /**
+     *  define the extrude fields:
+     *  different kinds of boosts ,
+     *   For Example:
+     *   boostFields = ["field1:3.0","field2:2.0"]
+     *   multiQueryBuilder.field ("field1", 3.0).field("field2", 2.0)
+     * @return
+     */
+    String[] boostFields() default {};
     MultiMatchQueryBuilder.Type type() default MultiMatchQueryBuilder.Type.BEST_FIELDS;
     ZeroTermsQueryOption zeroTermsQuery() default ZeroTermsQueryOption.NONE;
     boolean autoGenerateSynonymsPhraseQuery() default true;
@@ -49,15 +60,5 @@ public @interface MultiMatch {
     Operator operator() default Operator.OR;
     String minimumShouldMatch() default "";
     int slop() default 0;
-
-    /**
-     *  define the extrude fields:
-     *  different kinds of boosts ,
-     *   For Example:
-     *   boostFields = field1:3.0,field2:2.0
-     *   multiQueryBuilder.field ("field1", 3.0).field("field2", 2.0)
-     * @return
-     */
-    String boostFields() default "";
 
 }
