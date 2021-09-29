@@ -119,6 +119,67 @@ public class TestQueryBeanServiceTest {
 }
 
 ```
+##### 扩展类，配置类，方法说明：
+```
+=> 包：org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend下定义的类：
+MoreLikeThisParam：@MoreLikeThis修饰的类属性需要定义为该类型;
+PageParam：@PageAndOrder修饰的类属性需要定义为该类型;
+RangeParam：@Range修饰的类属性需要定义为该类型;
+
+=> 关于钩子方法：
+包：org.pippi.elasticsearch.helper.core.hook
+作用：我们无法定义所有的查询场景，因此需要使用钩子方法来自定义查询类以及结果处理方法
+接口：
+@FunctionalInterface RequestHook#handleRequest
+@FunctionalInterface ResponseHook#handleResponse
+
+我们可以通过让查询对象 继承 HookQuery抽象类,实现其中的set方法,如：
+
+public class DemoParam extends HookQuery {
+    
+    @Match(value = @Base)
+    private String Field;
+    
+    @Override
+    public void setRequestHook() {
+        super.requestHook = (h, p) -> h;
+    }
+    @Override
+    public void setResponseHook() {
+        super.responseHook = resp -> null;
+    }
+}
+
+或者 在代码中定义公共的钩子方法，如：
+public interface MySearchHooks extends UserHooks {
+    RequestHook reqHook1 = (h, p) -> h;
+    ResponseHook respHook1 = resp -> null;
+}
+使用：
+@EsHelperProxy
+public interface TestQueryService {
+    // 查询在处理了 查询类中的注解定义之后会执行 RequestHook 钩子
+    // 得到Es返回原始对象后 会使用 结果处理钩子，返回钩子定义的对象
+    @UseRequestHook("reqHook1")
+    @UseResponseHook("respHook1")
+    BaseResp<Content> queryRecordByIntensity(ContentSearchParam param);
+}
+
+=> 关于高亮：
+高亮在同一个系统中定义应该是类似的；
+我们可以在配置Bean中调用全局高亮配置类，定义不同的高亮配置
+
+class AutoConfiguration {
+    
+    void config {
+    // 定义
+        GlobalEsQueryConfig.configHighLight(DEFAULT_KEY ,() -> SearchSourceBuilder.highlight());
+    }
+
+}
+
+```
+
 ### 依赖
 ```
 

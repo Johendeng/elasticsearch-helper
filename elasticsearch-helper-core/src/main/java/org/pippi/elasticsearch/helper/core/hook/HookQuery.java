@@ -8,22 +8,24 @@ package org.pippi.elasticsearch.helper.core.hook;
  */
 public abstract class HookQuery<PARAM, RESULT> {
 
-    private RequestHook<PARAM> requestHook;
+    protected RequestHook<PARAM> requestHook;
 
-    private ResponseHook<RESULT> responseHook;
+    protected ResponseHook<RESULT> responseHook;
+
+    public HookQuery() {
+        this.setRequestHook();
+        this.setResponseHook();
+    }
 
     /**
      * define RequestHook
-     * @param requestHook
      */
-    public abstract void setRequestHook(RequestHook<PARAM> requestHook);
+    public abstract void setRequestHook();
 
     /**
      * define ResponseHook
-     * @param responseHook
      */
-    public abstract void setResponseHook(ResponseHook<RESULT> responseHook);
-
+    public abstract void setResponseHook();
 
     public RequestHook<PARAM> getRequestHook() {
         return requestHook;
