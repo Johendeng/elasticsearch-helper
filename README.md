@@ -1,5 +1,5 @@
 ## ElasticSearch-Helper 
-##### -- ElasticSearch HighLevelRestClient 封装框架
+    --- ElasticSearch HighLevelRestClient 封装框架 `
 
 ### 背景：
 ```
@@ -40,7 +40,83 @@ ResponseHook: 扩展接口，自定义解读 es 的 SearchResponse
 
 ### 使用方法：
 ```
+主方法中：
+@EnableEsHelper // 启用EsHelper框架 
+@SpringBootApplication(scanBasePackages = "com.sun")
+public class SampleApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(SampleApplication.class, args);
+    }
+}
 
+```
+```
+在 spring-boot配置中定义：
+
+.properties 配置：
+## 配置日志是否打印 elasticsearch的查询语句
+es.helper.queryLogOut.enable = true 
+## 配置自定义处理类所在位置：
+es.helper.ext.handle-packages = *** 
+
+.yml 配置：
+es:
+  helper:
+    queryLogOut:
+      enable: true
+    ext:
+      handle-packages: com.***.***.handles1,com.***.***.handles2 
+```
+```
+查询对象：
+
+@EsQueryIndex(index = "test", model = QueryModel.BOOL)
+// 是否启用高亮
+@HighLight(fields = {"title", "describe"}) 
+public class DemoSearchParam {
+    // 范围查询
+    @Range(value = @Base, tag = Range.LE_GE)
+    private RangeParam intensity;
+    
+    @MultiMatch(value = @Base,fields = {"title", "describe"})
+    private String title;
+}
+返回对象：
+// 默认的查询结果处理结果类需要 继承 BaseResp.BaseHit
+public class Content extends BaseResp.BaseHit {
+
+    private int intensity;
+
+    private String title;
+}
+
+被代理接口：
+@EsHelperProxy
+public interface TestQueryService {
+    BaseResp<Content> queryRecordByIntensity(ContentSearchParam param)
+}
+
+调用：
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = SampleApplication.class)
+public class TestQueryBeanServiceTest {
+
+    @Resource
+    private TestQueryService testQueryService;
+
+    @Test
+    public void testQueryService(){
+        ContentSearchParam param = new ContentSearchParam();
+        RangeParam rangeParam = new RangeParam();
+        rangeParam.setLeft(12);
+        rangeParam.setRight(15);
+        param.setIntensity(rangeParam);
+        param.setTitle("测试测试");
+        BaseResp<Content> baseResp = testQueryService.queryRecordByIntensity(param);
+        System.out.println(SerializerUtils.parseObjToJson(baseResp));
+    }
+
+}
 
 ```
 ### 依赖
