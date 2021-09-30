@@ -1,7 +1,11 @@
 package org.pippi.elasticsearch.helper.core.utils;
 
+import org.pippi.elasticsearch.helper.core.beans.exception.SerializeException;
+
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
@@ -48,6 +52,32 @@ public class ReflectionUtils {
         }
     }
 
+    /**
+     * invoke target method
+     */
+    public static Object methodInvoke(Object instance, Method method, Object... args) {
+        try {
+            return method.invoke(instance, args);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Reflect-Invoke-TargetMethod IllegalAccessException Error,cause:", e);
+        } catch (InvocationTargetException e) {
+            throw new RuntimeException("Reflect-Invoke-TargetMethod InvocationTargetException Error,cause:", e);
+        }
+    }
+
+    /**
+     * use reflect to set a value for a given field
+     */
+    public static void setFieldValue (Object instance, Field field, Object val, boolean nullable) {
+        try {
+            field.setAccessible(true);
+            if (Objects.nonNull(val) || nullable) {
+                field.set(instance, val);
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Reflect-setValue IllegalAccessException Error,cause:", e);
+        }
+    }
 
 
 }

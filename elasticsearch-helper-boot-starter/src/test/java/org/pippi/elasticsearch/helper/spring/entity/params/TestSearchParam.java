@@ -56,6 +56,5 @@ public class TestSearchParam extends HookQuery<TestSearchParam, TestRecord> {
 
     @Override
     public void setResponseHook() {
-        super.responseHook = resp -> null;
     }
 }

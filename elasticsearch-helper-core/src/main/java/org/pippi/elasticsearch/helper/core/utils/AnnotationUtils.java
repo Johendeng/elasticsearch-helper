@@ -33,15 +33,9 @@ public class AnnotationUtils {
                 .collect(Collectors.toList());
         Map<String, Object> res = Maps.newHashMap();
         for (Method m : annMethods) {
-            try {
-                String key = m.getName();
-                Object val = m.invoke(ann);
-                res.put(key, val);
-            } catch (IllegalAccessException e) {
-                throw new SerializeException("annotation mapping JavaBean IllegalAccessException Error,cause:", e);
-            } catch (InvocationTargetException e) {
-                throw new SerializeException("annotation mapping JavaBean InvocationTargetException Error,cause:", e);
-            }
+            String key = m.getName();
+            Object val = ReflectionUtils.methodInvoke(ann, m);
+            res.put(key, val);
         }
         return res;
     }

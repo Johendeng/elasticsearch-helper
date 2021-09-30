@@ -26,21 +26,15 @@ public class ExtAnnBeanMapUtils {
      */
     public static Object mapping(Annotation annotation, Class<?> clazz) {
         Field[] extBeanFields = clazz.getDeclaredFields();
-        try {
-            Object extBean = ReflectionUtils.newInstance(clazz);
-            Map<String, Object> annMapping = AnnotationUtils.toMap(annotation);
-            for (Field field : extBeanFields) {
-                field.setAccessible(true);
-                String key = field.getName();
-                Object val = annMapping.get(key);
-                if (Objects.nonNull(val)) {
-                    field.set(extBean, val);
-                }
-            }
-            return extBean;
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException("target Field's access illegal, cause", e);
+        Object extBean = ReflectionUtils.newInstance(clazz);
+        Map<String, Object> annMapping = AnnotationUtils.toMap(annotation);
+        for (Field field : extBeanFields) {
+            field.setAccessible(true);
+            String key = field.getName();
+            Object val = annMapping.get(key);
+            ReflectionUtils.setFieldValue(extBean, field, val, false);
         }
+        return extBean;
     }
 
 }
