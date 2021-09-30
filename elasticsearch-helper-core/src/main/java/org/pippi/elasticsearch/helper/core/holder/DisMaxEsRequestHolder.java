@@ -3,6 +3,8 @@ package org.pippi.elasticsearch.helper.core.holder;
 import org.elasticsearch.index.query.DisMaxQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * DisMaxEsRequestHolder

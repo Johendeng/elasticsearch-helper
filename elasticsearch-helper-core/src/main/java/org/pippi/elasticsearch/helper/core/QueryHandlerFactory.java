@@ -6,6 +6,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandler;
+import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,19 +104,7 @@ public class QueryHandlerFactory {
     }
 
     private static AbstractQueryHandler getTargetHandleInstance(Class<? extends AbstractQueryHandler> targetClazz) {
-        try {
-            Constructor<? extends AbstractQueryHandler> constructor = targetClazz.getConstructor(new Class[0]);
-            AbstractQueryHandler abstractQueryHandler = constructor.newInstance(new Object[0]);
-            return abstractQueryHandler;
-        } catch (NoSuchMethodException e) {
-            throw new EsHelperQueryException("es query handler load fail, cause:", e);
-        } catch (InstantiationException e) {
-            throw new EsHelperQueryException("es query handler load fail, cause:", e);
-        } catch (IllegalAccessException e) {
-            throw new EsHelperQueryException("es query handler load fail, cause:", e);
-        } catch (InvocationTargetException e) {
-            throw new EsHelperQueryException("es query handler load fail, cause:", e);
-        }
+        return ReflectionUtils.newInstance(targetClazz);
     }
 
 }

@@ -15,6 +15,7 @@ import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.config.GlobalEsQueryConfig;
+import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
 import org.reflections.Reflections;
 
 import java.lang.reflect.Constructor;
@@ -184,29 +185,24 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			}
 			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(esQueryModel);
 			if (Objects.nonNull(targetClazz)) {
-				try {
-					Constructor<? extends AbstractEsRequestHolder> targetConstructor = targetClazz.getConstructor(new Class[]{});
-					AbstractEsRequestHolder holder = targetConstructor.newInstance(new Object[]{});
-					holder.init(indexName);
-					SearchSourceBuilder source = holder.getSource();
-					if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
-						source.fetchSource(this.fetchFields, this.excludeFields);
-					}
-					if (Objects.nonNull(highLightBean)) {
-						HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(highLightBean.getHighLightKey());
-						for (String field : highLightBean.getFields()) {
-							source.highlighter(highlightBuilder.field(field));
-						}
-					}
-					if (minScore > 0) {
-						holder.getSource().minScore(minScore);
-					}
-					return (R)holder;
-				} catch (Exception e) {
-					throw new EsHelperConfigException("generate query-holder Error,cause:", e);
+				AbstractEsRequestHolder holder = ReflectionUtils.newInstance(targetClazz);
+				holder.init(indexName);
+				SearchSourceBuilder source = holder.getSource();
+				if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
+					source.fetchSource(this.fetchFields, this.excludeFields);
 				}
+				if (Objects.nonNull(highLightBean)) {
+					HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(highLightBean.getHighLightKey());
+					for (String field : highLightBean.getFields()) {
+						source.highlighter(highlightBuilder.field(field));
+					}
+				}
+				if (minScore > 0) {
+					holder.getSource().minScore(minScore);
+				}
+				return (R)holder;
 			}
-			throw new RuntimeException("unsupport this query model");
+			throw new RuntimeException("un-support this query model");
 		}
 
 
@@ -216,14 +212,9 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			}
 			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(esQueryModel);
 			if (Objects.nonNull(targetClazz)) {
-				try {
-					Constructor<? extends AbstractEsRequestHolder> targetConstructor = targetClazz.getConstructor();
-					AbstractEsRequestHolder holder = targetConstructor.newInstance();
-					holder.simpleInitialize();
-					return (R)holder;
-				} catch (Exception e) {
-					throw new EsHelperConfigException("generate query-holder Error,cause:", e);
-				}
+				AbstractEsRequestHolder holder = ReflectionUtils.newInstance(targetClazz);
+				holder.simpleInitialize();
+				return (R)holder;
 			}
 			throw new RuntimeException("unsupport this query model");
 		}

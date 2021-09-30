@@ -27,8 +27,7 @@ public class ExtAnnBeanMapUtils {
     public static Object mapping(Annotation annotation, Class<?> clazz) {
         Field[] extBeanFields = clazz.getDeclaredFields();
         try {
-            Constructor<?> constructor = clazz.getConstructor();
-            Object extBean = constructor.newInstance();
+            Object extBean = ReflectionUtils.newInstance(clazz);
             Map<String, Object> annMapping = AnnotationUtils.toMap(annotation);
             for (Field field : extBeanFields) {
                 field.setAccessible(true);
@@ -39,14 +38,8 @@ public class ExtAnnBeanMapUtils {
                 }
             }
             return extBean;
-        } catch (NoSuchMethodException e) {
-            throw new SerializeException("annotation mapping Error NoSuchMethodException, cause",e);
-        } catch (InvocationTargetException e) {
-            throw new SerializeException("annotation mapping Error InvocationTargetException, cause",e);
-        } catch (InstantiationException e) {
-            throw new SerializeException("annotation mapping Error InstantiationException, cause",e);
         } catch (IllegalAccessException e) {
-            throw new SerializeException("annotation mapping Error IllegalAccessException, cause",e);
+            throw new RuntimeException("target Field's access illegal, cause", e);
         }
     }
 

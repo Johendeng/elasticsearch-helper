@@ -24,8 +24,6 @@ import java.util.Objects;
  **/
 public abstract class AbstractQueryHandler<T extends QueryBean> {
 
-    protected static final String _SEPARATOR = ",";
-
     AbstractQueryHandler(){}
 
     /**

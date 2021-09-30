@@ -10,15 +10,17 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsComplexParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
-import org.pippi.elasticsearch.helper.core.utils.TypeUtils;
+import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
@@ -139,21 +141,7 @@ public class QueryAnnParser {
             if (Objects.isNull(val)) {
                 return null;
             }
-            if (TypeUtils.isBaseType(fieldType)) {
-                queryDes.setValue(val);
-            } else if (val instanceof Collection && ! (val instanceof Map)) {
-                ParameterizedType genericType = (ParameterizedType) field.getGenericType();
-                Type[] actualTypeArguments = genericType.getActualTypeArguments();
-                if (actualTypeArguments.length <= 1 && actualTypeArguments.length >= 1) {
-                    Type parameterizeType = actualTypeArguments[0];
-                    if (!TypeUtils.isBaseType(parameterizeType.getClass())) {
-                        throw new EsHelperQueryException("Just support Collection<@JavaBaseType>");
-                    }
-                    queryDes.setValue(val);
-                } else {
-                    throw new EsHelperQueryException("Just support single parameterized-type");
-                }
-            } else if (val instanceof EsComplexParam) {
+            if (ReflectionUtils.isBaseType(fieldType) || val instanceof EsComplexParam || checkCollectionValueType(field, val)) {
                 queryDes.setValue(val);
             } else {
                 throw new EsHelperQueryException("config @EsQueryField at an Error-Type Field, Just support Primitive-type (exclude void.class) or their Decorate-type or Collection or Map or EsComplexParam");
@@ -162,6 +150,15 @@ public class QueryAnnParser {
         } catch (IllegalAccessException e) {
             throw new EsHelperQueryException("unable reach target field ", e);
         }
+    }
+
+    private boolean checkCollectionValueType (Field field, Object val) {
+        Predicate<Field> checkCollectionTypePredicate = f -> {
+            ParameterizedType genericType = (ParameterizedType) f.getGenericType();
+            Type[] actualType = genericType.getActualTypeArguments();
+            return actualType.length == 1 && ReflectionUtils.isBaseType(actualType[0].getClass());
+        };
+        return (val instanceof Collection) && checkCollectionTypePredicate.test(field);
     }
 
     private void parseAnn(EsQueryFieldBean queryDes, Field field, Annotation targetAnn) {
@@ -191,22 +188,15 @@ public class QueryAnnParser {
             if (StringUtils.isBlank(meta)) {
                 meta =  ann.meta().getType();
             }
-            if (StringUtils.isBlank(meta)) {
-                throw new EsHelperQueryException("META-TYPE missing, it's necessary");
-            }
-
+//            if (StringUtils.isBlank(meta)) {
+//                throw new EsHelperQueryException("META-TYPE missing, it's necessary");
+//            }
             queryDes.setField(column);
             queryDes.setQueryType(query);
             queryDes.setMeta(meta);
             queryDes.setBoost(ann.boost());
-
-            //TODO 处理该异常
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            throw new EsHelperConfigException("annotation analysis Error, cause:", e);
         }
     }
 
