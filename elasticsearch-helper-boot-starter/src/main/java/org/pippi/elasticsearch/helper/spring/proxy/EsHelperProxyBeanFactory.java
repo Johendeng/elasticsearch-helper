@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.Proxy;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * EsHelperProxyBeanFactory
@@ -71,6 +72,8 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
         RestHighLevelClient restClient = applicationContext.getBean(RestHighLevelClient.class);
         Objects.requireNonNull(restClient, "SpringContext haven't RestHighLevelClient, config it");
         this.client = restClient;
-        this.enableLogOut =  applicationContext.getEnvironment().getProperty(ENABLE_LOG_OUT_PROPERTIES, Boolean.class);
+        this.enableLogOut = Optional.ofNullable(
+            applicationContext.getEnvironment().getProperty(ENABLE_LOG_OUT_PROPERTIES, Boolean.class)
+        ).orElse(true);
     }
 }

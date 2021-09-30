@@ -118,7 +118,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
     }
 
     private RequestHook checkRequestHook (Object param, Method method) {
-        if (param.getClass().isAssignableFrom(RequestHook.class)) {
+        if (HookQuery.class.isAssignableFrom(param.getClass())) {
             HookQuery hookQuery = (HookQuery) param;
             RequestHook reqHook = null;
             if (Objects.nonNull(hookQuery.getRequestHook())) {
@@ -135,7 +135,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
     }
 
     private ResponseHook checkResponseHook(Object param, Method method) {
-        if (param.getClass().isAssignableFrom(ResponseHook.class)) {
+        if (HookQuery.class.isAssignableFrom(param.getClass())) {
             HookQuery hookQuery = (HookQuery) param;
             ResponseHook reqHook = null;
             if (Objects.nonNull(hookQuery.getResponseHook())) {
