@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ArrayUtils;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -8,11 +7,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MultiMatch;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.MultiMatchQueryBean;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
-
-import java.util.HashSet;
 
 /**
  * MultiMutchQueryHandler

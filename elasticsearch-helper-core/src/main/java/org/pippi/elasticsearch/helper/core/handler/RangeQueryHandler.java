@@ -6,9 +6,7 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.RangeQueryBean;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryType;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
