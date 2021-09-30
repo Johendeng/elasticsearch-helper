@@ -1,5 +1,7 @@
 ## ElasticSearch-Helper 
-    --- ElasticSearch HighLevelRestClient 封装框架 `
+    --- ElasticSearch HighLevelRestClient 封装框架 
+
+`使用示例：https://gitee.com/JohenTeng/elasticsearch-helper-sample.git`
 
 ### 背景：
 ```
