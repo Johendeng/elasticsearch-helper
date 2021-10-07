@@ -24,7 +24,7 @@ public @interface Range {
     String L_GE = "(L,G]";
     String F_T = "F->T";
 
-    Base value();
+    Base value() default @Base;
 
     /**
      *  range-query both side relation

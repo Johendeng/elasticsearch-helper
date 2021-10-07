@@ -32,7 +32,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface QueryString {
 
-    Base value();
+    Base value() default @Base;
 
 
 

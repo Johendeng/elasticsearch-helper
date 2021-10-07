@@ -37,7 +37,11 @@ import java.util.zip.Deflater;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MultiMatch {
 
-    Base value();
+    /**
+     *  define the boost and logic-connector
+     * @return
+     */
+    Base value() default @Base;
 
     /**
      * the fields that need to query

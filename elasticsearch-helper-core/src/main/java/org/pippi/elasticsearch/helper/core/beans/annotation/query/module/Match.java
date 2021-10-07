@@ -20,7 +20,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Match {
 
-    Base value();
+    Base value() default @Base;
 
     int prefixLength() default 0;
 

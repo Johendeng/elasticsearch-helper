@@ -17,8 +17,7 @@ import org.pippi.elasticsearch.helper.spring.entity.result.TestRecord;
  * @author JohenTeng
  * @date 2021/9/18
  */
-@EsQueryIndex(index = "test", model = QueryModel.BOOL,
-    fetch = {"intensity", "describe", "title"})
+@EsQueryIndex(index = "test", model = QueryModel.BOOL, fetch = {"intensity", "describe", "title"})
 @HighLight(fields = {"title", "describe"})
 public class TestSearchParam extends HookQuery<TestSearchParam, TestRecord> {
 

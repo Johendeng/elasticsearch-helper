@@ -21,7 +21,7 @@ public final class GlobalEsQueryConfig {
     private static Map<String, Supplier<HighlightBuilder>> HIGH_LIGHT_MAP = Maps.newHashMap();
 
 
-    public static void configHighLight(String key, Supplier<HighlightBuilder> supplier){
+    public synchronized static void configHighLight(String key, Supplier<HighlightBuilder> supplier){
         HIGH_LIGHT_MAP.put(key, supplier);
     }
 

@@ -19,7 +19,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Fuzzy {
 
-    Base value();
+    Base value() default @Base;
 
     FuzzinessEnum fuzziness() default FuzzinessEnum.AUTO;
 

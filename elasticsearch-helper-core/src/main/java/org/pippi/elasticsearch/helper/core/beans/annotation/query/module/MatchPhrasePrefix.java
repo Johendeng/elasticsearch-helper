@@ -19,7 +19,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MatchPhrasePrefix {
 
-    Base value();
+    Base value()  default @Base;
 
     int slop() default 0;
 

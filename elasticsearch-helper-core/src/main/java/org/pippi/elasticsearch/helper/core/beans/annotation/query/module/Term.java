@@ -18,6 +18,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Term {
 
-    Base value();
+    Base value()  default @Base;
 
 }

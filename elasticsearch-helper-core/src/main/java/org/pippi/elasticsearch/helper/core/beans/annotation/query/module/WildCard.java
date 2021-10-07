@@ -22,6 +22,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface WildCard {
 
-    Base value();
+    Base value()  default @Base;
 
 }

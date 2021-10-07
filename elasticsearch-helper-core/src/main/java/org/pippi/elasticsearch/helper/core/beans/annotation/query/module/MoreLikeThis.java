@@ -21,7 +21,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MoreLikeThis {
 
-    Base value();
+    Base value() default @Base;
 
     /**
      * 纳入查询评分的字段

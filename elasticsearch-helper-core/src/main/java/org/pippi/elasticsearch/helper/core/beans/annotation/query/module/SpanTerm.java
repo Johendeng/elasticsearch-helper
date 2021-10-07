@@ -18,7 +18,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface SpanTerm {
 
-    Base value();
+    Base value()  default @Base;
 
 
 
