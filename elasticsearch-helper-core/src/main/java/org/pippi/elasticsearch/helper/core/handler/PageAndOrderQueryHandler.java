@@ -36,7 +36,7 @@ public class PageAndOrderQueryHandler extends AbstractQueryHandler{
             LinkedHashMap<String, SortOrder> orderMap = pageParam.getOrderMap();
             if (MapUtils.isNotEmpty(orderMap)) {
                 for (Map.Entry<String, SortOrder> entry : orderMap.entrySet()) {
-                    source.sort(entry.getKey(), Objects.requireNonNullElse(entry.getValue(), SortOrder.ASC));
+                    source.sort(entry.getKey(), Objects.nonNull(entry.getValue()) ? entry.getValue() : SortOrder.ASC);
                 }
             }
             return null;

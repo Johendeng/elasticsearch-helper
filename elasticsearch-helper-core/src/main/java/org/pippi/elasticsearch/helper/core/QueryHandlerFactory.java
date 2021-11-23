@@ -66,7 +66,7 @@ public class QueryHandlerFactory {
         LinkedList<String> packageList = Lists.newLinkedList();
         packageList.add(_BASE_SCAN_PACKAGE);
         // LOAD THE CONFIGURATION FROM SYSTEM_PROPERTY
-        String extHandlePath = Objects.requireNonNullElse(System.getProperty(_EXT_DEFINE_QUERY_HANDLE_PROPERTY), "");
+        String extHandlePath =System.getProperty(_EXT_DEFINE_QUERY_HANDLE_PROPERTY, "");
         String[] packages = extHandlePath.split(",");
 
         List<String> extPackageList = Arrays.stream(Optional.ofNullable(packages)

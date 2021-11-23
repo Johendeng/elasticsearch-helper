@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
-import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
