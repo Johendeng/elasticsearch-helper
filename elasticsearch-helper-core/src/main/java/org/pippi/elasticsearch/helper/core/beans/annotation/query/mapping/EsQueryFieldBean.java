@@ -27,37 +27,37 @@ import java.lang.annotation.Annotation;
 public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 
 	/**
-	 *  对应查询字段
+	 *  the field be queried
 	 */
 	private String field;
 
 	/**
-	 *  查询参数值
+	 *  the val of query for
 	 */
 	private Object value;
 
 	/**
-	 *  查询类型 (required)
+	 *  query Type like <h>Match,Fuzzy,Term ...</h>
 	 */
 	private String queryType;
 
 	/**
-	 *  逻辑连接符 (required)
+	 *  connector of multi-query (must, should, must not, filter)
 	 */
 	private EsConnector logicConnector;
 
 	/**
-	 *  对应字段类型 (required)
+	 *  meta of field
 	 */
 	private String meta;
 
 	/**
-	 *  评分底分
+	 *  boost score default 1.0
 	 */
 	private Float boost;
 
 	/**
-	 *  自定义扩展信息映射对象
+	 *  extend query bean
 	 */
 	private T extBean;
 
@@ -67,7 +67,7 @@ public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 	private Annotation extAnnotation;
 
 	/**
-	 *  定义字段是否需要高亮
+	 *  high light enable ?
 	 */
 	private boolean highLight;
 

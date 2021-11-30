@@ -188,9 +188,7 @@ public class QueryAnnParser {
             if (StringUtils.isBlank(meta)) {
                 meta =  ann.meta().getType();
             }
-//            if (StringUtils.isBlank(meta)) {
-//                throw new EsHelperQueryException("META-TYPE missing, it's necessary");
-//            }
+
             queryDes.setField(column);
             queryDes.setQueryType(query);
             queryDes.setMeta(meta);
