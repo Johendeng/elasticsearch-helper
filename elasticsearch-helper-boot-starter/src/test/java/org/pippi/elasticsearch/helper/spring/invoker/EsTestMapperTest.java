@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.spring.invoker;
 
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
@@ -21,7 +22,7 @@ import javax.annotation.Resource;
  * @author JohenTeng
  * @date 2021/9/30
  */
-
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
 public class EsTestMapperTest {
