@@ -3,10 +3,7 @@ package org.pippi.elasticsearch.helper.core;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.*;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
@@ -96,12 +93,27 @@ public class QueryAnnParser {
             Set<Annotation> annotationSet = Arrays.stream(field.getAnnotations())
                     .filter(ann -> ann.annotationType().isAnnotationPresent(Query.class))
                     .collect(Collectors.toSet());
-            if (CollectionUtils.isNotEmpty(annotationSet)){
+            if (CollectionUtils.isNotEmpty(annotationSet) && checkEsCondition(field, view) ){
                 List<EsQueryFieldBean> queryDes = this.mapFieldAnn(field, view, annotationSet);
                 queryDesList.addAll(queryDes);
             }
         }
         return queryDesList;
+    }
+
+
+    private boolean checkEsCondition(Field field, Object view) {
+        Optional<Annotation> optionCondition = Arrays.stream(field.getAnnotations())
+                .filter(ann -> ann.annotationType().isAnnotationPresent(EsCondition.class))
+                .findAny();
+        if (!optionCondition.isPresent()) {
+            return true;
+        }
+        EsCondition condition  = (EsCondition) optionCondition.get();
+        Class<? extends EsConditionHandle> conditionHandleClazz = condition.value();
+        EsConditionHandle conditionHandle = ReflectionUtils.newInstance(conditionHandleClazz);
+        Object val = ReflectionUtils.getFieldValue(field, view);
+        return conditionHandle.test(val);
     }
 
     private List<Field> getFields(Class<?> clazz, boolean visitParent) {

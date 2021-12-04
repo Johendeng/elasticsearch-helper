@@ -80,4 +80,16 @@ public class ReflectionUtils {
     }
 
 
+    public static Object getFieldValue (Field field , Object target) {
+        if (!field.isAccessible()) {
+            field.setAccessible(true);
+        }
+        try {
+            return field.get(target);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Reflect-getValue IllegalAccessException Error, cause:", e);
+        }
+    }
+
+
 }

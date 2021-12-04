@@ -7,8 +7,13 @@ package org.pippi.elasticsearch.helper.core;
  * developer: JohenTeng
  * email: 1078481395@qq.com
  **/
-public interface EsConditionHandle {
+public interface EsConditionHandle<T> {
 
-    boolean test(Object val);
+    /**
+     * if The val is useful
+     * @param val
+     * @return
+     */
+    boolean test(T val);
 
 }
