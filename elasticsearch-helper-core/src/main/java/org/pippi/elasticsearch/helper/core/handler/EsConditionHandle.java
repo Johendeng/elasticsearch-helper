@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core;
+package org.pippi.elasticsearch.helper.core.handler;
 
 /**
  * project: elasticsearch-helper

@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query;
 
-import org.pippi.elasticsearch.helper.core.EsConditionHandle;
+import org.pippi.elasticsearch.helper.core.handler.EsConditionHandle;
 
 import java.lang.annotation.*;
 

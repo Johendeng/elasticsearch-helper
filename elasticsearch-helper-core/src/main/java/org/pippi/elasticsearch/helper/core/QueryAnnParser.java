@@ -12,6 +12,7 @@ import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryExceptio
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsComplexParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.core.handler.EsConditionHandle;
 import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
