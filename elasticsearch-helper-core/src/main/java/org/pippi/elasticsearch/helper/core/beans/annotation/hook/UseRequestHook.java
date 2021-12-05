@@ -7,7 +7,7 @@ import java.lang.annotation.*;
  * File Name:RequestHook
  * Package Name:org.pippi.elasticsearch.helper.beans.annotation
  * Date:2021/7/21 00:31
- * @author:  JohenTeng
+ * author    JohenTeng
  * Description:
  */
 @Documented

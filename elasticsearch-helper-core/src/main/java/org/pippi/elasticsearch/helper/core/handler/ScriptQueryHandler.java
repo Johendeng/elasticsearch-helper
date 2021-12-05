@@ -18,8 +18,8 @@ import java.util.Objects;
 /**
  * ScriptQueryHandler
  *
- * @author JohenTeng
- * @date 2021/9/28
+ * author     JohenTeng
+ * date      2021/9/28
  */
 @EsQueryHandle(ScriptQuery.class)
 public class ScriptQueryHandler extends AbstractQueryHandler<ScriptQueryBean>{

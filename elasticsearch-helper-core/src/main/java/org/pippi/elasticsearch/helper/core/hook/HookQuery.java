@@ -3,8 +3,8 @@ package org.pippi.elasticsearch.helper.core.hook;
 /**
  * HookQuery
  *
- * @author JohenTeng
- * @date 2021/9/29
+ * author     JohenTeng
+ * date      2021/9/29
  */
 public abstract class HookQuery<PARAM, RESULT> {
 

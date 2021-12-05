@@ -183,6 +183,20 @@ class AutoConfiguration {
 
 ### 依赖
 ```
+v1.0.0-bate.1
 
+spring-boot-starter:
 
+    <dependency>
+        <groupId>io.github.johendeng</groupId>
+        <artifactId>elasticsearch-helper-boot-starter</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
+
+core:
+    <dependency>
+        <groupId>io.github.johendeng</groupId>
+        <artifactId>elasticsearch-helper-core</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </dependency>
 ```

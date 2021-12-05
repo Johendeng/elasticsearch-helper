@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 /**
  * MoreLikeThisParam
  *
- * @author JohenTeng
- * @date 2021/9/29
+ * author     JohenTeng
+ * date      2021/9/29
  */
 public class MoreLikeThisParam implements EsComplexParam {
 

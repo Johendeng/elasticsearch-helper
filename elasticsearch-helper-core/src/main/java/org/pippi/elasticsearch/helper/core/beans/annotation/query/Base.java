@@ -8,8 +8,8 @@ import java.lang.annotation.*;
 
 /**
  * base define of a Es-query-bean
- * @author JohenTeng
- * @date 2021/8/8
+ * author     JohenTeng
+ * date      2021/8/8
  */
 @Inherited
 @Documented
@@ -19,19 +19,19 @@ public @interface Base {
 
     /**
      * index-filed name, default is Field's name
-     * @return
+     * return
      */
     String name() default "";
 
     /**
      * Query-Type: Match,MultiMatch
-     * @return
+     * return
      */
     String queryType() default "";
 
     /**
      * query's logic connector (boolQuery: must,must_not,should,filter)
-     * @return
+     * return
      */
     EsConnector connect() default EsConnector.MUST;
 

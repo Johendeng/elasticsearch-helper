@@ -6,8 +6,8 @@ import org.elasticsearch.index.query.NestedQueryBuilder;
 /**
  * ExtNestedBean
  *
- * @author JohenTeng
- * @date 2021/9/24
+ * author     JohenTeng
+ * date      2021/9/24
  */
 public class NestedQueryBean extends QueryBean<NestedQueryBuilder> {
 

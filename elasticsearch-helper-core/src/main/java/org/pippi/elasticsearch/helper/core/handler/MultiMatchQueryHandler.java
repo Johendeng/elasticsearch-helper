@@ -19,8 +19,8 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  *      private String userName;
  *
  *  }
- * @author  JohenTeng
- * @date 2021/8/20
+ * author      JohenTeng
+ * date      2021/8/20
  */
 @EsQueryHandle(MultiMatch.class)
 public class MultiMatchQueryHandler extends AbstractQueryHandler<MultiMatchQueryBean>{

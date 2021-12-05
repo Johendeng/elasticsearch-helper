@@ -8,8 +8,8 @@ import java.lang.annotation.*;
 /**
  * Define the esQueryHolder's index-name, queryModel ... information
  *
- * @author JohenTeng
- * @date 2021/8/8
+ * author     JohenTeng
+ * date      2021/8/8
  */
 @Documented
 @Target(ElementType.TYPE)
@@ -18,32 +18,32 @@ public @interface EsQueryIndex {
 
     /**
      *  query index name (required)
-     * @return
+     * return
      */
     String index();
 
     /**
      *  query model {@link QueryModel} (required)
      * @see QueryModel
-     * @return
+     * return
      */
     QueryModel model();
 
     /**
      *  fetch need fields from ES, reduce data-package of I/O
-     * @return
+     * return
      */
     String[] fetch() default {};
 
     /**
      * exclude unuseful fields from ES
-     * @return
+     * return
      */
     String[] exclude() default {};
 
     /**
      * min fetch doc-score, default is 0.0
-     * @return
+     * return
      */
     float minScore() default 0f;
 }

@@ -17,11 +17,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @project: elasticsearch-helper
- * @package: org.pippi.elasticsearch.helper.core.handler
- * @date:    2021/9/8
- * @author: JohenTeng
- * @email: 1078481395@qq.com
+ * project  elasticsearch-helper
+ * packages   org.pippi.elasticsearch.helper.core.handler
+ * date     2021/9/8
+ * author   JohenTeng
+ * email    1078481395@qq.com
  **/
 public class QueryHandlerFactory {
 

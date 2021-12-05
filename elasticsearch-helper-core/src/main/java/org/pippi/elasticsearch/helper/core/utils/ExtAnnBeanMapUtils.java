@@ -7,8 +7,8 @@ import java.util.Map;
 /**
  * ExtAnnBeanMapUtils
  *
- * @author JohenTeng
- * @date 2021/9/23
+ * author     JohenTeng
+ * date      2021/9/23
  */
 public class ExtAnnBeanMapUtils {
 
@@ -17,7 +17,7 @@ public class ExtAnnBeanMapUtils {
      *  phrase annotation to JavaBean
      * @param annotation target Annotation
      * @param clazz mapping class
-     * @return target JavaBean(T)
+     * return    target JavaBean(T)
      */
     public static Object mapping(Annotation annotation, Class<?> clazz) {
         Field[] extBeanFields = clazz.getDeclaredFields();

@@ -27,8 +27,8 @@ import java.util.zip.Deflater;
          "fuzzy_transpositions": true,
          "boost": 1
      }
- * @author JohenTeng
- * @date 2021/9/23
+ * author     JohenTeng
+ * date      2021/9/23
  */
 @Query
 @Inherited
@@ -39,7 +39,7 @@ public @interface MultiMatch {
 
     /**
      *  define the boost and logic-connector
-     * @return
+     * return
      */
     Base value() default @Base;
 
@@ -53,7 +53,7 @@ public @interface MultiMatch {
      *   For Example:
      *   boostFields = ["field1:3.0","field2:2.0"]
      *   multiQueryBuilder.field ("field1", 3.0).field("field2", 2.0)
-     * @return
+     * return
      */
     String[] boostFields() default {};
     MultiMatchQueryBuilder.Type type() default MultiMatchQueryBuilder.Type.BEST_FIELDS;

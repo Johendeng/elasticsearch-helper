@@ -5,8 +5,8 @@ import java.lang.annotation.*;
 /**
  * HighLight
  *
- * @author JohenTeng
- * @date 2021/9/29
+ * author     JohenTeng
+ * date      2021/9/29
  */
 @Documented
 @Target({ElementType.TYPE})
@@ -15,13 +15,13 @@ public @interface HighLight {
 
     /**
      * highLight fields
-     * @return
+     * return
      */
     String[] fields() default {};
 
     /**
      *  which kind of highLight-key
-     * @return
+     * return
      */
     String highLightKey() default "default";
 

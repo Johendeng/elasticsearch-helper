@@ -37,8 +37,8 @@ import java.util.List;
          }
      }
  *
- * @author JohenTeng
- * @date 2021/9/22
+ * author     JohenTeng
+ * date      2021/9/22
  */
 @EsQueryHandle(Nested.class)
 public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {

@@ -9,8 +9,8 @@ import java.util.LinkedHashMap;
 /**
  * Define Page-Query params and order Config
  *
- * @author JohenTeng
- * @date 2021/9/29
+ * author     JohenTeng
+ * date      2021/9/29
  */
 public class PageParam implements EsComplexParam {
 

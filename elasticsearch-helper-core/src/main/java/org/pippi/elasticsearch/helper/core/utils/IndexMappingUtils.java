@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @project: elasticsearch-helper
- * @package: org.pippi.elasticsearch.helper
- * @date:    2021/5/13
- * @author:  JohenTeng
- * @email: 1078481395@qq.com
+ * project  elasticsearch-helper
+ * packages   org.pippi.elasticsearch.helper
+ * date     2021/5/13
+ * author    JohenTeng
+ * email    1078481395@qq.com
  **/
 public class IndexMappingUtils {
 
@@ -41,7 +41,7 @@ public class IndexMappingUtils {
     /**
      *  translate target Index-mapper-class to initialize Index mapper-json
      * @param target
-     * @return
+     * return
      */
     public String read(Class<?> target, boolean prettyExport) {
         EsIndex indexDes = target.getAnnotation(EsIndex.class);

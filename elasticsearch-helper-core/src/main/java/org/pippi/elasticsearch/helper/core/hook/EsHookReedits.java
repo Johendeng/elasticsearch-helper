@@ -10,11 +10,11 @@ import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigExcepti
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
- * @Project Name:elasticsearch-helper
- * @File Name:EsResponseHookFactory
- * @Package Name:org.pippi.elasticsearch.helper.view
- * @Date:2021/7/21 00:36
- * @author:JohenTeng
+ * project     Name:elasticsearch-helper
+ * file        Name:EsResponseHookFactory
+ * package     Name:org.pippi.elasticsearch.helper.view
+ * date 2021/7/21 00:36
+ * author  JohenTeng
  * Description:
  */
 public class EsHookReedits {

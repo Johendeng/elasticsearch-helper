@@ -11,8 +11,8 @@ import java.util.function.Supplier;
  *   config global query supplier, in order to define the configuration
  *   with annotation like
  *   {@link org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight#highLightKey()}
- * @author JohenTeng
- * @date 2021/9/22
+ * author     JohenTeng
+ * date      2021/9/22
  */
 public final class GlobalEsQueryConfig {
 

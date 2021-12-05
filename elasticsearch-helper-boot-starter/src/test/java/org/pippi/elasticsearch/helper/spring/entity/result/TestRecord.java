@@ -5,8 +5,8 @@ import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 /**
  * 描述
  *
- * @author JohenTeng
- * @date 2021/8/4
+ * author     JohenTeng
+ * date      2021/8/4
  */
 public class TestRecord extends BaseResp.BaseHit {
 

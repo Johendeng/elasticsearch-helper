@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 /**
  * phrase Es-response to required JavaBean-Response
  *
- * @project: elasticsearch-helper
- * @package: org.pippi.elasticsearch.helper
- * @date:    2021/5/8
- * @author:  JohenTeng
- * @email: 1078481395@qq.com
+ * project  elasticsearch-helper
+ * packages   org.pippi.elasticsearch.helper
+ * date     2021/5/8
+ * author    JohenTeng
+ * email    1078481395@qq.com
  **/
 public class EsResponseParseHelper {
 
@@ -38,7 +38,7 @@ public class EsResponseParseHelper {
     /**
      *  simple read es response
      * @param resp
-     * @return
+     * return
      */
     public static BaseResp<Map<String, Object>> getListMap(SearchResponse resp){
         BaseResp res = new BaseResp();

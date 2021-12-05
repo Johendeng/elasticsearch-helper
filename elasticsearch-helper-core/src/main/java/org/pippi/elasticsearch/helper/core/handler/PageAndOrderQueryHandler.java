@@ -20,8 +20,8 @@ import java.util.Objects;
 /**
  * PageAndOrderQueryHandler
  *
- * @author JohenTeng
- * @date 2021/9/29
+ * author     JohenTeng
+ * date      2021/9/29
  */
 @EsQueryHandle(PageAndOrder.class)
 public class PageAndOrderQueryHandler extends AbstractQueryHandler{

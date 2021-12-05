@@ -19,8 +19,8 @@ import javax.annotation.Resource;
 /**
  * EsTestMapperTest
  *
- * @author JohenTeng
- * @date 2021/9/30
+ * author     JohenTeng
+ * date      2021/9/30
  */
 @Ignore
 @RunWith(SpringRunner.class)

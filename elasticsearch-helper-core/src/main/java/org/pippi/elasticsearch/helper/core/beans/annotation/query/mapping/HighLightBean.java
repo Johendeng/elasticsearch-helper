@@ -5,20 +5,20 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
 /**
  * HighLightBean
  *
- * @author JohenTeng
- * @date 2021/9/29
+ * author     JohenTeng
+ * date      2021/9/29
  */
 public class HighLightBean {
 
     /**
      * highLight fields
-     * @return
+     * return
      */
     private String[] fields;
 
     /**
      *  which kind of highLight-key
-     * @return
+     * return
      */
     private String highLightKey;
 

@@ -19,8 +19,8 @@ import java.lang.annotation.*;
  *                is {@link ScriptType#INLINE}, {@code null} otherwise.
  * param params   The user-defined params to be bound for script execution.
  *
- * @author JohenTeng
- * @date 2021/9/28
+ * author     JohenTeng
+ * date      2021/9/28
  */
 @Query
 @Inherited
@@ -39,7 +39,7 @@ public @interface ScriptQuery {
 
     /**
      * Dose script has params
-     * @return
+     * return
      */
     boolean hasParams() default false;
 

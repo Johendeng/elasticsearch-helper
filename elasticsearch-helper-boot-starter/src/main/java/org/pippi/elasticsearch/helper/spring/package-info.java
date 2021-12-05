@@ -1,8 +1,8 @@
 /**
  * package-info
  *
- * @author johenTeng
- * @date 2021/9/17
+ * author     johenTeng
+ * date      2021/9/17
  */
 package org.pippi.elasticsearch.helper.spring;
 

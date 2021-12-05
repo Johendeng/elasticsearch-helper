@@ -3,8 +3,8 @@ package org.pippi.elasticsearch.helper.core.beans.enums;
 /**
  * 描述 ES 涉及的查询逻辑连接符
  *
- * @author JohenTeng
- * @date 2021/8/9
+ * author     JohenTeng
+ * date      2021/8/9
  */
 public enum EsConnector {
 

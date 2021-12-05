@@ -22,8 +22,8 @@ import java.lang.annotation.*;
          "fuzzy_transpositions": true,
          "boost": 1
      }
- * @author JohenTeng
- * @date 2021/9/28
+ * author     JohenTeng
+ * date      2021/9/28
  */
 @Query
 @Inherited

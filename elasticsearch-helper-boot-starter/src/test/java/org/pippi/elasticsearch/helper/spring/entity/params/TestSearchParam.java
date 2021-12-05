@@ -14,8 +14,8 @@ import org.pippi.elasticsearch.helper.spring.entity.result.TestRecord;
 /**
  * ContentSearchParam
  *
- * @author JohenTeng
- * @date 2021/9/18
+ * author     JohenTeng
+ * date      2021/9/18
  */
 @EsQueryIndex(index = "test", model = QueryModel.BOOL, fetch = {"intensity", "describe", "title"})
 @HighLight(fields = {"title", "describe"})

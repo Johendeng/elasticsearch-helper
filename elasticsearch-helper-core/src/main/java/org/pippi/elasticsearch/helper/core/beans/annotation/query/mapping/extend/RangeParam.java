@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 /**
  * RangeParam: define the two-side of range query
  *
- * @author JohenTeng
- * @date 2021/9/26
+ * author     JohenTeng
+ * date      2021/9/26
  */
 public class RangeParam implements EsComplexParam {
 

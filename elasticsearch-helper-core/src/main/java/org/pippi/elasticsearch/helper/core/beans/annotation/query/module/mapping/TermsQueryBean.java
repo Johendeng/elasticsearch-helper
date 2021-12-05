@@ -5,8 +5,8 @@ import org.elasticsearch.index.query.TermsQueryBuilder;
 /**
  * TermsQueryBean
  *
- * @author JohenTeng
- * @date 2021/9/24
+ * author     JohenTeng
+ * date      2021/9/24
  */
 public class TermsQueryBean extends QueryBean<TermsQueryBuilder>{
 

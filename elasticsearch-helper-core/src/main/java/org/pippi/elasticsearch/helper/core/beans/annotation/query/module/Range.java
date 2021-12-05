@@ -8,8 +8,8 @@ import java.lang.annotation.*;
 /**
  * Range
  *
- * @author JohenTeng
- * @date 2021/9/26
+ * author     JohenTeng
+ * date      2021/9/26
  */
 @Query
 @Inherited
@@ -22,7 +22,7 @@ public @interface Range {
     String L_G = "(L,G)";
     String LE_G = "[L,G)";
     String L_GE = "(L,G]";
-    String F_T = "F->T";
+    String F_T = "F_T";
 
     Base value() default @Base;
 
@@ -33,7 +33,7 @@ public @interface Range {
      *  {@value LE_G}
      *  {@value L_GE}
      *  {@value F_T}
-     * @return
+     * return
      */
     String tag() default L_G;
 

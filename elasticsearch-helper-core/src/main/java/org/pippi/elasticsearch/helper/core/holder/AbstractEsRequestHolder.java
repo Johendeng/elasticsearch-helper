@@ -28,8 +28,8 @@ import java.util.Set;
 /**
  *  hold es request bean
  *
- * @author JohenTeng
- * @date 2021/8/8
+ * author     JohenTeng
+ * date      2021/8/8
  */
 public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 
@@ -58,7 +58,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 	/**
 	 *
 	 * @param index
-	 * @return
+	 * return
 	 */
 	public AbstractEsRequestHolder init(String index) {
 		this.indexName = index;
@@ -84,7 +84,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 	/**
 	 *  change logic connector
 	 * @param connector
-	 * @return
+	 * return
 	 */
 	public abstract AbstractEsRequestHolder changeLogicConnector(EsConnector connector);
 

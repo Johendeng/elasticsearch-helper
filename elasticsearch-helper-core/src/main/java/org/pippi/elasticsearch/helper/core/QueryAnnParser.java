@@ -22,11 +22,11 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * @project: elasticsearch-helper
- * @package: org.pippi.elasticsearch.helper.view
- * @date:    2021/7/18
- * @author:  JohenTeng
- * @email: 1078481395@qq.com
+ * project  elasticsearch-helper
+ * packages   org.pippi.elasticsearch.helper.view
+ * date     2021/7/18
+ * author    JohenTeng
+ * email    1078481395@qq.com
  **/
 public class QueryAnnParser {
 
@@ -51,7 +51,7 @@ public class QueryAnnParser {
     /**
      *  parse Index-information
      * @param view
-     * @return
+     * return
      */
     public EsQueryIndexBean getIndex(Object view) {
 
@@ -83,7 +83,7 @@ public class QueryAnnParser {
      *
      * @param view
      * @param visitParent
-     * @return
+     * return
      */
     public List<EsQueryFieldBean> read(Object view, boolean visitParent) {
         Class<?> clazz = view.getClass();

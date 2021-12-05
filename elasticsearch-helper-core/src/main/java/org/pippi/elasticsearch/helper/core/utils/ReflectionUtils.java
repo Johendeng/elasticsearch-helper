@@ -9,18 +9,18 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
- * @project: elasticsearch-helper
- * @package: org.pippi.elasticsearch.helper.core.utils
- * @date:    2021/7/18
- * @author:  JohenTeng
- * @email: 1078481395@qq.com
+ * project  elasticsearch-helper
+ * packages   org.pippi.elasticsearch.helper.core.utils
+ * date     2021/7/18
+ * author    JohenTeng
+ * email    1078481395@qq.com
  **/
 public class ReflectionUtils {
 
     /**
      *  judge the given type is Java-Base type or String, but not void.class
      * @param type
-     * @return
+     * return
      */
     public static boolean isBaseType (Class<?> type) {
         return ( type.isPrimitive() && !Objects.equals(type, void.class))
@@ -34,7 +34,7 @@ public class ReflectionUtils {
      *  initialize target-class
      * @param clazz target-class， must have no-args public constructor
      * @param <T> target-class-type
-     * @return
+     * return
      */
     public static <T> T newInstance(Class<T> clazz) {
         try {

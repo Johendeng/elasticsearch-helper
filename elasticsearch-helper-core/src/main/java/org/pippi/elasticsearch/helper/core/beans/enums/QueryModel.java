@@ -3,8 +3,8 @@ package org.pippi.elasticsearch.helper.core.beans.enums;
 /**
  * 描述
  *
- * @author JohenTeng
- * @date 2021/8/9
+ * author     JohenTeng
+ * date      2021/8/9
  */
 public enum QueryModel {
 

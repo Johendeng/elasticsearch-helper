@@ -12,8 +12,8 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 /**
  * TermsQueryHandler
  *
- * @author JohenTeng
- * @date 2021/9/27
+ * author     JohenTeng
+ * date      2021/9/27
  */
 @EsQueryHandle(Terms.class)
 public class TermsQueryHandler extends AbstractQueryHandler<TermsQueryBean> {

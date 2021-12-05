@@ -12,11 +12,11 @@ import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
- * @project: elasticsearch-helper
- * @package: com.poet.elasticsearch.helper.core.web
- * @date:    2021/5/3
- * @author:  JohenTeng
- * @email: 1078481395@qq.com
+ * project  elasticsearch-helper
+ * packages   com.poet.elasticsearch.helper.core.web
+ * date     2021/5/3
+ * author    JohenTeng
+ * email    1078481395@qq.com
  *
  * @param <T> mapping JavaBean
  **/
@@ -28,7 +28,7 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
      *  execute param-explain
      * @param queryDes
      * @param searchHelper
-     * @return
+     * return
      */
     public final AbstractEsRequestHolder execute(EsQueryFieldBean<T> queryDes, AbstractEsRequestHolder searchHelper){
         searchHelper.changeLogicConnector(queryDes.getLogicConnector());
@@ -45,7 +45,7 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
      *  abstract Handle method, you need to implement it
      * @param queryDes
      * @param searchHelper
-     * @return
+     * return
      */
     public abstract QueryBuilder handle (EsQueryFieldBean<T> queryDes, AbstractEsRequestHolder searchHelper);
 
@@ -54,7 +54,7 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
      *  explain the extend-params
      *  final handle-process of query-field-reader
      * @param queryDes
-     * @return
+     * return
      */
     protected void handleExtConfig (EsQueryFieldBean<T> queryDes, QueryBuilder queryBuilder) {
         // do nothing, if need translate QueryDes.extendDefine, you need implement this method
@@ -63,7 +63,7 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
     /**
      *  mapping the annotation
      * @param queryDes
-     * @return
+     * return
      */
     protected final EsQueryFieldBean<T> handleExtBean(EsQueryFieldBean<T> queryDes) {
         try {

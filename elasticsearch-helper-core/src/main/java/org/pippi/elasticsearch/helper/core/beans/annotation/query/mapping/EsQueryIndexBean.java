@@ -6,8 +6,8 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 /**
  * 描述
  *
- * @author JohenTeng
- * @date 2021/8/9
+ * author     JohenTeng
+ * date      2021/8/9
  */
 public class EsQueryIndexBean {
 

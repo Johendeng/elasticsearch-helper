@@ -11,8 +11,8 @@ import java.lang.annotation.*;
  *
  *  the Field should be define to MoreLikeThisParam.class
  *
- * @author JohenTeng
- * @date 2021/9/28
+ * author     JohenTeng
+ * date      2021/9/28
  */
 @Query
 @Inherited
@@ -25,7 +25,7 @@ public @interface MoreLikeThis {
 
     /**
      * 纳入查询评分的字段
-     * @return
+     * return
      */
     String[] fields() default {};
 

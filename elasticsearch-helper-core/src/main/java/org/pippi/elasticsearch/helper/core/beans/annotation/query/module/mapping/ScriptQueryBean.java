@@ -6,8 +6,8 @@ import org.elasticsearch.script.ScriptType;
 /**
  * ScriptQueryBean
  *
- * @author JohenTeng
- * @date 2021/9/28
+ * author     JohenTeng
+ * date      2021/9/28
  */
 public class ScriptQueryBean extends QueryBean<ScriptQueryBuilder>{
 
@@ -22,7 +22,7 @@ public class ScriptQueryBean extends QueryBean<ScriptQueryBuilder>{
 
     /**
      * Dose script has params
-     * @return
+     * return
      */
     boolean hasParams;
 

@@ -8,18 +8,18 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import java.util.*;
 
 /**
- * @project: elasticsearch-helper
- * @package: org.pippi.elasticsearch.helper.view
- * @date:    2021/7/17
- * @author:  JohenTeng
- * @email: 1078481395@qq.com
+ * project  elasticsearch-helper
+ * packages   org.pippi.elasticsearch.helper.view
+ * date     2021/7/17
+ * author    JohenTeng
+ * email    1078481395@qq.com
  **/
 public class EsQueryEngine {
 
     /**
      * @param queryViewObj
      * @param visitParent
-     * @return
+     * return
      */
     public static AbstractEsRequestHolder execute(Object queryViewObj, boolean visitParent) {
         QueryAnnParser translator = QueryAnnParser.instance();

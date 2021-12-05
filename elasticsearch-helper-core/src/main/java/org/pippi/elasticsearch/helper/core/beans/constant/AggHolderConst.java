@@ -4,8 +4,8 @@ package org.pippi.elasticsearch.helper.core.beans.constant;
 /**
  * 描述 聚合字段占位标识
  *
- * @author JohenTeng
- * @date 2021/7/21
+ * author     JohenTeng
+ * date      2021/7/21
  */
 public interface AggHolderConst {
 

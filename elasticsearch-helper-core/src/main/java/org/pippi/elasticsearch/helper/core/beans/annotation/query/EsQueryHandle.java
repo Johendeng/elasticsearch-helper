@@ -4,11 +4,11 @@ import java.lang.annotation.*;
 
 /**
  *  define the query handle
- * @project: elasticsearch-helper
- * @package: org.pippi.elasticsearch.helper.beans.annotation
- * @date:    2021/7/18
- * @author: JohenTeng
- * @email: 1078481395@qq.com
+ * project  elasticsearch-helper
+ * packages   org.pippi.elasticsearch.helper.beans.annotation
+ * date     2021/7/18
+ * author   JohenTeng
+ * email    1078481395@qq.com
  **/
 @Inherited
 @Documented

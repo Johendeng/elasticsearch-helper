@@ -8,8 +8,8 @@ import org.pippi.elasticsearch.helper.spring.entity.result.TestRecord;
 /**
  * EsTestMapper
  *
- * @author JohenTeng
- * @date 2021/9/30
+ * author     JohenTeng
+ * date      2021/9/30
  */
 @EsHelperProxy
 public interface EsTestMapper {
@@ -17,7 +17,7 @@ public interface EsTestMapper {
 	/**
 	 *  query records by intensity-field
 	 * @param param mapping query param bean
-	 * @return
+	 * return
 	 */
 	BaseResp<TestRecord> queryRecordByIntensity(TestSearchParam param);
 

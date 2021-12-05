@@ -15,8 +15,8 @@ import java.util.Optional;
 /**
  * EsHelperProxyBeanFactory
  *
- * @author JohenTeng
- * @date 2021/9/18
+ * author     JohenTeng
+ * date      2021/9/18
  */
 public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,InitializingBean,FactoryBean<T> {
 

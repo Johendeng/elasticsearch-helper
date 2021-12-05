@@ -7,8 +7,8 @@ import org.elasticsearch.common.unit.Fuzziness;
 /**
  * FuzzyType
  *
- * @author JohenTeng
- * @date 2021/9/22
+ * author     JohenTeng
+ * date      2021/9/22
  */
 public enum FuzzinessEnum {
 

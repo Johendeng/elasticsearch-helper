@@ -14,8 +14,8 @@ import javax.annotation.Resource;
 /**
  * EsHelperAutoConfiguration
  *
- * @author JohenTeng
- * @date 2021/9/17
+ * author     JohenTeng
+ * date      2021/9/17
  */
 @Configuration
 public class EsHelperAutoConfiguration {

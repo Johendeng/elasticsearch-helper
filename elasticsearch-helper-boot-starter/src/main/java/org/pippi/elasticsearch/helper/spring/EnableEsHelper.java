@@ -8,8 +8,8 @@ import java.lang.annotation.*;
 /**
  * Enable ElasticSearch Handler
  *
- * @author JohenTeng
- * @date 2021/9/18
+ * author     JohenTeng
+ * date      2021/9/18
  */
 @Documented
 @Target({ElementType.TYPE})
