@@ -4,12 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
-        <groupId>org.pippi</groupId>
+        <groupId>io.github.johendeng</groupId>
         <artifactId>elasticsearch-helper</artifactId>
         <version>1.0.0.SNAPSHOT</version>
     </parent>
 
     <modelVersion>4.0.0</modelVersion>
+    <groupId>io.github.johendeng</groupId>
     <artifactId>elasticsearch-helper-boot-starter</artifactId>
     <build>
         <plugins>
@@ -42,7 +43,7 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.pippi</groupId>
+            <groupId>io.github.johendeng</groupId>
             <artifactId>elasticsearch-helper-core</artifactId>
         </dependency>
     </dependencies>
