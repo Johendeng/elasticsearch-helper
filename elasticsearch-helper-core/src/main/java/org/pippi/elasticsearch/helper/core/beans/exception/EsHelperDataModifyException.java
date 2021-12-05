@@ -5,7 +5,7 @@ package org.pippi.elasticsearch.helper.core.beans.exception;
  * File Name:EsHelperDataModifyException
  * Package Name:com.poet.elasticsearch.helper.exception
  * Date:2021/4/30 11:55
- * Author:JohenTeng
+ * author:JohenTeng
  * Description:
  */
 public class EsHelperDataModifyException extends RuntimeException {

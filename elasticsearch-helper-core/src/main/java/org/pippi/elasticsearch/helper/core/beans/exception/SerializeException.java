@@ -5,7 +5,7 @@ package org.pippi.elasticsearch.helper.core.beans.exception;
  * File Name:SerializeException
  * Package Name:com.poet.elasticsearch.helper.beans.exception
  * Date:2021/7/17 15:23
- * Author: JohenTeng
+ * author: JohenTeng
  * Description:
  */
 public class SerializeException extends RuntimeException {

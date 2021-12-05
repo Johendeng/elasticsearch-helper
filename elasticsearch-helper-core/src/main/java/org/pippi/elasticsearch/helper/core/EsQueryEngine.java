@@ -8,11 +8,11 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import java.util.*;
 
 /**
- * project: elasticsearch-helper
- * package: org.pippi.elasticsearch.helper.view
- * date:    2021/7/17
- * @Author:  JohenTeng
- * email: 1078481395@qq.com
+ * @project: elasticsearch-helper
+ * @package: org.pippi.elasticsearch.helper.view
+ * @date:    2021/7/17
+ * @author:  JohenTeng
+ * @email: 1078481395@qq.com
  **/
 public class EsQueryEngine {
 

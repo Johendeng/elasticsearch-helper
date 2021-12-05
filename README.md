@@ -163,6 +163,22 @@ class AutoConfiguration {
 可以使用 @HighLight(fields = {"title", "describe"}, highLightKey = "html")
 中的 highLightKey 来定义使用的HightLight配置
 
+=》@EsCondition 条件筛选注解
+当属性不被 @EsCondition注解 修饰时，默认当 属性值不为空时 就会在Es查询语句中构建该属性的查询条件，
+
+可以使用 @EsCondition 注解来自定义筛选条件；
+你需要 实现 EsConditionHandler 接口中的boolean test(R val) 方法来判断值是否被采纳；
+
+    public class UserAgeConditionHandler implements EsConditionHandler<Integer> {
+    
+        @Overider
+        public boolean test(Integer age) {
+            ... 你的条件判断逻辑 ...
+        }
+    }
+
+同时使用@EsCondition注解修饰属性，例如 @EsCondition(UserAgeConditionHandler.class)
+
 ```
 
 ### 依赖

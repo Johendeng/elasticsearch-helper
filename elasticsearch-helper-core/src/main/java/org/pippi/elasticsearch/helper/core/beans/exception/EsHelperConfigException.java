@@ -1,12 +1,12 @@
 package org.pippi.elasticsearch.helper.core.beans.exception;
 
 /**
- * Project Name:elasticsearch-helper
- * File Name:EsHelperConfigException
- * Package Name:com.poet.elasticsearch.helper.exception
- * Date:2021/4/30 11:56
- * Author:JohenTeng
- * Description:
+ * @project Name:elasticsearch-helper
+ * @file Name:EsHelperConfigException
+ * @package Name:com.poet.elasticsearch.helper.exception
+ * @date:2021/4/30 11:56
+ * @author:JohenTeng
+ * @description:
  */
 public class EsHelperConfigException extends RuntimeException {
 

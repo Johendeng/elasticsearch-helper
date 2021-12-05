@@ -9,11 +9,11 @@ import java.lang.reflect.Method;
 import java.util.Objects;
 
 /**
- * project: elasticsearch-helper
- * package: org.pippi.elasticsearch.helper.core.utils
- * date:    2021/7/18
- * @Author:  JohenTeng
- * email: 1078481395@qq.com
+ * @project: elasticsearch-helper
+ * @package: org.pippi.elasticsearch.helper.core.utils
+ * @date:    2021/7/18
+ * @author:  JohenTeng
+ * @email: 1078481395@qq.com
  **/
 public class ReflectionUtils {
 

@@ -20,11 +20,11 @@ import java.util.stream.Collectors;
 /**
  * phrase Es-response to required JavaBean-Response
  *
- * project: elasticsearch-helper
- * package: com.poet.elasticsearch.helper
- * date:    2021/5/8
- * @Author:  JohenTeng
- * email: 1078481395@qq.com
+ * @project: elasticsearch-helper
+ * @package: org.pippi.elasticsearch.helper
+ * @date:    2021/5/8
+ * @author:  JohenTeng
+ * @email: 1078481395@qq.com
  **/
 public class EsResponseParseHelper {
 

@@ -5,11 +5,11 @@ import org.pippi.elasticsearch.helper.core.handler.EsConditionHandle;
 import java.lang.annotation.*;
 
 /**
- * project: elasticsearch-helper
- * package: org.pippi.elasticsearch.helper.core.beans.annotation.query
- * date:    2021/12/3
- * developer: JohenTeng
- * email: 1078481395@qq.com
+ * @project: elasticsearch-helper
+ * @package: org.pippi.elasticsearch.helper.core.beans.annotation.query
+ * @date:    2021/12/3
+ * @author: JohenTeng
+ * @email: 1078481395@qq.com
  **/
 @Inherited
 @Documented

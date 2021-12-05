@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * @project: elasticsearch-helper
  * @package: org.pippi.elasticsearch.helper.view
  * @date:    2021/7/18
- * @Author:  JohenTeng
+ * @author:  JohenTeng
  * @email: 1078481395@qq.com
  **/
 public class QueryAnnParser {

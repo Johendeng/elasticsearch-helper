@@ -15,7 +15,7 @@ import java.util.Objects;
  * @project: elasticsearch-helper
  * @package: com.poet.elasticsearch.helper.core.web
  * @date:    2021/5/3
- * @@Author:  JohenTeng
+ * @author:  JohenTeng
  * @email: 1078481395@qq.com
  *
  * @param <T> mapping JavaBean
