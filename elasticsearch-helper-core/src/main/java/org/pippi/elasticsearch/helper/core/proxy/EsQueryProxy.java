@@ -17,6 +17,7 @@ import org.pippi.elasticsearch.helper.core.hook.ResponseHook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -54,7 +55,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
     }
 
     @Override
-    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+    public Object invoke(Object proxy, Method method, Object[] args) {
         if (args == null || args.length == 0 || args.length > 1 ) {
             throw new EsHelperQueryException("ES-HELPER un-support multi-params or miss-param, params must be single");
         }
@@ -68,7 +69,12 @@ public class EsQueryProxy<T> implements InvocationHandler {
             if (enableLogOutEsQueryJson) {
                 log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
             }
-            SearchResponse resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
+            SearchResponse resp = null;
+            try {
+                resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
+            } catch (IOException e) {
+                throw new EsHelperQueryException("EsSearchExecute I/O exception, cause:", e);
+            }
             ResponseHook responseHook = null;
             if ((responseHook = checkResponseHook(param, method)) != null) {
                 return responseHook.handleResponse(resp);
@@ -124,12 +130,12 @@ public class EsQueryProxy<T> implements InvocationHandler {
             if (Objects.nonNull(hookQuery.getRequestHook())) {
                 reqHook = hookQuery.getRequestHook();
             }
-            if (method.isAnnotationPresent(UseRequestHook.class)) {
-                UseRequestHook useReqHookAnn = method.getAnnotation(UseRequestHook.class);
-                String reqHookKey = useReqHookAnn.value();
-                reqHook = EsHookReedits.REP_FUNC_REGEDIT.get(reqHookKey);
-            }
             return reqHook;
+        }
+        if (method.isAnnotationPresent(UseRequestHook.class)) {
+            UseRequestHook useReqHookAnn = method.getAnnotation(UseRequestHook.class);
+            String reqHookKey = useReqHookAnn.value();
+            return EsHookReedits.REP_FUNC_REGEDIT.get(reqHookKey);
         }
         return null;
     }
@@ -141,12 +147,12 @@ public class EsQueryProxy<T> implements InvocationHandler {
             if (Objects.nonNull(hookQuery.getResponseHook())) {
                 reqHook = hookQuery.getResponseHook();
             }
-            if (method.isAnnotationPresent(UseResponseHook.class)) {
-                UseResponseHook useResponseHookAnn = method.getAnnotation(UseResponseHook.class);
-                String responseHookKey = useResponseHookAnn.value();
-                reqHook = EsHookReedits.RESP_FUNC_REGEDIT.get(responseHookKey);
-            }
             return reqHook;
+        }
+        if (method.isAnnotationPresent(UseResponseHook.class)) {
+            UseResponseHook useResponseHookAnn = method.getAnnotation(UseResponseHook.class);
+            String responseHookKey = useResponseHookAnn.value();
+            return EsHookReedits.RESP_FUNC_REGEDIT.get(responseHookKey);
         }
         return null;
     }

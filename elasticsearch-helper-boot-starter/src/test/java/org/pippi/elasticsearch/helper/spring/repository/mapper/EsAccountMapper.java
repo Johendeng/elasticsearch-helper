@@ -25,4 +25,7 @@ public interface EsAccountMapper {
 	 * 测试聚合查询
 	 */
 	AccountAggResult aggByParam(AggAccountQueryParam param);
+
+
+
 }
