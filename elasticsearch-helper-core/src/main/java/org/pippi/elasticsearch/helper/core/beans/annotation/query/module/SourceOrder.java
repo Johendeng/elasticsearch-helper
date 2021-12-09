@@ -23,9 +23,25 @@ public @interface SourceOrder {
 
     Base value() default @Base;
 
+    /**
+     * <p>
+     *     -asc/desc
+     *     {@link org.elasticsearch.search.sort.SortOrder}
+     * </p>
+     */
     String sort() default "";
 
+    /**
+     * script configuration:
+     *    inline + painless and no params
+     */
     String script() default "";
 
+    /**
+     * <p>
+     *     -string/number
+     *     {@link org.elasticsearch.search.sort.ScriptSortBuilder.ScriptSortType}
+     * </p>
+     */
     String scriptType() default "";
 }
