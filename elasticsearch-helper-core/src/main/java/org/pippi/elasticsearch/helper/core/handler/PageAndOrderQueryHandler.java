@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.MapUtils;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
@@ -12,7 +11,6 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.PageAnd
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -29,19 +27,18 @@ public class PageAndOrderQueryHandler extends AbstractQueryHandler{
     @Override
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
         Object value = queryDes.getValue();
-        if (value.getClass().equals(PageParam.class)) {
-            PageParam pageParam = (PageParam) value;
-            SearchSourceBuilder source = searchHelper.getSource();
-            source.from(pageParam.getExclude()).size(pageParam.getPageSize());
-            LinkedHashMap<String, SortOrder> orderMap = pageParam.getOrderMap();
-            if (MapUtils.isNotEmpty(orderMap)) {
-                for (Map.Entry<String, SortOrder> entry : orderMap.entrySet()) {
-                    source.sort(entry.getKey(), Objects.nonNull(entry.getValue()) ? entry.getValue() : SortOrder.ASC);
-                }
-            }
-            return null;
-        } else {
+        if (!value.getClass().equals(PageParam.class)) {
             throw new EsHelperQueryException("@PageAndOrder have to define as PageParam.class");
         }
+        PageParam pageParam = (PageParam) value;
+        SearchSourceBuilder source = searchHelper.getSource();
+        source.from(pageParam.getExclude()).size(pageParam.getPageSize());
+        LinkedHashMap<String, SortOrder> orderMap = pageParam.getOrderMap();
+        if (MapUtils.isNotEmpty(orderMap)) {
+            for (Map.Entry<String, SortOrder> entry : orderMap.entrySet()) {
+                source.sort(entry.getKey(), Objects.nonNull(entry.getValue()) ? entry.getValue() : SortOrder.ASC);
+            }
+        }
+        return null;
     }
 }

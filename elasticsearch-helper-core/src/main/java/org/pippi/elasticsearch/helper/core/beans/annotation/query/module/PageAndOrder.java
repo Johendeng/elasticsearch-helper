@@ -7,7 +7,9 @@ import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
 import java.lang.annotation.*;
 
 /**
- * PageAndOrder
+ * <h>define the field type as <br/>
+ * {@link org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam}</h>
+ *
  *
  * author     JohenTeng
  * date      2021/9/29
@@ -20,5 +22,4 @@ import java.lang.annotation.*;
 public @interface PageAndOrder {
 
     Base value() default @Base(meta = EsMeta.COMPLEX);
-
 }
