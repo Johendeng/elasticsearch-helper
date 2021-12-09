@@ -179,15 +179,18 @@ public class QueryAnnParser {
             queryDes.setExtAnnotation(targetAnn);
             Method baseMethod = targetAnn.getClass().getDeclaredMethod(BASE_FILED);
             Base ann = (Base) baseMethod.invoke(targetAnn);
+
             EsConnector esConnector = ann.connect();
             if (esConnector == null) {
                 throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");
             }
+            queryDes.setLogicConnector(esConnector);
 
             String column = ann.name();
             if (StringUtils.isBlank(column)) {
                 column = field.getName();
             }
+            queryDes.setField(column);
 
             String query = ann.queryType();
             if (StringUtils.isBlank(query)) {
@@ -196,15 +199,14 @@ public class QueryAnnParser {
             if (StringUtils.isBlank(query)) {
                 throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
             }
+            queryDes.setQueryType(query);
 
             String meta = ann.metaStringify();
             if (StringUtils.isBlank(meta)) {
                 meta =  ann.meta().getType();
             }
-
-            queryDes.setField(column);
-            queryDes.setQueryType(query);
             queryDes.setMeta(meta);
+
             queryDes.setBoost(ann.boost());
         } catch (Exception e) {
             throw new EsHelperConfigException("annotation analysis Error, cause:", e);
