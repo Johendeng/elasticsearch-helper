@@ -6,7 +6,9 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.spring.EsHelperSampleApplication;
+import org.pippi.elasticsearch.helper.spring.repository.entity.params.AggAccountQueryParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.SimpleAccountQueryParam;
+import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountAggResult;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
 import org.pippi.elasticsearch.helper.spring.repository.mapper.EsAccountMapper;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -38,6 +40,14 @@ public class EsAccountMapperTest {
 		param.setAge(range);
 		BaseResp<AccountEntity> resp = esAccountMapper.queryByParam(param);
 		System.out.println(SerializerUtils.parseObjToJson(resp));
+	}
+
+	@Test
+	public void testAggQuery() {
+		AggAccountQueryParam param = new AggAccountQueryParam();
+		param.setCity("Nogal");
+		AccountAggResult res = esAccountMapper.aggByParam(param);
+		System.out.println(SerializerUtils.parseObjToJson(res));
 	}
 
 }

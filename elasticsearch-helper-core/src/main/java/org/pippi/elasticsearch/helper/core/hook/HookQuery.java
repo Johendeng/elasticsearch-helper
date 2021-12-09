@@ -1,5 +1,8 @@
 package org.pippi.elasticsearch.helper.core.hook;
 
+import org.elasticsearch.action.search.SearchResponse;
+import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+
 /**
  * HookQuery
  *
@@ -20,12 +23,24 @@ public abstract class HookQuery<PARAM, RESULT> {
     /**
      * define RequestHook
      */
-    public abstract void setRequestHook();
+    protected abstract void configRequestHook(AbstractEsRequestHolder holder, PARAM param);
 
     /**
      * define ResponseHook
      */
-    public abstract void setResponseHook();
+    protected abstract RESULT configResponseHook(SearchResponse resp);
+
+
+    public void setRequestHook() {
+        this.requestHook = (holder, param) -> {
+            this.configRequestHook(holder, param);
+            return holder;
+        };
+    }
+
+    public void setResponseHook() {
+        this.responseHook = (orgResp) -> this.configResponseHook(orgResp);
+    }
 
     public RequestHook<PARAM> getRequestHook() {
         return requestHook;

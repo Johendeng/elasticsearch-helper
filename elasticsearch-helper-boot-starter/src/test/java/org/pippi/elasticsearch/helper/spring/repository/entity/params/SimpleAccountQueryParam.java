@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.spring.repository.entity.params;
 
-import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsCondition;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
@@ -8,7 +7,6 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SourceOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
