@@ -4,7 +4,6 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
@@ -14,7 +13,7 @@ import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountAgg
 /**
  * 实现自定义聚合，自定义结果返回
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/12/9
  */
 @EsQueryIndex(index = "account", model = QueryModel.BOOL)
