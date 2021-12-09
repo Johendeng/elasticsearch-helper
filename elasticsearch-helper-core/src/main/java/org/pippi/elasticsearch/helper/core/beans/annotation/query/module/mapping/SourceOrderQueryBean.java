@@ -5,7 +5,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 /**
  * OrderQueryBean
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/12/9
  */
 public class SourceOrderQueryBean extends QueryBean{

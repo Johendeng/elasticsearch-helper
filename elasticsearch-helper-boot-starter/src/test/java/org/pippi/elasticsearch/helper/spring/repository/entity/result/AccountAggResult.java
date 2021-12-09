@@ -5,7 +5,7 @@ import org.elasticsearch.action.search.SearchResponse;
 /**
  * AccountAggResult
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/12/9
  */
 public class AccountAggResult {

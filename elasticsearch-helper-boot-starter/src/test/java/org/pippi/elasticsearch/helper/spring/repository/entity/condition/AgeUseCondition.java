@@ -8,7 +8,7 @@ import java.util.Objects;
 /**
  * AgeUseCondition
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/12/9
  */
 public class AgeUseCondition implements EsConditionHandle<RangeParam> {
