@@ -105,7 +105,7 @@ public class QueryAnnParser {
 
     private boolean checkEsCondition(Field field, Object view) {
         Optional<Annotation> optionCondition = Arrays.stream(field.getAnnotations())
-                .filter(ann -> ann.annotationType().isAnnotationPresent(EsCondition.class))
+                .filter(ann -> ann.annotationType().equals(EsCondition.class))
                 .findAny();
         if (!optionCondition.isPresent()) {
             return true;

@@ -2,6 +2,7 @@ package org.pippi.elasticsearch.helper.spring.repository.entity.params;
 
 import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsCondition;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
@@ -11,6 +12,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SourceO
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
+import org.pippi.elasticsearch.helper.spring.repository.entity.condition.AgeUseCondition;
 
 /**
  * SimpleAccountQueryParam
@@ -32,6 +34,7 @@ public class SimpleAccountQueryParam {
 		value = @Base(connect = EsConnector.FILTER),
 		tag = Range.LE_GE
 	)
+	@EsCondition(AgeUseCondition.class)
 	private RangeParam age;
 
 	public String getState() {

@@ -33,7 +33,7 @@ public class EsAccountMapperTest {
 		param.setState("DE");
 		param.setAddress("River Street");
 		RangeParam range = new RangeParam();
-		range.setLeft(30);
+		range.setLeft(10);
 		range.setRight(35);
 		param.setAge(range);
 		BaseResp<AccountEntity> resp = esAccountMapper.queryByParam(param);
