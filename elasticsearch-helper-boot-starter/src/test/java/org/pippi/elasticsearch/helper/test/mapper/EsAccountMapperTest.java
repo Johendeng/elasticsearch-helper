@@ -50,4 +50,11 @@ public class EsAccountMapperTest {
 		System.out.println(SerializerUtils.parseObjToJson(res));
 	}
 
+	@Test
+	public void testAggQueryAnn() {
+		AggAccountQueryParam param = new AggAccountQueryParam();
+		param.setCity("Nogal");
+		AccountAggResult res = esAccountMapper.aggByParamAnn(param);
+		System.out.println(SerializerUtils.parseObjToJson(res));
+	}
 }
