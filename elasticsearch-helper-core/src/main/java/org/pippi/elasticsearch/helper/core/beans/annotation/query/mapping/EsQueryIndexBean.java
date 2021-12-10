@@ -21,17 +21,25 @@ public class EsQueryIndexBean {
 
 	private float minScore;
 
+	private boolean traceScore;
+
 	private HighLightBean highLight;
 
 	public EsQueryIndexBean() {
 	}
 
-	public EsQueryIndexBean(String indexName, QueryModel esQueryModel, String[] fetchFields, String[] excludeFields, float minScore) {
+	public EsQueryIndexBean(String indexName,
+							QueryModel esQueryModel,
+							String[] fetchFields,
+							String[] excludeFields,
+							float minScore,
+							boolean traceScore) {
 		this.indexName = indexName;
 		this.esQueryModel = esQueryModel;
 		this.fetchFields = fetchFields;
 		this.excludeFields = excludeFields;
 		this.minScore = minScore;
+		this.traceScore = traceScore;
 	}
 
 	public HighLightBean getHighLight() {
@@ -80,5 +88,13 @@ public class EsQueryIndexBean {
 
 	public void setMinScore(float minScore) {
 		this.minScore = minScore;
+	}
+
+	public boolean getTraceScore() {
+		return traceScore;
+	}
+
+	public void setTraceScore(boolean traceScore) {
+		this.traceScore = traceScore;
 	}
 }

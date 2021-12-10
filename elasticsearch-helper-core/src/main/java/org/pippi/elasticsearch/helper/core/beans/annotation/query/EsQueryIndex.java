@@ -43,7 +43,12 @@ public @interface EsQueryIndex {
 
     /**
      * min fetch doc-score, default is 0.0
-     * return
+     * @return
      */
     float minScore() default 0f;
+
+    /**
+     * force compute doc-hit-score
+     */
+    boolean traceScore() default false;
 }

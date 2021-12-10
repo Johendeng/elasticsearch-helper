@@ -153,6 +153,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		public String[] fetchFields;
 		public String[] excludeFields;
 		public float minScore;
+		public boolean traceScore;
 		public HighLightBean highLightBean;
 
 		public EsRequestHolderBuilder config(EsQueryIndexBean indexBean) {
@@ -160,6 +161,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			this.esQueryModel = indexBean.getEsQueryModel();
 			this.fetchFields = indexBean.getFetchFields();
 			this.minScore = indexBean.getMinScore();
+			this.traceScore = indexBean.getTraceScore();
 			this.highLightBean = indexBean.getHighLight();
 			return this;
 		}
@@ -199,6 +201,9 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 				}
 				if (minScore > 0) {
 					holder.getSource().minScore(minScore);
+				}
+				if (traceScore) {
+					holder.getSource().trackScores(traceScore);
 				}
 				return (R)holder;
 			}

@@ -67,7 +67,8 @@ public class QueryAnnParser {
         String[] fetchFields = ann.fetch();
         String[] excludeFields = ann.exclude();
         float minScore = ann.minScore();
-        EsQueryIndexBean indexBean = new EsQueryIndexBean(index, model, fetchFields, excludeFields, minScore);
+        boolean traceScore = ann.traceScore();
+        EsQueryIndexBean indexBean = new EsQueryIndexBean(index, model, fetchFields, excludeFields, minScore, traceScore);
         HighLight highLightAnn = clazz.getAnnotation(HighLight.class);
         if (Objects.nonNull(highLightAnn)) {
             indexBean.setHighLight(HighLightBean.phrase(highLightAnn));
