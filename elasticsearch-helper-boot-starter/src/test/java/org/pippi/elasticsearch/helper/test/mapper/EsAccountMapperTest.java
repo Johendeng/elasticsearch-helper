@@ -34,10 +34,10 @@ public class EsAccountMapperTest {
 		SimpleAccountQueryParam param = new SimpleAccountQueryParam();
 		param.setState("DE");
 		param.setAddress("River Street");
-		RangeParam range = new RangeParam();
-		range.setLeft(25);
-		range.setRight(35);
-		param.setAge(range);
+//		RangeParam range = new RangeParam();
+//		range.setLeft(25);
+//		range.setRight(35);
+//		param.setAge(range);
 		param.setFuzzyField("Bates");
 		BaseResp<AccountEntity> resp = esAccountMapper.queryByParam(param);
 		System.out.println(SerializerUtils.parseObjToJson(resp));

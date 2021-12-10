@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.spring.repository.entity.result;
 
-import org.elasticsearch.action.search.SearchResponse;
+import java.util.Map;
 
 /**
  * AccountAggResult
@@ -10,13 +10,13 @@ import org.elasticsearch.action.search.SearchResponse;
  */
 public class AccountAggResult {
 
-    private SearchResponse resp;
+    private Map<String, Long> data;
 
-    public SearchResponse getResp() {
-        return resp;
+    public Map<String, Long> getData() {
+        return data;
     }
 
-    public void setResp(SearchResponse resp) {
-        this.resp = resp;
+    public void setData(Map<String, Long> data) {
+        this.data = data;
     }
 }

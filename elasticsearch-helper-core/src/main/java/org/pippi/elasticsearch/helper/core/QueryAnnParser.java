@@ -115,6 +115,9 @@ public class QueryAnnParser {
         Class<? extends EsConditionHandle> conditionHandleClazz = condition.value();
         EsConditionHandle conditionHandle = ReflectionUtils.newInstance(conditionHandleClazz);
         Object val = ReflectionUtils.getFieldValue(field, view);
+        if (Objects.isNull(val)) {
+            return false;
+        }
         return conditionHandle.test(val);
     }
 

@@ -9,6 +9,9 @@
         <version>1.0.1-RELEASE</version>
     </parent>
 
+    <name>elasticsearch-helper-boot-starter</name>
+    <description>elasticsearch-helper boot starter</description>
+
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.johendeng</groupId>
     <artifactId>elasticsearch-helper-boot-starter</artifactId>

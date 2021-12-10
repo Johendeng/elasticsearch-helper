@@ -8,6 +8,9 @@
         <version>1.0.1-RELEASE</version>
     </parent>
 
+    <name>elasticsearch-helper-core</name>
+    <description>code code</description>
+
     <groupId>io.github.johendeng</groupId>
     <artifactId>elasticsearch-helper-core</artifactId>
     <version>1.0.1-RELEASE</version>
