@@ -223,9 +223,6 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			}
 			throw new RuntimeException("unsupport this query model");
 		}
-
-
-
 	}
 
 }
