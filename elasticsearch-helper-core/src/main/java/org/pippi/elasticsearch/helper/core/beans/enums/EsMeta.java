@@ -1,5 +1,9 @@
 package org.pippi.elasticsearch.helper.core.beans.enums;
 
+import com.google.common.collect.Maps;
+
+import java.util.*;
+
 /**
  * Project Name:elasticsearch-helper
  * File Name:Meta
@@ -13,43 +17,43 @@ public enum EsMeta {
     /**
      *
      */
-    KEYWORD("keyword", 1),
+    KEYWORD("keyword", 1, String.class),
 
-    BOOLEAN("boolean",2),
-    INTEGER("integer",3),
-    LONG("long",4),
-    SHORT("short",5),
-    BYTE("byte",6),
+    BOOLEAN("boolean",2, Boolean.class),
+    INTEGER("integer",3, Integer.class),
+    LONG("long",4, Long.class),
+    SHORT("short",5, Short.class),
+    BYTE("byte",6, Byte.class),
 
-    DOUBLE("double",7),
-    FLOAT("float",8),
-    HALF_FLOAT("half_float",9),
-    SCALED_FLOAT("scaled_float",10),
+    DOUBLE("double",7, Double.class),
+    FLOAT("float",8, Float.class),
+    HALF_FLOAT("half_float",9, Float.class),
+    SCALED_FLOAT("scaled_float",10, Float.class),
 
-    TEXT("text", 11),
+    TEXT("text", 11, String.class),
 
-    DATE("date",100),
-    RANGE("range",101),
-    BINARY("binary",102),
+    DATE("date",100, Date.class),
+    RANGE("range",101, Object.class),
+    BINARY("binary",102, Object.class),
 
-    OBJECT("object",202),
-    NESTED("nested",203),
-    GEO_POINT("geo_point",204),
-    GEO_SHAPE("geo_shape",205),
-    IP("ip",206),
-    TOKEN_COUNT("token_count",207),
+    OBJECT("object",202, Object.class),
+    NESTED("nested",203, Object.class),
+    GEO_POINT("geo_point",204, Object.class),
+    GEO_SHAPE("geo_shape",205, Object.class),
+    IP("ip",206, String.class),
+    TOKEN_COUNT("token_count",207, Object.class),
 
-    COMPLEX("complex", -1);
+    COMPLEX("complex", -1, Object.class);
     ;
-
-
 
     private String type;
     private int code;
+    private Class clazz;
 
-    EsMeta(String type, int code) {
+    EsMeta(String type, int code, Class clazz) {
         this.type = type;
         this.code = code;
+        this.clazz = clazz;
     }
 
     public String getType() {
@@ -58,5 +62,25 @@ public enum EsMeta {
 
     public int getCode() {
         return code;
+    }
+
+    public Class getClazz() {
+        return clazz;
+    }
+
+    private static final Map<String, Class> META_CLAZZ_MAP = Maps.newHashMap();
+
+    static {
+        Arrays.stream(EsMeta.values()).peek( en ->
+            META_CLAZZ_MAP.put(en.getType().toLowerCase(Locale.ROOT), en.getClazz())
+        );
+    }
+
+    public Class getEsMetaJavaClazz(String type) {
+        Class clazz = META_CLAZZ_MAP.get(type.toLowerCase(Locale.ROOT));
+        if (Objects.isNull(clazz)) {
+            return Object.class;
+        }
+        return clazz;
     }
 }

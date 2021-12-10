@@ -37,8 +37,8 @@ public class AggAccountQueryParam extends HookQuery<AggAccountQueryParam, Accoun
     protected void configRequestHook(AbstractEsRequestHolder holder, AggAccountQueryParam aggAccountQueryParam) {
         SearchSourceBuilder source = holder.getSource();
         source.aggregation(
-                AggregationBuilders.terms("_age").field("age").subAggregation(
-                        AggregationBuilders.count("_age_count").field("age"))
+            AggregationBuilders.terms("_age").field("age").subAggregation(
+                AggregationBuilders.count("_age_count").field("age"))
         );
     }
 

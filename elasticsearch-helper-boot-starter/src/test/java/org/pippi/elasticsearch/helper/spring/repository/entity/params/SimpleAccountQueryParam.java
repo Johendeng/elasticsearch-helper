@@ -35,10 +35,10 @@ public class SimpleAccountQueryParam {
 	private String address;
 
 	@MultiMatch(
-			value = @Base(connect = EsConnector.SHOULD),
-			fields = {"firstname","employer","lastname"},
-			type = MultiMatchQueryBuilder.Type.MOST_FIELDS,
-			minimumShouldMatch = "1"
+		value = @Base(connect = EsConnector.SHOULD),
+		fields = {"firstname","employer","lastname"},
+		type = MultiMatchQueryBuilder.Type.MOST_FIELDS,
+		minimumShouldMatch = "1"
 	)
 	private String fuzzyField;
 
