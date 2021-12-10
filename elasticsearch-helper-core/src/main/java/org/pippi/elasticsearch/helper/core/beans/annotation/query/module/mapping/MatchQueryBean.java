@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
+import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.ZeroTermsQueryOption;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
@@ -26,6 +27,8 @@ public class MatchQueryBean extends QueryBean<MatchQueryBuilder> {
 
     private ZeroTermsQueryOption zerTermsQuery;
 
+    private String analyzer;
+
     @Override
     public void configQueryBuilder(MatchQueryBuilder match) {
         match.prefixLength(this.prefixLength)
@@ -35,6 +38,9 @@ public class MatchQueryBean extends QueryBean<MatchQueryBuilder> {
              .autoGenerateSynonymsPhraseQuery(this.autoGenerateSynonymsPhraseQuery)
              .fuzziness(this.fuzziness.getFuzziness())
              .zeroTermsQuery(zerTermsQuery);
+        if (StringUtils.isNotBlank(analyzer)) {
+            match.analyzer(analyzer);
+        }
     }
 
 
@@ -92,5 +98,13 @@ public class MatchQueryBean extends QueryBean<MatchQueryBuilder> {
 
     public void setZerTermsQuery(ZeroTermsQueryOption zerTermsQuery) {
         this.zerTermsQuery = zerTermsQuery;
+    }
+
+    public String getAnalyzer() {
+        return analyzer;
+    }
+
+    public void setAnalyzer(String analyzer) {
+        this.analyzer = analyzer;
     }
 }

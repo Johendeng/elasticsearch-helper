@@ -36,4 +36,5 @@ public @interface Match {
 
     ZeroTermsQueryOption zerTermsQuery() default ZeroTermsQueryOption.NONE;
 
+    String analyzer() default "";
 }
