@@ -183,7 +183,7 @@ class AutoConfiguration {
 
 ### 依赖
 ```
-v1.0.0-bate.1
+v1.0.1-RELEASE
 
 spring-boot-starter:
 
