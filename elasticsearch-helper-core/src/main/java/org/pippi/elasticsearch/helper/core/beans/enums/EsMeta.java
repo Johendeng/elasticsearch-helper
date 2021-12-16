@@ -71,12 +71,12 @@ public enum EsMeta {
     private static final Map<String, Class> META_CLAZZ_MAP = Maps.newHashMap();
 
     static {
-        Arrays.stream(EsMeta.values()).peek( en ->
+        Arrays.stream(EsMeta.values()).forEach( en ->
             META_CLAZZ_MAP.put(en.getType().toLowerCase(Locale.ROOT), en.getClazz())
         );
     }
 
-    public Class getEsMetaJavaClazz(String type) {
+    public static Class getEsMetaJavaClazz(String type) {
         Class clazz = META_CLAZZ_MAP.get(type.toLowerCase(Locale.ROOT));
         if (Objects.isNull(clazz)) {
             return Object.class;
