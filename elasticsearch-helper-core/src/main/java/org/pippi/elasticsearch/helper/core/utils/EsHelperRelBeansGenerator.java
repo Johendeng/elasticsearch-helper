@@ -89,7 +89,7 @@ public class EsHelperRelBeansGenerator {
         });
         this.clz.append(this.gs.toString());
         this.clz.append("}");
-        this.imp.append(this.clz.toString());
+        this.imp.append("\n\n\n" + this.clz.toString());
         String clazzFile = this.imp.toString();
         File file = new File(exportPath + "/" + this.upCaseField(indexName) + "Entity.java");
         if (!file.exists()) {
@@ -144,7 +144,7 @@ public class EsHelperRelBeansGenerator {
     }
 
     private void addImp (Class clazz) {
-        imp.append("import " + clazz.getTypeName() + "\n");
+        imp.append("import " + clazz.getTypeName() + ";\n");
     }
 
     private String addClz (String name, Class type) {
@@ -154,7 +154,7 @@ public class EsHelperRelBeansGenerator {
             clz.append(fieldMap.getJsonProp() + "\n");
             field = fieldMap.getField();
         }
-        String fieldProp = "\tprivate " + type.getSimpleName() + " " + field + "\n";
+        String fieldProp = "\tprivate " + type.getSimpleName() + " " + field + ";\n";
         clz.append(fieldProp);
         return field;
     }
@@ -162,11 +162,11 @@ public class EsHelperRelBeansGenerator {
     private void addGs (String field, Class type) {
 
         String gm = "\tpublic %s get%s () {\n" +
-                    "\t\treturn this.%s" +
+                    "\t\treturn this.%s;\n" +
                     "\t}\n";
 
         String sm = "\tpublic void set%s(%s %s) {\n" +
-                    "\t\tthis.%s = %s\n" +
+                    "\t\tthis.%s = %s;\n" +
                     "\t}\n";
 
         gm = String.format(gm, type.getSimpleName(), this.upCaseField(field), field);
