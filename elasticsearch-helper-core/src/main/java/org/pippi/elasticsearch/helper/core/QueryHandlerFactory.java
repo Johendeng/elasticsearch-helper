@@ -11,8 +11,12 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -39,6 +43,9 @@ public class QueryHandlerFactory {
     private static final Map<String, Class<? extends AbstractQueryHandler>> QUERY_HANDLE_CLAZZ_MAP = new HashMap<>();
 
     private static final Map<String, AbstractQueryHandler> QUERY_HANDLE_MAP = new HashMap<>();
+
+    private static final URL BANNER_LOC = Thread.currentThread().getContextClassLoader().getResource("pippi-banner.txt");
+    private static final URL PROP_LOC = Thread.currentThread().getContextClassLoader().getResource("elasticseach-helper.properties");
 
     public static void addHandleClazz(String handleName, Class<? extends AbstractQueryHandler> clazz) {
         QUERY_HANDLE_CLAZZ_MAP.put(handleName, clazz);
@@ -96,6 +103,8 @@ public class QueryHandlerFactory {
 
             QUERY_HANDLE_MAP.put(handleName, QueryHandlerFactory.getTargetHandleInstance(targetClazz));
         }
+        String banner = readBanner();
+        log.info(banner);
         log.info("es-helper-query-handler-scanner load handles:\n{}\n",
                 QUERY_HANDLE_CLAZZ_MAP.entrySet().stream().map(
                         e -> "[\tes-helper] " + e.getKey() + ":" + e.getValue()
@@ -105,6 +114,27 @@ public class QueryHandlerFactory {
 
     private static AbstractQueryHandler getTargetHandleInstance(Class<? extends AbstractQueryHandler> targetClazz) {
         return ReflectionUtils.newInstance(targetClazz);
+    }
+
+    private static String readBanner() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(new File(BANNER_LOC.toURI())));
+            String banner = reader.lines().collect(Collectors.joining("\n"));
+            banner = String.format(banner, getProperty("elasticsearch-helper.version"));
+            return banner;
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    private static String getProperty(String fullKey) throws URISyntaxException, FileNotFoundException {
+        BufferedReader reader = new BufferedReader(new FileReader(new File(PROP_LOC.toURI())));
+        Optional<String> targetLine = reader.lines().filter(l -> l.startsWith(fullKey)).findAny();
+        if (targetLine.isPresent()) {
+            String[] split = targetLine.get().split("=");
+            return split[1];
+        }
+        return "";
     }
 
 }

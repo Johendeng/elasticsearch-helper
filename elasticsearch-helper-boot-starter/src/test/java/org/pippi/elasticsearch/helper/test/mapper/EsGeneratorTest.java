@@ -29,5 +29,4 @@ public class EsGeneratorTest {
         EsHelperRelBeansGenerator generator = new EsHelperRelBeansGenerator("account", client);
         generator.run();
     }
-
 }
