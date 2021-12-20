@@ -2,7 +2,6 @@ package org.pippi.elasticsearch.helper.test.mapper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.spring.EsHelperSampleApplication;
