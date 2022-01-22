@@ -8,6 +8,9 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQuer
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Terms;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.TermsQueryBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
+
+import java.util.Collection;
 
 /**
  * TermsQueryHandler
@@ -20,10 +23,10 @@ public class TermsQueryHandler extends AbstractQueryHandler<TermsQueryBean> {
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean<TermsQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
-        TermsQueryBuilder queryBuilder = QueryBuilders.termsQuery(queryDes.getField(), queryDes.getValue())
+        Collection value = ReflectionUtils.transArrayOrCollection(queryDes.getValue());
+        TermsQueryBuilder queryBuilder = QueryBuilders.termsQuery(queryDes.getField(), value)
                 .boost(queryDes.getBoost());
         searchHelper.chain(queryBuilder);
         return queryBuilder;
     }
-
 }

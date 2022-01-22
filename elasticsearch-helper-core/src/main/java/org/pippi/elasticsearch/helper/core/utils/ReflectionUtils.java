@@ -1,12 +1,16 @@
 package org.pippi.elasticsearch.helper.core.utils;
 
+import com.google.common.collect.Lists;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.beans.exception.SerializeException;
+import sun.reflect.Reflection;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * project  elasticsearch-helper
@@ -91,5 +95,23 @@ public class ReflectionUtils {
         }
     }
 
-
+    public static Collection transArrayOrCollection(Object targetObj) {
+        Class<?> returnType = targetObj.getClass();
+        //判断返回类型是否是集合类型
+        boolean isCollection = Collection.class.isAssignableFrom(returnType);
+        if (isCollection) {
+            return (Collection) targetObj;
+        }
+        //判断返回类型是否是数组类型
+        boolean isArray = returnType.isArray();
+        if (isArray) {
+            int length = Array.getLength(targetObj);
+            List<Object> arr = Lists.newArrayList();
+            for (int i = 0; i < length; i ++) {
+                arr.add(Array.get(targetObj, i));
+            }
+            return arr;
+        }
+        throw new RuntimeException("Reflect trans collection error");
+    }
 }
