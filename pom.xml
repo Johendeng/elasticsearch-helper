@@ -10,7 +10,7 @@
     <name>elasticsearch-helper</name>
     <description>build ElasticSearch-query by Java annotation, simplify code struct</description>
     <url>https://github.com/Johendeng/elasticsearch-helper</url>
-    <version>1.0.1-RELEASE</version>
+    <version>1.0.2-RELEASE</version>
 
     <licenses>
         <license>
@@ -56,12 +56,12 @@
             <dependency>
                 <groupId>io.github.johendeng</groupId>
                 <artifactId>elasticsearch-helper-core</artifactId>
-                <version>1.0.1-RELEASE</version>
+                <version>1.0.2-RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>io.github.johendeng</groupId>
                 <artifactId>elasticsearch-helper-boot-starter</artifactId>
-                <version>1.0.1-RELEASE</version>
+                <version>1.0.2-RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
