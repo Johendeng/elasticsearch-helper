@@ -11,12 +11,8 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -44,8 +40,8 @@ public class QueryHandlerFactory {
 
     private static final Map<String, AbstractQueryHandler> QUERY_HANDLE_MAP = new HashMap<>();
 
-    private static final URL BANNER_LOC = Thread.currentThread().getContextClassLoader().getResource("pippi-banner.txt");
-    private static final URL PROP_LOC = Thread.currentThread().getContextClassLoader().getResource("elasticseach-helper.properties");
+    private static final String BANNER_LOC = "pippi-banner.txt";
+    private static final String PROP_LOC = "elasticseach-helper.properties";
 
     public static void addHandleClazz(String handleName, Class<? extends AbstractQueryHandler> clazz) {
         QUERY_HANDLE_CLAZZ_MAP.put(handleName, clazz);
@@ -118,7 +114,8 @@ public class QueryHandlerFactory {
 
     private static String readBanner() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(new File(BANNER_LOC.toURI())));
+            InputStream bannerStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(BANNER_LOC);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(bannerStream));
             String banner = reader.lines().collect(Collectors.joining("\n"));
             banner = String.format(banner, getProperty("elasticsearch-helper.version"));
             return banner;
@@ -128,7 +125,8 @@ public class QueryHandlerFactory {
     }
 
     private static String getProperty(String fullKey) throws URISyntaxException, FileNotFoundException {
-        BufferedReader reader = new BufferedReader(new FileReader(new File(PROP_LOC.toURI())));
+        InputStream bannerStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROP_LOC);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(bannerStream));
         Optional<String> targetLine = reader.lines().filter(l -> l.startsWith(fullKey)).findAny();
         if (targetLine.isPresent()) {
             String[] split = targetLine.get().split("=");
