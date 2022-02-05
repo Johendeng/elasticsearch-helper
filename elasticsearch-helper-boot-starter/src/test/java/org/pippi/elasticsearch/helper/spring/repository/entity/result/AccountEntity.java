@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.spring.repository.entity.result;
 
-import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
+import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author JohenTeng
  * @date 2021/12/6
  */
-public class AccountEntity extends BaseResp.BaseHit {
+public class AccountEntity extends BaseHit {
 
 	@JsonProperty(value = "account_number")
 	private Integer accountNumber;

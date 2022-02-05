@@ -17,11 +17,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * project  elasticsearch-helper
- * packages   org.pippi.elasticsearch.helper
- * date     2021/5/13
- * author    JohenTeng
- * email    1078481395@qq.com
+ * @project  elasticsearch-helper
+ * @packages   org.pippi.elasticsearch.helper
+ * @date     2021/5/13
+ * @author    JohenTeng
+ * @email    1078481395@qq.com
  **/
 public class IndexMappingUtils {
 
