@@ -1,16 +1,11 @@
 package org.pippi.elasticsearch.helper.core.utils;
 
 import com.google.common.collect.Lists;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.beans.exception.SerializeException;
-import sun.reflect.Reflection;
 
 import java.lang.reflect.*;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * project  elasticsearch-helper

@@ -30,10 +30,8 @@ public class SourceSortQueryHandler extends AbstractQueryHandler<SourceOrderQuer
         String scriptType = sourceOrderBean.getScriptType();
         String sort = sourceOrderBean.getSort();
         if (StringUtils.isNotBlank(scriptType) && StringUtils.isNotBlank(script)) {
-            source.sort(queryDes.getField()).sort(SortBuilders.scriptSort(
-                new Script(script),
-                ScriptSortBuilder.ScriptSortType.fromString(scriptType)
-            ));
+            source.sort(queryDes.getField()).sort(SortBuilders.scriptSort(new Script(script),
+                ScriptSortBuilder.ScriptSortType.fromString(scriptType)));
             return null;
         }
         if (StringUtils.isNotBlank(sort)) {
