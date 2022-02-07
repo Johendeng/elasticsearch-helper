@@ -185,9 +185,6 @@ public class QueryAnnParser {
             Base ann = (Base) baseMethod.invoke(targetAnn);
 
             EsConnector esConnector = ann.connect();
-            if (esConnector == null) {
-                throw new EsHelperQueryException("ES-QUERY-LOGIC-CONNECTOR cant be null");
-            }
             queryDes.setLogicConnector(esConnector);
 
             String column = ann.name();

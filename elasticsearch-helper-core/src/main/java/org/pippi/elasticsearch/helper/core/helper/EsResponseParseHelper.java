@@ -5,6 +5,7 @@ import org.apache.commons.collections4.MapUtils;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.elasticsearch.action.search.SearchResponse;
@@ -69,7 +70,7 @@ public class EsResponseParseHelper {
         return res;
     }
 
-    public static <T extends BaseResp.BaseHit>BaseResp<T> getList(SearchResponse resp, Class<T> type) {
+    public static <T extends BaseHit>BaseResp<T> getList(SearchResponse resp, Class<T> type) {
         BaseResp res = new BaseResp();
         SearchHits hits = resp.getHits();
         res.setMaxScore(hits.getMaxScore());

@@ -6,6 +6,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
@@ -56,33 +57,30 @@ public class EsQueryProxy<T> implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
-        if (args == null || args.length == 0 || args.length > 1 ) {
+        if (args == null || args.length != 1) {
             throw new EsHelperQueryException("ES-HELPER un-support multi-params or miss-param, params must be single");
         }
-        if (args != null && args.length == 1) {
-            Object param = args[0];
-            AbstractEsRequestHolder esHolder = EsQueryEngine.execute(param, visitQueryBeanParent);
-            RequestHook requestHook = null;
-            if ((requestHook = checkRequestHook(param, method)) != null) {
-                esHolder = requestHook.handleRequest(esHolder, param);
-            }
-            if (enableLogOutEsQueryJson) {
-                log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
-            }
-            SearchResponse resp = null;
-            try {
-                resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
-            } catch (IOException e) {
-                throw new EsHelperQueryException("EsSearchExecute I/O exception, cause:", e);
-            }
-            ResponseHook responseHook = null;
-            if ((responseHook = checkResponseHook(param, method)) != null) {
-                return responseHook.handleResponse(resp);
-            } else {
-                return this.returnDefaultResult(method, resp);
-            }
+        Object param = args[0];
+        AbstractEsRequestHolder esHolder = EsQueryEngine.execute(param, visitQueryBeanParent);
+        RequestHook requestHook = null;
+        if ((requestHook = checkRequestHook(param, method)) != null) {
+            esHolder = requestHook.handleRequest(esHolder, param);
         }
-        return null;
+        if (enableLogOutEsQueryJson) {
+            log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
+        }
+        SearchResponse resp = null;
+        try {
+            resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
+        } catch (IOException e) {
+            throw new EsHelperQueryException("EsSearchExecute I/O exception, cause:", e);
+        }
+        ResponseHook responseHook = null;
+        if ((responseHook = checkResponseHook(param, method)) != null) {
+            return responseHook.handleResponse(resp);
+        } else {
+            return this.returnDefaultResult(method, resp);
+        }
     }
 
     /**
@@ -97,8 +95,8 @@ public class EsQueryProxy<T> implements InvocationHandler {
             ParameterizedType paramReturnType = (ParameterizedType)method.getGenericReturnType();
             Type[] paramTypes = paramReturnType.getActualTypeArguments();
             Class paramClazz = (Class) paramTypes[0];
-            if (BaseResp.BaseHit.class.isAssignableFrom(paramClazz)){
-                BaseResp<? extends BaseResp.BaseHit> baseResp = EsResponseParseHelper.getList(resp, ((Class<? extends BaseResp.BaseHit>) paramClazz));
+            if (BaseHit.class.isAssignableFrom(paramClazz)){
+                BaseResp<? extends BaseHit> baseResp = EsResponseParseHelper.getList(resp, ((Class<? extends BaseHit>) paramClazz));
                 return baseResp;
             } else {
                 throw new EsHelperQueryException("BaseResponse's ParameterizedType has to be <? extends BaseResp.BaseHit>");
