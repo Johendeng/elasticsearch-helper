@@ -37,7 +37,7 @@ public class SerializerUtils {
     public static <T> T jsonToBean(String json, Class<T> clazz) {
         try {
             return _NORMAL_MAPPER.readValue(json, clazz);
-        } catch (JsonProcessingException e) {
+        } catch (Exception e) {
             throw new SerializeException("Json-String trans to Java-Bean error, cause:", e);
         }
     }

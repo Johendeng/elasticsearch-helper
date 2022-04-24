@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.test.mapper;
 
 import org.elasticsearch.client.RestHighLevelClient;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.utils.EsHelperRelBeansGenerator;
@@ -17,6 +18,7 @@ import java.io.IOException;
  * @author JohenTeng
  * @date 2021/12/10
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
 public class EsGeneratorTest {

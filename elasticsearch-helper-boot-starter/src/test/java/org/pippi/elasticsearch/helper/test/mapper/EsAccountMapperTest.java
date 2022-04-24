@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.test.mapper;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
@@ -21,6 +22,7 @@ import javax.annotation.Resource;
  * @author JohenTeng
  * @date 2021/12/9
  */
+@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
 public class EsAccountMapperTest {
