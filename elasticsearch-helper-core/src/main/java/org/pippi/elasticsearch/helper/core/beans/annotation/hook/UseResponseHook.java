@@ -6,8 +6,8 @@ import java.lang.annotation.*;
  * Project Name:elasticsearch-helper
  * File Name:ResponseHook
  * Package Name:org.pippi.elasticsearch.helper.beans.annotation
- * Date:2021/7/21 00:33
- * author   JohenTeng
+ * @date 2021/7/21 00:33
+ * @author   JohenTeng
  * Description:
  */
 @Documented

@@ -8,8 +8,8 @@ import java.lang.annotation.*;
 /**
  * Range
  *
- * author     JohenTeng
- * date      2021/9/26
+ * @author     JohenTeng
+ * @date      2021/9/26
  */
 @Query
 @Inherited

@@ -19,13 +19,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
- * phrase Es-response to required JavaBean-Response
  *
- * project  elasticsearch-helper
- * packages   org.pippi.elasticsearch.helper
- * date     2021/5/8
- * author    JohenTeng
- * email    1078481395@qq.com
+ * @author    JohenTeng
+ * @date     2021/5/8
+ *
  **/
 public class EsResponseParseHelper {
 

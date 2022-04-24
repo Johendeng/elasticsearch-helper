@@ -4,8 +4,8 @@ import org.elasticsearch.action.search.SearchResponse;
 
 /**
  *
- * author     JohenTeng
- * date      2021/7/21
+ * @author     JohenTeng
+ * @date      2021/7/21
  */
 @FunctionalInterface
 public interface ResponseHook<RESULT> {

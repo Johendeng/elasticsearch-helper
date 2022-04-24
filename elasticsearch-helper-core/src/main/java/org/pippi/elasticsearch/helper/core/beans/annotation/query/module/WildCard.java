@@ -12,8 +12,8 @@ import java.lang.annotation.*;
  *  '*': multi-words holder
  *  '?': single-words holder
  *
- * author     JohenTeng
- * date      2021/9/25
+ * @author     JohenTeng
+ * @date      2021/9/25
  */
 @Query
 @Inherited

@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
  *    annotation mapping to Map<String, Object>
  *    Action: annotation don't define property equals(), can't mapping to Map result,
  *            OBJECT_METHOD_FILTER({@link Annotation})'s methods will be excluded
- * author     JohenTeng
- * date      2021/9/24
+ * @author     JohenTeng
+ * @date      2021/9/24
  */
 public class AnnotationUtils {
 

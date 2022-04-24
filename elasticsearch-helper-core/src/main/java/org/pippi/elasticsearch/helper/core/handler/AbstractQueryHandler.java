@@ -12,11 +12,8 @@ import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
- * project  elasticsearch-helper
- * packages   com.poet.elasticsearch.helper.core.web
- * date     2021/5/3
- * author    JohenTeng
- * email    1078481395@qq.com
+ * @date     2021/5/3
+ * @author    JohenTeng
  *
  * @param <T> mapping JavaBean
  **/

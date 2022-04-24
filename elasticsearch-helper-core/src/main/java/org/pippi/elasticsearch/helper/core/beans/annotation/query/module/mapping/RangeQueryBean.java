@@ -6,8 +6,8 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 /**
  * RangeQueryBean
  *
- * author     JohenTeng
- * date      2021/9/26
+ * @author     JohenTeng
+ * @date      2021/9/26
  */
 public class RangeQueryBean  extends QueryBean<RangeQueryBuilder>{
 

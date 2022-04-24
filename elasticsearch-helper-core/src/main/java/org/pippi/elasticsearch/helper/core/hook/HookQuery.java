@@ -6,8 +6,8 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 /**
  * HookQuery
  *
- * author     JohenTeng
- * date      2021/9/29
+ * @author     JohenTeng
+ * @date      2021/9/29
  */
 public abstract class HookQuery<PARAM, RESULT> {
 

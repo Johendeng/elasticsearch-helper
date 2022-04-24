@@ -1,7 +1,6 @@
 package org.pippi.elasticsearch.helper.core.beans.enums;
 
 /**
- * 描述 ES 涉及的查询逻辑连接符
  * define elasticsearch's query-logic-connector
  *
  * @author     JohenTeng
@@ -10,13 +9,18 @@ package org.pippi.elasticsearch.helper.core.beans.enums;
 public enum EsConnector {
 
 	/**
-	 *  ---- bool query
+	 *  influence doc's recall and doc's score
 	 */
 	MUST,
+	/**
+	 * influence doc's recall and doc's score
+	 */
 	MUST_NOT,
+	/**
+	 * influence doc's recall, but un-influence doc's score
+	 */
 	FILTER,
 	/**
-	 *  不会影响过滤， 只影响文档评分
 	 *  un-influence the results-hit, just influence doc's score
 	 *
 	 */

@@ -16,8 +16,8 @@ import java.util.Optional;
 /**
  * RangeQueryHandler
  *
- * author     JohenTeng
- * date      2021/8/23
+ * @author     JohenTeng
+ * @date      2021/8/23
  */
 @EsQueryHandle(Range.class)
 public class RangeQueryHandler extends AbstractQueryHandler<RangeQueryBean>{

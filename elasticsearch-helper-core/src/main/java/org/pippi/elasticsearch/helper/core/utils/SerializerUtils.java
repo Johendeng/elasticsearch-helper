@@ -12,10 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * project  elasticsearch-helper
- * date     2021/3/16
- * author    JohenTeng
- * email    1078481395@qq.com
+ * @author    JohenTeng
+ * @date     2021/3/16
  **/
 public class SerializerUtils {
 

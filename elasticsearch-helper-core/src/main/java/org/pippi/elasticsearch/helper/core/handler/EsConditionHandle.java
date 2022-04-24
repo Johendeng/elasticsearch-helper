@@ -1,11 +1,8 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
 /**
- * project  elasticsearch-helper
- * packages   org.pippi.elasticsearch.helper.core
- * date     2021/12/3
- * author   JohenTeng
- * email    1078481395@qq.com
+ * @author   JohenTeng
+ * @date     2021/12/3
  **/
 public interface EsConditionHandle<T> {
 

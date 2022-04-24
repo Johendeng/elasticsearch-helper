@@ -3,10 +3,10 @@ package org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
 
 /**
- * HighLightBean
+ * load high light description
  *
- * author     JohenTeng
- * date      2021/9/29
+ * @author     JohenTeng
+ * @date      2021/9/29
  */
 public class HighLightBean {
 

@@ -28,8 +28,8 @@ import java.util.Set;
 /**
  *  hold es request bean
  *
- * author     JohenTeng
- * date      2021/8/8
+ * @author     JohenTeng
+ * @date      2021/8/8
  */
 public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 

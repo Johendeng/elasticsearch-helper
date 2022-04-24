@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
-import org.pippi.elasticsearch.helper.spring.EsHelperSampleApplication;
+import org.pippi.elasticsearch.helper.EsHelperSampleApplication;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.AggAccountQueryParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.SimpleAccountQueryParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountAggResult;

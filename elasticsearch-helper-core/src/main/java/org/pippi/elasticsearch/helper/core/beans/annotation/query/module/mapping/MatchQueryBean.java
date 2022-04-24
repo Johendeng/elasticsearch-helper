@@ -8,8 +8,8 @@ import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 /**
  * ExtMatchBean
  *
- * author     JohenTeng
- * date      2021/9/24
+ * @author     JohenTeng
+ * @date      2021/9/24
  */
 public class MatchQueryBean extends QueryBean<MatchQueryBuilder> {
 

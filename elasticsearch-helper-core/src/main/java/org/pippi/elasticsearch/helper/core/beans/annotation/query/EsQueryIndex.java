@@ -8,8 +8,8 @@ import java.lang.annotation.*;
 /**
  * Define the esQueryHolder's index-name, queryModel ... information
  *
- * author     JohenTeng
- * date      2021/8/8
+ * @author     JohenTeng
+ * @date      2021/8/8
  */
 @Documented
 @Target(ElementType.TYPE)

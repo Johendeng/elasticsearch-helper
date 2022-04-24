@@ -8,11 +8,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * project  elasticsearch-helper
- * packages   org.pippi.elasticsearch.helper.core.utils
- * date     2021/7/18
- * author    JohenTeng
- * email    1078481395@qq.com
+ * @author    JohenTeng
+ * @date     2021/7/18
  **/
 public class ReflectionUtils {
 

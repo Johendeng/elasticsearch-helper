@@ -4,7 +4,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.utils.EsHelperRelBeansGenerator;
-import org.pippi.elasticsearch.helper.spring.EsHelperSampleApplication;
+import org.pippi.elasticsearch.helper.EsHelperSampleApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 

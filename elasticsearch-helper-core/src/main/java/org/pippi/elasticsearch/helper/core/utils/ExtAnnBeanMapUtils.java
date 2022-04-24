@@ -7,8 +7,8 @@ import java.util.Map;
 /**
  * ExtAnnBeanMapUtils
  *
- * author     JohenTeng
- * date      2021/9/23
+ * @author     JohenTeng
+ * @date      2021/9/23
  */
 public class ExtAnnBeanMapUtils {
 

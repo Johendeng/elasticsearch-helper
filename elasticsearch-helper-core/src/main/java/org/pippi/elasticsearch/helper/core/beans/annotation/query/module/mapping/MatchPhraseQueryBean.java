@@ -7,8 +7,8 @@ import org.elasticsearch.index.query.ZeroTermsQueryOption;
 /**
  * MatchPhraseQueryBean
  *
- * author     JohenTeng
- * date      2021/9/28
+ * @author     JohenTeng
+ * @date      2021/9/28
  */
 public class MatchPhraseQueryBean extends QueryBean<MatchPhraseQueryBuilder>{
 

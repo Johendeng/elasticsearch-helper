@@ -22,11 +22,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * project  elasticsearch-helper
- * packages   org.pippi.elasticsearch.helper.view
- * date     2021/7/18
- * author    JohenTeng
- * email    1078481395@qq.com
+ * @date     2021/7/18
+ * @author    JohenTeng
  **/
 public class QueryAnnParser {
 

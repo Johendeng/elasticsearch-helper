@@ -16,29 +16,25 @@ import java.util.List;
 
 /**
  * nested-query need a query-bean #implements
-     {@link org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsComplexParam}
-     For Example:
-     @EsQueryIndex(index = "test", model = QueryModel.BOOL)
-     class SampleParam {
-
-         @Ranger
-         private int score;
-         @Nested
-         private InnerParam inner;
-
-         @EsQueryIndex(index = "test", model = QueryModel.BOOL)
-         public static class InnerParam implements EsComplexParam{
-
-              @Match
-              private String name;
-              @Term
-              private int age;
-
-         }
-     }
+ *    {@link org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsComplexParam}
+ *    For Example:
+ *    @EsQueryIndex(index = "test", model = QueryModel.BOOL)
+ *    class SampleParam {
+ *        @Ranger
+ *        private int score;
+ *        @Nested
+ *        private InnerParam inner;
+ *        @EsQueryIndex(index = "test", model = QueryModel.BOOL)
+ *        public static class InnerParam implements EsComplexParam{
+ *             @Match
+ *             private String name;
+ *             @Term
+ *             private int age;
+ *        }
+ *    }
  *
- * author     JohenTeng
- * date      2021/9/22
+ * @author     JohenTeng
+ * @date      2021/9/22
  */
 @EsQueryHandle(Nested.class)
 public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {

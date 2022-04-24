@@ -15,11 +15,8 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * project  elasticsearch-helper
- * packages   org.pippi.elasticsearch.helper
- * date     2021/3/12
- * author    JohenTeng
- * email    1078481395@qq.com
+ * @author    JohenTeng
+ * @date     2021/3/12
  **/
 public class EsDataModifyHelper {
 

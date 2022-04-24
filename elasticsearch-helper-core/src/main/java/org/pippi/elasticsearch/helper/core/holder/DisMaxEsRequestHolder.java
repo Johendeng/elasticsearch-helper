@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 /**
  * DisMaxEsRequestHolder
  *
- * author     JohenTeng
- * date      2021/9/29
+ * @author     JohenTeng
+ * @date      2021/9/29
  */
 public class DisMaxEsRequestHolder extends AbstractEsRequestHolder<DisMaxQueryBuilder> {
 

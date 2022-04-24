@@ -10,10 +10,8 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
- * MatchPhrasePrefixQueryHandler
- *
- * author     JohenTeng
- * date      2021/9/28
+ * @author     JohenTeng
+ * @date      2021/9/28
  */
 @EsQueryHandle(MatchPhrasePrefix.class)
 public class MatchPhrasePrefixQueryHandler extends AbstractQueryHandler<MatchPhrasePrefixQueryBean> {

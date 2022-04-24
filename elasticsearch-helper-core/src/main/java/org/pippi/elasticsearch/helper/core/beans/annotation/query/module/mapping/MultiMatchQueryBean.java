@@ -14,8 +14,8 @@ import java.util.Map;
 /**
  * ExtMultiMatch
  *
- * author     JohenTeng
- * date      2021/9/24
+ * @author     JohenTeng
+ * @date      2021/9/24
  */
 public class MultiMatchQueryBean extends QueryBean<MultiMatchQueryBuilder> {
 

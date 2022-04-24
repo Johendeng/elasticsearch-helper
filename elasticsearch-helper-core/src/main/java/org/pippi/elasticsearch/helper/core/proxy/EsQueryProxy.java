@@ -26,10 +26,9 @@ import java.lang.reflect.Type;
 import java.util.Objects;
 
 /**
- * author     JohenTeng
- * date      2021/7/21
+ * @author     JohenTeng
+ * @date      2021/7/21
  */
-
 public class EsQueryProxy<T> implements InvocationHandler {
 
     private static final Logger log = LoggerFactory.getLogger(EsQueryProxy.class);

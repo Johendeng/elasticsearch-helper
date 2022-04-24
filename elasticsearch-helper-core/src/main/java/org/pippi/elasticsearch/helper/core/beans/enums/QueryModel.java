@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.core.beans.enums;
 
 /**
- * 描述
+ * es-helper support query model
  *
  * @author     JohenTeng
  * @date      2021/8/9
@@ -9,9 +9,13 @@ package org.pippi.elasticsearch.helper.core.beans.enums;
 public enum QueryModel {
 
 	/**
-	 *  bool 组合查询
+	 * bool
+	 * @see org.elasticsearch.index.query.BoolQueryBuilder
 	 */
 	BOOL,
+	/**
+	 * dis_max
+	 * @see org.elasticsearch.index.query.DisMaxQueryBuilder
+	 */
 	DIS_MAX,
-
 }

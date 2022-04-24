@@ -11,8 +11,8 @@ import java.lang.annotation.*;
  * {@link org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam}</h>
  *
  *
- * author     JohenTeng
- * date      2021/9/29
+ * @author     JohenTeng
+ * @date      2021/9/29
  */
 @Query
 @Inherited

@@ -8,8 +8,8 @@ import java.lang.annotation.*;
 
 /**
  * base define of a Es-query-bean
- * author     JohenTeng
- * date      2021/8/8
+ * @author     JohenTeng
+ * @date      2021/8/8
  */
 @Inherited
 @Documented

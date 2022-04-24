@@ -21,8 +21,8 @@ import java.lang.annotation.Annotation;
  *    ......
  *
  * @see Base
- * author     JohenTeng
- * date      2021/8/9
+ * @author     JohenTeng
+ * @date      2021/8/9
  */
 public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 

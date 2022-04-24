@@ -12,8 +12,8 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 /**
  * WildCardQueryHandler
  *
- * author     JohenTeng
- * date      2021/9/24
+ * @author     JohenTeng
+ * @date      2021/9/24
  */
 @EsQueryHandle(WildCard.class)
 public class WildCardQueryHandler extends AbstractQueryHandler<WildCardQueryBean>{
