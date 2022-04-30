@@ -21,5 +21,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface PageAndOrder {
 
+    /**
+     * meta = EsMeta.COMPLEX =
+     * @see org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam
+     */
     Base value() default @Base(meta = EsMeta.COMPLEX);
 }

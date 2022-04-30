@@ -1,9 +1,14 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
+import org.apache.commons.lang3.tuple.Pair;
+import org.elasticsearch.index.query.Operator;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
 import java.lang.annotation.*;
+import java.time.ZoneId;
+import java.util.Map;
 
 /**
      "query_string": {
@@ -34,6 +39,33 @@ public @interface QueryString {
 
     Base value() default @Base;
 
+    String defaultField() ;
+    String field() ;
+//    Pair<String, Float> fieldAndBoost() ;
+    String fieldAndBoost() ;
 
+//    Map<String, Float> fields() ;
+    String fields() ;
 
+    String analyzer() ;
+    Operator defaultOperator() ;
+    FuzzinessEnum fuzzinessEnum() ;
+    int fuzzyMaxExpansions() ;
+    int fuzzyPrefixLength() ;
+    String fuzzyRewrite() ;
+    boolean fuzzyTranspositions() ;
+    boolean analyzeWildcard() ;
+    boolean autoGenerateSynonymsPhraseQuery() ;
+    boolean allowLeadingWildcard() ;
+    boolean enablePositionIncrements() ;
+    boolean escape() ;
+    boolean lenient() ;
+    int phraseSlop() ;
+    int maxDeterminizedStates() ;
+    String quoteAnalyzer() ;
+    String quoteFieldSuffix() ;
+    float tieBreaker() ;
+    String timeZone() ;
+    String minimumShouldMatch() ;
+    float boost() ;
 }

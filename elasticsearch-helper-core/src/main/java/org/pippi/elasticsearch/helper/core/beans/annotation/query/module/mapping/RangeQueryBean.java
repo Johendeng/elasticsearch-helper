@@ -3,13 +3,15 @@ package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mappin
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.RangeQueryBuilder;
 
+import java.util.Objects;
+
 /**
  * RangeQueryBean
  *
  * @author     JohenTeng
  * @date      2021/9/26
  */
-public class RangeQueryBean  extends QueryBean<RangeQueryBuilder>{
+public class RangeQueryBean extends QueryBean<RangeQueryBuilder>{
 
     /**
       need config value is:
@@ -40,6 +42,8 @@ public class RangeQueryBean  extends QueryBean<RangeQueryBuilder>{
         if (StringUtils.isNotBlank(timeZone)) {
             queryBuilder.timeZone(timeZone);
         }
+        queryBuilder.includeLower(includeLower);
+        queryBuilder.includeUpper(includeUpper);
     }
 
     public String getTag() {

@@ -8,6 +8,7 @@ import java.lang.annotation.*;
 
 /**
  * base define of a Es-query-bean
+ *
  * @author     JohenTeng
  * @date      2021/8/8
  */
@@ -22,12 +23,6 @@ public @interface Base {
      * return
      */
     String name() default "";
-
-    /**
-     * Query-Type: Match,MultiMatch
-     * return
-     */
-    String queryType() default "";
 
     /**
      * query's logic connector (boolQuery: must,must_not,should,filter)

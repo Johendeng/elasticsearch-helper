@@ -10,8 +10,11 @@ import org.elasticsearch.index.query.WildcardQueryBuilder;
  */
 public class WildCardQueryBean extends QueryBean<WildcardQueryBuilder> {
 
+    private Boolean caseInsensitive;
+
     @Override
     public void configQueryBuilder(WildcardQueryBuilder queryBuilder) {
+        queryBuilder.caseInsensitive(caseInsensitive);
     }
 
 }

@@ -51,14 +51,11 @@ public class QueryAnnParser {
      * return
      */
     public EsQueryIndexBean getIndex(Object view) {
-
         Class<?> clazz = view.getClass();
         EsQueryIndex ann = clazz.getAnnotation(EsQueryIndex.class);
-
         if (ann == null) {
             throw new EsHelperQueryException("undefine query-index @EsQueryIndex");
         }
-
         String index = ann.index();
         QueryModel model = ann.model();
         String[] fetchFields = ann.fetch();
@@ -71,7 +68,6 @@ public class QueryAnnParser {
             indexBean.setHighLight(HighLightBean.phrase(highLightAnn));
         }
         return indexBean;
-
     }
 
     /**
@@ -85,7 +81,6 @@ public class QueryAnnParser {
      */
     public List<EsQueryFieldBean> read(Object view, boolean visitParent) {
         Class<?> clazz = view.getClass();
-
         List<Field> fieldList = this.getFields(clazz, visitParent);
         List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
@@ -180,31 +175,23 @@ public class QueryAnnParser {
             queryDes.setExtAnnotation(targetAnn);
             Method baseMethod = targetAnn.getClass().getDeclaredMethod(BASE_FILED);
             Base ann = (Base) baseMethod.invoke(targetAnn);
-
             EsConnector esConnector = ann.connect();
             queryDes.setLogicConnector(esConnector);
-
             String column = ann.name();
             if (StringUtils.isBlank(column)) {
                 column = field.getName();
             }
             queryDes.setField(column);
-
-            String query = ann.queryType();
-            if (StringUtils.isBlank(query)) {
-                query =  targetAnn.annotationType().getSimpleName();
-            }
+            String query =  targetAnn.annotationType().getSimpleName();
             if (StringUtils.isBlank(query)) {
                 throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
             }
             queryDes.setQueryType(query);
-
             String meta = ann.metaStringify();
             if (StringUtils.isBlank(meta)) {
                 meta =  ann.meta().getType();
             }
             queryDes.setMeta(meta);
-
             queryDes.setBoost(ann.boost());
         } catch (Exception e) {
             throw new EsHelperConfigException("annotation analysis Error, cause:", e);

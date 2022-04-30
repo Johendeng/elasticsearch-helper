@@ -1,28 +1,33 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
+import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 
 import java.lang.annotation.*;
 
 /**
- * WildCard
- *  real-fuzzy for elasticsearch, un-use analyzer, similar mysql's like %holder%
- *  WildCard query's value tag:
- *  '*': multi-words holder
- *  '?': single-words holder
+ * SearchAfter
  *
- * @author     JohenTeng
- * @date      2021/9/25
+ * @author JohenTeng
+ * @date 2022/4/28
  */
 @Query
 @Inherited
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface WildCard {
+public @interface SearchAfter {
 
-    Base value()  default @Base;
+    /**
+     * only the field "name" is effective
+     */
+    Base value() default @Base;
 
-    boolean caseInsensitive() default false;
+    /**
+     * sort rule
+     */
+    SortOrder order() default SortOrder.ASC;
+
+    int size() default 10;
 }

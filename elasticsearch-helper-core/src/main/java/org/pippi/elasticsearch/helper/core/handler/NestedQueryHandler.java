@@ -39,11 +39,12 @@ import java.util.List;
 @EsQueryHandle(Nested.class)
 public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {
 
-
+    //todo
     @Override
     public QueryBuilder handle(EsQueryFieldBean<NestedQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
         Object value = queryDes.getValue();
         NestedQueryBean extBean = queryDes.getExtBean();
+        // todo 应该做复杂参数定义的验证，如果不是定义为复杂参数需要提醒
         if (value instanceof EsComplexParam) {
             QueryAnnParser annParser = QueryAnnParser.instance();
             EsQueryIndexBean indexInfo = annParser.getIndex(value);

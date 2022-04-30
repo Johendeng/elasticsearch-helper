@@ -23,5 +23,4 @@ public class FuzzyQueryHandler extends AbstractQueryHandler<FuzzyQueryBean>{
         searchHelper.chain(fuzzyQueryBuilder);
         return fuzzyQueryBuilder;
     }
-
 }
