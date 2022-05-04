@@ -1,9 +1,11 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 
 import java.time.ZoneId;
 import java.util.Map;
@@ -16,13 +18,16 @@ import java.util.Map;
  */
 public class QueryStringQueryBean extends QueryBean<QueryStringQueryBuilder>{
 
+    private transient static final String _SP = ":";
+
     private String defaultField;
 
     private String field;
 
-    private Pair<String, Float> fieldAndBoost;
-
-    private Map<String, Float> fields;
+    //Pair<String, Float>
+    private String fieldAndBoost;
+    //Map<String, Float>
+    private String[] fieldAndBoosts;
 
     private String analyzer;
 
@@ -69,7 +74,22 @@ public class QueryStringQueryBean extends QueryBean<QueryStringQueryBuilder>{
 
     @Override
     public void configQueryBuilder(QueryStringQueryBuilder queryBuilder) {
-        queryBuilder.defaultField();
+        // todo
+        if (StringUtils.isNotBlank(this.defaultField)) {
+            queryBuilder.defaultField(this.defaultField);
+        }
+        if (StringUtils.isNotBlank(this.field)) {
+            queryBuilder.field(this.field);
+        }
+        if (StringUtils.isNotBlank(this.fieldAndBoost)) {
+            String[] fieldBoostArr = this.fieldAndBoost.split(_SP);
+            try {
+                queryBuilder.field(fieldBoostArr[0], Float.valueOf(fieldBoostArr[1]));
+            } catch (Exception e) {
+                throw new EsHelperConfigException("@QueryString's fieldAndBoost parse Error.", e);
+            }
+        }
+
         queryBuilder.fields();
         queryBuilder.allowLeadingWildcard();
         queryBuilder.analyzer();

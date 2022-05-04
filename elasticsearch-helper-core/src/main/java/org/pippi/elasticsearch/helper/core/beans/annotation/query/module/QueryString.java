@@ -40,12 +40,20 @@ public @interface QueryString {
     Base value() default @Base;
 
     String defaultField() ;
+
     String field() ;
-//    Pair<String, Float> fieldAndBoost() ;
+
+    /**
+     * ex:
+     *  fieldAndBoost = "field:2.0"
+     */
     String fieldAndBoost() ;
 
-//    Map<String, Float> fields() ;
-    String fields() ;
+    /**
+     * ex:
+     *  fieldAndBoosts = {"field1:2.0","field2:1.0"}
+     */
+    String[] fieldAndBoosts() ;
 
     String analyzer() ;
     Operator defaultOperator() ;
