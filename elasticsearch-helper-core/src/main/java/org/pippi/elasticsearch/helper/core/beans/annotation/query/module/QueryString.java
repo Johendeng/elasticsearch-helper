@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
@@ -39,9 +40,17 @@ public @interface QueryString {
 
     Base value() default @Base;
 
-    String defaultField() ;
+    MultiMatchQueryBuilder.Type type() default MultiMatchQueryBuilder.Type.BEST_FIELDS;
 
-    String field() ;
+    /**
+     * use default field ,when there is un-define any fields
+     */
+    String defaultField();
+
+    /**
+     * field: "field1"
+     */
+    String field() default "";
 
     /**
      * ex:
@@ -53,27 +62,50 @@ public @interface QueryString {
      * ex:
      *  fieldAndBoosts = {"field1:2.0","field2:1.0"}
      */
-    String[] fieldAndBoosts() ;
+    String[] fieldAndBoosts();
 
-    String analyzer() ;
-    Operator defaultOperator() ;
-    FuzzinessEnum fuzzinessEnum() ;
-    int fuzzyMaxExpansions() ;
-    int fuzzyPrefixLength() ;
-    String fuzzyRewrite() ;
-    boolean fuzzyTranspositions() ;
-    boolean analyzeWildcard() ;
-    boolean autoGenerateSynonymsPhraseQuery() ;
-    boolean allowLeadingWildcard() ;
-    boolean enablePositionIncrements() ;
-    boolean escape() ;
+    String analyzer();
+
+    Operator defaultOperator() default Operator.OR;
+
+    FuzzinessEnum fuzziness() default FuzzinessEnum.AUTO;
+
+    int fuzzyMaxExpansions() default 50;
+
+    int fuzzyPrefixLength() default 0;
+
+    String fuzzyRewrite() default "";
+
+    boolean fuzzyTranspositions() default true;
+
+    /**
+     * Set to {@code true} to enable analysis on wildcard and prefix queries.
+     */
+    boolean analyzeWildcard() default false;
+
+    boolean allowLeadingWildcard() default true;
+
+    boolean autoGenerateSynonymsPhraseQuery() default true;
+
+    boolean enablePositionIncrements() default true;
+
+    boolean escape() default false;
+
     boolean lenient() ;
-    int phraseSlop() ;
-    int maxDeterminizedStates() ;
+
+    int phraseSlop() default 0;
+
+    int maxDeterminizedStates() default 10000;
+
     String quoteAnalyzer() ;
+
     String quoteFieldSuffix() ;
+
     float tieBreaker() ;
+
     String timeZone() ;
+
     String minimumShouldMatch() ;
-    float boost() ;
+
+    float boost() default 1;
 }
