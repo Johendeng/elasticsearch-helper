@@ -45,4 +45,6 @@ public @interface Base {
      */
     float boost() default 1.0f;
 
+
+    String queryType() default "";
 }

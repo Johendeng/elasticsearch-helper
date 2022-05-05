@@ -5,6 +5,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.*;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.UserQuery;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
@@ -182,11 +183,15 @@ public class QueryAnnParser {
                 column = field.getName();
             }
             queryDes.setField(column);
-            String query =  targetAnn.annotationType().getSimpleName();
-            if (StringUtils.isBlank(query)) {
+            String queryType = ann.queryType();
+            if (StringUtils.isBlank(queryType)) {
+                queryType =  targetAnn.annotationType().getSimpleName();
+            }
+            if (StringUtils.isBlank(queryType) || StringUtils.equals(queryType, UserQuery.class.getSimpleName()) ) {
                 throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
             }
-            queryDes.setQueryType(query);
+            queryDes.setQueryType(queryType);
+
             String meta = ann.metaStringify();
             if (StringUtils.isBlank(meta)) {
                 meta =  ann.meta().getType();
