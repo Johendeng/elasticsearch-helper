@@ -187,6 +187,7 @@ public class QueryAnnParser {
             if (StringUtils.isBlank(queryType)) {
                 queryType =  targetAnn.annotationType().getSimpleName();
             }
+            // todo 用户自定义扩展逻辑有问题
             if (StringUtils.isBlank(queryType) || StringUtils.equals(queryType, UserQuery.class.getSimpleName()) ) {
                 throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
             }
