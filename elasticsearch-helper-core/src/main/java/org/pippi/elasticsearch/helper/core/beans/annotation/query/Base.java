@@ -45,6 +45,8 @@ public @interface Base {
      */
     float boost() default 1.0f;
 
-
+    /**
+     * user define handler, should write this queryType
+     */
     String queryType() default "";
 }

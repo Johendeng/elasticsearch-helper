@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.elasticsearch.index.query.Operator;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
@@ -8,8 +7,6 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 
 import java.lang.annotation.*;
-import java.time.ZoneId;
-import java.util.Map;
 
 /**
      "query_string": {
@@ -30,6 +27,7 @@ import java.util.Map;
      }
  * @author     JohenTeng
  * @date      2021/9/28
+ * todo: 默认参数需要推敲一下
  */
 @Query
 @Inherited
@@ -45,7 +43,7 @@ public @interface QueryString {
     /**
      * use default field ,when there is un-define any fields
      */
-    String defaultField();
+    String defaultField() default "";
 
     /**
      * field: "field1"
@@ -56,15 +54,15 @@ public @interface QueryString {
      * ex:
      *  fieldAndBoost = "field:2.0"
      */
-    String fieldAndBoost() ;
+    String fieldAndBoost() default "";
 
     /**
      * ex:
      *  fieldAndBoosts = {"field1:2.0","field2:1.0"}
      */
-    String[] fieldAndBoosts();
+    String[] fieldAndBoosts() default {};
 
-    String analyzer();
+    String analyzer() default "";
 
     Operator defaultOperator() default Operator.OR;
 
@@ -91,19 +89,19 @@ public @interface QueryString {
 
     boolean escape() default false;
 
-    boolean lenient() ;
+    boolean lenient() default false;
 
     int phraseSlop() default 0;
 
     int maxDeterminizedStates() default 10000;
 
-    String quoteAnalyzer() ;
+    String quoteAnalyzer() default "";
 
-    String quoteFieldSuffix() ;
+    String quoteFieldSuffix() default "";
 
-    float tieBreaker() ;
+    float tieBreaker() default 0.0f;
 
-    String timeZone() ;
+    String timeZone() default "+08:00";
 
     String minimumShouldMatch() ;
 

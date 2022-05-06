@@ -16,6 +16,22 @@
     <version>1.0.3-RELEASE</version>
     <modelVersion>4.0.0</modelVersion>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>JohenTeng</name>
+            <email>1078481395@qq.com</email>
+            <url>https://github.com/Johendeng/elasticsearch-helper</url>
+        </developer>
+    </developers>
+
     <build>
         <plugins>
             <plugin>

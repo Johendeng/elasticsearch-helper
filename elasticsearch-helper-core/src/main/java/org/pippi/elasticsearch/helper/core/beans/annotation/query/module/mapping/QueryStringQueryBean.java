@@ -70,7 +70,7 @@ public class QueryStringQueryBean extends QueryBean<QueryStringQueryBuilder>{
 
     private Float tieBreaker;
 
-    private ZoneId timeZone;
+    private String timeZone;
 
     private String minimumShouldMatch;
 
