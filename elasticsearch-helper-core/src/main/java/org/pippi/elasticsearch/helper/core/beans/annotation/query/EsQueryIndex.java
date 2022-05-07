@@ -17,33 +17,28 @@ import java.lang.annotation.*;
 public @interface EsQueryIndex {
 
     /**
-     *  query index name (required)
-     * return
+     * query index name (required)
      */
     String index();
 
     /**
-     *  query model {@link QueryModel} (required)
+     * query model {@link QueryModel} (required)
      * @see QueryModel
-     * return
      */
-    QueryModel model();
+    QueryModel model() default QueryModel.BOOL;
 
     /**
-     *  fetch need fields from ES, reduce data-package of I/O
-     * return
+     * fetch need fields from ES, reduce data-package of I/O
      */
     String[] fetch() default {};
 
     /**
      * exclude unuseful fields from ES
-     * return
      */
     String[] exclude() default {};
 
     /**
      * min fetch doc-score, default is 0.0
-     * @return
      */
     float minScore() default 0f;
 
@@ -51,4 +46,11 @@ public @interface EsQueryIndex {
      * force compute doc-hit-score
      */
     boolean traceScore() default false;
+
+    /**
+     * return hit's data, default 10
+     * page query please use {@code PageAndOrder} or {@code SearchAfter} annotation
+     *
+     */
+    int size() default 10;
 }

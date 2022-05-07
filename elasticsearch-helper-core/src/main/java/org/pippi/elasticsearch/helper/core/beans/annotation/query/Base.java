@@ -20,13 +20,13 @@ public @interface Base {
 
     /**
      * index-filed name, default is Field's name
-     * return
+     * 自定义查询字段 name，如果不配置默认使用类属性作为查询字段
      */
     String name() default "";
 
     /**
      * query's logic connector (boolQuery: must,must_not,should,filter)
-     * return
+     * 查询的逻辑连接符
      */
     EsConnector connect() default EsConnector.MUST;
 

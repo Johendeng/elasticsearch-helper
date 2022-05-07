@@ -23,8 +23,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * @date     2021/7/18
  * @author    JohenTeng
+ * @date     2021/7/18
  **/
 public class QueryAnnParser {
 
@@ -47,7 +47,7 @@ public class QueryAnnParser {
     }
 
     /**
-     *  parse Index-information
+     * parse Index-information
      * @param view
      * return
      */
@@ -63,7 +63,9 @@ public class QueryAnnParser {
         String[] excludeFields = ann.exclude();
         float minScore = ann.minScore();
         boolean traceScore = ann.traceScore();
+        int backSize = ann.size();
         EsQueryIndexBean indexBean = new EsQueryIndexBean(index, model, fetchFields, excludeFields, minScore, traceScore);
+        indexBean.setSize(backSize);
         HighLight highLightAnn = clazz.getAnnotation(HighLight.class);
         if (Objects.nonNull(highLightAnn)) {
             indexBean.setHighLight(HighLightBean.phrase(highLightAnn));
@@ -164,11 +166,14 @@ public class QueryAnnParser {
 
     private boolean checkCollectionValueType (Field field, Object val) {
         Predicate<Field> checkCollectionTypePredicate = f -> {
+            if (val.getClass().isArray()) {
+                return ReflectionUtils.isBaseType(val.getClass().getComponentType());
+            }
             ParameterizedType genericType = (ParameterizedType) f.getGenericType();
             Type[] actualType = genericType.getActualTypeArguments();
             return actualType.length == 1 && ReflectionUtils.isBaseType(actualType[0].getClass());
         };
-        return (val instanceof Collection) && checkCollectionTypePredicate.test(field);
+        return (val instanceof Collection || val.getClass().isArray()) && checkCollectionTypePredicate.test(field);
     }
 
     private void parseAnn(EsQueryFieldBean queryDes, Field field, Annotation targetAnn) {

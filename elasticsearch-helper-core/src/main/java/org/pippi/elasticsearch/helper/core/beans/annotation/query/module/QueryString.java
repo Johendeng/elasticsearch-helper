@@ -27,7 +27,7 @@ import java.lang.annotation.*;
      }
  * @author     JohenTeng
  * @date      2021/9/28
- * todo: 默认参数需要推敲一下
+ *   todo: 默认参数需要推敲一下
  */
 @Query
 @Inherited
@@ -103,7 +103,7 @@ public @interface QueryString {
 
     String timeZone() default "+08:00";
 
-    String minimumShouldMatch() ;
+    String minimumShouldMatch() default "";
 
     float boost() default 1;
 }

@@ -6,10 +6,8 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 import java.lang.annotation.*;
 
 /**
- * <p>
  * source sort will make records force sort by field value,
- *
- * <p/>
+ * 该注解配置 会强制让文档排序按照指定的方式进行排序
  *
  * @author JohenTeng
  * @date 2021/12/9
@@ -24,24 +22,20 @@ public @interface SourceOrder {
     Base value() default @Base;
 
     /**
-     * <p>
-     *     -asc/desc
-     *     {@link org.elasticsearch.search.sort.SortOrder}
-     * </p>
+     * {@code asc} or {@code desc}
+     * {@link org.elasticsearch.search.sort.SortOrder}
      */
     String sort() default "";
 
     /**
      * script configuration:
-     *    inline + painless and no params
+     * {@code inline} or {@code painless} and no params
      */
     String script() default "";
 
     /**
-     * <p>
-     *     -string/number
-     *     {@link org.elasticsearch.search.sort.ScriptSortBuilder.ScriptSortType}
-     * </p>
+     * {@code string} or {@code number}
+     * {@link org.elasticsearch.search.sort.ScriptSortBuilder.ScriptSortType}
      */
     String scriptType() default "";
 }

@@ -22,7 +22,6 @@ import javax.annotation.Resource;
  * @author JohenTeng
  * @date 2021/12/9
  */
-@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
 public class EsAccountMapperTest {
@@ -35,10 +34,6 @@ public class EsAccountMapperTest {
 		SimpleAccountQueryParam param = new SimpleAccountQueryParam();
 		param.setState("DE");
 		param.setAddress("River Street");
-//		RangeParam range = new RangeParam();
-//		range.setLeft(25);
-//		range.setRight(35);
-//		param.setAge(range);
 		param.setFuzzyField("Bates");
 		BaseResp<AccountEntity> resp = esAccountMapper.queryByParam(param);
 		System.out.println(SerializerUtils.parseObjToJson(resp));

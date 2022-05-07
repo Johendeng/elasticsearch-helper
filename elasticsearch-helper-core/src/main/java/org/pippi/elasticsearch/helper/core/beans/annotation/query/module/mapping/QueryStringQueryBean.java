@@ -9,7 +9,6 @@ import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 
-import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
@@ -127,11 +126,222 @@ public class QueryStringQueryBean extends QueryBean<QueryStringQueryBuilder>{
     private <T>Optional<T> optional(T obj) {
         return Optional.ofNullable(obj).filter(
                 o -> {
+                    if (o.getClass().isArray()) {
+                        return ArrayUtils.isEmpty((Object[]) o);
+                    }
                     if (o instanceof String) {
                         return StringUtils.isNotBlank(o.toString());
                     }
                     return true;
                 }
         );
+    }
+
+    public MultiMatchQueryBuilder.Type getType() {
+        return type;
+    }
+
+    public void setType(MultiMatchQueryBuilder.Type type) {
+        this.type = type;
+    }
+
+    public String getDefaultField() {
+        return defaultField;
+    }
+
+    public void setDefaultField(String defaultField) {
+        this.defaultField = defaultField;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public String getFieldAndBoost() {
+        return fieldAndBoost;
+    }
+
+    public void setFieldAndBoost(String fieldAndBoost) {
+        this.fieldAndBoost = fieldAndBoost;
+    }
+
+    public String[] getFieldAndBoosts() {
+        return fieldAndBoosts;
+    }
+
+    public void setFieldAndBoosts(String[] fieldAndBoosts) {
+        this.fieldAndBoosts = fieldAndBoosts;
+    }
+
+    public String getAnalyzer() {
+        return analyzer;
+    }
+
+    public void setAnalyzer(String analyzer) {
+        this.analyzer = analyzer;
+    }
+
+    public Operator getDefaultOperator() {
+        return defaultOperator;
+    }
+
+    public void setDefaultOperator(Operator defaultOperator) {
+        this.defaultOperator = defaultOperator;
+    }
+
+    public FuzzinessEnum getFuzziness() {
+        return fuzziness;
+    }
+
+    public void setFuzziness(FuzzinessEnum fuzziness) {
+        this.fuzziness = fuzziness;
+    }
+
+    public Integer getFuzzyMaxExpansions() {
+        return fuzzyMaxExpansions;
+    }
+
+    public void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions) {
+        this.fuzzyMaxExpansions = fuzzyMaxExpansions;
+    }
+
+    public Integer getFuzzyPrefixLength() {
+        return fuzzyPrefixLength;
+    }
+
+    public void setFuzzyPrefixLength(Integer fuzzyPrefixLength) {
+        this.fuzzyPrefixLength = fuzzyPrefixLength;
+    }
+
+    public String getFuzzyRewrite() {
+        return fuzzyRewrite;
+    }
+
+    public void setFuzzyRewrite(String fuzzyRewrite) {
+        this.fuzzyRewrite = fuzzyRewrite;
+    }
+
+    public Boolean getFuzzyTranspositions() {
+        return fuzzyTranspositions;
+    }
+
+    public void setFuzzyTranspositions(Boolean fuzzyTranspositions) {
+        this.fuzzyTranspositions = fuzzyTranspositions;
+    }
+
+    public Boolean getAnalyzeWildcard() {
+        return analyzeWildcard;
+    }
+
+    public void setAnalyzeWildcard(Boolean analyzeWildcard) {
+        this.analyzeWildcard = analyzeWildcard;
+    }
+
+    public Boolean getAutoGenerateSynonymsPhraseQuery() {
+        return autoGenerateSynonymsPhraseQuery;
+    }
+
+    public void setAutoGenerateSynonymsPhraseQuery(Boolean autoGenerateSynonymsPhraseQuery) {
+        this.autoGenerateSynonymsPhraseQuery = autoGenerateSynonymsPhraseQuery;
+    }
+
+    public Boolean getAllowLeadingWildcard() {
+        return allowLeadingWildcard;
+    }
+
+    public void setAllowLeadingWildcard(Boolean allowLeadingWildcard) {
+        this.allowLeadingWildcard = allowLeadingWildcard;
+    }
+
+    public Boolean getEnablePositionIncrements() {
+        return enablePositionIncrements;
+    }
+
+    public void setEnablePositionIncrements(Boolean enablePositionIncrements) {
+        this.enablePositionIncrements = enablePositionIncrements;
+    }
+
+    public Boolean getEscape() {
+        return escape;
+    }
+
+    public void setEscape(Boolean escape) {
+        this.escape = escape;
+    }
+
+    public Boolean getLenient() {
+        return lenient;
+    }
+
+    public void setLenient(Boolean lenient) {
+        this.lenient = lenient;
+    }
+
+    public Integer getPhraseSlop() {
+        return phraseSlop;
+    }
+
+    public void setPhraseSlop(Integer phraseSlop) {
+        this.phraseSlop = phraseSlop;
+    }
+
+    public Integer getMaxDeterminizedStates() {
+        return maxDeterminizedStates;
+    }
+
+    public void setMaxDeterminizedStates(Integer maxDeterminizedStates) {
+        this.maxDeterminizedStates = maxDeterminizedStates;
+    }
+
+    public String getQuoteAnalyzer() {
+        return quoteAnalyzer;
+    }
+
+    public void setQuoteAnalyzer(String quoteAnalyzer) {
+        this.quoteAnalyzer = quoteAnalyzer;
+    }
+
+    public String getQuoteFieldSuffix() {
+        return quoteFieldSuffix;
+    }
+
+    public void setQuoteFieldSuffix(String quoteFieldSuffix) {
+        this.quoteFieldSuffix = quoteFieldSuffix;
+    }
+
+    public Float getTieBreaker() {
+        return tieBreaker;
+    }
+
+    public void setTieBreaker(Float tieBreaker) {
+        this.tieBreaker = tieBreaker;
+    }
+
+    public String getTimeZone() {
+        return timeZone;
+    }
+
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public String getMinimumShouldMatch() {
+        return minimumShouldMatch;
+    }
+
+    public void setMinimumShouldMatch(String minimumShouldMatch) {
+        this.minimumShouldMatch = minimumShouldMatch;
+    }
+
+    public Float getBoost() {
+        return boost;
+    }
+
+    public void setBoost(Float boost) {
+        this.boost = boost;
     }
 }

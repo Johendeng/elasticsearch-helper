@@ -7,7 +7,8 @@ import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import java.lang.annotation.*;
 
 /**
- * ExtFuzzy
+ * 模糊查询
+ * -- 精度不高，且cpu消耗高
  *
  * @author     JohenTeng
  * @date      2021/9/23
@@ -21,13 +22,23 @@ public @interface Fuzzy {
 
     Base value() default @Base;
 
+    /**
+     * 允许经过几次变更能命中目标字段
+     */
     FuzzinessEnum fuzziness() default FuzzinessEnum.AUTO;
 
+    /**
+     * 不能被 “模糊化” 的初始字符
+     */
     int prefixLength() default 0;
 
+    /**
+     * max_expansions 用来限制将产生的模糊选项的总数量
+     */
     int maxExpansions() default 50;
 
-    boolean transpositions() default true;
-
-
+    /**
+     * 是否允许 字符交换 （ab -> ba）
+     */
+    boolean transpositions() default false;
 }

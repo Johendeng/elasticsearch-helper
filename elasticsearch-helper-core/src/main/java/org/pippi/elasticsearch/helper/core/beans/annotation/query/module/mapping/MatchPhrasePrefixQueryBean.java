@@ -28,6 +28,5 @@ public class MatchPhrasePrefixQueryBean extends QueryBean<MatchPhrasePrefixQuery
         if (StringUtils.isNotBlank(analyzer)) {
             queryBuilder.analyzer(analyzer);
         }
-
     }
 }

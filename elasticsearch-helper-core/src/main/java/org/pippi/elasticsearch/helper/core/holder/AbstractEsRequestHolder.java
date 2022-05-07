@@ -154,6 +154,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		public String[] excludeFields;
 		public float minScore;
 		public boolean traceScore;
+		public int size;
 		public HighLightBean highLightBean;
 
 		public EsRequestHolderBuilder config(EsQueryIndexBean indexBean) {
@@ -163,6 +164,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			this.minScore = indexBean.getMinScore();
 			this.traceScore = indexBean.getTraceScore();
 			this.highLightBean = indexBean.getHighLight();
+			this.size = indexBean.getSize();
 			return this;
 		}
 
@@ -205,6 +207,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 				if (traceScore) {
 					holder.getSource().trackScores(traceScore);
 				}
+				holder.getSource().size(this.size);
 				return (R)holder;
 			}
 			throw new RuntimeException("un-support this query model");

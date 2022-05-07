@@ -25,5 +25,4 @@ public @interface MatchPhrase {
     ZeroTermsQueryOption zeroTermsQuery() default ZeroTermsQueryOption.NONE;
 
     String analyzer() default "";
-
 }

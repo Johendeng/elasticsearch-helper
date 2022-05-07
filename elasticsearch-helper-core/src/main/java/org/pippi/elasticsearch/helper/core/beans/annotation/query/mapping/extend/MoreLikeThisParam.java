@@ -17,6 +17,9 @@ public class MoreLikeThisParam implements EsComplexParam {
 
     private String[] texts;
 
+    public MoreLikeThisParam() {
+    }
+
     public MoreLikeThisParam(String[] texts) {
         this.texts = texts;
         itemsSupplier = () -> null;

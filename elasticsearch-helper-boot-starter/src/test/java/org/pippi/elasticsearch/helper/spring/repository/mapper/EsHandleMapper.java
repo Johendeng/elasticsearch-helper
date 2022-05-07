@@ -1,0 +1,31 @@
+package org.pippi.elasticsearch.helper.spring.repository.mapper;
+
+import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
+import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
+import org.pippi.elasticsearch.helper.spring.repository.entity.params.*;
+import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
+
+/**
+ * EsTermMapper
+ *
+ * @author dengtianjia@fiture.com
+ * @date 2022/5/6
+ */
+@EsHelperProxy
+public interface EsHandleMapper {
+
+    /**
+     * @param param simple es query
+     */
+    BaseResp<AccountEntity> termQuery(TermQueryParam param);
+
+    BaseResp<AccountEntity> fuzzyQuery(FuzzyQueryParam param);
+
+    BaseResp<AccountEntity> matchQuery(MatchQueryParam param);
+
+    BaseResp<AccountEntity> matchPhraseQuery(MatchPhraseQueryParam param);
+
+    BaseResp<AccountEntity> matchPhrasePrefixQuery(MatchPhrasePrefixQueryParam param);
+
+    BaseResp<AccountEntity> moreLikeThisQuery(MoreLikeThisQueryParam param);
+}

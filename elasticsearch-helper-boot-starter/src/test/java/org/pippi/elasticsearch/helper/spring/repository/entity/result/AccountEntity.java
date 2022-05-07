@@ -3,13 +3,15 @@ package org.pippi.elasticsearch.helper.spring.repository.entity.result;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
 /**
  * AccountEntity
  *
  * @author JohenTeng
  * @date 2021/12/6
  */
-public class AccountEntity extends BaseHit {
+public class AccountEntity extends BaseHit implements Serializable {
 
 	@JsonProperty(value = "account_number")
 	private Integer accountNumber;

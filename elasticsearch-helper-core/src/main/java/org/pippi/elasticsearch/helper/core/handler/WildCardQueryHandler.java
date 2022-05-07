@@ -26,5 +26,4 @@ public class WildCardQueryHandler extends AbstractQueryHandler<WildCardQueryBean
         searchHelper.chain(queryBuilder);
         return queryBuilder;
     }
-
 }

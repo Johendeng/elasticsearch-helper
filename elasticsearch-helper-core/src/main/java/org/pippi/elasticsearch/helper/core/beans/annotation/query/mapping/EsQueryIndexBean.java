@@ -25,6 +25,8 @@ public class EsQueryIndexBean {
 
 	private HighLightBean highLight;
 
+	private int size;
+
 	public EsQueryIndexBean() {
 	}
 
@@ -96,5 +98,13 @@ public class EsQueryIndexBean {
 
 	public void setTraceScore(boolean traceScore) {
 		this.traceScore = traceScore;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
 	}
 }

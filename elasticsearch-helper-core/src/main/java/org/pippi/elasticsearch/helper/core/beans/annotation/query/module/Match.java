@@ -30,10 +30,16 @@ public @interface Match {
 
     boolean lenient() default false;
 
+    /**
+     * 自动生成同义词搜索
+     */
     boolean autoGenerateSynonymsPhraseQuery() default true;
 
     FuzzinessEnum fuzziness() default FuzzinessEnum.AUTO;
 
+    /**
+     * 是否对停用词进行搜索
+     */
     ZeroTermsQueryOption zerTermsQuery() default ZeroTermsQueryOption.NONE;
 
     String analyzer() default "";

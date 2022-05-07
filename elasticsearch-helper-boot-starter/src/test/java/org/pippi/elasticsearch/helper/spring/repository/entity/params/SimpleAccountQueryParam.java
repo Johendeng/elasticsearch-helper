@@ -20,7 +20,7 @@ import org.pippi.elasticsearch.helper.spring.repository.entity.condition.AgeUseC
  * @author JohenTeng
  * @date 2021/12/9
  */
-@EsQueryIndex(index = "account", model = QueryModel.BOOL, traceScore = true, minScore = 0.01f)
+@EsQueryIndex(index = "account", model = QueryModel.BOOL, traceScore = true, minScore = 0.0001f)
 @HighLight(fields = "address")
 public class SimpleAccountQueryParam {
 

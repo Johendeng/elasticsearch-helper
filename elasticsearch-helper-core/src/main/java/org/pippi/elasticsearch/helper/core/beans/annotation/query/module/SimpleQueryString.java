@@ -1,34 +1,24 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
-import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 
 import java.lang.annotation.*;
 
 /**
- * SearchAfter
+ * todo
  *
- * @author JohenTeng
- * @date 2022/4/28
+ * @author dengtianjia@fiture.com
+ * @date 2022/5/6
  */
 @Query
 @Inherited
 @Documented
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SearchAfter {
+public @interface SimpleQueryString {
 
-    /**
-     * only the field "name" is effective
-     */
     Base value() default @Base;
 
-    /**
-     * sort rule
-     */
-    SortOrder order() default SortOrder.ASC;
 
-
-    int size() default 10;
 }
