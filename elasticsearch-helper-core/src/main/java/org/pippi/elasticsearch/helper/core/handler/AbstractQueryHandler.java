@@ -64,6 +64,9 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
      */
     protected final EsQueryFieldBean<T> handleExtBean(EsQueryFieldBean<T> queryDes) {
         try {
+            if (!(this.getClass().getGenericSuperclass() instanceof ParameterizedType)) {
+                return queryDes;
+            }
             Type[] actualTypeArguments = ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments();
             if (actualTypeArguments.length == 0) {
                 return queryDes;
@@ -77,5 +80,4 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
             throw new EsHelperConfigException("queryHandle-actualType class not found, cause:", e);
         }
     }
-
 }

@@ -13,7 +13,7 @@ import java.util.function.Supplier;
  */
 public class MoreLikeThisParam implements EsComplexParam {
 
-    private Supplier<MoreLikeThisQueryBuilder.Item[]> itemsSupplier;
+    private MoreLikeThisQueryBuilder.Item[] items;
 
     private String[] texts;
 
@@ -22,20 +22,20 @@ public class MoreLikeThisParam implements EsComplexParam {
 
     public MoreLikeThisParam(String[] texts) {
         this.texts = texts;
-        itemsSupplier = () -> null;
+        items = null;
     }
 
-    public MoreLikeThisParam(Supplier<MoreLikeThisQueryBuilder.Item[]> itemsSupplier, String[] texts) {
-        this.itemsSupplier = itemsSupplier;
+    public MoreLikeThisParam(MoreLikeThisQueryBuilder.Item[] itemsSupplier, String[] texts) {
+        this.items = itemsSupplier;
         this.texts = texts;
     }
 
-    public Supplier<MoreLikeThisQueryBuilder.Item[]> getItemsSupplier() {
-        return itemsSupplier;
+    public MoreLikeThisQueryBuilder.Item[] getItems() {
+        return items;
     }
 
-    public void setItemsSupplier(Supplier<MoreLikeThisQueryBuilder.Item[]> itemsSupplier) {
-        this.itemsSupplier = itemsSupplier;
+    public void setItems(MoreLikeThisQueryBuilder.Item[] items) {
+        this.items = items;
     }
 
     public String[] getTexts() {

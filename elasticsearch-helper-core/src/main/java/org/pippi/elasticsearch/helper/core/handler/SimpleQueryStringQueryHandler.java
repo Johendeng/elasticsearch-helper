@@ -11,7 +11,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 /**
  * SimpleQueryStringQueryHandler
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2022/5/6
  */
 @EsQueryHandle(SimpleQueryString.class)

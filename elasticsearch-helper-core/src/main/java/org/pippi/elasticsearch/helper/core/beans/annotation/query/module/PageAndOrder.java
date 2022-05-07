@@ -7,8 +7,8 @@ import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
 import java.lang.annotation.*;
 
 /**
- * <h>define the field type as <br/>
- * {@link org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam}</h>
+ *  field have to be
+ * {@link org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam}
  *
  *
  * @author     JohenTeng

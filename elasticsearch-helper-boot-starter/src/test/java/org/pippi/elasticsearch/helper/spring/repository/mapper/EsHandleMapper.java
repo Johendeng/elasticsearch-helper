@@ -8,7 +8,7 @@ import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEnt
 /**
  * EsTermMapper
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2022/5/6
  */
 @EsHelperProxy
@@ -28,4 +28,8 @@ public interface EsHandleMapper {
     BaseResp<AccountEntity> matchPhrasePrefixQuery(MatchPhrasePrefixQueryParam param);
 
     BaseResp<AccountEntity> moreLikeThisQuery(MoreLikeThisQueryParam param);
+
+    BaseResp<AccountEntity> multiMatchQuery(MultiMatchQueryParam param);
+
+    BaseResp<AccountEntity> pageAndRangeQuery(PageAndOrderQueryRankParam param);
 }

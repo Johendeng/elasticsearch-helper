@@ -7,13 +7,13 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MoreLik
 /**
  * MoreLikeThisQueryParam
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2022/5/7
  */
 @EsQueryIndex(index = "account", traceScore = true, size = 30)
 public class MoreLikeThisQueryParam {
 
-    @MoreLikeThis(fields = {"lastname", "address", "email"})
+    @MoreLikeThis(fields = {"address", "email"}, minTermFreq = 1, minDocFreq = 1)
     private MoreLikeThisParam address;
 
     public MoreLikeThisParam getAddress() {

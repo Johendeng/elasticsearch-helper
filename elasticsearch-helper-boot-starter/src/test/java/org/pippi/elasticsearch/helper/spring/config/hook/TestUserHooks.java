@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * TestUserHooks
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2021/12/10
  */
 public class TestUserHooks implements UserHooks {

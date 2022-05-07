@@ -19,11 +19,7 @@ public class MultiMatchQueryHandler extends AbstractQueryHandler<MultiMatchQuery
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean<MultiMatchQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
-        String[] fields = queryDes.getExtBean().getFields();
-        if (ArrayUtils.isEmpty(fields)) {
-            return null;
-        }
-        MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(queryDes.getValue(),fields)
+        MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(queryDes.getValue())
                 .boost(queryDes.getBoost());
         searchHelper.chain(multiMatchQueryBuilder);
         return multiMatchQueryBuilder;

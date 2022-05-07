@@ -12,6 +12,10 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.Optional;
+
 /**
  * @author     JohenTeng
  * @date      2021/9/28
@@ -25,9 +29,16 @@ public class MoreLikeThisQueryHandler extends AbstractQueryHandler<MoreLikeThisQ
         String[] fields = queryDes.getExtBean().getFields();
         if (value.getClass().equals(MoreLikeThisParam.class)) {
             MoreLikeThisParam params = (MoreLikeThisParam) value;
-            MoreLikeThisQueryBuilder moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(
-                    ArrayUtils.isEmpty(fields) ? null : fields,
-                    params.getTexts(), params.getItemsSupplier().get());
+            MoreLikeThisQueryBuilder moreLikeThisQueryBuilder = null;
+            if (ArrayUtils.isEmpty(params.getTexts())) {
+                throw new EsHelperQueryException("likeTexts/fields can't be empty");
+            }
+            if (ArrayUtils.isEmpty(fields)) {
+                moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(params.getTexts(), params.getItems());
+            } else {
+                moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(fields, params.getTexts(), params.getItems());
+            }
+            searchHelper.chain(moreLikeThisQueryBuilder);
             return moreLikeThisQueryBuilder;
         } else {
             throw new EsHelperQueryException("@MoreLikeThis query's Field value have to be MoreLikeThisParam.class");

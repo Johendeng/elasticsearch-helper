@@ -9,7 +9,7 @@ import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 /**
  * TermQueryParam
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2022/5/6
  */
 @EsQueryIndex(index = "account", traceScore = true, size = 30)

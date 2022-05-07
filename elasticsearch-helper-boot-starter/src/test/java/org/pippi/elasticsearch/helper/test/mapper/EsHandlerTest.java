@@ -1,11 +1,15 @@
 package org.pippi.elasticsearch.helper.test.mapper;
 
+import com.google.common.collect.Lists;
 import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.EsHelperSampleApplication;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.MoreLikeThisParam;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.FuzzyQueryBean;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
@@ -16,11 +20,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.LinkedHashMap;
 
 /**
  * EsHandlerTest
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2022/5/6
  */
 @RunWith(SpringRunner.class)
@@ -81,7 +86,39 @@ public class EsHandlerTest {
         MoreLikeThisQueryParam param = new MoreLikeThisQueryParam();
         MoreLikeThisParam likeParam = new MoreLikeThisParam();
         likeParam.setTexts(new String[]{"Morgan", "Street"});
+        param.setAddress(likeParam);
         BaseResp<AccountEntity> resp = esHandleMapper.moreLikeThisQuery(param);
         System.out.println(SerializerUtils.parseObjToJson(resp));
     }
+
+    @Test
+    public void testMultiMatchQuery() {
+        MultiMatchQueryParam param = new MultiMatchQueryParam();
+        param.setQueryText("street");
+        BaseResp<AccountEntity> resp = esHandleMapper.multiMatchQuery(param);
+        System.out.println(SerializerUtils.parseObjToJson(resp));
+    }
+
+    @Test
+    public void testPageAndRangeQuery() {
+        PageAndOrderQueryRankParam param = new PageAndOrderQueryRankParam();
+
+        RangeParam rangeParam = new RangeParam();
+        rangeParam.setLeft(20);
+        rangeParam.setRight(30);
+        param.setAge(rangeParam);
+
+        PageParam pageParam = new PageParam();
+        pageParam.setPageSize(5);
+        pageParam.setCurrent(1);
+        LinkedHashMap<String, SortOrder> orderMap = new LinkedHashMap<>();
+        orderMap.put("age", SortOrder.DESC);
+        pageParam.setOrderMap(orderMap);
+
+        param.setPage(pageParam);
+
+        BaseResp<AccountEntity> resp = esHandleMapper.pageAndRangeQuery(param);
+        System.out.println(SerializerUtils.parseObjToJson(resp));
+    }
+
 }

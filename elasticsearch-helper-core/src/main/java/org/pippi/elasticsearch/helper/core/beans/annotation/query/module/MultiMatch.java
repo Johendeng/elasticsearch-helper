@@ -46,7 +46,7 @@ public @interface MultiMatch {
     /**
      * the fields that need to query
      */
-    String[] fields();
+    String[] fields() default {};
     /**
      *  define the extrude fields:
      *  different kinds of boosts ,

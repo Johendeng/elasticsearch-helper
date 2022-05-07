@@ -47,7 +47,9 @@ public @interface MoreLikeThis {
 
     /**
      * 纳入查询评分的字段
-     * return
+     *  ps:
+     *   如果索引未设置默认查询字段 {@code [index.query.default_field]}，
+     *   那么该字段必填，否则会报查询异常
      */
     String[] fields() default {};
 

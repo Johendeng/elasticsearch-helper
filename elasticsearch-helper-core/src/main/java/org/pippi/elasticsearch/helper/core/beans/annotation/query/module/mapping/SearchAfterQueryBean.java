@@ -6,7 +6,7 @@ import org.elasticsearch.search.sort.SortOrder;
 /**
  * SearchAfterQueryBean
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2022/4/28
  */
 public class SearchAfterQueryBean extends QueryBean{

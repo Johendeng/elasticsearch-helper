@@ -5,6 +5,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsCondition;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsComplexParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MultiMatch;
@@ -22,7 +23,7 @@ import org.pippi.elasticsearch.helper.spring.repository.entity.condition.AgeUseC
  */
 @EsQueryIndex(index = "account", model = QueryModel.BOOL, traceScore = true, minScore = 0.0001f)
 @HighLight(fields = "address")
-public class SimpleAccountQueryParam {
+public class SimpleAccountQueryParam implements EsComplexParam {
 
 	@Term(value = @Base(connect = EsConnector.FILTER))
 	private String state;
