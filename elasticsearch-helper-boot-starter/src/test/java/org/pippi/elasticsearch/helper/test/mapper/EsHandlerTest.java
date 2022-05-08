@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.test.mapper;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Assert;
@@ -20,7 +21,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * EsHandlerTest
@@ -119,6 +122,45 @@ public class EsHandlerTest {
 
         BaseResp<AccountEntity> resp = esHandleMapper.pageAndRangeQuery(param);
         System.out.println(SerializerUtils.parseObjToJson(resp));
+    }
+
+    @Test
+    public void testQueryStringQuery() {
+        QueryStringQueryParam param = new QueryStringQueryParam();
+        param.setQueryText("Street AND age:>30");
+        BaseResp<AccountEntity> resp = esHandleMapper.queryStringQuery(param);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
+
+    @Test
+    public void testScriptQuery() {
+        ScriptQueryParam param = new ScriptQueryParam();
+
+        Map<String, String> scriptMap = Maps.newHashMap();
+        scriptMap.put("name", "B");
+        param.setScriptMapParam(scriptMap);
+
+        BaseResp<AccountEntity> resp = esHandleMapper.scriptQuery(param);
+        resp.getRecords().forEach(record -> {
+            Assert.assertTrue(record.getAge() % 2 == 0);
+            Assert.assertTrue(record.getFirstname().startsWith("B"));
+        });
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
+
+    @Test
+    public void testSearchAfter() {
+        SearchAfterQueryParam param = new SearchAfterQueryParam();
+        param.setGender("F");
+        param.setId(String.valueOf(Integer.MAX_VALUE));
+        BaseResp<AccountEntity> resp = esHandleMapper.searchAfterQuery(param);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+
+        SearchAfterQueryParam param2 = new SearchAfterQueryParam();
+        param2.setGender("F");
+        param2.setId(String.valueOf(991));
+        BaseResp<AccountEntity> resp2 = esHandleMapper.searchAfterQuery(param2);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp2));
     }
 
 }

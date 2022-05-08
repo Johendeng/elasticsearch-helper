@@ -32,4 +32,10 @@ public interface EsHandleMapper {
     BaseResp<AccountEntity> multiMatchQuery(MultiMatchQueryParam param);
 
     BaseResp<AccountEntity> pageAndRangeQuery(PageAndOrderQueryRankParam param);
+
+    BaseResp<AccountEntity> queryStringQuery(QueryStringQueryParam param);
+
+    BaseResp<AccountEntity> scriptQuery(ScriptQueryParam param);
+
+    BaseResp<AccountEntity> searchAfterQuery(SearchAfterQueryParam param);
 }

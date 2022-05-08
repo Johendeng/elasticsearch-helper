@@ -39,8 +39,6 @@ public @interface ScriptQuery {
 
     /**
      * Dose script has params
-     * return
      */
     boolean hasParams() default false;
-
 }

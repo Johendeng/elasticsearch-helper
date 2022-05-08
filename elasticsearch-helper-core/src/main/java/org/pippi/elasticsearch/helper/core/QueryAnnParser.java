@@ -2,9 +2,11 @@ package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.AnnotationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.*;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.ScriptQuery;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.UserQuery;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
@@ -23,18 +25,19 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * @author    JohenTeng
- * @date     2021/7/18
+ * @author JohenTeng
+ * @date 2021/7/18
  **/
 public class QueryAnnParser {
 
     private static final String BASE_FILED = "value";
 
-    private volatile static QueryAnnParser INSTANCE ;
+    private volatile static QueryAnnParser INSTANCE;
 
-    private QueryAnnParser(){}
+    private QueryAnnParser() {
+    }
 
-    public static QueryAnnParser instance(){
+    public static QueryAnnParser instance() {
         if (INSTANCE == null) {
             synchronized (QueryAnnParser.class) {
                 if (INSTANCE == null) {
@@ -48,8 +51,8 @@ public class QueryAnnParser {
 
     /**
      * parse Index-information
-     * @param view
-     * return
+     *
+     * @param view return
      */
     public EsQueryIndexBean getIndex(Object view) {
         Class<?> clazz = view.getClass();
@@ -74,13 +77,12 @@ public class QueryAnnParser {
     }
 
     /**
-     *  read query-view-pojo define by user,
-     *  support java-base type, collections and
-     *  @link
+     * read query-view-pojo define by user,
+     * support java-base type, collections and
      *
      * @param view
-     * @param visitParent
-     * return
+     * @param visitParent return
+     * @link
      */
     public List<EsQueryFieldBean> read(Object view, boolean visitParent) {
         Class<?> clazz = view.getClass();
@@ -90,7 +92,7 @@ public class QueryAnnParser {
             Set<Annotation> annotationSet = Arrays.stream(field.getAnnotations())
                     .filter(ann -> ann.annotationType().isAnnotationPresent(Query.class))
                     .collect(Collectors.toSet());
-            if (CollectionUtils.isNotEmpty(annotationSet) && checkEsCondition(field, view) ){
+            if (CollectionUtils.isNotEmpty(annotationSet) && checkEsCondition(field, view)) {
                 List<EsQueryFieldBean> queryDes = this.mapFieldAnn(field, view, annotationSet);
                 queryDesList.addAll(queryDes);
             }
@@ -106,7 +108,7 @@ public class QueryAnnParser {
         if (!optionCondition.isPresent()) {
             return true;
         }
-        EsCondition condition  = (EsCondition) optionCondition.get();
+        EsCondition condition = (EsCondition) optionCondition.get();
         Class<? extends EsConditionHandle> conditionHandleClazz = condition.value();
         EsConditionHandle conditionHandle = ReflectionUtils.newInstance(conditionHandleClazz);
         Object val = ReflectionUtils.getFieldValue(field, view);
@@ -136,7 +138,7 @@ public class QueryAnnParser {
     private List<EsQueryFieldBean> mapFieldAnn(Field field, Object viewObj, Set<Annotation> annotationSet) {
         final List<EsQueryFieldBean> res = Lists.newArrayList();
         for (Annotation ann : annotationSet) {
-            Optional.ofNullable(parseValue(field, viewObj)).ifPresent(queryDes ->{
+            Optional.ofNullable(parseValue(field, viewObj)).ifPresent(queryDes -> {
                 this.parseAnn(queryDes, field, ann);
                 res.add(queryDes);
             });
@@ -144,12 +146,16 @@ public class QueryAnnParser {
         return res;
     }
 
-    private EsQueryFieldBean parseValue(Field field, Object viewObj){
+    private EsQueryFieldBean parseValue(Field field, Object viewObj) {
         try {
             EsQueryFieldBean queryDes = new EsQueryFieldBean<>();
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
             Object val = field.get(viewObj);
+            if (field.isAnnotationPresent(ScriptQuery.class) && !field.getAnnotation(ScriptQuery.class).hasParams()) {
+                // 脚本查詢字段如果配置不需要參數的脚本，則無需加載查詢參數
+                return queryDes;
+            }
             if (Objects.isNull(val)) {
                 return null;
             }
@@ -164,16 +170,16 @@ public class QueryAnnParser {
         }
     }
 
-    private boolean checkCollectionValueType (Field field, Object val) {
+    private boolean checkCollectionValueType(Field field, Object val) {
         Predicate<Field> checkCollectionTypePredicate = f -> {
             if (val.getClass().isArray()) {
                 return ReflectionUtils.isBaseType(val.getClass().getComponentType());
             }
             ParameterizedType genericType = (ParameterizedType) f.getGenericType();
             Type[] actualType = genericType.getActualTypeArguments();
-            return actualType.length == 1 && ReflectionUtils.isBaseType(actualType[0].getClass());
+            return Arrays.stream(actualType).allMatch(type -> ReflectionUtils.isBaseType((Class<?>) type));
         };
-        return (val instanceof Collection || val.getClass().isArray()) && checkCollectionTypePredicate.test(field);
+        return (val instanceof Collection || val.getClass().isArray() || val instanceof Map ) && checkCollectionTypePredicate.test(field);
     }
 
     private void parseAnn(EsQueryFieldBean queryDes, Field field, Annotation targetAnn) {
@@ -190,16 +196,16 @@ public class QueryAnnParser {
             queryDes.setField(column);
             String queryType = ann.queryType();
             if (StringUtils.isBlank(queryType)) {
-                queryType =  targetAnn.annotationType().getSimpleName();
+                queryType = targetAnn.annotationType().getSimpleName();
             }
-            if (StringUtils.isBlank(queryType) || StringUtils.equals(queryType, UserQuery.class.getSimpleName()) ) {
+            if (StringUtils.isBlank(queryType) || StringUtils.equals(queryType, UserQuery.class.getSimpleName())) {
                 throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
             }
             queryDes.setQueryType(queryType);
 
             String meta = ann.metaStringify();
             if (StringUtils.isBlank(meta)) {
-                meta =  ann.meta().getType();
+                meta = ann.meta().getType();
             }
             queryDes.setMeta(meta);
             queryDes.setBoost(ann.boost());
@@ -207,7 +213,6 @@ public class QueryAnnParser {
             throw new EsHelperConfigException("annotation analysis Error, cause:", e);
         }
     }
-
 
 
 }
