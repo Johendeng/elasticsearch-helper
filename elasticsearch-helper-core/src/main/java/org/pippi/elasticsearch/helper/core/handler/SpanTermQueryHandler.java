@@ -24,5 +24,4 @@ public class SpanTermQueryHandler extends AbstractQueryHandler<SpanTermQueryBean
         searchHelper.chain(spanTermQueryBuilder);
         return spanTermQueryBuilder;
     }
-
 }

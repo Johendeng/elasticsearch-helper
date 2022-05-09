@@ -6,8 +6,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 import java.lang.annotation.*;
 
 /**
- * todo
- *
+ * todo wait implements
  * @author JohenTeng
  * @date 2022/5/6
  */
@@ -19,6 +18,5 @@ import java.lang.annotation.*;
 public @interface SimpleQueryString {
 
     Base value() default @Base;
-
 
 }

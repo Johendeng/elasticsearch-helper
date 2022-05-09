@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.*;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.ScriptQuery;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SourceOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.UserQuery;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
@@ -152,14 +153,20 @@ public class QueryAnnParser {
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
             Object val = field.get(viewObj);
-            if (field.isAnnotationPresent(ScriptQuery.class) && !field.getAnnotation(ScriptQuery.class).hasParams()) {
+            if (
+                (field.isAnnotationPresent(ScriptQuery.class) && !field.getAnnotation(ScriptQuery.class).hasParams())
+             || (field.isAnnotationPresent(SourceOrder.class))
+            ) {
                 // 脚本查詢字段如果配置不需要參數的脚本，則無需加載查詢參數
                 return queryDes;
             }
             if (Objects.isNull(val)) {
                 return null;
             }
-            if (ReflectionUtils.isBaseType(fieldType) || val instanceof EsComplexParam || checkCollectionValueType(field, val)) {
+            if (ReflectionUtils.isBaseType(fieldType)
+                || val instanceof EsComplexParam
+                || val.getClass().isAnnotationPresent(EsQueryIndex.class)
+                || checkCollectionValueType(field, val)) {
                 queryDes.setValue(val);
             } else {
                 throw new EsHelperQueryException("config @EsQueryField at an Error-Type Field, Just support Primitive-type (exclude void.class) or their Decorate-type or Collection or Map or EsComplexParam");

@@ -71,12 +71,6 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		return this;
 	}
 
-	public AbstractEsRequestHolder simpleInitialize() {
-		this.defineQueryBuilder();
-		this.defineDefaultLogicConnector();
-		return this;
-	}
-
 	public static void regisHolder(QueryModel model, Class<? extends AbstractEsRequestHolder> clazz) {
 		HOLDER_CLAZZ_MAP.put(model, clazz);
 	}
@@ -212,20 +206,5 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			}
 			throw new RuntimeException("un-support this query model");
 		}
-
-
-		public <R extends AbstractEsRequestHolder>R simpleBuild(){
-			if (esQueryModel == null){
-				throw new RuntimeException("index and query model cant be null");
-			}
-			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(esQueryModel);
-			if (Objects.nonNull(targetClazz)) {
-				AbstractEsRequestHolder holder = ReflectionUtils.newInstance(targetClazz);
-				holder.simpleInitialize();
-				return (R)holder;
-			}
-			throw new RuntimeException("unsupport this query model");
-		}
 	}
-
 }

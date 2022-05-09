@@ -43,7 +43,6 @@ public class EsResponseParseHelper {
         SearchHits hits = resp.getHits();
         res.setMaxScore(hits.getMaxScore());
         res.setTotalHit(hits.getTotalHits().value);
-
         SearchHit[] hitArr = hits.getHits();
         List<Map<String, Object>> records = new ArrayList<>(hitArr.length);
         for (SearchHit hit : hitArr) {
@@ -62,12 +61,27 @@ public class EsResponseParseHelper {
             }
             records.add(sourceMap);
         }
-
         res.setRecords(records);
         return res;
     }
 
-    public static <T extends BaseHit>BaseResp<T> getList(SearchResponse resp, Class<T> type) {
+    public static <T>List<T> readList(SearchResponse resp, Class<T> type) {
+        SearchHits hits = resp.getHits();
+        SearchHit[] hitArr = hits.getHits();
+        List<T> records = new ArrayList<>(hitArr.length);
+        for (SearchHit hit : hitArr) {
+            String recordJson = hit.getSourceAsString();
+            T record = SerializerUtils.jsonToBean(recordJson, type);
+            records.add(record);
+            if (BaseHit.class.isAssignableFrom(type)) {
+                loadBaseHitData((BaseHit) record, hit);
+            }
+        }
+        return records;
+    }
+
+
+    public static <T>BaseResp<T> readBaseResp(SearchResponse resp, Class<T> type) {
         BaseResp res = new BaseResp();
         SearchHits hits = resp.getHits();
         res.setMaxScore(hits.getMaxScore());
@@ -77,22 +91,28 @@ public class EsResponseParseHelper {
         for (SearchHit hit : hitArr) {
             String recordJson = hit.getSourceAsString();
             T record = SerializerUtils.jsonToBean(recordJson, type);
-            record.setDocId(hit.getId());
-            record.setHitScore(hit.getScore());
             records.add(record);
-            Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-            if (MapUtils.isNotEmpty(highlightFields)) {
-                Map<String, List<String>> highLightMap = Maps.newHashMap();
-                for (Map.Entry<String, HighlightField> en : highlightFields.entrySet()) {
-                    String key = en.getKey();
-                    List<String> value = Arrays.stream(en.getValue().fragments()).map(Text::toString).collect(Collectors.toList());
-                    highLightMap.put(key, value);
-                }
-                record.setHighLightMap(highLightMap);
+            if (BaseHit.class.isAssignableFrom(type)) {
+                loadBaseHitData((BaseHit) record, hit);
             }
         }
         res.setRecords(records);
         return res;
+    }
+
+    private static void loadBaseHitData(BaseHit record, SearchHit hit) {
+        record.setDocId(hit.getId());
+        record.setHitScore(hit.getScore());
+        Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+        if (MapUtils.isNotEmpty(highlightFields)) {
+            Map<String, List<String>> highLightMap = Maps.newHashMap();
+            for (Map.Entry<String, HighlightField> en : highlightFields.entrySet()) {
+                String key = en.getKey();
+                List<String> value = Arrays.stream(en.getValue().fragments()).map(Text::toString).collect(Collectors.toList());
+                highLightMap.put(key, value);
+            }
+            record.setHighLightMap(highLightMap);
+        }
     }
 
     public static <T>T getOne(SearchResponse resp, Class<T> type) {
@@ -107,8 +127,4 @@ public class EsResponseParseHelper {
         }
         return null;
     }
-
-
-
-
 }

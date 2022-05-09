@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.spring.repository.mapper;
 
+import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.*;
@@ -38,4 +39,12 @@ public interface EsHandleMapper {
     BaseResp<AccountEntity> scriptQuery(ScriptQueryParam param);
 
     BaseResp<AccountEntity> searchAfterQuery(SearchAfterQueryParam param);
+
+    BaseResp<AccountEntity> nestedQuery(NestedQueryParam param);
+
+    BaseResp<AccountEntity> sourceOrderQuery(SourceOrderQueryParam param);
+
+    BaseResp<AccountEntity> spanTermQuery(SpanTermQueryParam param);
+
+    BaseResp<AccountEntity> wildCardQuery(WildCardQueryParam param);
 }

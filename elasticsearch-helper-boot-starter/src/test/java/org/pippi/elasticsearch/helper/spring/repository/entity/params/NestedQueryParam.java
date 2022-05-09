@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.spring.repository.entity.params;
 
-import org.apache.lucene.search.join.ScoreMode;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Nested;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
@@ -17,7 +16,7 @@ public class NestedQueryParam {
     @Term
     private String address;
 
-    @Nested(path = "$.address", scoreMode = ScoreMode.Total)
+    @Nested
     private SimpleAccountQueryParam nestParam;
 
     public String getAddress() {

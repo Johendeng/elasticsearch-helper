@@ -3,12 +3,11 @@ package org.pippi.elasticsearch.helper.core.proxy;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
-import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
@@ -23,6 +22,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -90,18 +90,20 @@ public class EsQueryProxy<T> implements InvocationHandler {
      */
     private Object returnDefaultResult(Method method, SearchResponse resp) {
         Class<?> returnType = method.getReturnType();
-        if (returnType.isAssignableFrom(BaseResp.class)) {
-            ParameterizedType paramReturnType = (ParameterizedType)method.getGenericReturnType();
-            Type[] paramTypes = paramReturnType.getActualTypeArguments();
-            Class paramClazz = (Class) paramTypes[0];
-            if (BaseHit.class.isAssignableFrom(paramClazz)){
-                BaseResp<? extends BaseHit> baseResp = EsResponseParseHelper.getList(resp, ((Class<? extends BaseHit>) paramClazz));
-                return baseResp;
-            } else {
-                throw new EsHelperQueryException("BaseResponse's ParameterizedType has to be <? extends BaseResp.BaseHit>");
-            }
+        if (!(returnType.isAssignableFrom(BaseResp.class) || returnType.equals(List.class))) {
+            throw new EsHelperQueryException("un-support this kind of return-type,please define @ResponseHook or change type to BaseResp/List");
         }
-        throw new EsHelperQueryException("un-support this kind of return-type,please define @ResponseHook or change type to BaseResp/StandAggResp");
+        ParameterizedType paramReturnType = (ParameterizedType)method.getGenericReturnType();
+        Type[] paramTypes = paramReturnType.getActualTypeArguments();
+        Class<?> paramClazz = (Class<?>) paramTypes[0];
+        try {
+            if (returnType.isAssignableFrom(BaseResp.class)) {
+                return EsResponseParseHelper.readBaseResp(resp, paramClazz);
+            }
+            return EsResponseParseHelper.readList(resp, paramClazz);
+        } catch (Exception e) {
+            throw new EsHelperQueryException("default result handler Error, cause:", e);
+        }
     }
 
     public Class<T> getTargetInterface() {

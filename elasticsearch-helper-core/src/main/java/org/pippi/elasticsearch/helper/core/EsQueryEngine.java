@@ -30,9 +30,4 @@ public class EsQueryEngine {
         }
         return helper;
     }
-
-
-
-
-
 }

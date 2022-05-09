@@ -1,8 +1,6 @@
 package org.pippi.elasticsearch.helper.test.mapper;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,7 +9,6 @@ import org.pippi.elasticsearch.helper.EsHelperSampleApplication;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.FuzzyQueryBean;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.*;
@@ -21,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -163,4 +159,42 @@ public class EsHandlerTest {
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp2));
     }
 
+    @Test
+    public void testNestedQuery() {
+        SimpleAccountQueryParam param = new SimpleAccountQueryParam();
+        param.setState("DE");
+        param.setAddress("River Street");
+        param.setFuzzyField("Bates");
+
+        NestedQueryParam nestedQueryParam = new NestedQueryParam();
+        nestedQueryParam.setNestParam(param);
+        nestedQueryParam.setAddress("street");
+
+        BaseResp<AccountEntity> resp = esHandleMapper.nestedQuery(nestedQueryParam);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
+
+    @Test
+    public void testSourceOrderQuery() {
+        SourceOrderQueryParam param = new SourceOrderQueryParam();
+        param.setQueryText("123");
+        BaseResp<AccountEntity> resp = esHandleMapper.sourceOrderQuery(param);
+        System.out.println(SerializerUtils.parseObjToJson(resp));
+    }
+
+    @Test
+    public void testSpanTermQuery() {
+        SpanTermQueryParam param = new SpanTermQueryParam();
+        param.setAddress("875");
+        BaseResp<AccountEntity> resp = esHandleMapper.spanTermQuery(param);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
+
+    @Test
+    public void testWildCardQuery() {
+        WildCardQueryParam param = new WildCardQueryParam();
+        param.setAddress("87*");
+        BaseResp<AccountEntity> resp = esHandleMapper.wildCardQuery(param);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
 }

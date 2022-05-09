@@ -20,6 +20,4 @@ public @interface SpanTerm {
 
     Base value()  default @Base;
 
-
-
 }

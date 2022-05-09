@@ -1,6 +1,8 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping;
 
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.search.sort.ScriptSortBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 
 /**
  * OrderQueryBean
@@ -10,22 +12,14 @@ import org.elasticsearch.index.query.QueryBuilder;
  */
 public class SourceOrderQueryBean extends QueryBean{
 
-    private String sort;
-
     private String script;
 
-    private String scriptType;
+    private SortOrder sortOrder;
+
+    private ScriptSortBuilder.ScriptSortType sortType;
 
     @Override
     public void configQueryBuilder(QueryBuilder queryBuilder) {
-    }
-
-    public String getSort() {
-        return sort;
-    }
-
-    public void setSort(String sort) {
-        this.sort = sort;
     }
 
     public String getScript() {
@@ -36,11 +30,19 @@ public class SourceOrderQueryBean extends QueryBean{
         this.script = script;
     }
 
-    public String getScriptType() {
-        return scriptType;
+    public SortOrder getSortOrder() {
+        return sortOrder;
     }
 
-    public void setScriptType(String scriptType) {
-        this.scriptType = scriptType;
+    public void setSortOrder(SortOrder sortOrder) {
+        this.sortOrder = sortOrder;
+    }
+
+    public ScriptSortBuilder.ScriptSortType getSortType() {
+        return sortType;
+    }
+
+    public void setSortType(ScriptSortBuilder.ScriptSortType sortType) {
+        this.sortType = sortType;
     }
 }
