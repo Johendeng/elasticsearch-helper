@@ -9,13 +9,22 @@ package org.pippi.elasticsearch.helper.core.beans.enums;
 public enum QueryModel {
 
 	/**
+	 * 组合匹配文档查询
 	 * bool
 	 * @see org.elasticsearch.index.query.BoolQueryBuilder
 	 */
 	BOOL,
 	/**
+	 * 最匹配文档查询，类似查询multi_match
 	 * dis_max
 	 * @see org.elasticsearch.index.query.DisMaxQueryBuilder
 	 */
 	DIS_MAX,
+
+	/**
+	 * 自定义文档评分
+	 * function_score
+	 * @see org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder
+	 */
+	FUNC_SCORE,
 }

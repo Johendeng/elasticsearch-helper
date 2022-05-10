@@ -93,9 +93,9 @@ public class EsHandlerTest {
     @Test
     public void testMultiMatchQuery() {
         MultiMatchQueryParam param = new MultiMatchQueryParam();
-        param.setQueryText("street");
+        param.setQueryText("live in Jacksonburg and 25 year's old");
         BaseResp<AccountEntity> resp = esHandleMapper.multiMatchQuery(param);
-        System.out.println(SerializerUtils.parseObjToJson(resp));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
     }
 
     @Test

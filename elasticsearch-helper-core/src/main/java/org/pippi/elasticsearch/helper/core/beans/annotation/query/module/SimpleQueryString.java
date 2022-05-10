@@ -1,12 +1,15 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module;
 
+import org.elasticsearch.index.query.Operator;
+import org.elasticsearch.index.query.SimpleQueryStringFlag;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.Query;
 
 import java.lang.annotation.*;
 
 /**
- * todo wait implements
+ * simplify query type of {@link QueryString}
+ *
  * @author JohenTeng
  * @date 2022/5/6
  */
@@ -18,5 +21,33 @@ import java.lang.annotation.*;
 public @interface SimpleQueryString {
 
     Base value() default @Base;
+
+     String field() default "";
+
+     String fieldAndBoost() default "";
+
+     String[] fieldAndBoosts() default {};
+
+     String analyzer() default "";
+
+     boolean analyzeWildcard() default false;
+
+     boolean autoGenerateSynonymsPhraseQuery() default true;
+
+     Operator defaultOperator() default Operator.OR;
+
+     int fuzzyPrefixLength() default 0;
+
+     int fuzzyMaxExpansions() default 50;
+
+     boolean lenient() default false;
+
+     String minimumShouldMatch() default "";
+
+     String quoteFieldSuffix() default "";
+
+     float boost() default 1.0f;
+
+     SimpleQueryStringFlag[] flags() default {};
 
 }

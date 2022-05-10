@@ -13,7 +13,9 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MultiMa
 @EsQueryIndex(index = "account", traceScore = true, size = 30)
 public class MultiMatchQueryParam {
 
-    @MultiMatch(boostFields = {"address:10.0", "email:5.0"}, type = MultiMatchQueryBuilder.Type.MOST_FIELDS)
+    @MultiMatch(boostFields = {"address:10.0", "email:5.0", "city:20.0"},
+            type = MultiMatchQueryBuilder.Type.MOST_FIELDS,
+            analyzer = "ik_max_word")
     private String queryText;
 
     public String getQueryText() {

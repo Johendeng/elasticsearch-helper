@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.QueryString;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryStringQueryBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryStringBean;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
@@ -16,7 +16,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * @date 2022/4/29
  */
 @EsQueryHandle(QueryString.class)
-public class QueryStringQueryHandler extends AbstractQueryHandler<QueryStringQueryBean> {
+public class QueryStringQueryHandler extends AbstractQueryHandler<QueryStringBean> {
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {

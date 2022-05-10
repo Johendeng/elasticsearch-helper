@@ -8,6 +8,7 @@ import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.core.utils.CommonUtils;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -19,7 +20,7 @@ import java.util.Optional;
  * @author JohenTeng
  * @date 2022/4/29
  */
-public class QueryStringQueryBean extends QueryBean<QueryStringQueryBuilder>{
+public class QueryStringBean extends QueryBean<QueryStringQueryBuilder>{
 
     private transient static final String _SP = ":";
 
@@ -97,44 +98,30 @@ public class QueryStringQueryBean extends QueryBean<QueryStringQueryBuilder>{
             });
             queryBuilder.fields(fieldAndBoostMap);
         }
-        this.optional(this.type).ifPresent(queryBuilder::type);
-        this.optional(this.defaultField).ifPresent(queryBuilder::defaultField);
-        this.optional(this.field).ifPresent(queryBuilder::field);
-        this.optional(this.allowLeadingWildcard).ifPresent(queryBuilder::allowLeadingWildcard);
-        this.optional(this.analyzer).ifPresent(queryBuilder::analyzer);
-        this.optional(this.analyzeWildcard).ifPresent(queryBuilder::analyzeWildcard);
-        this.optional(this.autoGenerateSynonymsPhraseQuery).ifPresent(queryBuilder::autoGenerateSynonymsPhraseQuery);
-        this.optional(this.defaultOperator).ifPresent(queryBuilder::defaultOperator);
-        this.optional(this.enablePositionIncrements).ifPresent(queryBuilder::enablePositionIncrements);
-        this.optional(this.escape).ifPresent(queryBuilder::escape);
-        this.optional(this.fuzziness).ifPresent(fuzziness -> queryBuilder.fuzziness(fuzziness.getFuzziness()));
-        this.optional(this.fuzzyMaxExpansions).ifPresent(queryBuilder::fuzzyMaxExpansions);
-        this.optional(this.fuzzyPrefixLength).ifPresent(queryBuilder::fuzzyPrefixLength);
-        this.optional(this.fuzzyRewrite).ifPresent(queryBuilder::fuzzyRewrite);
-        this.optional(this.fuzzyTranspositions).ifPresent(queryBuilder::fuzzyTranspositions);
-        this.optional(this.lenient).ifPresent(queryBuilder::lenient);
-        this.optional(this.phraseSlop).ifPresent(queryBuilder::phraseSlop);
-        this.optional(this.maxDeterminizedStates).ifPresent(queryBuilder::maxDeterminizedStates);
-        this.optional(this.quoteAnalyzer).ifPresent(queryBuilder::quoteAnalyzer);
-        this.optional(this.quoteFieldSuffix).ifPresent(queryBuilder::quoteFieldSuffix);
-        this.optional(this.tieBreaker).ifPresent(queryBuilder::tieBreaker);
-        this.optional(this.timeZone).ifPresent(queryBuilder::timeZone);
-        this.optional(this.minimumShouldMatch).ifPresent(queryBuilder::minimumShouldMatch);
-        this.optional(this.boost).ifPresent(queryBuilder::boost);
-    }
-
-    private <T>Optional<T> optional(T obj) {
-        return Optional.ofNullable(obj).filter(
-                o -> {
-                    if (o.getClass().isArray()) {
-                        return ArrayUtils.isEmpty((Object[]) o);
-                    }
-                    if (o instanceof String) {
-                        return StringUtils.isNotBlank(o.toString());
-                    }
-                    return true;
-                }
-        );
+        CommonUtils.optional(this.type).ifPresent(queryBuilder::type);
+        CommonUtils.optional(this.defaultField).ifPresent(queryBuilder::defaultField);
+        CommonUtils.optional(this.field).ifPresent(queryBuilder::field);
+        CommonUtils.optional(this.allowLeadingWildcard).ifPresent(queryBuilder::allowLeadingWildcard);
+        CommonUtils.optional(this.analyzer).ifPresent(queryBuilder::analyzer);
+        CommonUtils.optional(this.analyzeWildcard).ifPresent(queryBuilder::analyzeWildcard);
+        CommonUtils.optional(this.autoGenerateSynonymsPhraseQuery).ifPresent(queryBuilder::autoGenerateSynonymsPhraseQuery);
+        CommonUtils.optional(this.defaultOperator).ifPresent(queryBuilder::defaultOperator);
+        CommonUtils.optional(this.enablePositionIncrements).ifPresent(queryBuilder::enablePositionIncrements);
+        CommonUtils.optional(this.escape).ifPresent(queryBuilder::escape);
+        CommonUtils.optional(this.fuzziness).ifPresent(fuzziness -> queryBuilder.fuzziness(fuzziness.getFuzziness()));
+        CommonUtils.optional(this.fuzzyMaxExpansions).ifPresent(queryBuilder::fuzzyMaxExpansions);
+        CommonUtils.optional(this.fuzzyPrefixLength).ifPresent(queryBuilder::fuzzyPrefixLength);
+        CommonUtils.optional(this.fuzzyRewrite).ifPresent(queryBuilder::fuzzyRewrite);
+        CommonUtils.optional(this.fuzzyTranspositions).ifPresent(queryBuilder::fuzzyTranspositions);
+        CommonUtils.optional(this.lenient).ifPresent(queryBuilder::lenient);
+        CommonUtils.optional(this.phraseSlop).ifPresent(queryBuilder::phraseSlop);
+        CommonUtils.optional(this.maxDeterminizedStates).ifPresent(queryBuilder::maxDeterminizedStates);
+        CommonUtils.optional(this.quoteAnalyzer).ifPresent(queryBuilder::quoteAnalyzer);
+        CommonUtils.optional(this.quoteFieldSuffix).ifPresent(queryBuilder::quoteFieldSuffix);
+        CommonUtils.optional(this.tieBreaker).ifPresent(queryBuilder::tieBreaker);
+        CommonUtils.optional(this.timeZone).ifPresent(queryBuilder::timeZone);
+        CommonUtils.optional(this.minimumShouldMatch).ifPresent(queryBuilder::minimumShouldMatch);
+        CommonUtils.optional(this.boost).ifPresent(queryBuilder::boost);
     }
 
     public MultiMatchQueryBuilder.Type getType() {
