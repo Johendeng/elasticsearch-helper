@@ -29,16 +29,22 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ScriptQuery {
 
-    Base value() default @Base(meta = EsMeta.COMPLEX);
+    Base value() default @Base;
 
     ScriptType scriptType() default ScriptType.INLINE;
 
     String lang() default org.elasticsearch.script.Script.DEFAULT_SCRIPT_LANG;
 
+    /**
+     * script or script-id define in elasticsearch-server,
+     * 脚本 或者 定义在es服务器中的脚本id
+     */
     String idOrCode() default "";
 
     /**
      * Dose script has params
+     * 如果该脚本不需要传参数，则该注解修饰的字段不需要赋值
+     * 如果有参数请将该字段定义为 Map<String, Object> 其中map.value只能为 String/基本类型
      */
-    boolean hasParams() default false;
+    boolean hasParams();
 }

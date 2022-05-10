@@ -4,7 +4,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 
 /**
- * HookQuery
+ * 当参数对象继承该类，可以定义请求处理方法/响应处理方法
  *
  * @author     JohenTeng
  * @date      2021/9/29

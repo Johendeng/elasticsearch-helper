@@ -36,7 +36,7 @@ public class EsAccountMapperTest {
 		param.setAddress("River Street");
 		param.setFuzzyField("Bates");
 		BaseResp<AccountEntity> resp = esAccountMapper.queryByParam(param);
-		System.out.println(SerializerUtils.parseObjToJson(resp));
+		System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
 	}
 
 	@Test

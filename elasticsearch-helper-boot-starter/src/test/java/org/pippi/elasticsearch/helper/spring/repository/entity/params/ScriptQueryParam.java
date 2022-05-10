@@ -12,7 +12,7 @@ import java.util.Map;
 @EsQueryIndex(index = "account", traceScore = true, size = 100)
 public class ScriptQueryParam {
 
-    @ScriptQuery(idOrCode = "(doc['age'].value%2 == 0)")
+    @ScriptQuery(idOrCode = "(doc['age'].value%2 == 0)", hasParams = false)
     private Object scriptParams;
 
     @ScriptQuery(

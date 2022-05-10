@@ -49,6 +49,4 @@ public class BaseResp<T> implements Serializable {
     public void setRecords(List<T> records) {
         this.records = records;
     }
-
-
 }
