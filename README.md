@@ -180,23 +180,3 @@ class AutoConfiguration {
 同时使用@EsCondition注解修饰属性，例如 @EsCondition(UserAgeConditionHandler.class)
 
 ```
-
-### 依赖
-```
-v1.0.2-RELEASE
-
-spring-boot-starter:
-
-    <dependency>
-        <groupId>io.github.johendeng</groupId>
-        <artifactId>elasticsearch-helper-boot-starter</artifactId>
-        <version>1.0.2-RELEASE</version>
-    </dependency>
-
-core:
-    <dependency>
-        <groupId>io.github.johendeng</groupId>
-        <artifactId>elasticsearch-helper-core</artifactId>
-        <version>1.0.2-RELEASE</version>
-    </dependency>
-```
