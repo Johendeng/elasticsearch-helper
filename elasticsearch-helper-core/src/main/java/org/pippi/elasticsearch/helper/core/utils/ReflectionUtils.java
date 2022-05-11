@@ -106,4 +106,15 @@ public class ReflectionUtils {
         }
         throw new RuntimeException("Reflect trans collection error");
     }
+
+    /**
+     * 获取目标类型
+     */
+    public static Type[] getParameterizedTypes(Type targetClazz) {
+        if (!(targetClazz instanceof ParameterizedType)) {
+            return null;
+        }
+        ParameterizedType paramReturnType = (ParameterizedType)targetClazz;
+        return paramReturnType.getActualTypeArguments();
+    }
 }

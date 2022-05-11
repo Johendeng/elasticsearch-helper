@@ -22,7 +22,7 @@ public enum QueryModel {
 	DIS_MAX,
 
 	/**
-	 * 自定义文档评分
+	 * 自定义文档评分 todo
 	 * function_score
 	 * @see org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder
 	 */

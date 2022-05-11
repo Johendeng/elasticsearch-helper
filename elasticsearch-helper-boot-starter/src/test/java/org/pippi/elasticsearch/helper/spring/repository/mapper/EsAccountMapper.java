@@ -9,6 +9,9 @@ import org.pippi.elasticsearch.helper.spring.repository.entity.params.SimpleAcco
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountAggResult;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * EsAccountMapper
  *
@@ -21,7 +24,7 @@ public interface EsAccountMapper {
 	/**
 	 * @param param simple es query
 	 */
-	BaseResp<AccountEntity> queryByParam(SimpleAccountQueryParam param);
+	List<Map> queryByParam(SimpleAccountQueryParam param);
 
 	/**
 	 * 测试聚合查询

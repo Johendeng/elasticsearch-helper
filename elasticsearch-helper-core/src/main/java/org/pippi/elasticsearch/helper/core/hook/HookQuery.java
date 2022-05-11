@@ -23,7 +23,7 @@ public abstract class HookQuery<PARAM, RESULT> {
     /**
      * define RequestHook
      */
-    protected abstract void configRequestHook(AbstractEsRequestHolder holder, PARAM param);
+    protected abstract void configRequestHook(AbstractEsRequestHolder holder);
 
     /**
      * define ResponseHook
@@ -33,7 +33,7 @@ public abstract class HookQuery<PARAM, RESULT> {
 
     public void setRequestHook() {
         this.requestHook = (holder, param) -> {
-            this.configRequestHook(holder, param);
+            this.configRequestHook(holder);
             return holder;
         };
     }

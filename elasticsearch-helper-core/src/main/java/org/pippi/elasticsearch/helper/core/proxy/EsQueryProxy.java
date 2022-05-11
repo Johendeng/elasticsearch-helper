@@ -8,7 +8,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
-import org.pippi.elasticsearch.helper.core.helper.EsResponseParseHelper;
+import org.pippi.elasticsearch.helper.core.reader.EsResponseReader;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
 import org.pippi.elasticsearch.helper.core.hook.HookQuery;
@@ -78,31 +78,10 @@ public class EsQueryProxy<T> implements InvocationHandler {
         if ((responseHook = checkResponseHook(param, method)) != null) {
             return responseHook.handleResponse(resp);
         } else {
-            return this.returnDefaultResult(method, resp);
-        }
-    }
-
-    /**
-     * phrase SearchResponse and return Result
-     * @param method
-     * @param resp
-     * return
-     */
-    private Object returnDefaultResult(Method method, SearchResponse resp) {
-        Class<?> returnType = method.getReturnType();
-        if (!(returnType.isAssignableFrom(BaseResp.class) || returnType.equals(List.class))) {
-            throw new EsHelperQueryException("un-support this kind of return-type,please define @ResponseHook or change type to BaseResp/List");
-        }
-        ParameterizedType paramReturnType = (ParameterizedType)method.getGenericReturnType();
-        Type[] paramTypes = paramReturnType.getActualTypeArguments();
-        Class<?> paramClazz = (Class<?>) paramTypes[0];
-        try {
-            if (returnType.isAssignableFrom(BaseResp.class)) {
-                return EsResponseParseHelper.readBaseResp(resp, paramClazz);
-            }
-            return EsResponseParseHelper.readList(resp, paramClazz);
-        } catch (Exception e) {
-            throw new EsHelperQueryException("default result handler Error, cause:", e);
+            /**
+             * default response reader
+             */
+            return EsResponseReader.readResp(method, resp);
         }
     }
 

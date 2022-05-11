@@ -2,10 +2,8 @@ package org.pippi.elasticsearch.helper.core.utils;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.pippi.elasticsearch.helper.core.beans.exception.SerializeException;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -39,8 +37,4 @@ public class AnnotationUtils {
         }
         return res;
     }
-
-
-
-
 }
