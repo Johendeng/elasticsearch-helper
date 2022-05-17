@@ -7,22 +7,18 @@ import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
-import org.pippi.elasticsearch.helper.core.reader.EsResponseReader;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
 import org.pippi.elasticsearch.helper.core.hook.HookQuery;
 import org.pippi.elasticsearch.helper.core.hook.RequestHook;
 import org.pippi.elasticsearch.helper.core.hook.ResponseHook;
+import org.pippi.elasticsearch.helper.core.reader.EsResponseReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.List;
 import java.util.Objects;
 
 /**

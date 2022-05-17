@@ -1,6 +1,9 @@
 package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
@@ -12,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.lang.annotation.Annotation;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -85,16 +89,21 @@ public class QueryHandlerFactory {
                 throw new EsHelperConfigException("query handle have to ann by @EsQueryHandle");
             }
             EsQueryHandle ann = targetClazz.getAnnotation(EsQueryHandle.class);
-            String handleName = ann.queryType();
-            if (StringUtils.isBlank(handleName)) {
-                handleName = ann.value().getSimpleName();
+            String[] handleName = ann.queryType();
+            Set<String> handleNames = null;
+            if (ArrayUtils.isEmpty(handleName)) {
+                Class<? extends Annotation>[] handleAnnTypes = ann.value();
+                handleNames = Arrays.stream(handleAnnTypes).map(Class::getSimpleName).collect(Collectors.toSet());
+            } else {
+                handleNames = Sets.newHashSet(handleName);
             }
-            if (StringUtils.isBlank(handleName)) {
+            if (CollectionUtils.isEmpty(handleNames)) {
                 throw new EsHelperConfigException("handle-name is undefine");
             }
-            QueryHandlerFactory.addHandleClazz(handleName, targetClazz);
-
-            QUERY_HANDLE_MAP.put(handleName, QueryHandlerFactory.getTargetHandleInstance(targetClazz));
+            handleNames.forEach(name -> {
+                QueryHandlerFactory.addHandleClazz(name, targetClazz);
+                QUERY_HANDLE_MAP.put(name, QueryHandlerFactory.getTargetHandleInstance(targetClazz));
+            });
         }
         String banner = readBanner();
         log.info(banner);

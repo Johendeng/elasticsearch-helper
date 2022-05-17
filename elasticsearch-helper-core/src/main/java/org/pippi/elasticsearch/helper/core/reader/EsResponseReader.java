@@ -42,8 +42,7 @@ public class EsResponseReader {
         ResponseReader<?> reader = READER_MAP.get(method.getReturnType());
         if (Objects.isNull(reader)) {
             throw new EsHelperQueryException("QueryMethod's return-type un-support, support type list:" +
-                SerializerUtils.parseObjToJson(READER_MAP.keySet())
-            );
+                SerializerUtils.parseObjToJson(READER_MAP.keySet()));
         }
         return reader.read(method.getGenericReturnType(), originalResp);
     }

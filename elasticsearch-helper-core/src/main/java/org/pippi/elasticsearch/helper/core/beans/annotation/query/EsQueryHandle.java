@@ -8,7 +8,6 @@ import java.lang.annotation.*;
  * packages   org.pippi.elasticsearch.helper.beans.annotation
  * @date     2021/7/18
  * @author   JohenTeng
- * email    1078481395@qq.com
  **/
 @Inherited
 @Documented
@@ -16,7 +15,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsQueryHandle {
 
-    String queryType() default "";
+    String[] queryType() default {};
 
-    Class<? extends Annotation> value() default Annotation.class;
+    Class<? extends Annotation>[] value() default Annotation.class;
 }

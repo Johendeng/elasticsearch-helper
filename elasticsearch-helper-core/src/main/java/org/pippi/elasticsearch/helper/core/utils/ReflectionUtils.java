@@ -108,7 +108,7 @@ public class ReflectionUtils {
     }
 
     /**
-     * 获取目标类型
+     * 获取目标参数化类型
      */
     public static Type[] getParameterizedTypes(Type targetClazz) {
         if (!(targetClazz instanceof ParameterizedType)) {

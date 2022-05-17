@@ -8,7 +8,7 @@ import java.lang.reflect.Type;
 /**
  * OriginalRespReader
  *
- * @author dengtianjia@fiture.com
+ * @author JohenTeng
  * @date 2022/5/11
  */
 public class OriginalRespReader implements ResponseReader {
