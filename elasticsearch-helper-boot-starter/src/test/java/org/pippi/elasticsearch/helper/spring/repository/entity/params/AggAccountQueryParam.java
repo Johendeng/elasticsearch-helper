@@ -1,7 +1,9 @@
 package org.pippi.elasticsearch.helper.spring.repository.entity.params;
 
 import com.google.common.collect.Maps;
+import org.apache.lucene.util.QueryBuilder;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -32,6 +34,7 @@ import java.util.Map;
 public class AggAccountQueryParam extends HookQuery<AggAccountQueryParam, AccountAggResult> {
 
     private String city;
+
 
     @Override
     protected void configRequestHook(AbstractEsRequestHolder holder) {

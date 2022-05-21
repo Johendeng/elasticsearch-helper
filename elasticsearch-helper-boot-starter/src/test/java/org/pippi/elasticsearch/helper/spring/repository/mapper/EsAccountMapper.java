@@ -24,7 +24,7 @@ public interface EsAccountMapper {
 	/**
 	 * @param param simple es query
 	 */
-	List<Map> queryByParam(SimpleAccountQueryParam param);
+	List<AccountEntity> queryByParam(SimpleAccountQueryParam param);
 
 	/**
 	 * 测试聚合查询

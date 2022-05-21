@@ -1,12 +1,9 @@
 package org.pippi.elasticsearch.helper.test.mapper;
 
-import org.aspectj.weaver.ast.Var;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.EsHelperSampleApplication;
+import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.AggAccountQueryParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.SimpleAccountQueryParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountAggResult;
@@ -17,7 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * EsAccountMapperTest
@@ -38,7 +34,7 @@ public class EsAccountMapperTest {
 		param.setState("DE");
 		param.setAddress("River Street");
 		param.setFuzzyField("Bates");
-		List<Map> resp = esAccountMapper.queryByParam(param);
+		List<AccountEntity> resp = esAccountMapper.queryByParam(param);
 		System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
 	}
 
