@@ -6,9 +6,13 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.GeoPolygonParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.GeoPolygon;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.GeoPolygonQueryBean;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+
+import java.util.Objects;
 
 /**
  * GeoPolygonQueryHandler
@@ -21,8 +25,11 @@ public class GeoPolygonQueryHandler extends AbstractQueryHandler<GeoPolygonQuery
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean<GeoPolygonQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
-        //todo 参数未创建
-        GeoPolygonQueryBuilder queryBuilder = QueryBuilders.geoPolygonQuery(queryDes.getField(), Lists.newArrayList());
+        Object value = queryDes.getValue();
+        if (Objects.isNull(value) || !(value instanceof GeoPolygonParam)) {
+            throw new EsHelperQueryException("GeoPolygon's param have to be GeoPolygonParam.class");
+        }
+        GeoPolygonQueryBuilder queryBuilder = QueryBuilders.geoPolygonQuery(queryDes.getField(), ((GeoPolygonParam) value).getPoints());
         queryBuilder.boost(queryDes.getBoost());
         searchHelper.chain(queryBuilder);
         return null;
