@@ -14,6 +14,8 @@ import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.*;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
 import org.pippi.elasticsearch.helper.spring.repository.mapper.EsHandleMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -31,6 +33,8 @@ import java.util.Map;
 @SpringBootTest(classes = EsHelperSampleApplication.class)
 public class EsHandlerTest {
 
+    private static final Logger log = LoggerFactory.getLogger(EsHandlerTest.class);
+
     @Resource
     private EsHandleMapper esHandleMapper;
 
@@ -41,8 +45,8 @@ public class EsHandlerTest {
         param.setFirstname("Good");
         param.setLastnames(new String[]{"Bates", "Olson", "Campbell"});
         BaseResp<AccountEntity> res = esHandleMapper.termQuery(param);
-        System.out.println(res.getRecords().size());
-        System.out.println(SerializerUtils.parseObjToJson(res));
+        log.info("res size:{}", res.getRecords().size());
+        log.info("data: {}", SerializerUtils.parseObjToJson(res));
         res.getRecords().forEach(data -> {
             Assert.assertEquals(data.getGender(), "F");
         });
@@ -53,7 +57,10 @@ public class EsHandlerTest {
         FuzzyQueryParam param = new FuzzyQueryParam();
         param.setAddress("Strete");
         BaseResp<AccountEntity> resp = esHandleMapper.fuzzyQuery(param);
-        System.out.println(SerializerUtils.parseObjToJson(resp));
+        log.info("data: {}", SerializerUtils.parseObjToJson(resp));
+        resp.getRecords().forEach(data -> {
+            Assert.assertTrue(data.getAddress().contains("Street"));
+        });
     }
 
     @Test

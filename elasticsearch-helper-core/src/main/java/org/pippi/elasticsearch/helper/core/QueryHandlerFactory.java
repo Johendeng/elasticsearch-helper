@@ -14,7 +14,10 @@ import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.annotation.Annotation;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -130,15 +133,12 @@ public class QueryHandlerFactory {
         }
     }
 
-    private static String getProperty(String fullKey) throws URISyntaxException, FileNotFoundException {
+    private static String getProperty(String fullKey) throws URISyntaxException, IOException {
         InputStream bannerStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROP_LOC);
         BufferedReader reader = new BufferedReader(new InputStreamReader(bannerStream));
-        Optional<String> targetLine = reader.lines().filter(l -> l.startsWith(fullKey)).findAny();
-        if (targetLine.isPresent()) {
-            String[] split = targetLine.get().split("=");
-            return split[1];
-        }
-        return "";
+        Properties properties = new Properties();
+        properties.load(reader);
+        return (String) properties.getOrDefault(fullKey, "");
     }
 
 }
