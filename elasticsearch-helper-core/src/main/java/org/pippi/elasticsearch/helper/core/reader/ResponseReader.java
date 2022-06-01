@@ -26,8 +26,6 @@ public interface ResponseReader<R> {
 
     Logger log = LoggerFactory.getLogger(ResponseReader.class);
 
-    Class getClazzKey();
-
     /**
      * 执行结果读取
      */

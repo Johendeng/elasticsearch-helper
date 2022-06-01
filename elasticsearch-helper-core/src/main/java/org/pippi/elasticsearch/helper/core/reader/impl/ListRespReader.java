@@ -22,11 +22,6 @@ import java.util.Map;
 public class ListRespReader implements ResponseReader<List<?>> {
 
     @Override
-    public Class getClazzKey() {
-        return List.class;
-    }
-
-    @Override
     public List<?> read(Type returnType, SearchResponse resp) {
         Type[] parameterizedTypes = ReflectionUtils.getParameterizedTypes(returnType);
         Class<?> paramClazz = Map.class;

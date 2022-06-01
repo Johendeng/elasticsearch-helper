@@ -14,11 +14,6 @@ import java.lang.reflect.Type;
 public class OriginalRespReader implements ResponseReader {
 
     @Override
-    public Class getClazzKey() {
-        return SearchResponse.class;
-    }
-
-    @Override
     public Object read(Type returnType, SearchResponse resp) {
         return resp;
     }
