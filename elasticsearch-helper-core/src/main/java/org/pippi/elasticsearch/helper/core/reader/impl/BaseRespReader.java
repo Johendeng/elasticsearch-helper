@@ -23,6 +23,11 @@ import java.util.Map;
 public class BaseRespReader implements ResponseReader<BaseResp> {
 
     @Override
+    public Class getClazzKey() {
+        return BaseResp.class;
+    }
+
+    @Override
     public BaseResp read(Type returnType, SearchResponse resp) {
         Type[] parameterizedTypes = ReflectionUtils.getParameterizedTypes(returnType);
         Class<?> paramClazz = Map.class;
