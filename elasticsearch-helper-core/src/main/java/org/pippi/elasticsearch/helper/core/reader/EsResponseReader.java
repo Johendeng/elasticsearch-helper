@@ -7,16 +7,13 @@ import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.reader.impl.BaseRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.ListRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.OriginalRespReader;
-import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
-import org.reflections.Reflections;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  *
