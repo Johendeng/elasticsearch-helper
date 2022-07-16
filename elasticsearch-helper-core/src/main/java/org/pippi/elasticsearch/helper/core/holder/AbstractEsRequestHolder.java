@@ -185,33 +185,33 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 				throw new RuntimeException("index and query model cant be null");
 			}
 			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(esQueryModel);
-			if (Objects.nonNull(targetClazz)) {
-				AbstractEsRequestHolder holder = ReflectionUtils.newInstance(targetClazz);
-				holder.init(indexName);
-				SearchSourceBuilder source = holder.getSource();
-				if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
-					source.fetchSource(this.fetchFields, this.excludeFields);
-				}
-				if (Objects.nonNull(highLightBean)) {
-					HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(highLightBean.getHighLightKey());
-					if (Objects.isNull(highlightBuilder)) {
-						log.error("can't find highlight-config: {}", highLightBean.getHighLightKey());
-					} else {
-						for (String field : highLightBean.getFields()) {
-							source.highlighter(highlightBuilder.field(field));
-						}
+			if (Objects.isNull(targetClazz)) {
+				throw new RuntimeException("un-support this query model");
+			}
+			AbstractEsRequestHolder holder = ReflectionUtils.newInstance(targetClazz);
+			holder.init(indexName);
+			SearchSourceBuilder source = holder.getSource();
+			if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
+				source.fetchSource(this.fetchFields, this.excludeFields);
+			}
+			if (Objects.nonNull(highLightBean)) {
+				HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(highLightBean.getHighLightKey());
+				if (Objects.isNull(highlightBuilder)) {
+					log.error("can't find highlight-config: {}", highLightBean.getHighLightKey());
+				} else {
+					for (String field : highLightBean.getFields()) {
+						source.highlighter(highlightBuilder.field(field));
 					}
 				}
-				if (minScore > 0) {
-					holder.getSource().minScore(minScore);
-				}
-				if (traceScore) {
-					holder.getSource().trackScores(traceScore);
-				}
-				holder.getSource().size(this.size);
-				return (R)holder;
 			}
-			throw new RuntimeException("un-support this query model");
+			if (minScore > 0) {
+				holder.getSource().minScore(minScore);
+			}
+			if (traceScore) {
+				holder.getSource().trackScores(traceScore);
+			}
+			holder.getSource().size(this.size);
+			return (R)holder;
 		}
 	}
 }
