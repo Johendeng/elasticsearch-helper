@@ -6,26 +6,19 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.config.GlobalEsQueryConfig;
 import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
-import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  *  hold es request bean
@@ -45,6 +38,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		 */
 		AbstractEsRequestHolder.regisHolder(QueryModel.BOOL, BoolEsRequestHolder.class);
 		AbstractEsRequestHolder.regisHolder(QueryModel.DIS_MAX, DisMaxEsRequestHolder.class);
+		AbstractEsRequestHolder.regisHolder(QueryModel.FUNC_SCORE, FuncScoreEsRequestHolder.class);
 
 	}
 
@@ -57,6 +51,8 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 	private T queryBuilder;
 
 	private List<QueryBuilder> currentQueryBuilderList ;
+
+	private EsQueryIndexBean indexConfig;
 
 	/**
 	 *
@@ -145,73 +141,54 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 
 	public static class EsRequestHolderBuilder {
 
-		public String indexName;
-		public QueryModel esQueryModel;
-		public String[] fetchFields;
-		public String[] excludeFields;
-		public float minScore;
-		public boolean traceScore;
-		public int size;
-		public HighLightBean highLightBean;
+		private EsQueryIndexBean indexConfig;
 
 		public EsRequestHolderBuilder config(EsQueryIndexBean indexBean) {
-			this.indexName = indexBean.getIndexName();
-			this.esQueryModel = indexBean.getEsQueryModel();
-			this.fetchFields = indexBean.getFetchFields();
-			this.minScore = indexBean.getMinScore();
-			this.traceScore = indexBean.getTraceScore();
-			this.highLightBean = indexBean.getHighLight();
-			this.size = indexBean.getSize();
+			this.indexConfig = indexBean;
 			return this;
 		}
 
-		public EsRequestHolderBuilder indexName(String indexName) {
-			this.indexName = indexName;
-			return this;
-		}
-
-		public EsRequestHolderBuilder queryModel(QueryModel model){
-			this.esQueryModel = model;
-			return this;
-		}
-
-		public EsRequestHolderBuilder minScore(float minScore){
-			this.minScore = minScore;
-			return this;
-		}
-
-		public <R extends AbstractEsRequestHolder>R build(){
-			if (StringUtils.isBlank(indexName) || esQueryModel == null){
+		public <R extends AbstractEsRequestHolder> R build(){
+			if (StringUtils.isBlank(indexConfig.getIndexName()) || indexConfig.getEsQueryModel() == null){
 				throw new RuntimeException("index and query model cant be null");
 			}
-			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(esQueryModel);
+			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(indexConfig.getEsQueryModel());
 			if (Objects.isNull(targetClazz)) {
 				throw new RuntimeException("un-support this query model");
 			}
 			AbstractEsRequestHolder holder = ReflectionUtils.newInstance(targetClazz);
-			holder.init(indexName);
+			holder.init(indexConfig.getIndexName());
 			SearchSourceBuilder source = holder.getSource();
-			if (ArrayUtils.isNotEmpty(this.fetchFields) || ArrayUtils.isNotEmpty(this.excludeFields)){
-				source.fetchSource(this.fetchFields, this.excludeFields);
+			if (ArrayUtils.isNotEmpty(indexConfig.getFetchFields()) || ArrayUtils.isNotEmpty(indexConfig.getExcludeFields())){
+				source.fetchSource(indexConfig.getFetchFields(), indexConfig.getExcludeFields());
 			}
-			if (Objects.nonNull(highLightBean)) {
-				HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(highLightBean.getHighLightKey());
+			if (Objects.nonNull(indexConfig.getHighLight())) {
+				HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(indexConfig.getHighLight().getHighLightKey());
 				if (Objects.isNull(highlightBuilder)) {
-					log.error("can't find highlight-config: {}", highLightBean.getHighLightKey());
+					log.error("can't find highlight-config: {}", indexConfig.getHighLight().getHighLightKey());
 				} else {
-					for (String field : highLightBean.getFields()) {
+					for (String field : indexConfig.getHighLight().getFields()) {
 						source.highlighter(highlightBuilder.field(field));
 					}
 				}
 			}
-			if (minScore > 0) {
-				holder.getSource().minScore(minScore);
+			if (indexConfig.getMinScore() > 0) {
+				holder.getSource().minScore(indexConfig.getMinScore());
 			}
-			if (traceScore) {
-				holder.getSource().trackScores(traceScore);
+			if (indexConfig.getTraceScore()) {
+				holder.getSource().trackScores(indexConfig.getTraceScore());
 			}
-			holder.getSource().size(this.size);
-			return (R)holder;
+			holder.getSource().size(indexConfig.getSize());
+			holder.setIndexConfig(this.indexConfig);
+			return (R) holder;
 		}
+	}
+
+	public EsQueryIndexBean getIndexConfig() {
+		return indexConfig;
+	}
+
+	public void setIndexConfig(EsQueryIndexBean indexConfig) {
+		this.indexConfig = indexConfig;
 	}
 }

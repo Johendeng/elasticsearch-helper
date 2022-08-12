@@ -20,7 +20,6 @@ public class MatchPhraseQueryHandler extends AbstractQueryHandler<MatchPhraseQue
     public QueryBuilder handle(EsQueryFieldBean<MatchPhraseQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
         MatchPhraseQueryBuilder matchPhraseQueryBuilder = QueryBuilders.matchPhraseQuery(queryDes.getField(), queryDes.getValue())
                 .boost(queryDes.getBoost());
-        searchHelper.chain(matchPhraseQueryBuilder);
         return matchPhraseQueryBuilder;
     }
 

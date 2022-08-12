@@ -25,7 +25,7 @@ public @interface Nested {
 
     Base value() default @Base(meta = EsMeta.COMPLEX, connect = EsConnector.SHOULD);
 
-    String path() default "";
+    String path();
 
     ScoreMode scoreMode() default ScoreMode.Total;
 

@@ -27,6 +27,8 @@ public class EsQueryIndexBean {
 
 	private int size;
 
+	private FuncScoreBean funcScoreBean;
+
 	public EsQueryIndexBean() {
 	}
 
@@ -106,5 +108,13 @@ public class EsQueryIndexBean {
 
 	public void setSize(int size) {
 		this.size = size;
+	}
+
+	public FuncScoreBean getFuncScoreBean() {
+		return funcScoreBean;
+	}
+
+	public void setFuncScoreBean(FuncScoreBean funcScoreBean) {
+		this.funcScoreBean = funcScoreBean;
 	}
 }

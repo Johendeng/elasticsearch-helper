@@ -22,7 +22,6 @@ public class QueryStringQueryHandler extends AbstractQueryHandler<QueryStringBea
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
         QueryStringQueryBuilder queryBuilder = QueryBuilders.queryStringQuery(queryDes.getValue().toString());
         queryBuilder.field(queryDes.getField());
-        searchHelper.chain(queryBuilder);
         return queryBuilder;
     }
 }

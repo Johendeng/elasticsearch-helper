@@ -31,7 +31,6 @@ public class GeoPolygonQueryHandler extends AbstractQueryHandler<GeoPolygonQuery
         }
         GeoPolygonQueryBuilder queryBuilder = QueryBuilders.geoPolygonQuery(queryDes.getField(), ((GeoPolygonParam) value).getPoints());
         queryBuilder.boost(queryDes.getBoost());
-        searchHelper.chain(queryBuilder);
-        return null;
+        return queryBuilder;
     }
 }

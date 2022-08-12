@@ -46,7 +46,6 @@ public class RangeQueryHandler extends AbstractQueryHandler<RangeQueryBean>{
             Optional.ofNullable(rangeParam.getLeft()).ifPresent(l -> rangeQuery.from(l));
             Optional.ofNullable(rangeParam.getRight()).ifPresent(r -> rangeQuery.to(r));
         }
-        searchHelper.chain(rangeQuery);
         return rangeQuery;
     }
 

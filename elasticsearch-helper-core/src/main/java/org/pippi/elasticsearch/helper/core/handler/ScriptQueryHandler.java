@@ -37,7 +37,6 @@ public class ScriptQueryHandler extends AbstractQueryHandler<ScriptQueryBean>{
                 throw new EsHelperQueryException("@ScriptQuery's [hasParams].value is TRUE the Field have to define as [Map.class] and can't be null");
             }
         }
-        searchHelper.chain(scriptQueryBuilder);
         return scriptQueryBuilder;
     }
 }

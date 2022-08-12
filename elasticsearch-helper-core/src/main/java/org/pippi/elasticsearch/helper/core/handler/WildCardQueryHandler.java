@@ -23,7 +23,6 @@ public class WildCardQueryHandler extends AbstractQueryHandler<WildCardQueryBean
         String value = queryDes.getValue().toString();
         WildcardQueryBuilder queryBuilder = QueryBuilders.wildcardQuery(queryDes.getField(), value);
         queryBuilder.boost(queryDes.getBoost());
-        searchHelper.chain(queryBuilder);
         return queryBuilder;
     }
 }

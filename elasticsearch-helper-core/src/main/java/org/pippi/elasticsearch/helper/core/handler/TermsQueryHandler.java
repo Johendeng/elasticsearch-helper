@@ -26,7 +26,6 @@ public class TermsQueryHandler extends AbstractQueryHandler<TermsQueryBean> {
         Collection value = ReflectionUtils.transArrayOrCollection(queryDes.getValue());
         TermsQueryBuilder queryBuilder = QueryBuilders.termsQuery(queryDes.getField(), value)
                 .boost(queryDes.getBoost());
-        searchHelper.chain(queryBuilder);
         return queryBuilder;
     }
 }

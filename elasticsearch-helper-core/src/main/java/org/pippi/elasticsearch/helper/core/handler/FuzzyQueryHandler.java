@@ -20,7 +20,6 @@ public class FuzzyQueryHandler extends AbstractQueryHandler<FuzzyQueryBean>{
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
         FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery(queryDes.getField(), queryDes.getValue())
                 .boost(queryDes.getBoost());
-        searchHelper.chain(fuzzyQueryBuilder);
         return fuzzyQueryBuilder;
     }
 }

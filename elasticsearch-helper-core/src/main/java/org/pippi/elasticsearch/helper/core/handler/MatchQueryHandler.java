@@ -19,7 +19,6 @@ public class MatchQueryHandler extends AbstractQueryHandler<MatchQueryBean> {
     @Override
     public QueryBuilder handle(EsQueryFieldBean<MatchQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
         MatchQueryBuilder matchQuery = QueryBuilders.matchQuery(queryDes.getField(), queryDes.getValue()).boost(queryDes.getBoost());
-        searchHelper.chain(matchQuery);
         return matchQuery;
     }
 

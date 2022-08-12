@@ -75,7 +75,9 @@ public class ReflectionUtils {
         }
     }
 
-
+    /**
+     * use reflect to get value from given obj
+     */
     public static Object getFieldValue (Field field , Object target) {
         if (!field.isAccessible()) {
             field.setAccessible(true);
@@ -86,6 +88,18 @@ public class ReflectionUtils {
             throw new RuntimeException("Reflect-getValue IllegalAccessException Error, cause:", e);
         }
     }
+
+    public static Object getFieldValueQuietly(Field field , Object target) {
+        if (!field.isAccessible()) {
+            field.setAccessible(true);
+        }
+        try {
+            return field.get(target);
+        } catch (IllegalAccessException e) {
+            return null;
+        }
+    }
+
 
     public static Collection transArrayOrCollection(Object targetObj) {
         Class<?> returnType = targetObj.getClass();

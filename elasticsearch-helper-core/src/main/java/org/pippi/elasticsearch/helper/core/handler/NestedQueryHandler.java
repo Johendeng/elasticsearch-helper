@@ -53,15 +53,8 @@ public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {
         } else {
             throw new EsHelperQueryException("NestedQuery's field have to be annotation by @EsQueryIndex");
         }
-        if (StringUtils.isNotBlank(extBean.getPath())) {
-            NestedQueryBuilder nestedQuery = QueryBuilders.nestedQuery(extBean.getPath(), queryBUilder, extBean.getScoreMode());
-            searchHelper.chain(nestedQuery);
-            return nestedQuery;
-        }
-        // 如果未定义 nested查询 对应路径，将查询直接拼进现有查询，使用定义的逻辑连接符进行连接。
-        searchHelper.chain(queryBUilder);
-        return null;
-    }
+        return QueryBuilders.nestedQuery(extBean.getPath(), queryBUilder, extBean.getScoreMode());
+     }
 
 
     private QueryBuilder readNestedQuery(EsQueryFieldBean<NestedQueryBean> queryDes) {

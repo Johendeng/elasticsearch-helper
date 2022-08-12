@@ -21,7 +21,6 @@ public class SpanTermQueryHandler extends AbstractQueryHandler<SpanTermQueryBean
     public QueryBuilder handle(EsQueryFieldBean<SpanTermQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
         SpanTermQueryBuilder spanTermQueryBuilder = new SpanTermQueryBuilder(queryDes.getField(), queryDes.getValue());
         spanTermQueryBuilder.boost(queryDes.getBoost());
-        searchHelper.chain(spanTermQueryBuilder);
         return spanTermQueryBuilder;
     }
 }

@@ -34,7 +34,6 @@ public class TermQueryHandler extends AbstractQueryHandler<TermQueryBean> {
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
         QueryBuilder termQueryBuilder = QueryBuilders.termQuery(queryDes.getField(), queryDes.getValue());
         termQueryBuilder.boost(queryDes.getBoost());
-        searchHelper.chain(termQueryBuilder);
         return termQueryBuilder;
     }
 

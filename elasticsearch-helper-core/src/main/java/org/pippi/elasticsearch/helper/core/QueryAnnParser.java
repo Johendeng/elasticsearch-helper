@@ -2,21 +2,20 @@ package org.pippi.elasticsearch.helper.core;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.AnnotationUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.*;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.HighLightBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.*;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.ScriptQuery;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SourceOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.UserQuery;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.FuncQuery;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsComplexParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.handler.EsConditionHandle;
+import org.pippi.elasticsearch.helper.core.utils.AnnotationUtils;
+import org.pippi.elasticsearch.helper.core.utils.ExtAnnBeanMapUtils;
 import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
@@ -33,21 +32,15 @@ public class QueryAnnParser {
 
     private static final String BASE_FILED = "value";
 
-    private volatile static QueryAnnParser INSTANCE;
-
     private QueryAnnParser() {
     }
 
+    private static class QueryAnnParserHolder {
+        private static final QueryAnnParser ANN_PARSER = new QueryAnnParser();
+    }
+
     public static QueryAnnParser instance() {
-        if (INSTANCE == null) {
-            synchronized (QueryAnnParser.class) {
-                if (INSTANCE == null) {
-                    INSTANCE = new QueryAnnParser();
-                    return INSTANCE;
-                }
-            }
-        }
-        return INSTANCE;
+        return QueryAnnParserHolder.ANN_PARSER;
     }
 
     /**
@@ -74,6 +67,8 @@ public class QueryAnnParser {
         if (Objects.nonNull(highLightAnn)) {
             indexBean.setHighLight(HighLightBean.phrase(highLightAnn));
         }
+        FuncScoreBean funcScoreBean = (FuncScoreBean) ExtAnnBeanMapUtils.mapping(ann.funcScore(), FuncScoreBean.class);
+        indexBean.setFuncScoreBean(funcScoreBean);
         return indexBean;
     }
 
@@ -91,7 +86,8 @@ public class QueryAnnParser {
         List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
             Set<Annotation> annotationSet = Arrays.stream(field.getAnnotations())
-                    .filter(ann -> ann.annotationType().isAnnotationPresent(Query.class))
+                    // todo: 尚未完全实现 func_query 的功能
+                    .filter(ann -> ann.annotationType().isAnnotationPresent(Query.class) || ann.annotationType().isAnnotationPresent(FuncQuery.class))
                     .collect(Collectors.toSet());
             if (CollectionUtils.isNotEmpty(annotationSet) && checkEsCondition(field, view)) {
                 List<EsQueryFieldBean> queryDes = this.mapFieldAnn(field, view, annotationSet);
@@ -169,7 +165,8 @@ public class QueryAnnParser {
                 || checkCollectionValueType(field, val)) {
                 queryDes.setValue(val);
             } else {
-                throw new EsHelperQueryException("config @EsQueryField at an Error-Type Field, Just support Primitive-type (exclude void.class) or their Decorate-type or Collection or Map or EsComplexParam");
+                throw new EsHelperQueryException("config @EsQueryField at an Error-Type Field, Just support " +
+                        "Primitive-type (exclude void.class) or their Decorate-type or Collection or Map or EsComplexParam");
             }
             return queryDes;
         } catch (IllegalAccessException e) {
@@ -191,35 +188,48 @@ public class QueryAnnParser {
 
     private void parseAnn(EsQueryFieldBean queryDes, Field field, Annotation targetAnn) {
         try {
-            queryDes.setExtAnnotation(targetAnn);
-            Method baseMethod = targetAnn.getClass().getDeclaredMethod(BASE_FILED);
-            Base ann = (Base) baseMethod.invoke(targetAnn);
-            EsConnector esConnector = ann.connect();
-            queryDes.setLogicConnector(esConnector);
-            String column = ann.name();
-            if (StringUtils.isBlank(column)) {
-                column = field.getName();
-            }
-            queryDes.setField(column);
-            String queryType = ann.queryType();
-            if (StringUtils.isBlank(queryType)) {
-                queryType = targetAnn.annotationType().getSimpleName();
-            }
-            if (StringUtils.isBlank(queryType) || StringUtils.equals(queryType, UserQuery.class.getSimpleName())) {
-                throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
-            }
-            queryDes.setQueryType(queryType);
+            if (targetAnn.annotationType().isAnnotationPresent(Query.class)) {
+                queryDes.setExtAnnotation(targetAnn);
+                Method baseMethod = targetAnn.getClass().getDeclaredMethod(BASE_FILED);
+                Base ann = (Base) baseMethod.invoke(targetAnn);
+                EsConnector esConnector = ann.connect();
+                queryDes.setLogicConnector(esConnector);
+                String column = ann.name();
+                if (StringUtils.isBlank(column)) {
+                    column = field.getName();
+                }
+                queryDes.setField(column);
+                String queryType = ann.queryType();
+                if (StringUtils.isBlank(queryType)) {
+                    queryType = targetAnn.annotationType().getSimpleName();
+                }
+                if (StringUtils.isBlank(queryType) || StringUtils.equals(queryType, UserQuery.class.getSimpleName())) {
+                    throw new EsHelperQueryException("QUERY-TYPE missing, it's necessary");
+                }
+                queryDes.setQueryType(queryType);
 
-            String meta = ann.metaStringify();
-            if (StringUtils.isBlank(meta)) {
-                meta = ann.meta().getType();
+                String meta = ann.metaStringify();
+                if (StringUtils.isBlank(meta)) {
+                    meta = ann.meta().getType();
+                }
+                queryDes.setMeta(meta);
+                queryDes.setBoost(ann.boost());
             }
-            queryDes.setMeta(meta);
-            queryDes.setBoost(ann.boost());
+            /**
+             * xxx: 待优化
+             */
+            if (targetAnn.annotationType().isAnnotationPresent(FuncQuery.class)) {
+                queryDes.setFuncScoreAnn(targetAnn);
+                Class<? extends Annotation> annClazz = targetAnn.getClass();
+                Field targetField = annClazz.getField("field");
+                String fieldName = ReflectionUtils.getFieldValueQuietly(targetField, targetAnn).toString();
+                if (StringUtils.isBlank(fieldName)) {
+                    fieldName = field.getName();
+                }
+                queryDes.setField(fieldName);
+            }
         } catch (Exception e) {
             throw new EsHelperConfigException("annotation analysis Error, cause:", e);
         }
     }
-
-
 }

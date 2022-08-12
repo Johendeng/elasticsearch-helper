@@ -53,4 +53,9 @@ public @interface EsQueryIndex {
      *
      */
     int size() default 10;
+
+    /**
+     * function_score相关配置
+     */
+    FuncScore funcScore() default @FuncScore;
 }

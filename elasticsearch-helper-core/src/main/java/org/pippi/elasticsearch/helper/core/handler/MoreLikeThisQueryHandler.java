@@ -38,7 +38,6 @@ public class MoreLikeThisQueryHandler extends AbstractQueryHandler<MoreLikeThisQ
             } else {
                 moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(fields, params.getTexts(), params.getItems());
             }
-            searchHelper.chain(moreLikeThisQueryBuilder);
             return moreLikeThisQueryBuilder;
         } else {
             throw new EsHelperQueryException("@MoreLikeThis query's Field value have to be MoreLikeThisParam.class");

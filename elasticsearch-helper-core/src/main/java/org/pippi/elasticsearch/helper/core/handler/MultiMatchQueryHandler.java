@@ -22,7 +22,6 @@ public class MultiMatchQueryHandler extends AbstractQueryHandler<MultiMatchQuery
         MultiMatchQueryBean extBean = queryDes.getExtBean();
         MultiMatchQueryBuilder multiMatchQueryBuilder = QueryBuilders.multiMatchQuery(queryDes.getValue(), extBean.getFields())
                 .boost(queryDes.getBoost());
-        searchHelper.chain(multiMatchQueryBuilder);
         return multiMatchQueryBuilder;
     }
 }

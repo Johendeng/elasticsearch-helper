@@ -1,12 +1,16 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.mapping.ScoreFuncBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryBean;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.holder.FuncScoreEsRequestHolder;
 import org.pippi.elasticsearch.helper.core.utils.ExtAnnBeanMapUtils;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Objects;
@@ -32,9 +36,11 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
         handleExtBean(queryDes);
         QueryBuilder queryBuilder = handle(queryDes, searchHelper);
         if (Objects.nonNull(queryBuilder)) {
+            searchHelper.chain(queryBuilder);
             queryDes.getExtBean().configQueryBuilder(queryBuilder);
-            handleExtConfig(queryDes, queryBuilder);
+            this.handleExtConfig(queryDes, queryBuilder);
         }
+        this.handleFuncScoreQuery(queryDes, searchHelper);
         return searchHelper;
     }
 
@@ -79,5 +85,18 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
         } catch (ClassNotFoundException e) {
             throw new EsHelperConfigException("queryHandle-actualType class not found, cause:", e);
         }
+    }
+
+    protected final void handleFuncScoreQuery(EsQueryFieldBean<T> queryDes, AbstractEsRequestHolder searchHelper) {
+        if (!(searchHelper instanceof FuncScoreEsRequestHolder)) {
+            return;
+        }
+        FuncScoreEsRequestHolder funcScoreEsHolder = (FuncScoreEsRequestHolder) searchHelper;
+        Annotation funcScoreAnn = queryDes.getFuncScoreAnn();
+        if (Objects.isNull(funcScoreAnn)) {
+            return;
+        }
+        ScoreFunctionBuilder scoreFuncBuilder = ScoreFuncBuilder.generate(queryDes);
+        funcScoreEsHolder.addFilterFunc(scoreFuncBuilder);
     }
 }

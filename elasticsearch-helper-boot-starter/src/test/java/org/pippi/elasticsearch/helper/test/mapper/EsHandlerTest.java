@@ -3,6 +3,7 @@ package org.pippi.elasticsearch.helper.test.mapper;
 import com.google.common.collect.Maps;
 import org.elasticsearch.search.sort.SortOrder;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.EsHelperSampleApplication;
@@ -166,7 +167,9 @@ public class EsHandlerTest {
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp2));
     }
 
+    // 暂时无该用例对应数据集，暂时忽略
     @Test
+    @Ignore
     public void testNestedQuery() {
         SimpleAccountQueryParam param = new SimpleAccountQueryParam();
         param.setState("DE");

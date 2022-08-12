@@ -6,6 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * CommonUtils
@@ -39,4 +41,20 @@ public class CommonUtils {
         );
     }
 
+
+    public static <T extends Number>void filterIfPresent(T obj, Predicate<T> filter, Consumer<T> consumer) {
+        Optional.ofNullable(obj).filter(filter).ifPresent(consumer);
+    }
+
+
+    /**
+     * 封装参数判断逻辑
+     *  集成3种类型的判空逻辑
+     *  如果不为空， do something ... ...
+     * @param obj 目标对象
+     * @param <T>
+     */
+    public static <T>void optionalIfPresent(T obj, Consumer<T> consumer) {
+        CommonUtils.optional(obj).ifPresent(consumer);
+    }
 }

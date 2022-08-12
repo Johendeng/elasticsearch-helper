@@ -40,7 +40,6 @@ public class GeoBoundingBoxQueryHandler extends AbstractQueryHandler<GeoBounding
             GeoBoundingBoxParam.CornerGeoHash targetParam = (GeoBoundingBoxParam.CornerGeoHash) param;
             geoBoundingBoxQuery.setCorners(targetParam.getTopLeft(), targetParam.getBottomRight());
         }
-        searchHelper.chain(geoBoundingBoxQuery);
         return geoBoundingBoxQuery;
     }
 }

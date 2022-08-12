@@ -14,6 +14,7 @@ public enum QueryModel {
 	 * @see org.elasticsearch.index.query.BoolQueryBuilder
 	 */
 	BOOL,
+
 	/**
 	 * 最匹配文档查询，类似查询multi_match
 	 * dis_max
@@ -22,9 +23,9 @@ public enum QueryModel {
 	DIS_MAX,
 
 	/**
-	 * 自定义文档评分 todo
-	 * function_score
+	 * 文档自定义重评分
 	 * @see org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder
 	 */
 	FUNC_SCORE,
+	;
 }

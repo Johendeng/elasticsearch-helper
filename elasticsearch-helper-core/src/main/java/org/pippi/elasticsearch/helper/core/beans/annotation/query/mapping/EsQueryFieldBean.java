@@ -62,9 +62,16 @@ public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 	private T extBean;
 
 	/**
-	 * annotation that annotated by @Query
+	 * annotation which annotated by @Query
 	 */
 	private Annotation extAnnotation;
+
+	/**
+	 * annotation which annotated by @FuncQuery
+	 * 	it's function_score method
+	 */
+	private Annotation funcScoreAnn;
+
 
 	/**
 	 *  high light enable ?
@@ -165,5 +172,13 @@ public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 
 	public void setHighLightKey(String highLightKey) {
 		this.highLightKey = highLightKey;
+	}
+
+	public Annotation getFuncScoreAnn() {
+		return funcScoreAnn;
+	}
+
+	public void setFuncScoreAnn(Annotation funcScoreAnn) {
+		this.funcScoreAnn = funcScoreAnn;
 	}
 }
