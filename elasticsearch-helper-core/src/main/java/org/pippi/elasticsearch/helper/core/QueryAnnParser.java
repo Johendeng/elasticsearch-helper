@@ -86,7 +86,6 @@ public class QueryAnnParser {
         List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
             Set<Annotation> annotationSet = Arrays.stream(field.getAnnotations())
-                    // todo: 尚未完全实现 func_query 的功能
                     .filter(ann -> ann.annotationType().isAnnotationPresent(Query.class) || ann.annotationType().isAnnotationPresent(FuncQuery.class))
                     .collect(Collectors.toSet());
             if (CollectionUtils.isNotEmpty(annotationSet) && checkEsCondition(field, view)) {
