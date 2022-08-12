@@ -39,7 +39,7 @@ public @interface ScriptQuery {
      * script or script-id define in elasticsearch-server,
      * 脚本 或者 定义在es服务器中的脚本id
      */
-    String idOrCode() default "";
+    String idOrCode();
 
     /**
      * Dose script has params

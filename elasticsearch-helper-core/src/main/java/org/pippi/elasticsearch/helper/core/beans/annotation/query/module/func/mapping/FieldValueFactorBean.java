@@ -4,6 +4,7 @@ import org.elasticsearch.common.lucene.search.function.FieldValueFactorFunction;
 import org.elasticsearch.index.query.functionscore.FieldValueFactorFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.utils.CommonUtils;
 
 /**
@@ -29,6 +30,11 @@ public class FieldValueFactorBean implements ScoreFuncBuilder {
         CommonUtils.filterIfPresent(missing, missing -> missing != 0, fieldValFunc::missing);
         CommonUtils.filterIfPresent(weight, weight -> weight > 0, fieldValFunc::setWeight);
         return fieldValFunc;
+    }
+
+    @Override
+    public void builderExtend(EsQueryFieldBean fieldBean) {
+        this.field = fieldBean.getField();
     }
 
     public String getField() {

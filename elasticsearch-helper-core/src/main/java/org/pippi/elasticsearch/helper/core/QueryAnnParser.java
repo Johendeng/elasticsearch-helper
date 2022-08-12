@@ -215,13 +215,13 @@ public class QueryAnnParser {
                 queryDes.setBoost(ann.boost());
             }
             /**
-             * xxx: 待优化
+             * xxx: 待优化, 存在魔法值 结构设计不合理
              */
             if (targetAnn.annotationType().isAnnotationPresent(FuncQuery.class)) {
                 queryDes.setFuncScoreAnn(targetAnn);
-                Class<? extends Annotation> annClazz = targetAnn.getClass();
-                Field targetField = annClazz.getField("field");
-                String fieldName = ReflectionUtils.getFieldValueQuietly(targetField, targetAnn).toString();
+                queryDes.setQueryType("blank");
+                Method baseMethod = targetAnn.getClass().getDeclaredMethod("field");
+                String fieldName = (String) baseMethod.invoke(targetAnn);
                 if (StringUtils.isBlank(fieldName)) {
                     fieldName = field.getName();
                 }

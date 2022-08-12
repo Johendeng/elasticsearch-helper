@@ -29,6 +29,7 @@ public class ExponentialDecayBean implements ScoreFuncBuilder {
     @Override
     public void builderExtend(EsQueryFieldBean fieldBean) {
         this.origin = fieldBean.getValue().toString();
+        this.field = fieldBean.getField();
     }
 
     public String getField() {

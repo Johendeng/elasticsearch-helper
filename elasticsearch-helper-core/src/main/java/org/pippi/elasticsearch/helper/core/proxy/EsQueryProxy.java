@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.core.proxy;
 
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -61,12 +62,13 @@ public class EsQueryProxy<T> implements InvocationHandler {
         if ((requestHook = checkRequestHook(param, method)) != null) {
             esHolder = requestHook.handleRequest(esHolder, param);
         }
-        if (enableLogOutEsQueryJson) {
-            log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
-        }
         SearchResponse resp = null;
         try {
-            resp = client.search(esHolder.getRequest(), RequestOptions.DEFAULT);
+            SearchRequest request = esHolder.getRequest();
+            if (enableLogOutEsQueryJson) {
+                log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
+            }
+            resp = client.search(request, RequestOptions.DEFAULT);
         } catch (IOException e) {
             throw new EsHelperQueryException("EsSearchExecute I/O exception, cause:", e);
         }

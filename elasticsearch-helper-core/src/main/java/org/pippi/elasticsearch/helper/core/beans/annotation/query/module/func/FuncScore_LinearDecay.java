@@ -17,8 +17,6 @@ public @interface FuncScore_LinearDecay {
 
     String field() default "";
 
-    String origin() default "";
-
     String scale();
 
     String offset() default "";

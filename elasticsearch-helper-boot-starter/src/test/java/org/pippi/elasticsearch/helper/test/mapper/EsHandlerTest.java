@@ -13,6 +13,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.*;
+import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.GaussDecayParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
 import org.pippi.elasticsearch.helper.spring.repository.mapper.EsHandleMapper;
 import org.slf4j.Logger;
@@ -207,4 +208,13 @@ public class EsHandlerTest {
         BaseResp<AccountEntity> resp = esHandleMapper.wildCardQuery(param);
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
     }
+
+    @Test
+    public void testFunctionGaussDecayQuery() {
+        GaussDecayParam gaussDecayParam = new GaussDecayParam();
+        gaussDecayParam.setBalance(5000);
+        BaseResp<AccountEntity> resp = esHandleMapper.functionGaussDecayQuery(gaussDecayParam);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
+
 }

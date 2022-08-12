@@ -3,6 +3,7 @@ package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.m
 import org.elasticsearch.index.query.functionscore.RandomScoreFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.utils.CommonUtils;
 
 /**
@@ -32,6 +33,11 @@ public class RandomScoreBean implements ScoreFuncBuilder {
         CommonUtils.filterIfPresent(seedLong, seed -> seed < 0, randomFunc::seed);
         CommonUtils.filterIfPresent(seedInt, seed -> seed < 0, randomFunc::seed);
         return randomFunc;
+    }
+
+    @Override
+    public void builderExtend(EsQueryFieldBean fieldBean) {
+        this.field = fieldBean.getField();
     }
 
     public String getField() {

@@ -16,7 +16,7 @@ public interface ScoreFuncBuilder {
     ScoreFunctionBuilder buildFuncScore();
 
     static ScoreFunctionBuilder generate(EsQueryFieldBean fieldBean) {
-        Annotation scoreFuncAnn = fieldBean.getExtAnnotation();
+        Annotation scoreFuncAnn = fieldBean.getFuncScoreAnn();
         FuncQuery funcType = scoreFuncAnn.annotationType().getAnnotation(FuncQuery.class);
         Class<? extends ScoreFuncBuilder> scoreFuncBeanType = funcType.value();
         ScoreFuncBuilder scoreFuncBuilder = (ScoreFuncBuilder) ExtAnnBeanMapUtils.mapping(scoreFuncAnn, scoreFuncBeanType);

@@ -4,6 +4,7 @@ import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.*;
+import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.GaussDecayParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
 
 /**
@@ -47,4 +48,6 @@ public interface EsHandleMapper {
     BaseResp<AccountEntity> spanTermQuery(SpanTermQueryParam param);
 
     BaseResp<AccountEntity> wildCardQuery(WildCardQueryParam param);
+
+    BaseResp<AccountEntity> functionGaussDecayQuery(GaussDecayParam param);
 }
