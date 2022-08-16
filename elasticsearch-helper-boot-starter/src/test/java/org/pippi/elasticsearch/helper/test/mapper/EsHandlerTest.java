@@ -10,10 +10,13 @@ import org.pippi.elasticsearch.helper.EsHelperSampleApplication;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.mapping.ExponentialDecayBean;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.*;
+import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.ExponentialDecayParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.GaussDecayParam;
+import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.LinerDecayParam;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
 import org.pippi.elasticsearch.helper.spring.repository.mapper.EsHandleMapper;
 import org.slf4j.Logger;
@@ -217,4 +220,20 @@ public class EsHandlerTest {
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
     }
 
+    @Test
+    public void testFunctionExponentialDecayQuery() {
+        ExponentialDecayParam expBean = new ExponentialDecayParam();
+        expBean.setBalance(5000);
+        expBean.setLastname("Olson");
+        BaseResp<AccountEntity> resp = esHandleMapper.functionExpDecayQuery(expBean);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
+
+    @Test
+    public void testFunctionLinerDecayQuery() {
+        LinerDecayParam linerParam = new LinerDecayParam();
+        linerParam.setBalance(5000);
+        BaseResp<AccountEntity> resp = esHandleMapper.functionLinerDecayQuery(linerParam);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
 }

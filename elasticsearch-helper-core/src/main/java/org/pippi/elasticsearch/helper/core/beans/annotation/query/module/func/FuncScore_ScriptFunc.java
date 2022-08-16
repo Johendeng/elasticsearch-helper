@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func;
 
+import org.elasticsearch.script.Script;
 import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.mapping.ScriptFuncBean;
 
@@ -18,7 +19,7 @@ public @interface FuncScore_ScriptFunc {
 
     ScriptType scriptType() default ScriptType.INLINE;
 
-    String lang() default org.elasticsearch.script.Script.DEFAULT_SCRIPT_LANG;
+    String lang() default Script.DEFAULT_SCRIPT_LANG;
 
     /**
      * script or script-id define in elasticsearch-server,

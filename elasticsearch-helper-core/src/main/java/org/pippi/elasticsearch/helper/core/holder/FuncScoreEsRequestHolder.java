@@ -59,8 +59,9 @@ public class FuncScoreEsRequestHolder extends BoolEsRequestHolder {
         boolean hasClauses = queryBuilder.hasClauses();
         if (hasClauses) {
             functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(queryBuilder, filterFuncArr.toArray(new FunctionScoreQueryBuilder.FilterFunctionBuilder[0]));
+        } else {
+            functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(filterFuncArr.toArray(new FunctionScoreQueryBuilder.FilterFunctionBuilder[0]));
         }
-        functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(filterFuncArr.toArray(new FunctionScoreQueryBuilder.FilterFunctionBuilder[0]));
         functionScoreQueryBuilder.scoreMode(funcScoreBean.getScoreMode());
         functionScoreQueryBuilder.boostMode(funcScoreBean.getBoostMode());
         functionScoreQueryBuilder.maxBoost(funcScoreBean.getMaxBoost());
