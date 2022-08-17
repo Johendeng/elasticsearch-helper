@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.mapping;
 
-import com.google.common.collect.Maps;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.index.query.functionscore.ScriptScoreFunctionBuilder;
@@ -20,16 +19,16 @@ import java.util.Objects;
  **/
 public class ScriptFuncBean implements ScoreFuncBuilder {
 
-    ScriptType scriptType;
+    private ScriptType scriptType;
 
-    String lang;
+    private String lang;
 
     /**
      * define the script-ID (script-type is store) OR the script-code (script-type is inline)
      */
-    String idOrCode;
+    private String idOrCode;
 
-    private boolean hasParam;
+    private boolean hasParams;
 
     private float weight;
 
@@ -45,7 +44,7 @@ public class ScriptFuncBean implements ScoreFuncBuilder {
 
     @Override
     public void builderExtend(EsQueryFieldBean fieldBean) {
-        if (this.hasParam && fieldBean.getValue() instanceof Map && Objects.nonNull(fieldBean.getValue())) {
+        if (this.hasParams && fieldBean.getValue() instanceof Map && Objects.nonNull(fieldBean.getValue())) {
             params.putAll((Map) fieldBean.getValue());
         } else {
             throw new EsHelperQueryException("@ScriptQuery's [hasParams].value is TRUE the Field have to define as [Map.class] and can't be null");
@@ -76,12 +75,12 @@ public class ScriptFuncBean implements ScoreFuncBuilder {
         this.idOrCode = idOrCode;
     }
 
-    public boolean isHasParam() {
-        return hasParam;
+    public boolean isHasParams() {
+        return hasParams;
     }
 
-    public void setHasParam(boolean hasParam) {
-        this.hasParam = hasParam;
+    public void setHasParams(boolean hasParams) {
+        this.hasParams = hasParams;
     }
 
     public float getWeight() {

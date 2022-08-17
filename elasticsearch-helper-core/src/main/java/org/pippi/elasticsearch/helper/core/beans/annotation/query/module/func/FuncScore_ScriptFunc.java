@@ -17,6 +17,8 @@ import java.lang.annotation.*;
 @FuncQuery(ScriptFuncBean.class)
 public @interface FuncScore_ScriptFunc {
 
+    String field() default "";
+
     ScriptType scriptType() default ScriptType.INLINE;
 
     String lang() default Script.DEFAULT_SCRIPT_LANG;
@@ -27,7 +29,7 @@ public @interface FuncScore_ScriptFunc {
      */
     String idOrCode();
 
-    boolean hasParam() default false;
+    boolean hasParams() default false;
 
     float weight() default 0.0f;
 }

@@ -252,4 +252,16 @@ public class EsHandlerTest {
         BaseResp<AccountEntity> resp = esHandleMapper.functionFieldValueQuery(fieldValParam);
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
     }
+
+    @Test
+    public void testFunctionScriptQuery() {
+        ScriptFuncParam scriptParam = new ScriptFuncParam();
+        scriptParam.setAddress("Street");
+        Map<String, String> scriptMap = Maps.newHashMap();
+        scriptMap.put("name", "B");
+        scriptParam.setScriptMapParam(scriptMap);
+
+        BaseResp<AccountEntity> resp = esHandleMapper.functionScriptQuery(scriptParam);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
 }

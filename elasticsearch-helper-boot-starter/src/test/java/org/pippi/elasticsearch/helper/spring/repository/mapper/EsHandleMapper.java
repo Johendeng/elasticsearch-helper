@@ -58,4 +58,6 @@ public interface EsHandleMapper {
     BaseResp<AccountEntity> functionRanScoreQuery(RandomScoreParam param);
 
     BaseResp<AccountEntity> functionFieldValueQuery(FieldValueParam param);
+
+    BaseResp<AccountEntity> functionScriptQuery(ScriptFuncParam param);
 }
