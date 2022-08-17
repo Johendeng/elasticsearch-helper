@@ -49,6 +49,7 @@ public class EsAccountMapperTest {
 	@Test
 	public void testAggQueryAnn() {
 		AggAccountQueryParam param = new AggAccountQueryParam();
+		param.setCity("Limestone");
 		AccountAggResult res = esAccountMapper.aggByParamAnn(param);
 		System.out.println(SerializerUtils.parseObjToJson(res));
 	}
