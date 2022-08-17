@@ -3,5 +3,5 @@ es:
   helper:
     queryLogOut:
       enable: true
-    ext:
-      handle-packages:
+#    ext:
+#      handle-packages:

@@ -45,6 +45,4 @@ public class TestUserHooks implements UserHooks {
         res.setData(resMap);
         return res;
     });
-
-
 }
