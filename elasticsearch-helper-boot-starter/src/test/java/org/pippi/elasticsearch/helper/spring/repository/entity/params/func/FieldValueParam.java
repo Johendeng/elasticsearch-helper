@@ -20,7 +20,7 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 public class FieldValueParam {
 
     @Match(fuzziness = FuzzinessEnum.TWO)
-    @FuncScore_FieldValueFactor(field = "account_number", modifier = FieldValueFactorFunction.Modifier.LN1P, missing = 1, factor = 10)
+    @FuncScore_FieldValueFactor(field = "account_number", modifier = FieldValueFactorFunction.Modifier.LOG1P, missing = 1)
     private String city;
 
 

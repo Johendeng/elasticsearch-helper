@@ -6,6 +6,8 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.ma
 import java.lang.annotation.*;
 
 /**
+ * 直接使用文档中的字段值与 当前的 old_score 做运算，获得新的评分
+ *
  * @author: JohenTeng
  * @date: 2022/7/19
  **/
