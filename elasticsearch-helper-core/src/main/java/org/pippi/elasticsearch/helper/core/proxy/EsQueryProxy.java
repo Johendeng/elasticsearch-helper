@@ -52,6 +52,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
     }
 
     @Override
+    @SuppressWarnings(value = {"rawtypes", "unchecked"})
     public Object invoke(Object proxy, Method method, Object[] args) {
         if (args == null || args.length != 1) {
             throw new EsHelperQueryException("ES-HELPER un-support multi-params or miss-param, params must be single");

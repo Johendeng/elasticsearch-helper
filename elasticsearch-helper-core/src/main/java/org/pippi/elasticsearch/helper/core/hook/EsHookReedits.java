@@ -13,6 +13,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
  * @author  JohenTeng
  * @date 2021/7/21
  */
+@SuppressWarnings(value = {"rawtypes", "unchecked"})
 public class EsHookReedits {
 
     public static final Map<String, RequestHook> REP_FUNC_REGEDIT = Maps.newHashMap();

@@ -16,7 +16,9 @@ import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackages;
-import org.springframework.context.*;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ResourceLoaderAware;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.io.Resource;
@@ -69,10 +71,11 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware,
     }
 
     @Override
+    @SuppressWarnings("all")
     public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         // scan packages get all Class that annotation by @EsHelperProxy
         Set<Class<?>> beanClazzSet = this.findAllClazz();
-        for (Class beanClazz : beanClazzSet) {
+        for (Class<?> beanClazz : beanClazzSet) {
             if (isNotNeedProxy(beanClazz)) {
                 continue;
             }
@@ -138,7 +141,7 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware,
         return ClassUtils.convertClassNameToResourcePath(this.applicationContext.getEnvironment().resolveRequiredPlaceholders(basePackage));
     }
 
-    private boolean isNotNeedProxy(Class beanClazz) {
+    private boolean isNotNeedProxy(Class<?> beanClazz) {
         return  null == AnnotatedElementUtils.findMergedAnnotation(beanClazz, EsHelperProxy.class);
     }
 }

@@ -20,9 +20,11 @@ import java.util.Map;
  * @author JohenTeng
  * @date 2022/5/11
  */
+@SuppressWarnings(value = {"rawtypes", "unchecked"})
 public class BaseRespReader implements ResponseReader<BaseResp> {
 
     @Override
+    @SuppressWarnings(value = {"rawtypes", "unchecked"})
     public BaseResp read(Type returnType, SearchResponse resp) {
         Type[] parameterizedTypes = ReflectionUtils.getParameterizedTypes(returnType);
         Class<?> paramClazz = Map.class;

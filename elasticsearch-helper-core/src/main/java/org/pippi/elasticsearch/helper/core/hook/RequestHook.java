@@ -18,6 +18,7 @@ public interface RequestHook<PARAM> {
      * @param param
      * return
      */
+    @SuppressWarnings(value = {"rawtypes"})
     AbstractEsRequestHolder handleRequest(AbstractEsRequestHolder holder, PARAM param);
 
 }

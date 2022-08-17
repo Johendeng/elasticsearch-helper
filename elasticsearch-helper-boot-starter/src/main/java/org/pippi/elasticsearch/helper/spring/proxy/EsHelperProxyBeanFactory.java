@@ -20,9 +20,9 @@ import java.util.Optional;
  */
 public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,InitializingBean,FactoryBean<T> {
 
-    private Class<T> targetInterfaceClazz;
+    private final Class<T> targetInterfaceClazz;
 
-    private boolean visitQueryBeanParent;
+    private final boolean visitQueryBeanParent;
 
     private RestHighLevelClient client;
 
@@ -49,6 +49,7 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public T getObject() {
         return (T) Proxy.newProxyInstance(
                 targetInterfaceClazz.getClassLoader(),

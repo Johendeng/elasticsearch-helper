@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
  * @author JohenTeng
  * @date 2022/5/11
  */
+@SuppressWarnings(value = {"rawtypes"})
 public class OriginalRespReader implements ResponseReader {
 
     @Override

@@ -75,6 +75,4 @@ public class SerializerUtils {
             throw new EsHelperSerializeException("Object trans to json-string error, cause:", e);
         }
     }
-
-
 }

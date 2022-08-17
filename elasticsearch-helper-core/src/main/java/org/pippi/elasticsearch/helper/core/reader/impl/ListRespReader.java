@@ -22,6 +22,7 @@ import java.util.Map;
 public class ListRespReader implements ResponseReader<List<?>> {
 
     @Override
+    @SuppressWarnings(value = {"rawtypes", "unchecked"})
     public List<?> read(Type returnType, SearchResponse resp) {
         Type[] parameterizedTypes = ReflectionUtils.getParameterizedTypes(returnType);
         Class<?> paramClazz = Map.class;
