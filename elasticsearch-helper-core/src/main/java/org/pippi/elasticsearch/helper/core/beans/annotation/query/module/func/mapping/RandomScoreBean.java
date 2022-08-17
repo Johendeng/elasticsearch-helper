@@ -4,6 +4,7 @@ import org.elasticsearch.index.query.functionscore.RandomScoreFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.utils.CommonUtils;
 
 /**
@@ -16,11 +17,8 @@ public class RandomScoreBean implements ScoreFuncBuilder {
 
     private float weight;
 
-    private String seedStringify;
-
-    private long seedLong;
-
-    private int seedInt;
+    // 该字段为了保证每次相同评分文档产生的随机结果是一致的 （用户session_id, 用户id 等参数 需要用户自定义传入）
+    private Object seed;
 
     @Override
     public ScoreFunctionBuilder buildFuncScore() {
@@ -29,15 +27,19 @@ public class RandomScoreBean implements ScoreFuncBuilder {
         if (weight > 0.0f) {
             randomFunc.setWeight(weight);
         }
-        CommonUtils.optionalIfPresent(seedStringify, seed -> randomFunc.seed(seedStringify));
-        CommonUtils.filterIfPresent(seedLong, seed -> seed < 0, randomFunc::seed);
-        CommonUtils.filterIfPresent(seedInt, seed -> seed < 0, randomFunc::seed);
+        Class<?> clazz = this.seed.getClass();
+        if (clazz.equals(String.class) || clazz.equals(Integer.class) || clazz.equals(Long.class) ) {
+            CommonUtils.optionalIfPresent(seed, seed -> randomFunc.seed(seed.hashCode()));
+        }  else {
+            throw new EsHelperQueryException("random_score's [seed] have to be String.class, Integer.class or Long.class");
+        }
         return randomFunc;
     }
 
     @Override
     public void builderExtend(EsQueryFieldBean fieldBean) {
         this.field = fieldBean.getField();
+        this.seed = fieldBean.getValue();
     }
 
     public String getField() {
@@ -56,27 +58,11 @@ public class RandomScoreBean implements ScoreFuncBuilder {
         this.weight = weight;
     }
 
-    public String getSeedStringify() {
-        return seedStringify;
+    public Object getSeed() {
+        return seed;
     }
 
-    public void setSeedStringify(String seedStringify) {
-        this.seedStringify = seedStringify;
-    }
-
-    public long getSeedLong() {
-        return seedLong;
-    }
-
-    public void setSeedLong(long seedLong) {
-        this.seedLong = seedLong;
-    }
-
-    public int getSeedInt() {
-        return seedInt;
-    }
-
-    public void setSeedInt(int seedInt) {
-        this.seedInt = seedInt;
+    public void setSeed(Object seed) {
+        this.seed = seed;
     }
 }

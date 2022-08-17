@@ -4,9 +4,7 @@ import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
 import org.pippi.elasticsearch.helper.spring.repository.entity.params.*;
-import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.ExponentialDecayParam;
-import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.GaussDecayParam;
-import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.LinerDecayParam;
+import org.pippi.elasticsearch.helper.spring.repository.entity.params.func.*;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
 
 /**
@@ -56,4 +54,8 @@ public interface EsHandleMapper {
     BaseResp<AccountEntity> functionExpDecayQuery(ExponentialDecayParam param);
 
     BaseResp<AccountEntity> functionLinerDecayQuery(LinerDecayParam param);
+
+    BaseResp<AccountEntity> functionRanScoreQuery(RandomScoreParam param);
+
+    BaseResp<AccountEntity> functionFieldValueQuery(FieldValueParam param);
 }

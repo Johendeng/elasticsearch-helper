@@ -22,10 +22,4 @@ public @interface FuncScore_RandomScore {
     String field() default "";
 
     float weight() default 0.0f;
-
-    String seedStringify() default "";
-
-    long seedLong() default -1L;
-
-    int seedInt() default -1;
 }

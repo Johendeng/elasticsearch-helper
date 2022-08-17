@@ -33,19 +33,17 @@ public interface ResponseReader<R> {
 
 
     default int loadBaseHitData(Object record, SearchHit hit, Class<?> paramType) {
-        Map<String, HighlightField> highlightFields = hit.getHighlightFields();
-        if (BaseHit.class.isAssignableFrom(paramType) && (Objects.nonNull(highlightFields) && highlightFields.size() > 0)) {
-            ((BaseHit)record).setDocId(hit.getId());
-            ((BaseHit)record).setHitScore(hit.getScore());
-            if (MapUtils.isNotEmpty(highlightFields)) {
-                Map<String, List<String>> highLightMap = highlightFields.entrySet().stream()
-                        .collect(Collectors.toMap(Map.Entry::getKey, highlightField ->
-                                Arrays.stream(highlightField.getValue().fragments()).map(Text::toString).collect(Collectors.toList())));
-                ((BaseHit)record).setHighLightMap(highLightMap);
-            }
-            return 0;
-        } else if (Objects.nonNull(highlightFields) && highlightFields.size() > 0) {
+        if (!BaseHit.class.isAssignableFrom(paramType)) {
             return 1;
+        }
+        ((BaseHit)record).setDocId(hit.getId());
+        ((BaseHit)record).setHitScore(hit.getScore());
+        Map<String, HighlightField> highlightFields = hit.getHighlightFields();
+        if (MapUtils.isNotEmpty(highlightFields)) {
+            Map<String, List<String>> highLightMap = highlightFields.entrySet().stream()
+                    .collect(Collectors.toMap(Map.Entry::getKey, highlightField ->
+                            Arrays.stream(highlightField.getValue().fragments()).map(Text::toString).collect(Collectors.toList())));
+            ((BaseHit)record).setHighLightMap(highLightMap);
         }
         return 0;
     }
