@@ -15,13 +15,13 @@ import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 @EsQueryIndex(index = "account", traceScore = true, size = 30)
 public class TermQueryParam {
 
-    @Term(value = @Base(name = "firstname.keyword", boost = 3.0f, connect = EsConnector.SHOULD))
+    @Term(value = @Base(name = "firstname.keyword", boost = 3.0f, connect = EsConnector.MUST))
     private String firstname;
 
-    @Term
+    @Term(value = @Base(name = "gender.keyword"))
     private String gender;
 
-    @Terms(value = @Base(name = "lastname.keyword", boost = 3.0f))
+    @Terms(value = @Base(name = "lastname.keyword", boost = 3.0f, connect = EsConnector.MUST))
     private String[] lastnames;
 
     public String getFirstname() {

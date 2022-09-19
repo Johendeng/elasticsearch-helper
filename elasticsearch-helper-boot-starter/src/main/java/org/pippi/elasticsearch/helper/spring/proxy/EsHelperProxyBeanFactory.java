@@ -51,11 +51,7 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
     @Override
     @SuppressWarnings("unchecked")
     public T getObject() {
-        return (T) Proxy.newProxyInstance(
-                targetInterfaceClazz.getClassLoader(),
-                new Class[]{targetInterfaceClazz},
-                new EsQueryProxy<T>(targetInterfaceClazz, visitQueryBeanParent, client, enableLogOut)
-        );
+        return (T)EsQueryProxy.build(targetInterfaceClazz, visitQueryBeanParent, client, enableLogOut);
     }
 
     @Override

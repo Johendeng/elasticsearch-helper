@@ -20,6 +20,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.Objects;
 
 /**
@@ -134,4 +135,21 @@ public class EsQueryProxy<T> implements InvocationHandler {
         return null;
     }
 
+    /**
+     * 构建查询代理对象
+     */
+    public static Object build(Class<?> targetInterfaceClazz, boolean visitParent, RestHighLevelClient client, boolean enableLogOut) {
+        return Proxy.newProxyInstance(
+                targetInterfaceClazz.getClassLoader(),
+                new Class[]{targetInterfaceClazz},
+                new EsQueryProxy(targetInterfaceClazz, visitParent, client, enableLogOut)
+        );
+    }
+
+    /**
+     * 构建查询代理对象, 默认 visitParent: true, enableLogOut: true
+     */
+    public static Object build(Class<?> targetInterfaceClazz, RestHighLevelClient client) {
+        return build(targetInterfaceClazz, true, client, true);
+    }
 }
