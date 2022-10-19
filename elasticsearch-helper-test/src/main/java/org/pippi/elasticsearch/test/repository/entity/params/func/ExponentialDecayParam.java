@@ -1,10 +1,10 @@
-package org.pippi.elasticsearch.helper.spring.repository.entity.params.func;
+package org.pippi.elasticsearch.test.repository.entity.params.func;
 
 import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.FuncScore;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncScore_ExponentialDecay;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 
 /**

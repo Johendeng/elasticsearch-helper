@@ -13,7 +13,7 @@ public class BaseResp<T> implements Serializable {
 
     private Long totalHit;
 
-    private Float   maxScore;
+    private Float maxScore;
 
     private List<T> records;
 

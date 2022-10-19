@@ -4,7 +4,7 @@ import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.FuncScore;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.FuncScore_ScriptFunc;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncScore_ScriptFunc;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 

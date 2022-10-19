@@ -1,12 +1,14 @@
-package org.pippi.elasticsearch.helper.spring.repository.entity.params.func;
+package org.pippi.elasticsearch.test.repository.entity.params.func;
 
 import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.FuncScore;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncScore_ScriptFunc;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncScore_RandomScore;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
+
+import java.util.Map;
 
 /**
  * @author: JohenTeng
@@ -15,13 +17,16 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 @EsQueryIndex(index = "account", model = QueryModel.FUNC_SCORE, traceScore = true,
         funcScore = @FuncScore(boostMode = CombineFunction.SUM)
 )
-public class RandomScoreParam {
+public class ScriptFuncParam {
 
     @Match(fuzziness = FuzzinessEnum.ONE)
     private String address;
 
-    @FuncScore_RandomScore(field = "age")
-    private String seed;
+    @FuncScore_ScriptFunc(
+            idOrCode = "doc['firstname.keyword'].value.startsWith(params.name)? 10: 0",
+            hasParams = true
+    )
+    private Map<String, String> scriptMapParam;
 
     public String getAddress() {
         return address;
@@ -31,12 +36,11 @@ public class RandomScoreParam {
         this.address = address;
     }
 
-    public String getSeed() {
-        return seed;
+    public Map<String, String> getScriptMapParam() {
+        return scriptMapParam;
     }
 
-    public void setSeed(String seed) {
-        this.seed = seed;
+    public void setScriptMapParam(Map<String, String> scriptMapParam) {
+        this.scriptMapParam = scriptMapParam;
     }
 }
-

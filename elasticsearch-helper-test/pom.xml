@@ -11,10 +11,26 @@
 
     <artifactId>elasticsearch-helper-test</artifactId>
 
+    <description> 全测试用例 </description>
+
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>${spring.boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.github.johendeng</groupId>
+            <artifactId>elasticsearch-helper-boot-starter</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>

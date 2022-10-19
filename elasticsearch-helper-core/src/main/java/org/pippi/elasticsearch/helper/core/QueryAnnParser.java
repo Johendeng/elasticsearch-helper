@@ -8,13 +8,12 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.*;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.ScriptQuery;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SourceOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.UserQuery;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.FuncQuery;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncQuery;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.handler.EsConditionHandle;
-import org.pippi.elasticsearch.helper.core.utils.AnnotationUtils;
 import org.pippi.elasticsearch.helper.core.utils.ExtAnnBeanMapUtils;
 import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
 
@@ -148,6 +147,7 @@ public class QueryAnnParser {
             Class<?> fieldType = field.getType();
             field.setAccessible(true);
             Object val = field.get(viewObj);
+            // todo 魔法设计 需要修改
             if (
                 (field.isAnnotationPresent(ScriptQuery.class) && !field.getAnnotation(ScriptQuery.class).hasParams())
              || (field.isAnnotationPresent(SourceOrder.class))

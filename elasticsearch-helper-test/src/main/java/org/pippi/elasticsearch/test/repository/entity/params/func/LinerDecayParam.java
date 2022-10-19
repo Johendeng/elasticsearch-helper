@@ -1,10 +1,11 @@
-package org.pippi.elasticsearch.helper.spring.repository.entity.params.func;
+package org.pippi.elasticsearch.test.repository.entity.params.func;
 
 import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.FuncScore;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncScore_LinearDecay;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncScore_ExponentialDecay;
+import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 
 /**
@@ -14,13 +15,14 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 @EsQueryIndex(index = "account", model = QueryModel.FUNC_SCORE, traceScore = true,
         funcScore = @FuncScore(boostMode = CombineFunction.SUM)
 )
-public class ExponentialDecayParam {
+public class LinerDecayParam {
 
-    @Match
+    @Match(fuzziness = FuzzinessEnum.TWO)
     private String lastname;
 
-    @FuncScore_ExponentialDecay(scale = "50", offset = "100")
+    @FuncScore_LinearDecay(scale = "50", offset = "100")
     private Integer balance;
+
 
     public Integer getBalance() {
         return balance;

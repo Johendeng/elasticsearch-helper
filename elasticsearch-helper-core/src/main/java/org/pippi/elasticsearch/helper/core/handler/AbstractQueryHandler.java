@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.helper.core.handler;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.mapping.ScoreFuncBuilder;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.mapping.ScoreFuncBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryBean;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;

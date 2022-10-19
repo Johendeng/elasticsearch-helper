@@ -1,11 +1,11 @@
-package org.pippi.elasticsearch.helper.spring.repository.entity.params.func;
+package org.pippi.elasticsearch.test.repository.entity.params.func;
 
 import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.elasticsearch.common.lucene.search.function.FieldValueFactorFunction;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.FuncScore;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncScore_FieldValueFactor;
+import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
 import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 
