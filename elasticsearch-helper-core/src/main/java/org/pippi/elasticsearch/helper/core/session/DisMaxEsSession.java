@@ -1,10 +1,8 @@
-package org.pippi.elasticsearch.helper.core.holder;
+package org.pippi.elasticsearch.helper.core.session;
 
 import org.elasticsearch.index.query.DisMaxQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * DisMaxEsRequestHolder
@@ -12,10 +10,11 @@ import org.slf4j.LoggerFactory;
  * @author     JohenTeng
  * @date      2021/9/29
  */
-public class DisMaxEsRequestHolder extends AbstractEsRequestHolder<DisMaxQueryBuilder> {
+@SuppressWarnings("all")
+public class DisMaxEsSession extends AbstractEsSession<DisMaxQueryBuilder> {
 
     @Override
-    public AbstractEsRequestHolder changeLogicConnector(EsConnector connector) {
+    public AbstractEsSession changeLogicConnector(EsConnector connector) {
         return this;
     }
 

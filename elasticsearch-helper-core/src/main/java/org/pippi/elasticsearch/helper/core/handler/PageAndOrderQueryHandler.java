@@ -9,7 +9,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQuer
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.PageAndOrder;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -25,7 +25,7 @@ import java.util.Objects;
 public class PageAndOrderQueryHandler extends AbstractQueryHandler{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
         if (!value.getClass().equals(PageParam.class)) {
             throw new EsHelperQueryException("@PageAndOrder have to define as PageParam.class");

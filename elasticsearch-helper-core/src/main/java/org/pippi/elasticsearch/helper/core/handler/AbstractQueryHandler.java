@@ -6,8 +6,8 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQuer
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.func.mapping.ScoreFuncBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryBean;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
-import org.pippi.elasticsearch.helper.core.holder.FuncScoreEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
+import org.pippi.elasticsearch.helper.core.session.FuncScoreEsSession;
 import org.pippi.elasticsearch.helper.core.utils.ExtAnnBeanMapUtils;
 
 import java.lang.annotation.Annotation;
@@ -31,7 +31,7 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
      * @param searchHelper
      * return
      */
-    public final AbstractEsRequestHolder execute(EsQueryFieldBean<T> queryDes, AbstractEsRequestHolder searchHelper){
+    public final AbstractEsSession execute(EsQueryFieldBean<T> queryDes, AbstractEsSession searchHelper){
         searchHelper.changeLogicConnector(queryDes.getLogicConnector());
         handleExtBean(queryDes);
         QueryBuilder queryBuilder = handle(queryDes, searchHelper);
@@ -50,7 +50,7 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
      * @param searchHelper
      * return
      */
-    public abstract QueryBuilder handle (EsQueryFieldBean<T> queryDes, AbstractEsRequestHolder searchHelper);
+    public abstract QueryBuilder handle (EsQueryFieldBean<T> queryDes, AbstractEsSession searchHelper);
 
 
     /**
@@ -87,11 +87,11 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
         }
     }
 
-    protected final void handleFuncScoreQuery(EsQueryFieldBean<T> queryDes, AbstractEsRequestHolder searchHelper) {
-        if (!(searchHelper instanceof FuncScoreEsRequestHolder)) {
+    protected final void handleFuncScoreQuery(EsQueryFieldBean<T> queryDes, AbstractEsSession searchHelper) {
+        if (!(searchHelper instanceof FuncScoreEsSession)) {
             return;
         }
-        FuncScoreEsRequestHolder funcScoreEsHolder = (FuncScoreEsRequestHolder) searchHelper;
+        FuncScoreEsSession funcScoreEsHolder = (FuncScoreEsSession) searchHelper;
         Annotation funcScoreAnn = queryDes.getFuncScoreAnn();
         if (Objects.isNull(funcScoreAnn)) {
             return;

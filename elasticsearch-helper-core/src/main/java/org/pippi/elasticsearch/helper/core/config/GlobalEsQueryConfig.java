@@ -16,9 +16,9 @@ import java.util.function.Supplier;
  */
 public final class GlobalEsQueryConfig {
 
-    private static final String DEFAULT_KEY = "default";
+    private final static String DEFAULT_KEY = "default";
 
-    private static Map<String, Supplier<HighlightBuilder>> HIGH_LIGHT_MAP = Maps.newHashMap();
+    private final static Map<String, Supplier<HighlightBuilder>> HIGH_LIGHT_MAP = Maps.newHashMap();
 
 
     public synchronized static void configHighLight(String key, Supplier<HighlightBuilder> supplier){

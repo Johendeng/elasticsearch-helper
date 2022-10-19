@@ -8,7 +8,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.GeoDistance;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.GeoDistanceQueryBean;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
  * GeoDistanceQueryHandler
@@ -20,7 +20,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 public class GeoDistanceQueryHandler extends AbstractQueryHandler<GeoDistanceQueryBean> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<GeoDistanceQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<GeoDistanceQueryBean> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
         if (!(value instanceof GeoDistanceQueryBean)) {
             throw new EsHelperQueryException("GeoBoundingBoxQuery's param-type have to be GeoDistanceQueryBean");

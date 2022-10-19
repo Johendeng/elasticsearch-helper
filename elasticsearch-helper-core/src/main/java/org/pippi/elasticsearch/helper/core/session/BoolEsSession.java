@@ -1,9 +1,8 @@
-package org.pippi.elasticsearch.helper.core.holder;
+package org.pippi.elasticsearch.helper.core.session;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 
 /**
  * bool query builder holder
@@ -11,7 +10,8 @@ import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
  * @author     JohenTeng
  * @date      2021/8/9
  */
-public class BoolEsRequestHolder extends AbstractEsRequestHolder<BoolQueryBuilder> {
+@SuppressWarnings("all")
+public class BoolEsSession extends AbstractEsSession<BoolQueryBuilder> {
 
 	/**
 	 *  默认使用must连接
@@ -27,7 +27,7 @@ public class BoolEsRequestHolder extends AbstractEsRequestHolder<BoolQueryBuilde
 	}
 
 	@Override
-	public AbstractEsRequestHolder changeLogicConnector(EsConnector logicKey) {
+	public AbstractEsSession changeLogicConnector(EsConnector logicKey) {
 		if (logicKey == null) {
 			return this;
 		}

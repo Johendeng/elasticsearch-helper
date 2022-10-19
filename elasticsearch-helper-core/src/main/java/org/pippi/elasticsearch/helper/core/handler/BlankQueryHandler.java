@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.helper.core.handler;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
  * @author: JohenTeng
@@ -13,7 +13,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 public class BlankQueryHandler extends AbstractQueryHandler{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsSession searchHelper) {
         return null;
     }
 }

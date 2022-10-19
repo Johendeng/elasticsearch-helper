@@ -3,7 +3,6 @@ package org.pippi.elasticsearch.helper.core.handler;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.Script;
-import org.elasticsearch.script.ScriptType;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.ScriptSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -12,7 +11,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SourceOrder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.SourceOrderQueryBean;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.Objects;
 
@@ -29,7 +28,7 @@ import java.util.Objects;
 public class SourceSortQueryHandler extends AbstractQueryHandler<SourceOrderQueryBean>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<SourceOrderQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<SourceOrderQueryBean> queryDes, AbstractEsSession searchHelper) {
         SearchSourceBuilder source = searchHelper.getSource();
         SourceOrderQueryBean sourceOrderBean = queryDes.getExtBean();
         String script = sourceOrderBean.getScript();

@@ -7,7 +7,7 @@ import java.util.Objects;
 import org.elasticsearch.action.search.SearchResponse;
 import com.google.common.collect.Maps;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
  * @author  JohenTeng
@@ -36,7 +36,7 @@ public class EsHookReedits {
         RESP_FUNC_REGEDIT.put(key, responseHook);
     }
 
-    public static <P> AbstractEsRequestHolder useReqHook(String key, AbstractEsRequestHolder helper, P param) {
+    public static <P> AbstractEsSession useReqHook(String key, AbstractEsSession helper, P param) {
         return REP_FUNC_REGEDIT.get(key).handleRequest(helper, param);
     }
 

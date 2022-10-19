@@ -8,7 +8,7 @@ import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
 import org.pippi.elasticsearch.helper.core.hook.HookQuery;
 import org.pippi.elasticsearch.helper.core.hook.RequestHook;
@@ -27,6 +27,7 @@ import java.util.Objects;
  * @author     JohenTeng
  * @date      2021/7/21
  */
+@SuppressWarnings("all")
 public class EsQueryProxy<T> implements InvocationHandler {
 
     private static final Logger log = LoggerFactory.getLogger(EsQueryProxy.class);
@@ -53,13 +54,12 @@ public class EsQueryProxy<T> implements InvocationHandler {
     }
 
     @Override
-    @SuppressWarnings(value = {"rawtypes", "unchecked"})
     public Object invoke(Object proxy, Method method, Object[] args) {
         if (args == null || args.length != 1) {
             throw new EsHelperQueryException("ES-HELPER un-support multi-params or miss-param, params must be single");
         }
         Object param = args[0];
-        AbstractEsRequestHolder esHolder = EsQueryEngine.execute(param, visitQueryBeanParent);
+        AbstractEsSession esHolder = EsQueryEngine.execute(param, visitQueryBeanParent);
         RequestHook requestHook = null;
         if ((requestHook = checkRequestHook(param, method)) != null) {
             esHolder = requestHook.handleRequest(esHolder, param);

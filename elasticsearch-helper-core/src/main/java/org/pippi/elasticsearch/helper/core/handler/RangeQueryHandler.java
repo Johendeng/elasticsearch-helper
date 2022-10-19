@@ -9,7 +9,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.RangeQueryBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -24,7 +24,7 @@ import java.util.Optional;
 public class RangeQueryHandler extends AbstractQueryHandler<RangeQueryBean>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<RangeQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<RangeQueryBean> queryDes, AbstractEsSession searchHelper) {
         if ( !(queryDes.getValue() instanceof RangeParam) ) {
             throw new EsHelperQueryException("@Range annotation query has to define your Field type be [RangeParam.class]");
         }

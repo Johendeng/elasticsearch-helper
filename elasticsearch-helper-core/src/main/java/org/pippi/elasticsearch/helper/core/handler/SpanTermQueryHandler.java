@@ -6,7 +6,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SpanTerm;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.SpanTermQueryBean;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
  * SpanTermQueryHandler
@@ -18,7 +18,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 public class SpanTermQueryHandler extends AbstractQueryHandler<SpanTermQueryBean>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<SpanTermQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<SpanTermQueryBean> queryDes, AbstractEsSession searchHelper) {
         SpanTermQueryBuilder spanTermQueryBuilder = new SpanTermQueryBuilder(queryDes.getField(), queryDes.getValue());
         spanTermQueryBuilder.boost(queryDes.getBoost());
         return spanTermQueryBuilder;

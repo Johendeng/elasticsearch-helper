@@ -45,7 +45,7 @@ public class QueryHandlerFactory {
     private static final Map<String, AbstractQueryHandler> QUERY_HANDLE_MAP = new HashMap<>();
 
     private static final String BANNER_LOC = "pippi-banner.txt";
-    private static final String PROP_LOC = "elasticseach-helper.properties";
+    private static final String PROP_LOC = "elasticsearch-helper.properties";
 
     public static void addHandleClazz(String handleName, Class<? extends AbstractQueryHandler> clazz) {
         QUERY_HANDLE_CLAZZ_MAP.put(handleName, clazz);
@@ -126,7 +126,9 @@ public class QueryHandlerFactory {
             InputStream bannerStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(BANNER_LOC);
             BufferedReader reader = new BufferedReader(new InputStreamReader(bannerStream));
             String banner = reader.lines().collect(Collectors.joining("\n"));
-            banner = String.format(banner, getProperty("elasticsearch-helper.version"));
+            String version = Optional.ofNullable(QueryHandlerFactory.class.getPackage().getImplementationVersion()).
+                    orElse("unknow");
+            banner = String.format(banner, version);
             return banner;
         } catch (Exception e) {
             return "";

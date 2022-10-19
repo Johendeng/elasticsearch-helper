@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.holder;
+package org.pippi.elasticsearch.helper.core.session;
 
 
 import com.google.common.collect.Maps;
@@ -26,19 +26,20 @@ import java.util.Objects;
  * @author     JohenTeng
  * @date      2021/8/8
  */
-public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
+@SuppressWarnings("all")
+public abstract class AbstractEsSession<T extends QueryBuilder> {
 
-	protected static final Logger log = LoggerFactory.getLogger(AbstractEsRequestHolder.class);
+	protected static final Logger log = LoggerFactory.getLogger(AbstractEsSession.class);
 
-	private static final Map<QueryModel, Class<? extends AbstractEsRequestHolder>> HOLDER_CLAZZ_MAP = Maps.newHashMap();
+	private static final Map<QueryModel, Class<? extends AbstractEsSession>> HOLDER_CLAZZ_MAP = Maps.newHashMap();
 
 	static {
 		/**
 		 *  implements *EsRequestHolder load on this place
 		 */
-		AbstractEsRequestHolder.regisHolder(QueryModel.BOOL, BoolEsRequestHolder.class);
-		AbstractEsRequestHolder.regisHolder(QueryModel.DIS_MAX, DisMaxEsRequestHolder.class);
-		AbstractEsRequestHolder.regisHolder(QueryModel.FUNC_SCORE, FuncScoreEsRequestHolder.class);
+		AbstractEsSession.regisHolder(QueryModel.BOOL, BoolEsSession.class);
+		AbstractEsSession.regisHolder(QueryModel.DIS_MAX, DisMaxEsSession.class);
+		AbstractEsSession.regisHolder(QueryModel.FUNC_SCORE, FuncScoreEsSession.class);
 
 	}
 
@@ -59,7 +60,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 	 * @param index
 	 * return
 	 */
-	public AbstractEsRequestHolder init(String index) {
+	public AbstractEsSession init(String index) {
 		this.indexName = index;
 		request = new SearchRequest(index);
 		source = new SearchSourceBuilder();
@@ -70,7 +71,7 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 		return this;
 	}
 
-	public static void regisHolder(QueryModel model, Class<? extends AbstractEsRequestHolder> clazz) {
+	public static void regisHolder(QueryModel model, Class<? extends AbstractEsSession> clazz) {
 		HOLDER_CLAZZ_MAP.put(model, clazz);
 	}
 
@@ -79,14 +80,14 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 	 * @param connector
 	 * return
 	 */
-	public abstract AbstractEsRequestHolder changeLogicConnector(EsConnector connector);
+	public abstract AbstractEsSession changeLogicConnector(EsConnector connector);
 
 	/**
 	 *  define the default logic connector
 	 */
 	protected abstract void defineDefaultLogicConnector();
 
-	public AbstractEsRequestHolder chain(QueryBuilder queryCell){
+	public AbstractEsSession chain(QueryBuilder queryCell){
 		this.currentQueryBuilderList.add(queryCell);
 		return this;
 	}
@@ -148,15 +149,15 @@ public abstract class AbstractEsRequestHolder<T extends QueryBuilder> {
 			return this;
 		}
 
-		public <R extends AbstractEsRequestHolder> R build(){
+		public <R extends AbstractEsSession> R build(){
 			if (StringUtils.isBlank(indexConfig.getIndexName()) || indexConfig.getEsQueryModel() == null){
 				throw new RuntimeException("index and query model cant be null");
 			}
-			Class<? extends AbstractEsRequestHolder> targetClazz = HOLDER_CLAZZ_MAP.get(indexConfig.getEsQueryModel());
+			Class<? extends AbstractEsSession> targetClazz = HOLDER_CLAZZ_MAP.get(indexConfig.getEsQueryModel());
 			if (Objects.isNull(targetClazz)) {
 				throw new RuntimeException("un-support this query model");
 			}
-			AbstractEsRequestHolder holder = ReflectionUtils.newInstance(targetClazz);
+			AbstractEsSession holder = ReflectionUtils.newInstance(targetClazz);
 			holder.init(indexConfig.getIndexName());
 			SearchSourceBuilder source = holder.getSource();
 			if (ArrayUtils.isNotEmpty(indexConfig.getFetchFields()) || ArrayUtils.isNotEmpty(indexConfig.getExcludeFields())){

@@ -7,7 +7,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Terms;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.TermsQueryBean;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
 
 import java.util.Collection;
@@ -22,7 +22,7 @@ import java.util.Collection;
 public class TermsQueryHandler extends AbstractQueryHandler<TermsQueryBean> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<TermsQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<TermsQueryBean> queryDes, AbstractEsSession searchHelper) {
         Collection value = ReflectionUtils.transArrayOrCollection(queryDes.getValue());
         TermsQueryBuilder queryBuilder = QueryBuilders.termsQuery(queryDes.getField(), value)
                 .boost(queryDes.getBoost());

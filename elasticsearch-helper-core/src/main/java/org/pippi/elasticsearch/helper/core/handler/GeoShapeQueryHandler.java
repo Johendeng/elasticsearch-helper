@@ -9,7 +9,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.*;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.GeoShapeQueryBean;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -24,7 +24,7 @@ import java.util.Objects;
 public class GeoShapeQueryHandler extends AbstractQueryHandler<GeoShapeQueryBean>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<GeoShapeQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<GeoShapeQueryBean> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
         if (!(value instanceof GeoShapeParam)) {
             throw new EsHelperQueryException("GeoShapeQuery's param-type have to be GeoShapeParam");

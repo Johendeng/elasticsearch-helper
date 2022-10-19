@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.helper.core.hook;
 
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
  *
@@ -19,6 +19,6 @@ public interface RequestHook<PARAM> {
      * return
      */
     @SuppressWarnings(value = {"rawtypes"})
-    AbstractEsRequestHolder handleRequest(AbstractEsRequestHolder holder, PARAM param);
+    AbstractEsSession handleRequest(AbstractEsSession holder, PARAM param);
 
 }

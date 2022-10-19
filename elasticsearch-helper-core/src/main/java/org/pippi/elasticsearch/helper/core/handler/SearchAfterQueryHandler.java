@@ -6,7 +6,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SearchAfter;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.SearchAfterQueryBean;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
  * SearchAfterQueryHandler
@@ -18,7 +18,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 public class SearchAfterQueryHandler extends AbstractQueryHandler<SearchAfterQueryBean> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<SearchAfterQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<SearchAfterQueryBean> queryDes, AbstractEsSession searchHelper) {
         SearchAfterQueryBean extBean = queryDes.getExtBean();
         String fieldName = queryDes.getField();
         Object value = queryDes.getValue();

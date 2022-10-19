@@ -1,21 +1,16 @@
 package org.pippi.elasticsearch.helper.spring.repository.entity.params;
 
 import com.google.common.collect.Maps;
-import org.apache.lucene.util.QueryBuilder;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.ParsedLongTerms;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.metrics.ParsedValueCount;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.hook.HookQuery;
 import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountAggResult;
 
@@ -37,7 +32,7 @@ public class AggAccountQueryParam extends HookQuery<AggAccountQueryParam, Accoun
 
 
     @Override
-    protected void configRequestHook(AbstractEsRequestHolder holder) {
+    protected void configRequestHook(AbstractEsSession holder) {
         SearchSourceBuilder source = holder.getSource();
         holder.chain(QueryBuilders.termQuery("city", this.city));
         source.aggregation(

@@ -10,11 +10,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MoreLikeThis;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.MoreLikeThisQueryBean;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
-
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.Optional;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
  * @author     JohenTeng
@@ -24,7 +20,7 @@ import java.util.Optional;
 public class MoreLikeThisQueryHandler extends AbstractQueryHandler<MoreLikeThisQueryBean> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<MoreLikeThisQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<MoreLikeThisQueryBean> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
         String[] fields = queryDes.getExtBean().getFields();
         if (value.getClass().equals(MoreLikeThisParam.class)) {

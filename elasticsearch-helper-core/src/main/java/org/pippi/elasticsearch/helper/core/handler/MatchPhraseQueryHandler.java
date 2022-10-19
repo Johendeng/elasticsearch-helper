@@ -7,7 +7,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MatchPhrase;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.MatchPhraseQueryBean;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
  * @author     JohenTeng
@@ -17,7 +17,7 @@ import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
 public class MatchPhraseQueryHandler extends AbstractQueryHandler<MatchPhraseQueryBean> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<MatchPhraseQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<MatchPhraseQueryBean> queryDes, AbstractEsSession searchHelper) {
         MatchPhraseQueryBuilder matchPhraseQueryBuilder = QueryBuilders.matchPhraseQuery(queryDes.getField(), queryDes.getValue())
                 .boost(queryDes.getBoost());
         return matchPhraseQueryBuilder;

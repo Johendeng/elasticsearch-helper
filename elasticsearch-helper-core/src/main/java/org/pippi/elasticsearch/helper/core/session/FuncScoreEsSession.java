@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.holder;
+package org.pippi.elasticsearch.helper.core.session;
 
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -18,7 +18,8 @@ import java.util.List;
  * @author: JohenTeng
  * @date: 2022/8/11
  **/
-public class FuncScoreEsRequestHolder extends BoolEsRequestHolder {
+@SuppressWarnings("all")
+public class FuncScoreEsSession extends BoolEsSession {
 
     public FunctionScoreQueryBuilder functionScoreQueryBuilder;
 

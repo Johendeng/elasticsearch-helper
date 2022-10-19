@@ -31,12 +31,11 @@ public class SpringLessTester {
         param.setFirstname("Good");
         param.setLastnames(new String[]{"Bates", "Olson", "Campbell"});
 
-        EsHandleMapper esHandleMapper = (EsHandleMapper) Proxy.newProxyInstance(
-                EsHandleMapper.class.getClassLoader(),
-                new Class[]{EsHandleMapper.class},
-                new EsQueryProxy(EsHandleMapper.class, true, client, true)
-        );;
+        EsHandleMapper esHandleMapper = (EsHandleMapper)  EsQueryProxy.build(EsHandleMapper.class, client);
+
         BaseResp<AccountEntity> resp = esHandleMapper.termQuery(param);
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+
+        System.exit(0);
     }
 }

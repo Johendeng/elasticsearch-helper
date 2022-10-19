@@ -1,20 +1,17 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
-import org.apache.commons.lang3.StringUtils;
-import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsComplexParam;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Nested;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.NestedQueryBean;
 import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.holder.AbstractEsRequestHolder;
+import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.List;
 
@@ -44,7 +41,7 @@ import java.util.List;
 public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<NestedQueryBean> queryDes, AbstractEsRequestHolder searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<NestedQueryBean> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
         NestedQueryBean extBean = queryDes.getExtBean();
         QueryBuilder queryBUilder = null;
@@ -62,7 +59,7 @@ public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {
         QueryAnnParser annParser = QueryAnnParser.instance();
         EsQueryIndexBean indexInfo = annParser.getIndex(value);
         List<EsQueryFieldBean> paramFieldBeans = annParser.read(value, false);
-        AbstractEsRequestHolder holder = AbstractEsRequestHolder.builder().config(indexInfo).build();
+        AbstractEsSession holder = AbstractEsSession.builder().config(indexInfo).build();
         for (EsQueryFieldBean queryDesCell : paramFieldBeans) {
             String queryKey = queryDesCell.getQueryType();
             AbstractQueryHandler queryHandle = QueryHandlerFactory.getTargetHandleInstance(queryKey);
