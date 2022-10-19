@@ -9,8 +9,8 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.core.hook.RequestHook;
 import org.pippi.elasticsearch.helper.core.hook.ResponseHook;
 import org.pippi.elasticsearch.helper.core.hook.UserHooks;
-import org.pippi.elasticsearch.helper.spring.repository.entity.params.AggAccountQueryParam;
-import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountAggResult;
+import org.pippi.elasticsearch.test.repository.entity.params.AggAccountQueryParam;
+import org.pippi.elasticsearch.test.repository.entity.result.AccountAggResult;
 
 import java.util.List;
 import java.util.Map;
