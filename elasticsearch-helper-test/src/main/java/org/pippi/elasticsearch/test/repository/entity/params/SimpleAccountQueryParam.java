@@ -12,7 +12,8 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
 import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
 import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
-import org.pippi.elasticsearch.helper.spring.repository.entity.condition.AgeUseCondition;
+import org.pippi.elasticsearch.test.repository.entity.condition.AgeUseCondition;
+
 
 /**
  * SimpleAccountQueryParam

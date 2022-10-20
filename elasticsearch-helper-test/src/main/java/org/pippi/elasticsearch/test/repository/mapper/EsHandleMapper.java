@@ -1,8 +1,12 @@
 package org.pippi.elasticsearch.test.repository.mapper;
 
+
 import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
-import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountEntity;
+import org.pippi.elasticsearch.test.repository.entity.params.*;
+import org.pippi.elasticsearch.test.repository.entity.params.func.*;
+import org.pippi.elasticsearch.test.repository.entity.result.AccountEntity;
+
 
 /**
  * EsTermMapper

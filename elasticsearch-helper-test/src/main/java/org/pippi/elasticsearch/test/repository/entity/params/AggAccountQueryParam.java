@@ -12,7 +12,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
 import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
 import org.pippi.elasticsearch.helper.core.hook.HookQuery;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
-import org.pippi.elasticsearch.helper.spring.repository.entity.result.AccountAggResult;
+import org.pippi.elasticsearch.test.repository.entity.result.AccountAggResult;
 
 import java.util.List;
 import java.util.Map;
