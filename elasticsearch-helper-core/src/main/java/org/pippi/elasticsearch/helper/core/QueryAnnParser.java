@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
  * @author JohenTeng
  * @date 2021/7/18
  **/
+@SuppressWarnings("all")
 public class QueryAnnParser {
 
     private static final String BASE_FILED = "value";

@@ -1,7 +1,0 @@
-
-es:
-  helper:
-    queryLogOut:
-      enable: true
-#    ext:
-#      handle-packages:

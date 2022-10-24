@@ -8,7 +8,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import java.lang.reflect.Proxy;
 import java.util.Objects;
 import java.util.Optional;
 

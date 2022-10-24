@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
  * @date     2021/9/8
  * @author   JohenTeng
  **/
+@SuppressWarnings("all")
 public class QueryHandlerFactory {
 
     private static final Logger log = LoggerFactory.getLogger(QueryHandlerFactory.class);

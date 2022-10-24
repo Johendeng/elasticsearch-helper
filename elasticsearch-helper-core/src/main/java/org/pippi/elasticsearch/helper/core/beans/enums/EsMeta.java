@@ -45,11 +45,11 @@ public enum EsMeta {
     COMPLEX("complex", -1, Object.class);
     ;
 
-    private String type;
-    private int code;
-    private Class clazz;
+    private final String type;
+    private final int code;
+    private final Class<?> clazz;
 
-    EsMeta(String type, int code, Class clazz) {
+    EsMeta(String type, int code, Class<?> clazz) {
         this.type = type;
         this.code = code;
         this.clazz = clazz;
@@ -63,11 +63,11 @@ public enum EsMeta {
         return code;
     }
 
-    public Class getClazz() {
+    public Class<?> getClazz() {
         return clazz;
     }
 
-    private static final Map<String, Class> META_CLAZZ_MAP = Maps.newHashMap();
+    private static final Map<String, Class<?>> META_CLAZZ_MAP = Maps.newHashMap();
 
     static {
         Arrays.stream(EsMeta.values()).forEach( en ->
@@ -75,8 +75,8 @@ public enum EsMeta {
         );
     }
 
-    public static Class getEsMetaJavaClazz(String type) {
-        Class clazz = META_CLAZZ_MAP.get(type.toLowerCase(Locale.ROOT));
+    public static Class<?> getEsMetaJavaClazz(String type) {
+        Class<?> clazz = META_CLAZZ_MAP.get(type.toLowerCase(Locale.ROOT));
         if (Objects.isNull(clazz)) {
             return Object.class;
         }
