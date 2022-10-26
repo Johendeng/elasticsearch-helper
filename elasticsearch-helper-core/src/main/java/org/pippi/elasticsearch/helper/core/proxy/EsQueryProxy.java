@@ -40,10 +40,19 @@ public class EsQueryProxy<T> implements InvocationHandler {
 
     private boolean enableLogOutEsQueryJson = false;
 
+    private RequestOptions requestOption = RequestOptions.DEFAULT;
+
     public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client) {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
         this.client = client;
+    }
+
+    public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, RequestOptions requestOption) {
+        this.targetInterface = targetInterface;
+        this.visitQueryBeanParent = visitQueryBeanParent;
+        this.client = client;
+        this.requestOption = requestOption;
     }
 
     public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, boolean enableLogOutEsQueryJson) {
@@ -52,6 +61,15 @@ public class EsQueryProxy<T> implements InvocationHandler {
         this.client = client;
         this.enableLogOutEsQueryJson = enableLogOutEsQueryJson;
     }
+
+    public EsQueryProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, RequestOptions requestOption, boolean enableLogOutEsQueryJson) {
+        this.targetInterface = targetInterface;
+        this.visitQueryBeanParent = visitQueryBeanParent;
+        this.client = client;
+        this.requestOption = requestOption;
+        this.enableLogOutEsQueryJson = enableLogOutEsQueryJson;
+    }
+
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) {
@@ -70,7 +88,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
             if (enableLogOutEsQueryJson) {
                 log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), esHolder.getSource().toString());
             }
-            resp = client.search(request, RequestOptions.DEFAULT);
+            resp = client.search(request, requestOption);
         } catch (IOException e) {
             throw new EsHelperQueryException("EsSearchExecute I/O exception, cause:", e);
         }
@@ -138,11 +156,15 @@ public class EsQueryProxy<T> implements InvocationHandler {
     /**
      * 构建查询代理对象
      */
-    public static Object build(Class<?> targetInterfaceClazz, boolean visitParent, RestHighLevelClient client, boolean enableLogOut) {
+    public static Object build(Class<?> targetInterfaceClazz,
+                               boolean visitParent,
+                               RestHighLevelClient client,
+                               RequestOptions requestOption,
+                               boolean enableLogOut) {
         return Proxy.newProxyInstance(
                 targetInterfaceClazz.getClassLoader(),
                 new Class[]{targetInterfaceClazz},
-                new EsQueryProxy(targetInterfaceClazz, visitParent, client, enableLogOut)
+                new EsQueryProxy(targetInterfaceClazz, visitParent, client, requestOption, enableLogOut)
         );
     }
 
@@ -150,6 +172,10 @@ public class EsQueryProxy<T> implements InvocationHandler {
      * 构建查询代理对象, 默认 visitParent: true, enableLogOut: true
      */
     public static Object build(Class<?> targetInterfaceClazz, RestHighLevelClient client) {
-        return build(targetInterfaceClazz, true, client, true);
+        return build(targetInterfaceClazz, true, client, RequestOptions.DEFAULT,true);
+    }
+
+    public static Object build(Class<?> targetInterfaceClazz, RestHighLevelClient client, RequestOptions requestOption) {
+        return build(targetInterfaceClazz, true, client, requestOption, true);
     }
 }

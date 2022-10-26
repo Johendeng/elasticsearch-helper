@@ -20,9 +20,6 @@ import javax.annotation.Resource;
 @Configuration
 public class EsHelperAutoConfiguration {
 
-    @Value("${es.helper.ext.handle-packages:''}")
-    private String esQueryExtHandlePackages;
-
     @Resource
     private RestHighLevelClient restHighLevelClient;
 
@@ -34,7 +31,9 @@ public class EsHelperAutoConfiguration {
         QueryHandlerFactory.doQueryHandleScan();
         // if user undefine global-highlight style,
         // will use default (es default highlight style)
-        GlobalEsQueryConfig.configHighLight(DEFAULT_KEY ,() -> SearchSourceBuilder.highlight());
+        GlobalEsQueryConfig.configHighLight(DEFAULT_KEY , SearchSourceBuilder::highlight);
     }
+
+
 
 }

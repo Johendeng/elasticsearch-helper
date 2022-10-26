@@ -42,7 +42,7 @@ public enum EsMeta {
     IP("ip",206, String.class),
     TOKEN_COUNT("token_count",207, Object.class),
 
-    COMPLEX("complex", -1, Object.class);
+    COMPLEX("complex", -1, Object.class),
     ;
 
     private final String type;

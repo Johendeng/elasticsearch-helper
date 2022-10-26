@@ -80,6 +80,7 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware,
                 continue;
             }
             EsHelperProxy proxyAnn = AnnotationUtils.findAnnotation(beanClazz, EsHelperProxy.class);
+            String requestOptKey = proxyAnn.requestOption();
             // BeanDefinition builder
             BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(beanClazz);
             GenericBeanDefinition definition = (GenericBeanDefinition) builder.getRawBeanDefinition();
@@ -87,7 +88,7 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware,
             definition.setBeanClass(beanClazz);
             definition.setLazyInit(true);
             definition.setInstanceSupplier(()->
-                new EsHelperProxyBeanFactory(beanClazz, proxyAnn.visitParent())
+                new EsHelperProxyBeanFactory(beanClazz, RequestOptionMap.get(requestOptKey), proxyAnn.visitParent())
             );
             definition.setAutowireMode(GenericBeanDefinition.AUTOWIRE_BY_TYPE);
             String simpleName = beanClazz.getSimpleName();

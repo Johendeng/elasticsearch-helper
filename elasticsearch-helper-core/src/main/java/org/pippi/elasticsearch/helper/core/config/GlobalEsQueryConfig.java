@@ -32,8 +32,4 @@ public final class GlobalEsQueryConfig {
     public static HighlightBuilder highLight(String key){
         return HIGH_LIGHT_MAP.get(key).get();
     }
-
-
-
-
 }
