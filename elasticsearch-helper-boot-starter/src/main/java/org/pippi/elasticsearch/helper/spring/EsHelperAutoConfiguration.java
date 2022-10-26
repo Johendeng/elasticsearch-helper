@@ -33,7 +33,4 @@ public class EsHelperAutoConfiguration {
         // will use default (es default highlight style)
         GlobalEsQueryConfig.configHighLight(DEFAULT_KEY , SearchSourceBuilder::highlight);
     }
-
-
-
 }

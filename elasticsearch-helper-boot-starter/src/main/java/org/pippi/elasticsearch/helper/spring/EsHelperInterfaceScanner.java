@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
  * EsHelperInterfaceScanner
  *  read all Interface which annotated by
  *  {@link org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy @EsHelperProxy}
- *  and  load a proxy instance for it
+ *  and load a proxy instance for it
  * @author     JohenTeng
  * @date      2021/9/18
  */
