@@ -21,7 +21,7 @@ public @interface EsHelperProxy {
 
     /**
      * 定义 es 请求参数，默认为 RequestOptions.Default,
-     * 如需要自定义，可在 RequestOptionMap 中新增
+     * 如需要自定义，可在 RequestOptionMap 中新增 (静态对象)
      */
     String requestOption() default "default";
 }
