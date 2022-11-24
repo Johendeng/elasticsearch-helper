@@ -46,7 +46,7 @@ public class QueryHandlerFactory {
     private static final Map<String, AbstractQueryHandler> QUERY_HANDLE_MAP = new HashMap<>();
 
     private static final String BANNER_LOC = "pippi-banner.txt";
-    private static final String PROP_LOC = "elasticsearch-helper.properties";
+
 
     public static void addHandleClazz(String handleName, Class<? extends AbstractQueryHandler> clazz) {
         QUERY_HANDLE_CLAZZ_MAP.put(handleName, clazz);
@@ -134,14 +134,6 @@ public class QueryHandlerFactory {
         } catch (Exception e) {
             return "";
         }
-    }
-
-    private static String getProperty(String fullKey) throws URISyntaxException, IOException {
-        InputStream bannerStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(PROP_LOC);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(bannerStream));
-        Properties properties = new Properties();
-        properties.load(reader);
-        return (String) properties.getOrDefault(fullKey, "");
     }
 
 }
