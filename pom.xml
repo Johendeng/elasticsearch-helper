@@ -33,7 +33,6 @@
         <module>elasticsearch-helper-boot-starter</module>
         <module>elasticsearch-helper-sample</module>
         <module>elasticsearch-helper-test</module>
-        <module>elasticsearch-helper-lambda</module>
     </modules>
 
     <properties>

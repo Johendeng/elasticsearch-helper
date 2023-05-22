@@ -27,10 +27,9 @@ public class SerializerUtils {
                                     .setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
     private static ObjectMapper initDefaultMapper() {
-        ObjectMapper mapper = new ObjectMapper()
+        return new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
             .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        return mapper;
     }
 
 
@@ -49,8 +48,6 @@ public class SerializerUtils {
             throw new EsHelperSerializeException("Json-String trans to Java-Bean error, cause:", e);
         }
     }
-
-
 
     public static String parseObjToJson(Object obj) {
         try {

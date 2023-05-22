@@ -14,7 +14,7 @@ import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.repository.entity.params.*;
 import org.pippi.elasticsearch.test.repository.entity.params.func.*;
-import org.pippi.elasticsearch.test.repository.entity.result.AccountEntity;
+import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;

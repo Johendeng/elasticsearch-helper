@@ -19,6 +19,7 @@ import java.util.Set;
  * @author JohenTeng
  * @date 2021/12/10
  */
+@Deprecated
 public class EsHelperRelBeansGenerator {
 
 

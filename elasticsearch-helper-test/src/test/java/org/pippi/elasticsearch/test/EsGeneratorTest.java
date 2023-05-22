@@ -17,7 +17,7 @@ import java.io.IOException;
  * @author JohenTeng
  * @date 2021/12/10
  */
-@Ignore
+//@Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
 public class EsGeneratorTest {
@@ -28,6 +28,12 @@ public class EsGeneratorTest {
     @Test
     public void testGenClazzFile() throws IOException {
         EsHelperRelBeansGenerator generator = new EsHelperRelBeansGenerator("account", client);
+        generator.run();
+    }
+
+    @Test
+    public void testGenSampleFile() throws IOException {
+        EsHelperRelBeansGenerator generator = new EsHelperRelBeansGenerator("kibana_sample_data_ecommerce", client);
         generator.run();
     }
 }

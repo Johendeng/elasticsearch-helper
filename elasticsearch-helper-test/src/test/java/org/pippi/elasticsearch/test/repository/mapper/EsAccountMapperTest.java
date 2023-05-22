@@ -7,7 +7,7 @@ import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.repository.entity.params.AggAccountQueryParam;
 import org.pippi.elasticsearch.test.repository.entity.params.SimpleAccountQueryParam;
 import org.pippi.elasticsearch.test.repository.entity.result.AccountAggResult;
-import org.pippi.elasticsearch.test.repository.entity.result.AccountEntity;
+import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 

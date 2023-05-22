@@ -10,7 +10,7 @@ import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.proxy.EsQueryProxy;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.test.repository.entity.params.TermQueryParam;
-import org.pippi.elasticsearch.test.repository.entity.result.AccountEntity;
+import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
 import org.pippi.elasticsearch.test.repository.mapper.EsHandleMapper;
 
 public class SpringLessTester {
