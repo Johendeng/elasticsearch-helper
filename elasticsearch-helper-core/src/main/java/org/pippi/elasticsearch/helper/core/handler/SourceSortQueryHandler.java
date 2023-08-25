@@ -7,10 +7,10 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.ScriptSortBuilder;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SourceOrder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.SourceOrderQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.SourceOrder;
+import org.pippi.elasticsearch.helper.core.beans.query.SourceOrderQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.Objects;

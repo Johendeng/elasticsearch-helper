@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.helper.core.session;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
+import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 
 /**
  * bool query builder holder

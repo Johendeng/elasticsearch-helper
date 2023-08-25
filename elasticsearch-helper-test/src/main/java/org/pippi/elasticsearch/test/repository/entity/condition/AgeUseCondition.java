@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.test.repository.entity.condition;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
-import org.pippi.elasticsearch.helper.core.handler.EsConditionHandle;
+import org.pippi.elasticsearch.helper.model.param.RangeParam;
+import org.pippi.elasticsearch.helper.model.EsConditionHandle;
 
 import java.util.Objects;
 

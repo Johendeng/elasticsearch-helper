@@ -3,8 +3,7 @@ package org.pippi.elasticsearch.helper.spring;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
-import org.pippi.elasticsearch.helper.core.config.GlobalEsQueryConfig;
-import org.springframework.beans.factory.annotation.Value;
+import org.pippi.elasticsearch.helper.model.config.GlobalEsQueryConfig;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 

@@ -4,9 +4,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
+import org.pippi.elasticsearch.helper.model.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.reader.ResponseReader;
-import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
+import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 
 import java.lang.reflect.Type;

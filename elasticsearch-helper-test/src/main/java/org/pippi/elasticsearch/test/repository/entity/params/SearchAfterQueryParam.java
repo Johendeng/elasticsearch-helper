@@ -1,16 +1,16 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
 import org.elasticsearch.search.sort.SortOrder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SearchAfter;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.SearchAfter;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
 
 /**
  * @author: JohenTeng
  * @date: 2022/5/8
  **/
-@EsQueryIndex(index = "account", traceScore = true, size = 100)
+@EsQueryBean(index = "account", traceScore = true, size = 100)
 public class SearchAfterQueryParam {
 
     @Term

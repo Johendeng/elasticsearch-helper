@@ -3,10 +3,10 @@ package org.pippi.elasticsearch.helper.core.handler;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.WildcardQueryBuilder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.WildCard;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.WildCardQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.WildCard;
+import org.pippi.elasticsearch.helper.core.beans.query.WildCardQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

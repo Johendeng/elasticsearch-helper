@@ -4,12 +4,12 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.MoreLikeThisParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MoreLikeThis;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.MoreLikeThisQueryBean;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.MoreLikeThis;
+import org.pippi.elasticsearch.helper.core.beans.query.MoreLikeThisQueryBean;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

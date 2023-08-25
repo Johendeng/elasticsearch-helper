@@ -2,12 +2,12 @@ package org.pippi.elasticsearch.helper.core.handler;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.GeoDistanceParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.GeoDistance;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.GeoDistanceQueryBean;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.GeoDistance;
+import org.pippi.elasticsearch.helper.core.beans.query.GeoDistanceQueryBean;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

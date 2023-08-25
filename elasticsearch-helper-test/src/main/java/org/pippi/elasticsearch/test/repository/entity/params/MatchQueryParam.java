@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Match;
 
 /**
  * MatchQueryParam
@@ -9,7 +9,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
  * @author JohenTeng
  * @date 2022/5/7
  */
-@EsQueryIndex(index = "account", traceScore = true, size = 30)
+@EsQueryBean(index = "account", traceScore = true, size = 30)
 public class MatchQueryParam {
 
     @Match

@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.test.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.pippi.elasticsearch.helper.core.beans.resp.BaseHit;
+import org.pippi.elasticsearch.helper.model.resp.BaseHit;
 
 import java.io.Serializable;
 

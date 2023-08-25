@@ -2,10 +2,10 @@ package org.pippi.elasticsearch.helper.core.handler;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.TermQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
+import org.pippi.elasticsearch.helper.core.beans.query.TermQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

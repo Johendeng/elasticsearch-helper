@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.core;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.core.beans.base.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandler;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 

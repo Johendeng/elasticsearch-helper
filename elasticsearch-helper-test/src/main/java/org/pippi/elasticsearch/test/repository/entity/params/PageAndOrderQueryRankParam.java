@@ -1,10 +1,10 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.PageAndOrder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.param.PageParam;
+import org.pippi.elasticsearch.helper.model.param.RangeParam;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.PageAndOrder;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range;
 
 
 
@@ -14,7 +14,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
  * @author JohenTeng
  * @date 2022/5/7
  */
-@EsQueryIndex(index = "account", traceScore = true, size = 30)
+@EsQueryBean(index = "account", traceScore = true, size = 30)
 public class PageAndOrderQueryRankParam {
 
     @Range(tag = Range.LE_GE, includeLower = true)

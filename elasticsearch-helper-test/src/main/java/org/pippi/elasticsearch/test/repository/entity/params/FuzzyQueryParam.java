@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Fuzzy;
-import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Fuzzy;
+import org.pippi.elasticsearch.helper.model.enums.FuzzinessEnum;
 
 /**
  * FuzzyQueryParam
@@ -10,7 +10,7 @@ import org.pippi.elasticsearch.helper.core.beans.enums.FuzzinessEnum;
  * @author JohenTeng
  * @date 2022/5/6
  */
-@EsQueryIndex(index = "account", traceScore = true, size = 30)
+@EsQueryBean(index = "account", traceScore = true, size = 30)
 public class FuzzyQueryParam {
 
     @Fuzzy(maxExpansions = 10, transpositions = true, fuzziness = FuzzinessEnum.TWO)

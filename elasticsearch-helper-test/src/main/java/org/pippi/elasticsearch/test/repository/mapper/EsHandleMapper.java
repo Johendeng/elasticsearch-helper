@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.test.repository.mapper;
 
 
-import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
-import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
+import org.pippi.elasticsearch.helper.model.resp.BaseResp;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsMapper;
 import org.pippi.elasticsearch.test.repository.entity.params.*;
 import org.pippi.elasticsearch.test.repository.entity.params.func.*;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
@@ -14,7 +14,7 @@ import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
  * @author JohenTeng
  * @date 2022/5/6
  */
-@EsHelperProxy
+@EsMapper
 public interface EsHandleMapper {
 
     /**

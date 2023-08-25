@@ -1,17 +1,17 @@
 package org.pippi.elasticsearch.test.repository.entity.params.func;
 
 import org.elasticsearch.common.lucene.search.function.CombineFunction;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.FuncScore;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncScore_GaussDecay;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.func.FuncScore;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.func.FuncScore_GaussDecay;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Match;
+import org.pippi.elasticsearch.helper.model.enums.QueryModel;
 
 /**
  * @author: JohenTeng
  * @date: 2022/8/12
  **/
-@EsQueryIndex(index = "account", model = QueryModel.FUNC_SCORE, traceScore = true,
+@EsQueryBean(index = "account", model = QueryModel.FUNC_SCORE, traceScore = true,
         funcScore = @FuncScore(boostMode = CombineFunction.SUM)
 )
 public class GaussDecayParam {

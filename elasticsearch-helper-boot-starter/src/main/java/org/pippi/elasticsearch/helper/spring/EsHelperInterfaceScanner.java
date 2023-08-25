@@ -1,9 +1,9 @@
 package org.pippi.elasticsearch.helper.spring;
 
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
 import org.pippi.elasticsearch.helper.core.hook.UserHooks;
-import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsMapper;
 import org.pippi.elasticsearch.helper.spring.proxy.EsHelperProxyBeanFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
 /**
  * EsHelperInterfaceScanner
  *  read all Interface which annotated by
- *  {@link org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy @EsHelperProxy}
+ *  {@link EsMapper @EsHelperProxy}
  *  and load a proxy instance for it
  * @author     JohenTeng
  * @date      2021/9/18
@@ -79,7 +79,7 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware,
             if (isNotNeedProxy(beanClazz)) {
                 continue;
             }
-            EsHelperProxy proxyAnn = AnnotationUtils.findAnnotation(beanClazz, EsHelperProxy.class);
+            EsMapper proxyAnn = AnnotationUtils.findAnnotation(beanClazz, EsMapper.class);
             String requestOptKey = proxyAnn.requestOption();
             // BeanDefinition builder
             BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(beanClazz);
@@ -143,6 +143,6 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware,
     }
 
     private boolean isNotNeedProxy(Class<?> beanClazz) {
-        return  null == AnnotatedElementUtils.findMergedAnnotation(beanClazz, EsHelperProxy.class);
+        return  null == AnnotatedElementUtils.findMergedAnnotation(beanClazz, EsMapper.class);
     }
 }

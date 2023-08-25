@@ -3,12 +3,12 @@ package org.pippi.elasticsearch.helper.core.handler;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.query.RangeQueryBuilder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.RangeQueryBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.param.RangeParam;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range;
+import org.pippi.elasticsearch.helper.core.beans.query.RangeQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.Objects;

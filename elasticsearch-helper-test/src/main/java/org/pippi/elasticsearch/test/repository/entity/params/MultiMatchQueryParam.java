@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MultiMatch;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.MultiMatch;
 
 /**
  * MultiMatchQueryParam
@@ -10,7 +10,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MultiMa
  * @author JohenTeng
  * @date 2022/5/7
  */
-@EsQueryIndex(index = "account", traceScore = true, size = 30)
+@EsQueryBean(index = "account", traceScore = true, size = 30)
 public class MultiMatchQueryParam {
 
     @MultiMatch(boostFields = {"address:10.0", "email:5.0", "city:20.0"},

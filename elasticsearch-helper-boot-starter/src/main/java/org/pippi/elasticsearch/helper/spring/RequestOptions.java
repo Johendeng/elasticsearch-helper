@@ -1,5 +1,7 @@
 package org.pippi.elasticsearch.helper.spring;
 
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsMapper;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +15,7 @@ public class RequestOptions {
 
     /**
      * 新增es请求配置
-     * @param key {@link org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy} {@see requestOption}
+     * @param key {@link EsMapper} {@see requestOption}
      * @param requestOption 目标配置
      */
     public static void add(String key, org.elasticsearch.client.RequestOptions requestOption) {

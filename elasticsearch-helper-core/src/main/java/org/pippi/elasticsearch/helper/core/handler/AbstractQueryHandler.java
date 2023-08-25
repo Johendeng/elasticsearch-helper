@@ -2,13 +2,13 @@ package org.pippi.elasticsearch.helper.core.handler;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.mapping.ScoreFuncBuilder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.QueryBean;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.ScoreFuncBuilder;
+import org.pippi.elasticsearch.helper.model.bean.QueryBean;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.session.FuncScoreEsSession;
-import org.pippi.elasticsearch.helper.core.utils.ExtAnnBeanMapUtils;
+import org.pippi.elasticsearch.helper.model.utils.ExtAnnBeanMapUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.ParameterizedType;

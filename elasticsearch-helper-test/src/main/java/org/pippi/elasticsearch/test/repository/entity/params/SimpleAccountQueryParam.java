@@ -1,17 +1,17 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.Base;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsCondition;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.HighLight;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.RangeParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Match;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MultiMatch;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Range;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.Term;
-import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsCondition;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.HighLight;
+import org.pippi.elasticsearch.helper.model.enums.EsConnector;
+import org.pippi.elasticsearch.helper.model.enums.QueryModel;
+import org.pippi.elasticsearch.helper.model.param.RangeParam;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Match;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.MultiMatch;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
 import org.pippi.elasticsearch.test.repository.entity.condition.AgeUseCondition;
 
 
@@ -21,7 +21,7 @@ import org.pippi.elasticsearch.test.repository.entity.condition.AgeUseCondition;
  * @author JohenTeng
  * @date 2021/12/9
  */
-@EsQueryIndex(index = "account", model = QueryModel.BOOL, traceScore = true, minScore = 0.0001f)
+@EsQueryBean(index = "account", model = QueryModel.BOOL, traceScore = true, minScore = 0.0001f)
 @HighLight(fields = "address")
 public class SimpleAccountQueryParam {
 

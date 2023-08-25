@@ -8,11 +8,11 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryIndexBean;
-import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
-import org.pippi.elasticsearch.helper.core.config.GlobalEsQueryConfig;
-import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
+import org.pippi.elasticsearch.helper.core.beans.base.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.model.config.GlobalEsQueryConfig;
+import org.pippi.elasticsearch.helper.model.enums.EsConnector;
+import org.pippi.elasticsearch.helper.model.enums.QueryModel;
+import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

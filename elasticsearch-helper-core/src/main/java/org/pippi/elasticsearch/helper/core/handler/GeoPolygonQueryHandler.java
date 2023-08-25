@@ -3,12 +3,12 @@ package org.pippi.elasticsearch.helper.core.handler;
 import org.elasticsearch.index.query.GeoPolygonQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryHandle;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.GeoPolygonParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.GeoPolygon;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.mapping.GeoPolygonQueryBean;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.param.GeoPolygonParam;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.GeoPolygon;
+import org.pippi.elasticsearch.helper.core.beans.query.GeoPolygonQueryBean;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.Objects;

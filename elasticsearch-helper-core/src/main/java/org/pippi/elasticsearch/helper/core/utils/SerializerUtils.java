@@ -7,7 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperSerializeException;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperSerializeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

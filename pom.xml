@@ -22,7 +22,7 @@
 
     <developers>
         <developer>
-            <name>JohenTeng</name>
+            <name>JohenDeng</name>
             <email>1078481395@qq.com</email>
             <url>https://github.com/Johendeng/elasticsearch-helper</url>
         </developer>
@@ -30,12 +30,15 @@
 
     <modules>
         <module>elasticsearch-helper-core</module>
+        <module>elasticsearch-helper-model</module>
         <module>elasticsearch-helper-boot-starter</module>
         <module>elasticsearch-helper-sample</module>
         <module>elasticsearch-helper-test</module>
+        <module>elasticsearch-helper-lambda</module>
     </modules>
 
     <properties>
+        <elasticsearch-helper.version>1.1.0-RELEASE</elasticsearch-helper.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -58,12 +61,17 @@
             <dependency>
                 <groupId>io.github.johendeng</groupId>
                 <artifactId>elasticsearch-helper-core</artifactId>
-                <version>1.1.0-RELEASE</version>
+                <version>${elasticsearch-helper.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.github.johendeng</groupId>
                 <artifactId>elasticsearch-helper-boot-starter</artifactId>
-                <version>1.1.0-RELEASE</version>
+                <version>${elasticsearch-helper.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.johendeng</groupId>
+                <artifactId>elasticsearch-helper-model</artifactId>
+                <version>${elasticsearch-helper.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
@@ -138,7 +146,6 @@
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <scm>

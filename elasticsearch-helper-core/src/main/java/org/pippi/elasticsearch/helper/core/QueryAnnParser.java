@@ -3,19 +3,27 @@ package org.pippi.elasticsearch.helper.core;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.*;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.*;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.ScriptQuery;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.SourceOrder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.UserQuery;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.func.FuncQuery;
-import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.handler.EsConditionHandle;
-import org.pippi.elasticsearch.helper.core.utils.ExtAnnBeanMapUtils;
-import org.pippi.elasticsearch.helper.core.utils.ReflectionUtils;
+import org.pippi.elasticsearch.helper.core.beans.base.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.core.beans.base.FuncScoreBean;
+import org.pippi.elasticsearch.helper.core.beans.base.HighLightBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsCondition;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.HighLight;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.FuncQuery;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Query;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.ScriptQuery;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.SourceOrder;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.UserQuery;
+import org.pippi.elasticsearch.helper.model.enums.EsConnector;
+import org.pippi.elasticsearch.helper.model.enums.QueryModel;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.model.EsConditionHandle;
+import org.pippi.elasticsearch.helper.model.param.EsComplexParam;
+import org.pippi.elasticsearch.helper.model.utils.ExtAnnBeanMapUtils;
+import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
@@ -50,7 +58,7 @@ public class QueryAnnParser {
      */
     public EsQueryIndexBean getIndex(Object view) {
         Class<?> clazz = view.getClass();
-        EsQueryIndex ann = clazz.getAnnotation(EsQueryIndex.class);
+        EsQueryBean ann = clazz.getAnnotation(EsQueryBean.class);
         if (ann == null) {
             throw new EsHelperQueryException("undefine query-index @EsQueryIndex");
         }
@@ -161,7 +169,7 @@ public class QueryAnnParser {
             }
             if (ReflectionUtils.isBaseType(fieldType)
                 || val instanceof EsComplexParam
-                || val.getClass().isAnnotationPresent(EsQueryIndex.class)
+                || val.getClass().isAnnotationPresent(EsQueryBean.class)
                 || checkCollectionValueType(field, val)) {
                 queryDes.setValue(val);
             } else {

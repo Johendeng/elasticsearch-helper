@@ -2,8 +2,8 @@ package org.pippi.elasticsearch.helper.core.reader;
 
 import com.google.common.collect.Maps;
 import org.elasticsearch.action.search.SearchResponse;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.core.beans.resp.BaseResp;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.model.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.reader.impl.BaseRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.ListRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.OriginalRespReader;

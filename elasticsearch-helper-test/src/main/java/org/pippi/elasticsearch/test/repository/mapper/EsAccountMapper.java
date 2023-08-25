@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.test.repository.mapper;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseRequestHook;
-import org.pippi.elasticsearch.helper.core.beans.annotation.hook.UseResponseHook;
-import org.pippi.elasticsearch.helper.spring.annotation.EsHelperProxy;
+import org.pippi.elasticsearch.helper.model.annotations.hook.UseRequestHook;
+import org.pippi.elasticsearch.helper.model.annotations.hook.UseResponseHook;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsMapper;
 import org.pippi.elasticsearch.test.repository.entity.params.AggAccountQueryParam;
 import org.pippi.elasticsearch.test.repository.entity.params.SimpleAccountQueryParam;
 import org.pippi.elasticsearch.test.repository.entity.result.AccountAggResult;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author JohenTeng
  * @date 2021/12/9
  */
-@EsHelperProxy
+@EsMapper
 public interface EsAccountMapper {
 
 	/**

@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.helper.core.session;
 
+import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.elasticsearch.index.query.DisMaxQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.pippi.elasticsearch.helper.core.beans.enums.EsConnector;
 
 /**
  * DisMaxEsRequestHolder

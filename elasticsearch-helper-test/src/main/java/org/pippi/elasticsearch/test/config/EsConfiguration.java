@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.test.config;
 
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.pippi.elasticsearch.helper.core.config.GlobalEsQueryConfig;
+import org.pippi.elasticsearch.helper.model.config.GlobalEsQueryConfig;
 
 import org.pippi.elasticsearch.test.constants.HighLightKeys;
 import org.springframework.boot.ApplicationArguments;

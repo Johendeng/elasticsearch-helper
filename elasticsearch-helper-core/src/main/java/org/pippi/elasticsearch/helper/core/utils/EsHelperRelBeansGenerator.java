@@ -5,7 +5,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.GetMappingsRequest;
 import org.elasticsearch.client.indices.GetMappingsResponse;
-import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
+import org.pippi.elasticsearch.helper.model.enums.EsMeta;
 
 import java.io.*;
 import java.util.Map;
@@ -75,12 +75,12 @@ public class EsHelperRelBeansGenerator {
         String clazzHeader = String.format(clzHeader, this.upCaseField(indexName));
         clz.append(clazzHeader);
 
-        Set<Class> typeSet = Sets.newHashSet();
+        Set<Class<?>> typeSet = Sets.newHashSet();
         propMap.entrySet().stream().forEach(field -> {
             String fieldName = field.getKey();
             Map<String, Object> typeMap = (Map<String, Object>) field.getValue();
             String type = (String)typeMap.get("type");
-            Class typeClazz = EsMeta.getEsMetaJavaClazz(type);
+            Class<?> typeClazz = EsMeta.getEsMetaJavaClazz(type);
             if (!typeSet.contains(typeClazz)) {
                 this.addImp(typeClazz);
                 typeSet.add(typeClazz);

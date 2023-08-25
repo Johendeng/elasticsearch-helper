@@ -6,7 +6,7 @@ import java.util.Objects;
 
 import org.elasticsearch.action.search.SearchResponse;
 import com.google.common.collect.Maps;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

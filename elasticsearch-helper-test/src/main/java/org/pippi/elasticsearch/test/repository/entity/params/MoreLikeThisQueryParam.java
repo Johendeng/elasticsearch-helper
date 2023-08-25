@@ -1,8 +1,8 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.MoreLikeThisParam;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MoreLikeThis;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.MoreLikeThis;
 
 /**
  * MoreLikeThisQueryParam
@@ -10,7 +10,7 @@ import org.pippi.elasticsearch.helper.core.beans.annotation.query.module.MoreLik
  * @author JohenTeng
  * @date 2022/5/7
  */
-@EsQueryIndex(index = "account", traceScore = true, size = 30)
+@EsQueryBean(index = "account", traceScore = true, size = 30)
 public class MoreLikeThisQueryParam {
 
     @MoreLikeThis(fields = {"address", "email"}, minTermFreq = 1, minDocFreq = 1)

@@ -8,10 +8,10 @@ import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.ParsedLongTerms;
 import org.elasticsearch.search.aggregations.metrics.ParsedValueCount;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.pippi.elasticsearch.helper.core.beans.annotation.query.EsQueryIndex;
-import org.pippi.elasticsearch.helper.core.beans.enums.QueryModel;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
 import org.pippi.elasticsearch.helper.core.hook.HookQuery;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
+import org.pippi.elasticsearch.helper.model.enums.QueryModel;
 import org.pippi.elasticsearch.test.repository.entity.result.AccountAggResult;
 
 import java.util.List;
@@ -23,7 +23,7 @@ import java.util.Map;
  * @author JohenTeng
  * @date 2021/12/9
  */
-@EsQueryIndex(index = "account",
+@EsQueryBean(index = "account",
         fetch = "",
         model = QueryModel.BOOL)
 public class AggAccountQueryParam extends HookQuery<AggAccountQueryParam, AccountAggResult> {

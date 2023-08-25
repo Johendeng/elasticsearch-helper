@@ -1,11 +1,11 @@
 package org.pippi.elasticsearch.helper.core.utils;
 
 import com.google.common.collect.Maps;
-import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsField;
-import org.pippi.elasticsearch.helper.core.beans.annotation.meta.EsIndex;
-import org.pippi.elasticsearch.helper.core.beans.enums.EsMeta;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperConfigException;
-import org.pippi.elasticsearch.helper.core.beans.exception.EsHelperIOException;
+import org.pippi.elasticsearch.helper.model.annotations.meta.EsField;
+import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
+import org.pippi.elasticsearch.helper.model.enums.EsMeta;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperIOException;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
@@ -22,6 +22,7 @@ import java.util.Map;
  * @date     2021/5/13
  *
  **/
+@Deprecated
 public class IndexMappingUtils {
 
 
