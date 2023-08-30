@@ -1,18 +1,16 @@
 package org.pippi.elasticsearch.helper.core.reader.impl;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.pippi.elasticsearch.helper.model.resp.BaseResp;
+import org.pippi.elasticsearch.helper.core.reader.ResponseBeanMapper;
 import org.pippi.elasticsearch.helper.core.reader.ResponseReader;
-import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.resp.BaseResp;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * BaseRespReader
@@ -21,15 +19,26 @@ import java.util.Map;
  * @date 2022/5/11
  */
 @SuppressWarnings(value = {"rawtypes", "unchecked"})
-public class BaseRespReader implements ResponseReader<BaseResp> {
+public class BaseRespReader implements ResponseReader<BaseResp<?>> {
+
+    private static final BaseRespReader BASE_RESP_READER = new BaseRespReader();
+
+    public static BaseRespReader reader() {
+        return BASE_RESP_READER;
+    }
+
+    private BaseRespReader() {
+    }
 
     @Override
-    public BaseResp read(Type returnType, SearchResponse resp) {
-        Type[] parameterizedTypes = ReflectionUtils.getParameterizedTypes(returnType);
-        Class<?> paramClazz = Map.class;
-        if (ArrayUtils.isNotEmpty(parameterizedTypes)) {
-            paramClazz = (Class<?>) parameterizedTypes[0];
-        }
+    public boolean condition(Type returnType) {
+        return returnType instanceof ParameterizedType
+                && ((ParameterizedType) returnType).getRawType().equals(BaseResp.class);
+    }
+
+    @Override
+    public  BaseResp<?> read(Type returnType, SearchResponse resp) {
+        Class<?> paramClazz = getFirstParameterizedType(returnType);
         BaseResp res = new BaseResp();
         SearchHits hits = resp.getHits();
         res.setMaxScore(hits.getMaxScore());
@@ -38,8 +47,7 @@ public class BaseRespReader implements ResponseReader<BaseResp> {
         List records = new ArrayList<>(hitArr.length);
         int needWarn = 0;
         for (SearchHit hit : hitArr) {
-            String recordJson = hit.getSourceAsString();
-            Object record = SerializerUtils.jsonToBean(recordJson, paramClazz);
+            Object record = ResponseBeanMapper.map(paramClazz, hit.getSourceAsMap());
             records.add(record);
             needWarn += loadBaseHitData(record, hit, paramClazz);
         }

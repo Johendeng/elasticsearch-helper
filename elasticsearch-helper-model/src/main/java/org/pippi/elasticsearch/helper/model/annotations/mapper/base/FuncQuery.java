@@ -7,8 +7,8 @@ import org.pippi.elasticsearch.helper.model.ScoreFuncBuilder;
 import java.lang.annotation.*;
 
 /**
- * @author: JohenTeng
- * @date: 2022/8/11
+ * @author JohenTeng
+ * @date 2022/8/11
  **/
 @Inherited
 @Documented

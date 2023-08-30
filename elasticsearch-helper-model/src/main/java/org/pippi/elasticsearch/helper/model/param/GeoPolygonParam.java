@@ -6,8 +6,8 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author: JohenTeng
- * @date: 2022/5/21
+ * @author JohenTeng
+ * @date 2022/5/21
  **/
 public class GeoPolygonParam implements EsComplexParam, Serializable {
 

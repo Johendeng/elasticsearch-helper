@@ -25,7 +25,6 @@ public @interface GeoBoundingBox {
     /**
      * This enum is used to determine how to deal with invalid geo coordinates in geo related
      * queries:
-     *
      *  On STRICT validation invalid coordinates cause an exception to be thrown. 直接验证，存在无效坐标将会抛出异常
      *  On IGNORE_MALFORMED invalid coordinates are being accepted. 忽略无效坐标
      *  On COERCE invalid coordinates are being corrected to the most likely valid coordinate. 强制将无效坐标纠正为最接近的正确坐标

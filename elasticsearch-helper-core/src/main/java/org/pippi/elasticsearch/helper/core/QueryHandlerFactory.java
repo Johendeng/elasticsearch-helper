@@ -6,6 +6,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandler;
@@ -29,13 +30,6 @@ import java.util.stream.Collectors;
 public class QueryHandlerFactory {
 
     private static final Logger log = LoggerFactory.getLogger(QueryHandlerFactory.class);
-
-    /**
-     * user define config, { System.getProperty(_EXT_DEFINE_QUERY_HANDLE_KEY) }
-     * format : es.helper.ext.handles=com.***.loc1,com.***.loc2
-     * just the package loc, but it's also support define a explicit path like：com.XXX.xxx.TestQueryHandle
-     */
-    private static final String _EXT_DEFINE_QUERY_HANDLE_PROPERTY = "es.helper.ext.handle.packages";
 
     private static final String _BASE_SCAN_PACKAGE = "org.pippi.elasticsearch.helper.core.handler";
 
@@ -72,14 +66,14 @@ public class QueryHandlerFactory {
         LinkedList<String> packageList = Lists.newLinkedList();
         packageList.add(_BASE_SCAN_PACKAGE);
         // LOAD THE CONFIGURATION FROM SYSTEM_PROPERTY
-        String extHandlePath =System.getProperty(_EXT_DEFINE_QUERY_HANDLE_PROPERTY, "");
+        String extHandlePath = EsHelperConfiguration.extDefineQueryHandlerProperty;
         String[] packages = extHandlePath.split(",");
 
         List<String> extPackageList = Arrays.stream(Optional.ofNullable(packages)
                                             .orElse(new String[0]))
                                             .filter(StringUtils::isNoneBlank)
                                             .collect(Collectors.toList());
-        log.info("load the handlers locations:\n {}", extPackageList.stream().collect(Collectors.joining("\n")));
+        log.info("load the ext-handlers locations:\n {}", extPackageList.stream().collect(Collectors.joining("\n")));
         packageList.addAll(extPackageList);
 
         Reflections reflections = new Reflections(packageList);

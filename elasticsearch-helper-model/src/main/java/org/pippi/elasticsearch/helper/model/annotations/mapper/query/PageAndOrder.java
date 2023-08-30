@@ -4,12 +4,13 @@ package org.pippi.elasticsearch.helper.model.annotations.mapper.query;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Query;
 import org.pippi.elasticsearch.helper.model.enums.EsMeta;
+import org.pippi.elasticsearch.helper.model.param.EsPage;
 
 import java.lang.annotation.*;
 
 /**
  *  field have to be
- * {@link org.pippi.elasticsearch.helper.model.param.PageParam}
+ * {@link EsPage}
  *
  *
  * @author     JohenTeng
@@ -24,7 +25,7 @@ public @interface PageAndOrder {
 
     /**
      * meta = EsMeta.COMPLEX =
-     * @see org.pippi.elasticsearch.helper.core.beans.annotation.query.mapping.extend.PageParam
+     * @see EsPage
      */
     Base value() default @Base(meta = EsMeta.COMPLEX);
 }

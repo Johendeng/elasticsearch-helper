@@ -1,12 +1,15 @@
 package org.pippi.elasticsearch.test.config;
 
+import com.google.common.collect.Maps;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.pippi.elasticsearch.helper.model.config.GlobalEsQueryConfig;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 
+import org.pippi.elasticsearch.helper.spring.EsHelperCustomerConfig;
 import org.pippi.elasticsearch.test.constants.HighLightKeys;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * 1- 配置自定义的 highLight 对象生成器
@@ -14,18 +17,15 @@ import org.springframework.stereotype.Component;
  * @author JohenTeng
  * @date 2021/9/30
  */
-@Component
-public class EsConfiguration implements ApplicationRunner {
+@Configuration
+public class EsConfiguration implements EsHelperCustomerConfig {
+
 
 	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		// 1 -配置自定义的 highLight 对象生成器
-		GlobalEsQueryConfig.configHighLight(HighLightKeys.HTML, ()->
-			SearchSourceBuilder.highlight().fragmentSize(10).numOfFragments(5).noMatchSize(5)
-		);
-		GlobalEsQueryConfig.configHighLight(HighLightKeys.DOC, ()->
-			SearchSourceBuilder.highlight().fragmentSize(10).numOfFragments(5).noMatchSize(3)
-		);
+	public Map<String, Supplier<HighlightBuilder>> declareHighLight() {
+		Map<String, Supplier<HighlightBuilder>> highLightMap = Maps.newHashMap();
+		highLightMap.put(HighLightKeys.HTML, () -> SearchSourceBuilder.highlight().fragmentSize(10).numOfFragments(5).noMatchSize(5));
+		highLightMap.put(HighLightKeys.DOC, () -> SearchSourceBuilder.highlight().fragmentSize(10).numOfFragments(5).noMatchSize(3));
+		return highLightMap;
 	}
-
 }

@@ -6,8 +6,8 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.query.ScriptQuery
 import java.util.Map;
 
 /**
- * @author: JohenTeng
- * @date: 2022/5/8
+ * @author JohenTeng
+ * @date 2022/5/8
  **/
 @EsQueryBean(index = "account", traceScore = true, size = 100)
 public class ScriptQueryParam {

@@ -12,6 +12,11 @@
     <groupId>org.pippi.elasticsearch.helper</groupId>
     <artifactId>elasticsearch-helper-lambda</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>io.github.johendeng</groupId>
+            <artifactId>elasticsearch-helper-model</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

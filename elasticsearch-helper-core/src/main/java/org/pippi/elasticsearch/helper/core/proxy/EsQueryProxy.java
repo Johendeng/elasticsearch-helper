@@ -7,6 +7,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.pippi.elasticsearch.helper.core.EsQueryEngine;
 import org.pippi.elasticsearch.helper.model.annotations.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.model.annotations.hook.UseResponseHook;
+import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.hook.EsHookReedits;
@@ -38,7 +39,7 @@ public class EsQueryProxy<T> implements InvocationHandler {
 
     private RestHighLevelClient client;
 
-    private boolean enableLogOutEsQueryJson = false;
+    private boolean enableLogOutEsQueryJson = EsHelperConfiguration.statementLogOut;
 
     private RequestOptions requestOption = RequestOptions.DEFAULT;
 
@@ -165,6 +166,21 @@ public class EsQueryProxy<T> implements InvocationHandler {
                 targetInterfaceClazz.getClassLoader(),
                 new Class[]{targetInterfaceClazz},
                 new EsQueryProxy(targetInterfaceClazz, visitParent, client, requestOption, enableLogOut)
+        );
+    }
+
+
+    /**
+     * 构建查询代理对象
+     */
+    public static Object build(Class<?> targetInterfaceClazz,
+                               boolean visitParent,
+                               RestHighLevelClient client,
+                               RequestOptions requestOption) {
+        return Proxy.newProxyInstance(
+                targetInterfaceClazz.getClassLoader(),
+                new Class[]{targetInterfaceClazz},
+                new EsQueryProxy(targetInterfaceClazz, visitParent, client, requestOption)
         );
     }
 

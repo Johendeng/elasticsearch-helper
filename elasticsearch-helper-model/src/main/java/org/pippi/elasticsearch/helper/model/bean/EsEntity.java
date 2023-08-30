@@ -1,4 +1,6 @@
-package org.pippi.elasticsearch.helper.model.resp;
+package org.pippi.elasticsearch.helper.model.bean;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,17 +11,25 @@ import java.util.Map;
  * @author     JohenTeng
  * @date      2021/7/21
  */
-public class BaseHit implements Serializable {
+public class EsEntity implements Serializable {
 
-
+    /**
+     * es 索引默认存在的 _id 字段，如果未定义，es会为该字段分配 uuid，
+     * 该字段作为 更新/删除 的定位字段
+     */
+    @JsonIgnore
     private String docId;
+
+    @JsonIgnore
     private Float hitScore;
+
+    @JsonIgnore
     private Map<String, List<String>> highLightMap;
 
-    public BaseHit() {
+    public EsEntity() {
     }
 
-    public BaseHit(Float hitScore, String docId) {
+    public EsEntity(Float hitScore, String docId) {
         this.hitScore = hitScore;
         this.docId = docId;
     }

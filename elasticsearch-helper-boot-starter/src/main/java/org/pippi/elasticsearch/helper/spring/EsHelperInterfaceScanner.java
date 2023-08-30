@@ -88,7 +88,7 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware,
             definition.setBeanClass(beanClazz);
             definition.setLazyInit(true);
             definition.setInstanceSupplier(()->
-                new EsHelperProxyBeanFactory(beanClazz, RequestOptions.get(requestOptKey), proxyAnn.visitParent())
+                new EsHelperProxyBeanFactory(beanClazz, ReqOptionsHolder.get(requestOptKey), proxyAnn.visitParent())
             );
             definition.setAutowireMode(GenericBeanDefinition.AUTOWIRE_BY_TYPE);
             String simpleName = beanClazz.getSimpleName();
@@ -113,7 +113,9 @@ public class EsHelperInterfaceScanner implements ApplicationContextAware,
     private Set<Class<?>> findAllClazz() {
         List<String> packages = AutoConfigurationPackages.get(applicationContext);
         // scan packages get all Class that annotation by @EsHelperProxy
-        return packages.stream().flatMap(path -> findAllQueryHelperProxyInterfaces(path).stream()).collect(Collectors.toSet());
+        return packages.stream()
+                .flatMap(path -> findAllQueryHelperProxyInterfaces(path).stream())
+                .collect(Collectors.toSet());
     }
 
     private Set<Class<?>> findAllQueryHelperProxyInterfaces(String basePackage){

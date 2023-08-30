@@ -4,8 +4,8 @@ import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery;
 
 /**
- * @author: JohenTeng
- * @date: 2022/8/11
+ * @author JohenTeng
+ * @date 2022/8/11
  **/
 public class FuncScoreBean {
 

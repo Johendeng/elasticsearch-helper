@@ -2,7 +2,6 @@ package org.pippi.elasticsearch.helper.model.utils;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

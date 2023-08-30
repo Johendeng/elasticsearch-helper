@@ -18,27 +18,40 @@ public enum EsMeta {
     KEYWORD("keyword", 1, String.class),
 
     BOOLEAN("boolean",2, Boolean.class),
+
     INTEGER("integer",3, Integer.class),
+
     LONG("long",4, Long.class),
+
     SHORT("short",5, Short.class),
+
     BYTE("byte",6, Byte.class),
 
     DOUBLE("double",7, Double.class),
+
     FLOAT("float",8, Float.class),
+
     HALF_FLOAT("half_float",9, Float.class),
+
     SCALED_FLOAT("scaled_float",10, Float.class),
 
     TEXT("text", 11, String.class),
 
     DATE("date",100, Date.class),
+
     RANGE("range",101, Object.class),
+
     BINARY("binary",102, Object.class),
 
     OBJECT("object",202, Object.class),
+
     NESTED("nested",203, Object.class),
     GEO_POINT("geo_point",204, Object.class),
+
     GEO_SHAPE("geo_shape",205, Object.class),
+
     IP("ip",206, String.class),
+
     TOKEN_COUNT("token_count",207, Object.class),
 
     COMPLEX("complex", -1, Object.class),

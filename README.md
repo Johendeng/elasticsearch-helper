@@ -6,6 +6,15 @@
 ### 背景：
 ```
  为了简化elasticsearch的api，使用对象对查询行为进行描述，简化业务代码。
+ 有多简单？ 请求参数上面加注解，然后完了·····  
+ 要多简单就有多简单，并且保留了es各种查询需要调整的参数设置，毕竟es不是关系型数据库，
+ 不是简单的查出来就完事了，还有文档关联性，评分等等高级的特性，我们最大限度的隐藏了
+ es的java-high-level-client查询语法，让你只关注查询条件本身，让业务回归业务，
+ 其余的交给框架；
+ 同时我们引入了 类似mybatis-plus的 lambda查询定义，无缝切换，如果你想把es当
+ 关系型数据库使用，当然也可以；
+ 来啊··  玩起来
+ 
 ```
 ### 结构：
 ![Image text](https://gitee.com/JohenTeng/elasticsearch-helper/raw/develop/.doc/image/es-helper.png)

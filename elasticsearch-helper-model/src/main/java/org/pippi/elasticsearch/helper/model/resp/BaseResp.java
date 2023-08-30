@@ -2,7 +2,6 @@ package org.pippi.elasticsearch.helper.model.resp;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
 /**
  * User define Response's JavaBean

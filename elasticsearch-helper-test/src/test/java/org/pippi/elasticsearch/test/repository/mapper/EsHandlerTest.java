@@ -7,7 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
-import org.pippi.elasticsearch.helper.model.param.PageParam;
+import org.pippi.elasticsearch.helper.model.param.EsPage;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
 import org.pippi.elasticsearch.helper.model.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
@@ -115,14 +115,14 @@ public class EsHandlerTest {
         rangeParam.setRight(30);
         param.setAge(rangeParam);
 
-        PageParam pageParam = new PageParam();
-        pageParam.setPageSize(5);
-        pageParam.setCurrent(1);
+        EsPage esPage = new EsPage();
+        esPage.setPageSize(5);
+        esPage.setCurrent(1);
         LinkedHashMap<String, SortOrder> orderMap = new LinkedHashMap<>();
         orderMap.put("age", SortOrder.DESC);
-        pageParam.setOrderMap(orderMap);
+        esPage.setOrderMap(orderMap);
 
-        param.setPage(pageParam);
+        param.setPage(esPage);
 
         BaseResp<AccountEntity> resp = esHandleMapper.pageAndRangeQuery(param);
         System.out.println(SerializerUtils.parseObjToJson(resp));

@@ -1,19 +1,15 @@
 package org.pippi.elasticsearch.helper.core.reader;
 
-import com.google.common.collect.Maps;
 import org.elasticsearch.action.search.SearchResponse;
-import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
-import org.pippi.elasticsearch.helper.model.resp.BaseResp;
 import org.pippi.elasticsearch.helper.core.reader.impl.BaseRespReader;
-import org.pippi.elasticsearch.helper.core.reader.impl.ListRespReader;
+import org.pippi.elasticsearch.helper.core.reader.impl.CollectionRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.OriginalRespReader;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  *
@@ -23,20 +19,27 @@ import java.util.Objects;
  **/
 public class EsResponseReader {
 
-    private static final Map<Type, ResponseReader<?>> READER_MAP = Maps.newHashMap();
+
+    private static final List<ResponseReader<?>> READER_LIST = new ArrayList<>();
 
     static {
-        READER_MAP.put(List.class, new ListRespReader());
-        READER_MAP.put(BaseResp.class, new BaseRespReader());
-        READER_MAP.put(SearchResponse.class, new OriginalRespReader());
+        BaseRespReader.reader().register();
+        CollectionRespReader.reader().register();
+        OriginalRespReader.reader().register();
     }
 
     public static Object readResp(Method method, SearchResponse originalResp) {
-        ResponseReader<?> reader = READER_MAP.get(method.getReturnType());
-        if (Objects.isNull(reader)) {
-            throw new EsHelperQueryException("QueryMethod's return-type un-support, support type list:" +
-                SerializerUtils.parseObjToJson(READER_MAP.keySet()));
+        Type returnType = method.getGenericReturnType();
+        for (ResponseReader<?> reader : READER_LIST) {
+            if (reader.condition(returnType)) {
+                return reader.read(returnType, originalResp);
+            }
         }
-        return reader.read(method.getGenericReturnType(), originalResp);
+        throw new EsHelperQueryException(
+                "QueryMethod's return-type un-support, support type list: SearchResponse.class, Class<? extend Collection>, BaseResp.class");
+    }
+
+    static void readerRegister(ResponseReader reader) {
+        READER_LIST.add(reader);
     }
 }

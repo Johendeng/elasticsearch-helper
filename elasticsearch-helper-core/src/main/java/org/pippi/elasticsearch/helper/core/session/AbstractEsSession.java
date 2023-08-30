@@ -9,7 +9,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.pippi.elasticsearch.helper.core.beans.base.EsQueryIndexBean;
-import org.pippi.elasticsearch.helper.model.config.GlobalEsQueryConfig;
+import org.pippi.elasticsearch.helper.model.config.ExtendQueryFeatureHolder;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.enums.QueryModel;
 import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
@@ -164,7 +164,7 @@ public abstract class AbstractEsSession<T extends QueryBuilder> {
 				source.fetchSource(indexConfig.getFetchFields(), indexConfig.getExcludeFields());
 			}
 			if (Objects.nonNull(indexConfig.getHighLight())) {
-				HighlightBuilder highlightBuilder = GlobalEsQueryConfig.highLight(indexConfig.getHighLight().getHighLightKey());
+				HighlightBuilder highlightBuilder = ExtendQueryFeatureHolder.highLight(indexConfig.getHighLight().getHighLightKey());
 				if (Objects.isNull(highlightBuilder)) {
 					log.error("can't find highlight-config: {}", indexConfig.getHighLight().getHighLightKey());
 				} else {

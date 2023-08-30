@@ -4,8 +4,8 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.QueryString;
 
 /**
- * @author: JohenTeng
- * @date: 2022/5/8
+ * @author JohenTeng
+ * @date 2022/5/8
  **/
 @EsQueryBean(index = "account", traceScore = true, size = 30)
 public class QueryStringQueryParam {

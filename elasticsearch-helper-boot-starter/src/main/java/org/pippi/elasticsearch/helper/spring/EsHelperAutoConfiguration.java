@@ -3,12 +3,18 @@ package org.pippi.elasticsearch.helper.spring;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
-import org.pippi.elasticsearch.helper.model.config.GlobalEsQueryConfig;
+import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
+import org.pippi.elasticsearch.helper.model.config.ExtendQueryFeatureHolder;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * EsHelperAutoConfiguration
@@ -17,19 +23,50 @@ import javax.annotation.Resource;
  * @date      2021/9/17
  */
 @Configuration
-public class EsHelperAutoConfiguration {
+public class EsHelperAutoConfiguration implements ApplicationListener<ContextRefreshedEvent> {
+
+    /**
+     * user define config, { System.getProperty(_EXT_DEFINE_QUERY_HANDLE_KEY) }
+     * format : es.helper.ext.handles=com.***.loc1,com.***.loc2
+     * just the package loc, but it's also support define a explicit path like：com.XXX.xxx.TestQueryHandle
+     */
+    public static final String _EXT_DEFINE_QUERY_HANDLE_PROPERTY_PROP = "es.helper.ext.handle.packages";
+
+    public static final String ENABLE_LOG_OUT_PROPERTIES_PROP = "es.helper.queryLogOut.enable";
+
+    public static final String _MAP_UNDERSCORE_TO_CAMEL_CASE_PROP = "es.helper.configuration.map-underscore-to-camel-case";
+
+    public static final String _UPDATE_STRATEGY_PROP = "es.helper.configuration.field-strategy";
 
     @Resource
     private RestHighLevelClient restHighLevelClient;
 
-    private static final String DEFAULT_KEY = "default";
+    private static final String HIGH_LIGHT_DEFAULT_KEY = "default";
 
-    @PostConstruct
-    public void load(){
-        Assert.notNull(restHighLevelClient, "Application-Context has no RestHighLevelClient-instance,you have to config it at first");
-        QueryHandlerFactory.doQueryHandleScan();
-        // if user undefine global-highlight style,
-        // will use default (es default highlight style)
-        GlobalEsQueryConfig.configHighLight(DEFAULT_KEY , SearchSourceBuilder::highlight);
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent event) {
+        if(event.getApplicationContext().getParent() == null) {
+            Assert.notNull(restHighLevelClient, "Application-Context has no RestHighLevelClient-instance,you have to config it at first");
+            QueryHandlerFactory.doQueryHandleScan();
+            // if user undefine global-highlight style,
+            // will use default (es default highlight style)
+            ExtendQueryFeatureHolder.configHighLight(HIGH_LIGHT_DEFAULT_KEY , SearchSourceBuilder::highlight);
+            ApplicationContext applicationContext = event.getApplicationContext();
+            Map<String, EsHelperCustomerConfig> customerConfigMap = applicationContext.getBeansOfType(EsHelperCustomerConfig.class);
+            if (!customerConfigMap.isEmpty()) {
+                customerConfigMap.values().stream()
+                        .flatMap(c -> c.declareHighLight().entrySet().stream())
+                        .forEach(c -> ExtendQueryFeatureHolder.configHighLight(c.getKey(), c.getValue()));
+            }
+            Environment env = applicationContext.getEnvironment();
+            Optional.ofNullable(env.getProperty(_EXT_DEFINE_QUERY_HANDLE_PROPERTY_PROP))
+                    .ifPresent(EsHelperConfiguration::setExtDefineQueryHandlerProperty);
+            Optional.ofNullable(env.getProperty(ENABLE_LOG_OUT_PROPERTIES_PROP, Boolean.class))
+                    .ifPresent(EsHelperConfiguration::setStatementLogOut);
+            Optional.ofNullable(env.getProperty(_MAP_UNDERSCORE_TO_CAMEL_CASE_PROP, Boolean.class))
+                    .ifPresent(EsHelperConfiguration::setMapUnderscoreToCamelCase);
+            Optional.ofNullable(env.getProperty(_UPDATE_STRATEGY_PROP))
+                    .ifPresent(EsHelperConfiguration::setGlobalUpdateStrategy);
+        }
     }
 }

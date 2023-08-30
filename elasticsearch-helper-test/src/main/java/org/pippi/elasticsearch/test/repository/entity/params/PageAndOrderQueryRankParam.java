@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
-import org.pippi.elasticsearch.helper.model.param.PageParam;
+import org.pippi.elasticsearch.helper.model.param.EsPage;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.PageAndOrder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range;
@@ -21,7 +21,7 @@ public class PageAndOrderQueryRankParam {
     private RangeParam age;
 
     @PageAndOrder
-    private PageParam page;
+    private EsPage page;
 
     public RangeParam getAge() {
         return age;
@@ -31,11 +31,11 @@ public class PageAndOrderQueryRankParam {
         this.age = age;
     }
 
-    public PageParam getPage() {
+    public EsPage getPage() {
         return page;
     }
 
-    public void setPage(PageParam page) {
+    public void setPage(EsPage page) {
         this.page = page;
     }
 }

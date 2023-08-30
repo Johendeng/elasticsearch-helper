@@ -6,8 +6,8 @@ import org.elasticsearch.common.lucene.search.function.FunctionScoreQuery;
 import java.lang.annotation.*;
 
 /**
- * @author: JohenTeng
- * @date: 2022/7/18
+ * @author JohenTeng
+ * @date 2022/7/18
  **/
 @Inherited
 @Documented

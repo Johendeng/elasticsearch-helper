@@ -5,6 +5,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import javax.annotation.Nullable;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Define Page-Query params and order Config
@@ -12,7 +13,7 @@ import java.util.LinkedHashMap;
  * @author     JohenTeng
  * @date      2021/9/29
  */
-public class PageParam implements EsComplexParam {
+public class EsPage<T> implements EsComplexParam {
 
     private int current = 1;
 
@@ -20,6 +21,8 @@ public class PageParam implements EsComplexParam {
 
     @Nullable
     private LinkedHashMap<String, SortOrder> orderMap;
+
+    private List<T> data;
 
     public int getExclude() {
         return Math.max((current - 1), 0) * pageSize;

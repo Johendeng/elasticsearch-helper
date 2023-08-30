@@ -5,3 +5,5 @@ es:
       enable: true
 #    ext:
 #      handle-packages:
+    configuration:
+      map-underscore-to-camel-case: true

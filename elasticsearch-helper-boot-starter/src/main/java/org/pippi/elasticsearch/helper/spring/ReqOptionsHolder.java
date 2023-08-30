@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.spring;
 
+import org.elasticsearch.client.RequestOptions;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsMapper;
 
 import java.util.HashMap;
@@ -9,9 +10,9 @@ import java.util.Map;
  * @author JohenDeng
  * @date 2022/10/26
  **/
-public class RequestOptions {
+public class ReqOptionsHolder {
 
-    private static final Map<String, org.elasticsearch.client.RequestOptions>  REQ_OPT_MAP = new HashMap<>();
+    private static final Map<String, RequestOptions>  REQ_OPT_MAP = new HashMap<>();
 
     /**
      * 新增es请求配置
@@ -28,6 +29,6 @@ public class RequestOptions {
      * @return 目标配置
      */
     public static org.elasticsearch.client.RequestOptions get(String key) {
-        return REQ_OPT_MAP.getOrDefault(key, org.elasticsearch.client.RequestOptions.DEFAULT);
+        return REQ_OPT_MAP.getOrDefault(key, RequestOptions.DEFAULT);
     }
 }

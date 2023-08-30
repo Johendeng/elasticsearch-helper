@@ -3,9 +3,7 @@ package org.pippi.elasticsearch.helper.model.utils;
 import com.google.common.collect.Lists;
 
 import java.lang.reflect.*;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * @author    JohenTeng
@@ -35,8 +33,7 @@ public class ReflectionUtils {
     public static <T> T newInstance(Class<T> clazz) {
         try {
             Constructor<T> clazzConstructor = clazz.getConstructor();
-            T targetBean = clazzConstructor.newInstance();
-            return targetBean;
+            return clazzConstructor.newInstance();
         } catch (NoSuchMethodException e) {
             throw new RuntimeException("target Class don't have No-args Constructor, cause: ", e);
         } catch (InvocationTargetException e) {
@@ -130,5 +127,20 @@ public class ReflectionUtils {
         }
         ParameterizedType paramReturnType = (ParameterizedType)targetClazz;
         return paramReturnType.getActualTypeArguments();
+    }
+
+    public static  <C extends Collection<?>> C newCollection(Class<C> clazz) {
+        if (clazz.isInterface() || Modifier.isAbstract(clazz.getModifiers())) {
+            if (List.class.isAssignableFrom(clazz)) {
+                return (C) new ArrayList<>();
+            }
+            if (Set.class.isAssignableFrom(clazz)) {
+                return (C) new HashSet<>();
+            }
+            if (Queue.class.isAssignableFrom(clazz)) {
+                return (C) new LinkedList<>();
+            }
+        }
+        return newInstance(clazz);
     }
 }
