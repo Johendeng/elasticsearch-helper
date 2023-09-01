@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.QueryString;
-import org.pippi.elasticsearch.helper.core.beans.query.QueryStringBean;
+import org.pippi.elasticsearch.helper.model.bean.query.QueryStringBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

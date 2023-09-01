@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.MatchPhrase;
-import org.pippi.elasticsearch.helper.core.beans.query.MatchPhraseQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.MatchPhraseQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

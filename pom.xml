@@ -74,6 +74,11 @@
                 <version>${elasticsearch-helper.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.pippi.elasticsearch.helper</groupId>
+                <artifactId>elasticsearch-helper-lambda</artifactId>
+                <version>${elasticsearch-helper.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
                 <version>${elasticsearch.client.version}</version>
@@ -163,6 +168,10 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
+                    <encoding>utf8</encoding>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
 

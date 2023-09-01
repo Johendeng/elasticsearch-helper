@@ -103,7 +103,7 @@ public class QueryHandlerFactory {
         }
         String banner = readBanner();
         log.info(banner);
-        log.info("es-helper-query-handler-scanner load handles:\n{}\n",
+        log.debug("es-helper-query-handler-scanner load handles:\n{}\n",
                 QUERY_HANDLE_CLAZZ_MAP.entrySet().stream().map(
                         e -> "[\tes-helper] " + e.getKey() + ":" + e.getValue()
                 ).collect(Collectors.joining("\n"))

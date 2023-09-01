@@ -9,7 +9,7 @@ import java.lang.annotation.*;
  * @date      2021/9/29
  */
 @Documented
-@Target({ElementType.TYPE})
+@Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface HighLight {
 

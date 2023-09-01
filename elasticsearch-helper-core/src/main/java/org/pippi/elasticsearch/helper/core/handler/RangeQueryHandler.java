@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range;
-import org.pippi.elasticsearch.helper.core.beans.query.RangeQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryBean;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
@@ -34,21 +34,29 @@ public class RangeQueryHandler extends AbstractQueryHandler<RangeQueryBean>{
         }
         final RangeQueryBuilder rangeQuery = QueryBuilders.rangeQuery(queryDes.getField());
         RangeQueryBean rangeBean = queryDes.getExtBean();
-        if (rangeBean.getTag().equals(Range.LE_GE)) {
-            Optional.ofNullable(rangeParam.getLeft()).ifPresent(l -> rangeQuery.gte(l));
-            Optional.ofNullable(rangeParam.getRight()).ifPresent(r -> rangeQuery.lte(r));
-        } else if (rangeBean.getTag().equals(Range.L_G)) {
-            Optional.ofNullable(rangeParam.getLeft()).ifPresent(l -> rangeQuery.gt(l));
-            Optional.ofNullable(rangeParam.getRight()).ifPresent(r -> rangeQuery.lt(r));
-        } else if (rangeBean.getTag().equals(Range.LE_G)) {
-            Optional.ofNullable(rangeParam.getLeft()).ifPresent(l -> rangeQuery.gte(l));
-            Optional.ofNullable(rangeParam.getRight()).ifPresent(r -> rangeQuery.lt(r));
-        } else if (rangeBean.getTag().equals(Range.L_GE)) {
-            Optional.ofNullable(rangeParam.getLeft()).ifPresent(l -> rangeQuery.gt(l));
-            Optional.ofNullable(rangeParam.getRight()).ifPresent(r -> rangeQuery.lte(r));
-        } else if (rangeBean.getTag().equals(Range.F_T)) {
-            Optional.ofNullable(rangeParam.getLeft()).ifPresent(l -> rangeQuery.from(l));
-            Optional.ofNullable(rangeParam.getRight()).ifPresent(r -> rangeQuery.to(r));
+        switch (rangeBean.getTag()) {
+            case Range.LE_GE:
+                Optional.ofNullable(rangeParam.getLeft()).ifPresent(rangeQuery::gte);
+                Optional.ofNullable(rangeParam.getRight()).ifPresent(rangeQuery::lte);
+                break;
+            case Range.L_G:
+                Optional.ofNullable(rangeParam.getLeft()).ifPresent(rangeQuery::gt);
+                Optional.ofNullable(rangeParam.getRight()).ifPresent(rangeQuery::lt);
+                break;
+            case Range.LE_G:
+                Optional.ofNullable(rangeParam.getLeft()).ifPresent(rangeQuery::gte);
+                Optional.ofNullable(rangeParam.getRight()).ifPresent(rangeQuery::lt);
+                break;
+            case Range.L_GE:
+                Optional.ofNullable(rangeParam.getLeft()).ifPresent(rangeQuery::gt);
+                Optional.ofNullable(rangeParam.getRight()).ifPresent(rangeQuery::lte);
+                break;
+            case Range.F_T:
+                Optional.ofNullable(rangeParam.getLeft()).ifPresent(rangeQuery::from);
+                Optional.ofNullable(rangeParam.getRight()).ifPresent(rangeQuery::to);
+                rangeQuery.includeLower(rangeBean.isIncludeLower());
+                rangeQuery.includeUpper(rangeBean.isIncludeUpper());
+                break;
         }
         return rangeQuery;
     }

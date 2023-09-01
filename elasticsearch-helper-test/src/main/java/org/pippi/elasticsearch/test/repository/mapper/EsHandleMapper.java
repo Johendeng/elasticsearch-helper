@@ -1,11 +1,17 @@
 package org.pippi.elasticsearch.test.repository.mapper;
 
 
-import org.pippi.elasticsearch.helper.model.resp.BaseResp;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsMapper;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Gte;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Terms;
+import org.pippi.elasticsearch.helper.model.resp.BaseResp;
+import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
 import org.pippi.elasticsearch.test.repository.entity.params.*;
 import org.pippi.elasticsearch.test.repository.entity.params.func.*;
-import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
+
+import java.util.List;
 
 
 /**
@@ -61,4 +67,8 @@ public interface EsHandleMapper {
     BaseResp<AccountEntity> functionFieldValueQuery(FieldValueParam param);
 
     BaseResp<AccountEntity> functionScriptQuery(ScriptFuncParam param);
+
+    @EsAnnQueryIndex(index = "account")
+    List<AccountEntity> methodQueryTest(@Gte Integer age,
+                                        @Terms(@Base("firstname.keyword")) String ... firstname);
 }

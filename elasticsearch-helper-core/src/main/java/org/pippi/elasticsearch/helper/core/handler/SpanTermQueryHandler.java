@@ -5,7 +5,7 @@ import org.elasticsearch.index.query.SpanTermQueryBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.SpanTerm;
-import org.pippi.elasticsearch.helper.core.beans.query.SpanTermQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.SpanTermQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

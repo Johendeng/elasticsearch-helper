@@ -22,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -156,13 +157,13 @@ public class EsHandlerTest {
     public void testSearchAfter() {
         SearchAfterQueryParam param = new SearchAfterQueryParam();
         param.setGender("F");
-        param.setId(String.valueOf(Integer.MAX_VALUE));
+        param.setId("-1");
         BaseResp<AccountEntity> resp = esHandleMapper.searchAfterQuery(param);
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
 
         SearchAfterQueryParam param2 = new SearchAfterQueryParam();
         param2.setGender("F");
-        param2.setId(String.valueOf(991));
+        param2.setId(String.valueOf(resp.getRecords().get(resp.getRecords().size() - 1).getDocId()));
         BaseResp<AccountEntity> resp2 = esHandleMapper.searchAfterQuery(param2);
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp2));
     }
@@ -262,5 +263,11 @@ public class EsHandlerTest {
 
         BaseResp<AccountEntity> resp = esHandleMapper.functionScriptQuery(scriptParam);
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
+
+    @Test
+    public void testMethodAnnQuery() {
+        List<AccountEntity> elinor = esHandleMapper.methodQueryTest(36, "Elinor", "Virginia");
+        System.out.println(SerializerUtils.parseObjToJsonPretty(elinor));
     }
 }

@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.test.repository.entity.params.func;
 
 import org.elasticsearch.common.lucene.search.function.CombineFunction;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.func.FuncScore;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.func.FuncScore_ScriptFunc;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Match;
@@ -14,7 +14,7 @@ import java.util.Map;
  * @author: JohenTeng
  * @date: 2022/8/17
  **/
-@EsQueryBean(index = "account", model = QueryModel.FUNC_SCORE, traceScore = true,
+@EsAnnQueryIndex(index = "account", model = QueryModel.FUNC_SCORE, traceScore = true,
         funcScore = @FuncScore(boostMode = CombineFunction.SUM)
 )
 public class ScriptFuncParam {

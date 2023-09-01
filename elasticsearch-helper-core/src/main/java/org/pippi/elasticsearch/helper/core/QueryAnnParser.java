@@ -3,11 +3,11 @@ package org.pippi.elasticsearch.helper.core;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.pippi.elasticsearch.helper.core.beans.base.EsQueryIndexBean;
-import org.pippi.elasticsearch.helper.core.beans.base.FuncScoreBean;
-import org.pippi.elasticsearch.helper.core.beans.base.HighLightBean;
+import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.model.bean.base.FuncScoreBean;
+import org.pippi.elasticsearch.helper.model.bean.base.HighLightBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsCondition;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.HighLight;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.FuncQuery;
@@ -58,7 +58,15 @@ public class QueryAnnParser {
      */
     public EsQueryIndexBean getIndex(Object view) {
         Class<?> clazz = view.getClass();
-        EsQueryBean ann = clazz.getAnnotation(EsQueryBean.class);
+        EsAnnQueryIndex ann = clazz.getAnnotation(EsAnnQueryIndex.class);
+        return this.getIndex(ann, clazz.getAnnotation(HighLight.class));
+    }
+
+    public EsQueryIndexBean getIndex(Method method) {
+        return getIndex(method.getAnnotation(EsAnnQueryIndex.class), method.getAnnotation(HighLight.class));
+    }
+
+    public EsQueryIndexBean getIndex(EsAnnQueryIndex ann, HighLight highLightAnn) {
         if (ann == null) {
             throw new EsHelperQueryException("undefine query-index @EsQueryIndex");
         }
@@ -71,7 +79,6 @@ public class QueryAnnParser {
         int backSize = ann.size();
         EsQueryIndexBean indexBean = new EsQueryIndexBean(index, model, fetchFields, excludeFields, minScore, traceScore);
         indexBean.setSize(backSize);
-        HighLight highLightAnn = clazz.getAnnotation(HighLight.class);
         if (Objects.nonNull(highLightAnn)) {
             indexBean.setHighLight(HighLightBean.phrase(highLightAnn));
         }
@@ -79,6 +86,7 @@ public class QueryAnnParser {
         indexBean.setFuncScoreBean(funcScoreBean);
         return indexBean;
     }
+
 
     /**
      * read query-view-pojo define by user,
@@ -104,6 +112,25 @@ public class QueryAnnParser {
         return queryDesList;
     }
 
+    public List<EsQueryFieldBean> read(Parameter[] params, Object[] args, Annotation[][] anns) {
+        List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(params.length);
+        for (int index = 0; index < params.length; index ++) {
+            Parameter param = params[index];
+            Object arg = args[index];
+            Annotation[] paramAnn = anns[index];
+            Set<Annotation> annotationSet = Arrays.stream(paramAnn)
+                    .filter(ann -> ann.annotationType().isAnnotationPresent(Query.class)
+                                 || ann.annotationType().isAnnotationPresent(FuncQuery.class))
+                    .collect(Collectors.toSet());
+            if (CollectionUtils.isNotEmpty(annotationSet) && checkEsCondition(param, arg)) {
+                List<EsQueryFieldBean> queryDes = this.mapFieldAnn(param, arg, annotationSet);
+                queryDesList.addAll(queryDes);
+            }
+
+        }
+        return queryDesList;
+    }
+
 
     private boolean checkEsCondition(Field field, Object view) {
         Optional<Annotation> optionCondition = Arrays.stream(field.getAnnotations())
@@ -121,6 +148,23 @@ public class QueryAnnParser {
         }
         return conditionHandle.test(val);
     }
+
+    private boolean checkEsCondition(Parameter param, Object arg) {
+        Optional<Annotation> optionCondition = Arrays.stream(param.getAnnotations())
+                .filter(ann -> ann.annotationType().equals(EsCondition.class))
+                .findAny();
+        if (!optionCondition.isPresent()) {
+            return true;
+        }
+        EsCondition condition = (EsCondition) optionCondition.get();
+        Class<? extends EsConditionHandle> conditionHandleClazz = condition.value();
+        EsConditionHandle conditionHandle = ReflectionUtils.newInstance(conditionHandleClazz);
+        if (Objects.isNull(arg)) {
+            return false;
+        }
+        return conditionHandle.test(arg);
+    }
+
 
     private List<Field> getFields(Class<?> clazz, boolean visitParent) {
         if (visitParent) {
@@ -143,11 +187,45 @@ public class QueryAnnParser {
         final List<EsQueryFieldBean> res = Lists.newArrayList();
         for (Annotation ann : annotationSet) {
             Optional.ofNullable(parseValue(field, viewObj)).ifPresent(queryDes -> {
-                this.parseAnn(queryDes, field, ann);
+                this.parseAnn(queryDes, field.getName(), ann);
                 res.add(queryDes);
             });
         }
         return res;
+    }
+
+    private List<EsQueryFieldBean> mapFieldAnn(Parameter parameter, Object arg, Set<Annotation> annotationSet) {
+        final List<EsQueryFieldBean> res = Lists.newArrayList();
+        for (Annotation ann : annotationSet) {
+            Optional.ofNullable(parseValue(parameter, arg)).ifPresent(queryDes -> {
+                this.parseAnn(queryDes, parameter.getName(), ann);
+                res.add(queryDes);
+            });
+        }
+        return res;
+    }
+
+
+    private EsQueryFieldBean parseValue(Parameter parameter, Object arg) {
+        EsQueryFieldBean queryDes = new EsQueryFieldBean<>();
+        Class<?> fieldType = arg.getClass();
+        if (
+                (fieldType.isAnnotationPresent(ScriptQuery.class) && !fieldType.getAnnotation(ScriptQuery.class).hasParams())
+                || (fieldType.isAnnotationPresent(SourceOrder.class))
+        ) {
+            // 脚本查詢字段如果配置不需要參數的脚本，則無需加載查詢參數
+            return queryDes;
+        }
+        if (ReflectionUtils.isBaseType(fieldType)
+            || arg instanceof EsComplexParam
+            || arg.getClass().isAnnotationPresent(EsAnnQueryIndex.class)
+            || checkCollectionValueType(parameter, arg)) {
+            queryDes.setValue(arg);
+        } else {
+            throw new EsHelperQueryException("config @EsQueryField at an Error-Type Field, Just support " +
+                    "Primitive-type (exclude void.class) or their Decorate-type or Collection or Map or EsComplexParam");
+        }
+        return queryDes;
     }
 
     private EsQueryFieldBean parseValue(Field field, Object viewObj) {
@@ -169,7 +247,7 @@ public class QueryAnnParser {
             }
             if (ReflectionUtils.isBaseType(fieldType)
                 || val instanceof EsComplexParam
-                || val.getClass().isAnnotationPresent(EsQueryBean.class)
+                || val.getClass().isAnnotationPresent(EsAnnQueryIndex.class)
                 || checkCollectionValueType(field, val)) {
                 queryDes.setValue(val);
             } else {
@@ -194,7 +272,20 @@ public class QueryAnnParser {
         return (val instanceof Collection || val.getClass().isArray() || val instanceof Map ) && checkCollectionTypePredicate.test(field);
     }
 
-    private void parseAnn(EsQueryFieldBean queryDes, Field field, Annotation targetAnn) {
+    private boolean checkCollectionValueType(Parameter parameter, Object arg) {
+        Predicate<Parameter> checkCollectionTypePredicate = param -> {
+            if (arg.getClass().isArray()) {
+                return ReflectionUtils.isBaseType(arg.getClass().getComponentType());
+            }
+            ParameterizedType genericType = (ParameterizedType) param.getParameterizedType();
+            Type[] actualType = genericType.getActualTypeArguments();
+            return Arrays.stream(actualType).allMatch(type -> ReflectionUtils.isBaseType((Class<?>) type));
+        };
+        return (arg instanceof Collection || arg.getClass().isArray() || arg instanceof Map ) && checkCollectionTypePredicate.test(parameter);
+    }
+
+
+    private void parseAnn(EsQueryFieldBean queryDes, String orgFieldName, Annotation targetAnn) {
         try {
             if (targetAnn.annotationType().isAnnotationPresent(Query.class)) {
                 queryDes.setExtAnnotation(targetAnn);
@@ -202,9 +293,11 @@ public class QueryAnnParser {
                 Base ann = (Base) baseMethod.invoke(targetAnn);
                 EsConnector esConnector = ann.connect();
                 queryDes.setLogicConnector(esConnector);
-                String column = ann.name();
-                if (StringUtils.isBlank(column)) {
-                    column = field.getName();
+                String column = orgFieldName;
+                if (StringUtils.isNotBlank(ann.value())) {
+                    column = ann.value();
+                } else if (StringUtils.isNotBlank(ann.name())) {
+                    column = ann.name();
                 }
                 queryDes.setField(column);
                 String queryType = ann.queryType();
@@ -232,7 +325,7 @@ public class QueryAnnParser {
                 Method baseMethod = targetAnn.getClass().getDeclaredMethod("field");
                 String fieldName = (String) baseMethod.invoke(targetAnn);
                 if (StringUtils.isBlank(fieldName)) {
-                    fieldName = field.getName();
+                    fieldName = orgFieldName;
                 }
                 queryDes.setField(fieldName);
             }

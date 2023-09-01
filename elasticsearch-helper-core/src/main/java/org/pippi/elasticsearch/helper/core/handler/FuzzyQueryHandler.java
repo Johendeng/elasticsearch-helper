@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Fuzzy;
-import org.pippi.elasticsearch.helper.core.beans.query.FuzzyQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.FuzzyQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

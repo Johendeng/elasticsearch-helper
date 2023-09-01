@@ -8,7 +8,7 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.pippi.elasticsearch.helper.core.beans.base.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.model.config.ExtendQueryFeatureHolder;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.enums.QueryModel;

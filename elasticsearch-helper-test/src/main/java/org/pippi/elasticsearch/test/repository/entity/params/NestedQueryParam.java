@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
-import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Nested;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
 
@@ -11,7 +11,7 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
  * @date 2022/5/7
  */
 // 因为没有对应的查询数据集，因此暂时忽略该用例
-@EsQueryBean(index = "account", traceScore = true, size = 30)
+@EsAnnQueryIndex(index = "account", traceScore = true, size = 30)
 public class NestedQueryParam {
 
     @Term

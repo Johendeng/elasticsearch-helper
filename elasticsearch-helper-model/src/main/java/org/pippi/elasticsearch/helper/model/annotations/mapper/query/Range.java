@@ -17,7 +17,7 @@ import java.lang.annotation.*;
 @Query
 @Inherited
 @Documented
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Range {
 
@@ -44,9 +44,9 @@ public @interface Range {
 
     String relation() default "";
 
-    boolean includeLower() default false;
+    boolean includeLower() default true;
 
-    boolean includeUpper() default false;
+    boolean includeUpper() default true;
 
     String timeZone() default "+08:00";
 }

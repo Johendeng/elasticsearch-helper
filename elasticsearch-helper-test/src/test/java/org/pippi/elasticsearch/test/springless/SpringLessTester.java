@@ -7,7 +7,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.junit.Assert;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
 import org.pippi.elasticsearch.helper.model.resp.BaseResp;
-import org.pippi.elasticsearch.helper.core.proxy.EsQueryProxy;
+import org.pippi.elasticsearch.helper.core.proxy.EsOperationProxy;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.test.repository.entity.params.TermQueryParam;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
@@ -27,7 +27,7 @@ public class SpringLessTester {
         param.setFirstname("Fulton");
         param.setLastnames(new String[]{"Holt"});
 
-        EsHandleMapper esHandleMapper = (EsHandleMapper) EsQueryProxy.build(EsHandleMapper.class, true, client, RequestOptions.DEFAULT, true);
+        EsHandleMapper esHandleMapper = (EsHandleMapper) EsOperationProxy.build(EsHandleMapper.class, true, client, RequestOptions.DEFAULT, true);
         BaseResp<AccountEntity> res = esHandleMapper.termQuery(param);
         System.out.println(SerializerUtils.parseObjToJsonPretty(res));
         res.getRecords().forEach(data -> {

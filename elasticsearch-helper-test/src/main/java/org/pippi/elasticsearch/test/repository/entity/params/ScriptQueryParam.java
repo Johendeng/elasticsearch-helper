@@ -1,6 +1,6 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
-import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.ScriptQuery;
 
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.Map;
  * @author JohenTeng
  * @date 2022/5/8
  **/
-@EsQueryBean(index = "account", traceScore = true, size = 100)
+@EsAnnQueryIndex(index = "account", traceScore = true, size = 100)
 public class ScriptQueryParam {
 
     @ScriptQuery(idOrCode = "(doc['age'].value%2 == 0)", hasParams = false)

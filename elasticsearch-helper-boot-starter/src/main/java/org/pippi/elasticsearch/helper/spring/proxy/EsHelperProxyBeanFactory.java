@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.helper.spring.proxy;
 
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.pippi.elasticsearch.helper.core.proxy.EsQueryProxy;
+import org.pippi.elasticsearch.helper.core.proxy.EsOperationProxy;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
@@ -54,7 +54,7 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
     @Override
     @SuppressWarnings("unchecked")
     public T getObject() {
-        return (T)EsQueryProxy.build(targetInterfaceClazz, visitQueryBeanParent, client, requestOption);
+        return (T) EsOperationProxy.build(targetInterfaceClazz, visitQueryBeanParent, client, requestOption);
     }
 
     @Override

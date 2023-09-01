@@ -8,7 +8,7 @@ import org.elasticsearch.script.Script;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.ScriptQuery;
-import org.pippi.elasticsearch.helper.core.beans.query.ScriptQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.ScriptQueryBean;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 

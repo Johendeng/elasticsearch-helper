@@ -28,7 +28,7 @@ public class PageAndOrderQueryHandler extends AbstractQueryHandler{
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
         if (!value.getClass().equals(EsPage.class)) {
-            throw new EsHelperQueryException("@PageAndOrder have to define as PageParam.class");
+            throw new EsHelperQueryException("@PageAndOrder have to define as EsPage.class");
         }
         EsPage esPage = (EsPage) value;
         SearchSourceBuilder source = searchHelper.getSource();

@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Terms;
-import org.pippi.elasticsearch.helper.core.beans.query.TermsQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.TermsQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
 

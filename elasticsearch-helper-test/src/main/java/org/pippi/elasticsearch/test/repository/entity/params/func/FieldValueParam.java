@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.test.repository.entity.params.func;
 
 import org.elasticsearch.common.lucene.search.function.CombineFunction;
 import org.elasticsearch.common.lucene.search.function.FieldValueFactorFunction;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.func.FuncScore;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.func.FuncScore_FieldValueFactor;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Match;
@@ -13,7 +13,7 @@ import org.pippi.elasticsearch.helper.model.enums.QueryModel;
  * @author: JohenTeng
  * @date: 2022/8/17
  **/
-@EsQueryBean(index = "account", model = QueryModel.FUNC_SCORE,
+@EsAnnQueryIndex(index = "account", model = QueryModel.FUNC_SCORE,
         traceScore = true,
         funcScore = @FuncScore(boostMode = CombineFunction.SUM)
 )

@@ -32,7 +32,7 @@ import java.lang.annotation.*;
  **/
 @Inherited
 @Documented
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @FuncQuery(ExponentialDecayBean.class)
 public @interface FuncScore_ExponentialDecay {

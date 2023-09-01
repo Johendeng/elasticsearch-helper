@@ -7,7 +7,7 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandl
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.param.GeoPolygonParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.GeoPolygon;
-import org.pippi.elasticsearch.helper.core.beans.query.GeoPolygonQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.GeoPolygonQueryBean;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 

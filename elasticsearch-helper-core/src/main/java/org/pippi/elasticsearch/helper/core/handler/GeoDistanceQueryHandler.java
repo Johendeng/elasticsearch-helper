@@ -6,7 +6,7 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandl
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.GeoDistance;
-import org.pippi.elasticsearch.helper.core.beans.query.GeoDistanceQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.GeoDistanceQueryBean;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 

@@ -2,6 +2,7 @@ package org.pippi.elasticsearch.helper.model.annotations.meta;
 
 
 
+import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
 import org.pippi.elasticsearch.helper.model.enums.EsMeta;
 
 import java.lang.annotation.*;
@@ -18,7 +19,6 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsField {
-
 
     String name() default "";
 

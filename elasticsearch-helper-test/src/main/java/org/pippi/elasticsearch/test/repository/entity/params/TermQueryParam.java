@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.test.repository.entity.params;
 
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Terms;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
@@ -13,7 +13,7 @@ import org.pippi.elasticsearch.helper.model.enums.EsConnector;
  * @author JohenTeng
  * @date 2022/5/6
  */
-@EsQueryBean(index = "account", traceScore = true, size = 30)
+@EsAnnQueryIndex(index = "account", traceScore = true, size = 30)
 public class TermQueryParam {
 
     @Term(value = @Base(name = "firstname.keyword", boost = 3.0f, connect = EsConnector.MUST))

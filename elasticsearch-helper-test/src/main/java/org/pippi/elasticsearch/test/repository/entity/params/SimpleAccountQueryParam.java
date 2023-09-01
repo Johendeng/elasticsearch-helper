@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.test.repository.entity.params;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsCondition;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.HighLight;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.enums.QueryModel;
@@ -21,7 +21,7 @@ import org.pippi.elasticsearch.test.repository.entity.condition.AgeUseCondition;
  * @author JohenTeng
  * @date 2021/12/9
  */
-@EsQueryBean(index = "account", model = QueryModel.BOOL, traceScore = true, minScore = 0.0001f)
+@EsAnnQueryIndex(index = "account", model = QueryModel.BOOL, traceScore = true, minScore = 0.0001f)
 @HighLight(fields = "address")
 public class SimpleAccountQueryParam {
 

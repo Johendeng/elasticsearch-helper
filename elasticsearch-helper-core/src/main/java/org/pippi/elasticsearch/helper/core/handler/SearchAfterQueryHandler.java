@@ -5,7 +5,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.SearchAfter;
-import org.pippi.elasticsearch.helper.core.beans.query.SearchAfterQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.SearchAfterQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

@@ -7,7 +7,7 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandl
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.GeoBoundingBox;
-import org.pippi.elasticsearch.helper.core.beans.query.GeoBoundingBoxQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.GeoBoundingBoxQueryBean;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 

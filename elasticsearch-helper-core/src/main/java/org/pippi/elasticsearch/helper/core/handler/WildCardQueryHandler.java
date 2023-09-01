@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.WildCard;
-import org.pippi.elasticsearch.helper.core.beans.query.WildCardQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.WildCardQueryBean;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**

@@ -8,7 +8,7 @@ import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.ParsedLongTerms;
 import org.elasticsearch.search.aggregations.metrics.ParsedValueCount;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.EsQueryBean;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.core.hook.HookQuery;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.model.enums.QueryModel;
@@ -23,7 +23,7 @@ import java.util.Map;
  * @author JohenTeng
  * @date 2021/12/9
  */
-@EsQueryBean(index = "account",
+@EsAnnQueryIndex(index = "account",
         fetch = "",
         model = QueryModel.BOOL)
 public class AggAccountQueryParam extends HookQuery<AggAccountQueryParam, AccountAggResult> {

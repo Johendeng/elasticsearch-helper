@@ -51,7 +51,11 @@
             <artifactId>elasticsearch-helper-model</artifactId>
             <version>1.1.0-RELEASE</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.pippi.elasticsearch.helper</groupId>
+            <artifactId>elasticsearch-helper-lambda</artifactId>
+            <version>1.1.0-RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>

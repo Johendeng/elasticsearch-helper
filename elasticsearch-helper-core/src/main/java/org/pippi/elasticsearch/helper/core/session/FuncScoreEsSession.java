@@ -8,8 +8,8 @@ import org.elasticsearch.index.query.functionscore.FunctionScoreQueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilders;
 import org.elasticsearch.index.query.functionscore.WeightBuilder;
-import org.pippi.elasticsearch.helper.core.beans.base.EsQueryIndexBean;
-import org.pippi.elasticsearch.helper.core.beans.base.FuncScoreBean;
+import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
+import org.pippi.elasticsearch.helper.model.bean.base.FuncScoreBean;
 
 import java.util.ArrayList;
 import java.util.List;

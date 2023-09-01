@@ -4,6 +4,7 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.pippi.elasticsearch.helper.core.utils.EsBeanMapper;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperDataModifyException;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
@@ -24,12 +25,11 @@ public class InsertImpl<T extends EsEntity> {
 
     public void insert(T entity, RequestOptions reqOpt) {
         IndexRequest req = new IndexRequest();
-        req.source(SerializerUtils.parseObjToJson(entity), XContentType.JSON);
+        req.source(EsBeanMapper.toMap(entity), XContentType.JSON);
         try {
             client.index(req, reqOpt);
         } catch (IOException e) {
             throw new EsHelperDataModifyException(e);
         }
     }
-
 }

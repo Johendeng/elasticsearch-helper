@@ -24,6 +24,12 @@ public @interface Base {
      * index-filed name, default is Field's name
      * 自定义查询字段 name，如果不配置默认使用类属性作为查询字段
      */
+    String value() default "";
+
+    /**
+     * index-filed name, default is Field's name
+     * 自定义查询字段 name，如果不配置默认使用类属性作为查询字段
+     */
     String name() default "";
 
     /**

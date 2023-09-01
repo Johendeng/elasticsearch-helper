@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.helper.core.reader.impl;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.pippi.elasticsearch.helper.core.reader.ResponseBeanMapper;
+import org.pippi.elasticsearch.helper.core.utils.EsBeanMapper;
 import org.pippi.elasticsearch.helper.core.reader.ResponseReader;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 @SuppressWarnings(value = {"rawtypes", "unchecked"})
 public class CollectionRespReader implements ResponseReader<Collection<?>> {
 
-    private static final CollectionRespReader LIST_RESP_READER = new CollectionRespReader();
+    private static final CollectionRespReader COLLECTION_RESP_READER = new CollectionRespReader();
 
     public static CollectionRespReader reader() {
-        return LIST_RESP_READER;
+        return COLLECTION_RESP_READER;
     }
 
     private CollectionRespReader() {
@@ -45,7 +45,7 @@ public class CollectionRespReader implements ResponseReader<Collection<?>> {
         Collection records = ReflectionUtils.newCollection((Class<? extends Collection>) ((ParameterizedType)returnType).getRawType());
         int needWarm = 0;
         for (SearchHit hit : hitArr) {
-            Object record = ResponseBeanMapper.map(paramClazz, hit.getSourceAsMap());
+            Object record = EsBeanMapper.toBean(paramClazz, hit.getSourceAsMap());
             records.add(record);
             needWarm += loadBaseHitData(record, hit, paramClazz);
         }
@@ -60,10 +60,18 @@ public class CollectionRespReader implements ResponseReader<Collection<?>> {
         SearchHit[] hitArr = hits.getHits();
         return Arrays.stream(hitArr)
                 .map(hit -> {
-                    R cell = ResponseBeanMapper.map(clazz, hit.getSourceAsMap());
+                    R cell = EsBeanMapper.toBean(clazz, hit.getSourceAsMap());
                     loadBaseHitData(cell, hit, clazz);
                     return cell;
                 })
+                .collect(Collectors.toList());
+    }
+
+    public List<EsEntity> read(SearchResponse resp) {
+        SearchHits hits = resp.getHits();
+        SearchHit[] hitArr = hits.getHits();
+        return Arrays.stream(hitArr)
+                .map(hit -> new EsEntity(hit.getScore(), hit.getId()))
                 .collect(Collectors.toList());
     }
 }

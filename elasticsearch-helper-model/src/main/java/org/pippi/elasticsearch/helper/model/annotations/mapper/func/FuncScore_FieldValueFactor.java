@@ -15,7 +15,7 @@ import java.lang.annotation.*;
  **/
 @Inherited
 @Documented
-@Target(ElementType.FIELD)
+@Target({ElementType.FIELD, ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @FuncQuery(FieldValueFactorBean.class)
 public @interface FuncScore_FieldValueFactor {

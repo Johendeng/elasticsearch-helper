@@ -2,6 +2,7 @@ package org.pippi.elasticsearch.test.original_api;
 
 import com.google.common.collect.Maps;
 import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
@@ -35,10 +36,11 @@ public class UpsetTest {
         up.index("account");
         up.id("1");
         HashMap<Object, Object> map = Maps.newHashMap();
-        map.put("firstname", "deng");
+        map.put("firstname", "deng1111");
         System.out.println(SerializerUtils.parseObjToJson(map));
         up.doc(SerializerUtils.parseObjToJson(map), XContentType.JSON);
-        client.update(up, RequestOptions.DEFAULT);
+        UpdateResponse update = client.update(up, RequestOptions.DEFAULT);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(update));
     }
 
 }
