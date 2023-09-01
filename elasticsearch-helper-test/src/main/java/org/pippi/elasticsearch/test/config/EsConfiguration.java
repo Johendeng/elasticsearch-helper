@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.test.config;
 
 import com.google.common.collect.Maps;
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 
@@ -27,5 +28,10 @@ public class EsConfiguration implements EsHelperCustomerConfig {
 		highLightMap.put(HighLightKeys.HTML, () -> SearchSourceBuilder.highlight().fragmentSize(10).numOfFragments(5).noMatchSize(5));
 		highLightMap.put(HighLightKeys.DOC, () -> SearchSourceBuilder.highlight().fragmentSize(10).numOfFragments(5).noMatchSize(3));
 		return highLightMap;
+	}
+
+	@Override
+	public Map<String, RequestOptions> declareRequestOpt() {
+		return null;
 	}
 }

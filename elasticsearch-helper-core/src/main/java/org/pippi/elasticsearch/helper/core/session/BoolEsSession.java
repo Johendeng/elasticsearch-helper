@@ -45,6 +45,4 @@ public class BoolEsSession extends AbstractEsSession<BoolQueryBuilder> {
 		}
 		return this;
 	}
-
-
 }

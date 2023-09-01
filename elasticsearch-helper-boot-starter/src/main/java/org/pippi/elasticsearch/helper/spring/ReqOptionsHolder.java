@@ -19,7 +19,7 @@ public class ReqOptionsHolder {
      * @param key {@link EsMapper} {@see requestOption}
      * @param requestOption 目标配置
      */
-    public static void add(String key, org.elasticsearch.client.RequestOptions requestOption) {
+    public static void add(String key, RequestOptions requestOption) {
         REQ_OPT_MAP.put(key, requestOption);
     }
 
@@ -28,7 +28,12 @@ public class ReqOptionsHolder {
      * @param key 配置key
      * @return 目标配置
      */
-    public static org.elasticsearch.client.RequestOptions get(String key) {
+    public static RequestOptions get(String key) {
         return REQ_OPT_MAP.getOrDefault(key, RequestOptions.DEFAULT);
+    }
+
+
+    public static void putAll(Map<String, RequestOptions> reqOptMap) {
+        REQ_OPT_MAP.putAll(reqOptMap);
     }
 }

@@ -1,7 +1,9 @@
 package org.pippi.elasticsearch.helper.spring;
 
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
 import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
 import org.pippi.elasticsearch.helper.model.config.ExtendQueryFeatureHolder;
@@ -13,8 +15,10 @@ import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * EsHelperAutoConfiguration
@@ -32,7 +36,7 @@ public class EsHelperAutoConfiguration implements ApplicationListener<ContextRef
      */
     public static final String _EXT_DEFINE_QUERY_HANDLE_PROPERTY_PROP = "es.helper.ext.handle.packages";
 
-    public static final String ENABLE_LOG_OUT_PROPERTIES_PROP = "es.helper.queryLogOut.enable";
+    public static final String _ENABLE_LOG_OUT_PROPERTIES_PROP = "es.helper.queryLogOut.enable";
 
     public static final String _MAP_UNDERSCORE_TO_CAMEL_CASE_PROP = "es.helper.configuration.map-underscore-to-camel-case";
 
@@ -54,14 +58,21 @@ public class EsHelperAutoConfiguration implements ApplicationListener<ContextRef
             ApplicationContext applicationContext = event.getApplicationContext();
             Map<String, EsHelperCustomerConfig> customerConfigMap = applicationContext.getBeansOfType(EsHelperCustomerConfig.class);
             if (!customerConfigMap.isEmpty()) {
-                customerConfigMap.values().stream()
-                        .flatMap(c -> c.declareHighLight().entrySet().stream())
-                        .forEach(c -> ExtendQueryFeatureHolder.configHighLight(c.getKey(), c.getValue()));
+                customerConfigMap.values().forEach(customerConfig -> {
+                            Map<String, Supplier<HighlightBuilder>> highLightMap = customerConfig.declareHighLight();
+                            if (highLightMap != null && !highLightMap.isEmpty()) {
+                                highLightMap.forEach(ExtendQueryFeatureHolder::configHighLight);
+                            }
+                            Map<String, RequestOptions> reqOptMap = customerConfig.declareRequestOpt();
+                            if (reqOptMap != null && !reqOptMap.isEmpty()) {
+                                ReqOptionsHolder.putAll(reqOptMap);
+                            }
+                        });
             }
             Environment env = applicationContext.getEnvironment();
             Optional.ofNullable(env.getProperty(_EXT_DEFINE_QUERY_HANDLE_PROPERTY_PROP))
                     .ifPresent(EsHelperConfiguration::setExtDefineQueryHandlerProperty);
-            Optional.ofNullable(env.getProperty(ENABLE_LOG_OUT_PROPERTIES_PROP, Boolean.class))
+            Optional.ofNullable(env.getProperty(_ENABLE_LOG_OUT_PROPERTIES_PROP, Boolean.class))
                     .ifPresent(EsHelperConfiguration::setStatementLogOut);
             Optional.ofNullable(env.getProperty(_MAP_UNDERSCORE_TO_CAMEL_CASE_PROP, Boolean.class))
                     .ifPresent(EsHelperConfiguration::setMapUnderscoreToCamelCase);

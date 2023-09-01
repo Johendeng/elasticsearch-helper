@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.spring;
 
+import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 
 import java.util.Map;
@@ -18,4 +19,5 @@ public interface EsHelperCustomerConfig {
     Map<String, Supplier<HighlightBuilder>> declareHighLight();
 
 
+    Map<String, RequestOptions> declareRequestOpt();
 }
