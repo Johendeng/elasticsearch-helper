@@ -136,15 +136,15 @@ public abstract class AbstractEsSession<T extends QueryBuilder> {
 		this.currentQueryBuilderList = currentQueryBuilderList;
 	}
 
-	public static EsRequestHolderBuilder builder(){
-		return new EsRequestHolderBuilder();
+	public static EsRequestSessionBuilder builder(){
+		return new EsRequestSessionBuilder();
 	}
 
-	public static class EsRequestHolderBuilder {
+	public static class EsRequestSessionBuilder {
 
 		private EsQueryIndexBean indexConfig;
 
-		public EsRequestHolderBuilder config(EsQueryIndexBean indexBean) {
+		public EsRequestSessionBuilder config(EsQueryIndexBean indexBean) {
 			this.indexConfig = indexBean;
 			return this;
 		}

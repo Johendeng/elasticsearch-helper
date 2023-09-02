@@ -36,9 +36,9 @@ public class UpsetTest {
         up.index("account");
         up.id("1");
         HashMap<Object, Object> map = Maps.newHashMap();
-        map.put("firstname", "deng1111");
+        map.put("firstname", "deng333");
         System.out.println(SerializerUtils.parseObjToJson(map));
-        up.doc(SerializerUtils.parseObjToJson(map), XContentType.JSON);
+        up.doc(map, XContentType.JSON);
         UpdateResponse update = client.update(up, RequestOptions.DEFAULT);
         System.out.println(SerializerUtils.parseObjToJsonPretty(update));
     }

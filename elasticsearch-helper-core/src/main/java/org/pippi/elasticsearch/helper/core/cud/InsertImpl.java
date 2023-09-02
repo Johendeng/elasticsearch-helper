@@ -25,7 +25,7 @@ public class InsertImpl<T extends EsEntity> {
 
     public void insert(T entity, RequestOptions reqOpt) {
         IndexRequest req = new IndexRequest();
-        req.source(EsBeanMapper.toMap(entity), XContentType.JSON);
+        req.source(SerializerUtils.parseObjToJson(EsBeanMapper.toMap(entity)), XContentType.JSON);
         try {
             client.index(req, reqOpt);
         } catch (IOException e) {

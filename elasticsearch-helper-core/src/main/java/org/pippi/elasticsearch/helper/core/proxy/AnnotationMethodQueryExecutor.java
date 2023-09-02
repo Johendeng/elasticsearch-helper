@@ -69,7 +69,7 @@ public class AnnotationMethodQueryExecutor extends EsOperationExecutor{
                    boolean statementLogOut) {
         AbstractEsSession<?> session = EsQueryEngine.execute(method, args);
         session = this.handleRequestHook(session, method, args);
-        SearchResponse resp = null;
+        SearchResponse resp;
         try {
             SearchRequest request = session.getRequest();
             if (statementLogOut) {
