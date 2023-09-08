@@ -1,9 +1,11 @@
 package org.pippi.elasticsearch.helper.core.handler;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
+import org.pippi.elasticsearch.helper.core.session.BoolEsSession;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
@@ -25,7 +27,7 @@ import java.util.List;
  *        private int score;
  *        @Nested
  *        private InnerParam inner;
- *        @EsQueryIndex(index = "test", model = QueryModel.BOOL)
+
  *        public static class InnerParam implements EsComplexParam{
  *             @Match
  *             private String name;
@@ -42,29 +44,29 @@ public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean<NestedQueryBean> queryDes, AbstractEsSession searchHelper) {
-        Object value = queryDes.getValue();
         NestedQueryBean extBean = queryDes.getExtBean();
-        QueryBuilder queryBUilder = null;
-        if (value.getClass().isAnnotationPresent(EsAnnQueryIndex.class)) {
-            queryBUilder = this.readNestedQuery(queryDes);
-        } else {
-            throw new EsHelperQueryException("NestedQuery's field have to be annotation by @EsQueryIndex");
-        }
-        return QueryBuilders.nestedQuery(extBean.getPath(), queryBUilder, extBean.getScoreMode());
-     }
-
-
-    private QueryBuilder readNestedQuery(EsQueryFieldBean<NestedQueryBean> queryDes) {
         Object value = queryDes.getValue();
-        QueryAnnParser annParser = QueryAnnParser.instance();
-        EsQueryIndexBean indexInfo = annParser.getIndex(value);
-        List<EsQueryFieldBean> paramFieldBeans = annParser.read(value, false);
-        AbstractEsSession holder = AbstractEsSession.builder().config(indexInfo).build();
+        List<EsQueryFieldBean> paramFieldBeans = null;
+        if (value != null) {
+            QueryAnnParser annParser = QueryAnnParser.instance();
+            paramFieldBeans = annParser.read(extBean.getPath(), value);
+        } else {
+            /**
+             * xxx: 为了适配 lambda 类型的查询，进行该判断，
+             *
+             */
+            paramFieldBeans = queryDes.getNestedQueryDesList();
+        }
+        if (CollectionUtils.isEmpty(paramFieldBeans)) {
+            return null;
+        }
+        BoolEsSession session = BoolEsSession.buildSimpleSession();
         for (EsQueryFieldBean queryDesCell : paramFieldBeans) {
             String queryKey = queryDesCell.getQueryType();
             AbstractQueryHandler queryHandle = QueryHandlerFactory.getTargetHandleInstance(queryKey);
-            queryHandle.execute(queryDesCell, holder);
+            queryHandle.execute(queryDesCell, session);
         }
-        return holder.getQueryBuilder().boost(queryDes.getBoost());
-    }
+        QueryBuilder queryBUilder = session.getQueryBuilder().boost(queryDes.getBoost());
+        return QueryBuilders.nestedQuery(extBean.getPath(), queryBUilder, extBean.getScoreMode());
+     }
 }

@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * T 实体类
+ * F 字段
+ * Children 子引用
  * @author JohenDeng
  * @date 2023/8/28
  **/

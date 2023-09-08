@@ -7,9 +7,9 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Base;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Gte;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Terms;
 import org.pippi.elasticsearch.helper.model.resp.BaseResp;
+import org.pippi.elasticsearch.test.params.*;
+import org.pippi.elasticsearch.test.params.func.*;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
-import org.pippi.elasticsearch.test.repository.entity.params.*;
-import org.pippi.elasticsearch.test.repository.entity.params.func.*;
 
 import java.util.List;
 

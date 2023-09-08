@@ -3,9 +3,9 @@ package org.pippi.elasticsearch.test.repository.mapper;
 import org.pippi.elasticsearch.helper.model.annotations.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.model.annotations.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsMapper;
-import org.pippi.elasticsearch.test.repository.entity.params.AggAccountQueryParam;
-import org.pippi.elasticsearch.test.repository.entity.params.SimpleAccountQueryParam;
-import org.pippi.elasticsearch.test.repository.entity.result.AccountAggResult;
+import org.pippi.elasticsearch.test.params.AggAccountQueryParam;
+import org.pippi.elasticsearch.test.params.SimpleAccountQueryParam;
+import org.pippi.elasticsearch.test.result.AccountAggResult;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
 
 import java.util.List;

@@ -41,4 +41,12 @@ public class NestedQueryBean extends QueryBean<NestedQueryBuilder> {
     public void setScoreMode(ScoreMode scoreMode) {
         this.scoreMode = scoreMode;
     }
+
+    public boolean isIgnoreUnmapped() {
+        return ignoreUnmapped;
+    }
+
+    public void setIgnoreUnmapped(boolean ignoreUnmapped) {
+        this.ignoreUnmapped = ignoreUnmapped;
+    }
 }

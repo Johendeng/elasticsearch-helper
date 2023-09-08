@@ -69,6 +69,9 @@ public abstract class AbstractQueryHandler<T extends QueryBean> {
      * return
      */
     protected final EsQueryFieldBean<T> handleExtBean(EsQueryFieldBean<T> queryDes) {
+        if (queryDes.getExtBean() != null) {
+            return queryDes;
+        }
         try {
             if (!(this.getClass().getGenericSuperclass() instanceof ParameterizedType)) {
                 return queryDes;

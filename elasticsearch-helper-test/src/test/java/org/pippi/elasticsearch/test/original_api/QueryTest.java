@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.test.original_api;
 
+import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -40,6 +41,23 @@ public class QueryTest {
 
         SearchResponse search = client.search(req, RequestOptions.DEFAULT);
         System.out.println(SerializerUtils.parseObjToJsonPretty(search));
+    }
+
+
+    @Test
+    public void testNestdQuery() throws IOException {
+        SearchRequest req = new SearchRequest();
+        SearchSourceBuilder source = new SearchSourceBuilder();
+        BoolQueryBuilder bool = QueryBuilders.boolQuery();
+        source.query(bool);
+        req.source(source);
+
+        bool.must(QueryBuilders.nestedQuery("detail_info", QueryBuilders.rangeQuery("detail_info.age").gt(20),
+                ScoreMode.Total));
+
+        SearchResponse search = client.search(req, RequestOptions.DEFAULT);
+        System.out.println(SerializerUtils.parseObjToJsonPretty(search.getHits()));
+
     }
 
 }

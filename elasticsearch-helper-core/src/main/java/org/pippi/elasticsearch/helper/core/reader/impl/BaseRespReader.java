@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.helper.core.reader.impl;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.pippi.elasticsearch.helper.core.utils.EsBeanMapper;
+import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
 import org.pippi.elasticsearch.helper.core.reader.ResponseReader;
 import org.pippi.elasticsearch.helper.model.resp.BaseResp;
 
@@ -47,7 +47,7 @@ public class BaseRespReader implements ResponseReader<BaseResp<?>> {
         List records = new ArrayList<>(hitArr.length);
         int needWarn = 0;
         for (SearchHit hit : hitArr) {
-            Object record = EsBeanMapper.toBean(paramClazz, hit.getSourceAsMap());
+            Object record = EsBeanFieldTransUtils.toBean(paramClazz, hit.getSourceAsMap());
             records.add(record);
             needWarn += loadBaseHitData(record, hit, paramClazz);
         }

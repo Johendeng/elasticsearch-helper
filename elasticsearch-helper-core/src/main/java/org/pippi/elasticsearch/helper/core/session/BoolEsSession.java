@@ -1,7 +1,9 @@
 package org.pippi.elasticsearch.helper.core.session;
 
+import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 
 /**
@@ -44,5 +46,13 @@ public class BoolEsSession extends AbstractEsSession<BoolQueryBuilder> {
 			super.setCurrentQueryBuilderList(super.getQueryBuilder().should());
 		}
 		return this;
+	}
+
+	public static BoolEsSession buildSimpleSession() {
+		BoolEsSession session = new BoolEsSession();
+		session.setQueryBuilder(QueryBuilders.boolQuery());
+		session.defineQueryBuilder();
+		session.defineDefaultLogicConnector();
+		return session;
 	}
 }

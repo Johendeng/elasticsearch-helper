@@ -7,6 +7,7 @@ import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 
 import java.io.Serializable;
 import java.lang.annotation.Annotation;
+import java.util.List;
 
 /**
  * mapping the annotation information of
@@ -55,7 +56,7 @@ public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 	/**
 	 *  boost score default 1.0
 	 */
-	private Float boost;
+	private Float boost = 1.0f;
 
 	/**
 	 *  extend query bean
@@ -72,6 +73,12 @@ public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 	 * 	it's function_score method
 	 */
 	private Annotation funcScoreAnn;
+
+
+	/**
+	 * 主要用于lambda 类型的 nested查询
+	 */
+	private List<EsQueryFieldBean> nestedQueryDesList;
 
 
 	/**
@@ -93,6 +100,14 @@ public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 		this.queryType = queryType;
 		this.logicConnector = logicConnector;
 		this.meta = meta;
+	}
+
+	public static EsQueryFieldBean newInstance(Class<? extends Annotation> queryType, EsConnector connector, String field) {
+		return new EsQueryFieldBean(field, queryType.getSimpleName(), connector, null);
+	}
+
+	public static EsQueryFieldBean newInstance(String queryType, EsConnector connector, String field) {
+		return new EsQueryFieldBean(field, queryType, connector, null);
 	}
 
 	public String getField() {
@@ -181,5 +196,13 @@ public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
 
 	public void setFuncScoreAnn(Annotation funcScoreAnn) {
 		this.funcScoreAnn = funcScoreAnn;
+	}
+
+	public List<EsQueryFieldBean> getNestedQueryDesList() {
+		return nestedQueryDesList;
+	}
+
+	public void setNestedQueryDesList(List<EsQueryFieldBean> nestedQueryDesList) {
+		this.nestedQueryDesList = nestedQueryDesList;
 	}
 }

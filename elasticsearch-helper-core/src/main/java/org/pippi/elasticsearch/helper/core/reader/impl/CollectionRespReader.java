@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.helper.core.reader.impl;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
-import org.pippi.elasticsearch.helper.core.utils.EsBeanMapper;
+import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
 import org.pippi.elasticsearch.helper.core.reader.ResponseReader;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
@@ -45,7 +45,7 @@ public class CollectionRespReader implements ResponseReader<Collection<?>> {
         Collection records = ReflectionUtils.newCollection((Class<? extends Collection>) ((ParameterizedType)returnType).getRawType());
         int needWarm = 0;
         for (SearchHit hit : hitArr) {
-            Object record = EsBeanMapper.toBean(paramClazz, hit.getSourceAsMap());
+            Object record = EsBeanFieldTransUtils.toBean(paramClazz, hit.getSourceAsMap());
             records.add(record);
             needWarm += loadBaseHitData(record, hit, paramClazz);
         }
@@ -60,7 +60,7 @@ public class CollectionRespReader implements ResponseReader<Collection<?>> {
         SearchHit[] hitArr = hits.getHits();
         return Arrays.stream(hitArr)
                 .map(hit -> {
-                    R cell = EsBeanMapper.toBean(clazz, hit.getSourceAsMap());
+                    R cell = EsBeanFieldTransUtils.toBean(clazz, hit.getSourceAsMap());
                     loadBaseHitData(cell, hit, clazz);
                     return cell;
                 })

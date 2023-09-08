@@ -8,39 +8,23 @@ import java.io.Serializable;
  **/
 public interface Bool<Children> extends Serializable {
 
-    default Children must() {
-        return must(true);
-    }
-
     /**
      * 影响召回 & 影响评分
      */
-    Children must(boolean condition);
-
-    default Children should() {
-        return should(true);
-    }
+    Children must();
 
     /**
      * 不影响召回 & 影响评分
      */
-    Children should(boolean condition);
-
-    default Children filter() {
-        return filter(true);
-    }
+    Children should();
 
     /**
      * 影响召回 & 不影响评分
      */
-    Children filter(boolean condition);
-
-    default Children mustNot() {
-        return mustNot(true);
-    }
+    Children filter();
 
     /**
      * 影响召回 & 影响评分
      */
-    Children mustNot(boolean condition);
+    Children mustNot();
 }

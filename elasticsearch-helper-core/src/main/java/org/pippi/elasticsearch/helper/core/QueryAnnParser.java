@@ -3,6 +3,7 @@ package org.pippi.elasticsearch.helper.core;
 import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
 import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.model.bean.base.FuncScoreBean;
 import org.pippi.elasticsearch.helper.model.bean.base.HighLightBean;
@@ -96,20 +97,28 @@ public class QueryAnnParser {
      * @param visitParent return
      * @link
      */
-    public List<EsQueryFieldBean> read(Object view, boolean visitParent) {
-        Class<?> clazz = view.getClass();
+    public List<EsQueryFieldBean> read(Object val, boolean visitParent) {
+        Class<?> clazz = val.getClass();
         List<Field> fieldList = this.getFields(clazz, visitParent);
         List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
             Set<Annotation> annotationSet = Arrays.stream(field.getAnnotations())
                     .filter(ann -> ann.annotationType().isAnnotationPresent(Query.class) || ann.annotationType().isAnnotationPresent(FuncQuery.class))
                     .collect(Collectors.toSet());
-            if (CollectionUtils.isNotEmpty(annotationSet) && checkEsCondition(field, view)) {
-                List<EsQueryFieldBean> queryDes = this.mapFieldAnn(field, view, annotationSet);
+            if (CollectionUtils.isNotEmpty(annotationSet) && checkEsCondition(field, val)) {
+                List<EsQueryFieldBean> queryDes = this.mapFieldAnn(field, val, annotationSet);
                 queryDesList.addAll(queryDes);
             }
         }
         return queryDesList;
+    }
+
+    public List<EsQueryFieldBean> read(String path, Object val) {
+        List<EsQueryFieldBean> fieldBean = this.read(val, false);
+        fieldBean.forEach(bean -> {
+            bean.setField(path + "." + bean.getField());
+        });
+        return fieldBean;
     }
 
     public List<EsQueryFieldBean> read(Parameter[] params, Object[] args, Annotation[][] anns) {
@@ -293,7 +302,7 @@ public class QueryAnnParser {
                 Base ann = (Base) baseMethod.invoke(targetAnn);
                 EsConnector esConnector = ann.connect();
                 queryDes.setLogicConnector(esConnector);
-                String column = orgFieldName;
+                String column = EsBeanFieldTransUtils.camelify(orgFieldName);
                 if (StringUtils.isNotBlank(ann.value())) {
                     column = ann.value();
                 } else if (StringUtils.isNotBlank(ann.name())) {
