@@ -5,9 +5,11 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.pippi.elasticsearch.helper.core.EsRestClientFactory;
 import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.model.config.ExtendQueryFeatureHolder;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
@@ -54,6 +56,8 @@ public abstract class AbstractEsSession<T extends QueryBuilder> {
 	private List<QueryBuilder> currentQueryBuilderList ;
 
 	private EsQueryIndexBean indexConfig;
+
+	private RestHighLevelClient client = null;
 
 	/**
 	 *
@@ -136,6 +140,14 @@ public abstract class AbstractEsSession<T extends QueryBuilder> {
 		this.currentQueryBuilderList = currentQueryBuilderList;
 	}
 
+	public RestHighLevelClient getClient() {
+		return client;
+	}
+
+	public void setClient(RestHighLevelClient client) {
+		this.client = client;
+	}
+
 	public static EsRequestSessionBuilder builder(){
 		return new EsRequestSessionBuilder();
 	}
@@ -158,6 +170,7 @@ public abstract class AbstractEsSession<T extends QueryBuilder> {
 				throw new RuntimeException("un-support this query model");
 			}
 			AbstractEsSession holder = ReflectionUtils.newInstance(targetClazz);
+			holder.setClient(EsRestClientFactory.getClient(indexConfig.getClientKey()));
 			holder.init(indexConfig.getIndexName());
 			SearchSourceBuilder source = holder.getSource();
 			if (ArrayUtils.isNotEmpty(indexConfig.getFetchFields()) || ArrayUtils.isNotEmpty(indexConfig.getExcludeFields())){

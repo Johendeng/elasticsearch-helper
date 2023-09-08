@@ -18,6 +18,5 @@ public interface EsHelperCustomerConfig {
      */
     Map<String, Supplier<HighlightBuilder>> declareHighLight();
 
-
     Map<String, RequestOptions> declareRequestOpt();
 }

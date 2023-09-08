@@ -23,8 +23,6 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
 
     private final boolean visitQueryBeanParent;
 
-    private RestHighLevelClient client;
-
     private ApplicationContext applicationContext;
 
     private RequestOptions requestOption;
@@ -48,13 +46,12 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
     public EsHelperProxyBeanFactory(Class<T> targetInterfaceClazz, boolean visitQueryBeanParent, RestHighLevelClient client) {
         this.targetInterfaceClazz = targetInterfaceClazz;
         this.visitQueryBeanParent = visitQueryBeanParent;
-        this.client = client;
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public T getObject() {
-        return (T) EsOperationProxy.build(targetInterfaceClazz, visitQueryBeanParent, client, requestOption);
+        return (T) EsOperationProxy.build(targetInterfaceClazz, visitQueryBeanParent, requestOption);
     }
 
     @Override
@@ -69,8 +66,5 @@ public class EsHelperProxyBeanFactory<T> implements ApplicationContextAware,Init
 
     @Override
     public void afterPropertiesSet() {
-        RestHighLevelClient restClient = applicationContext.getBean(RestHighLevelClient.class);
-        Objects.requireNonNull(restClient, "SpringContext haven't RestHighLevelClient, config it");
-        this.client = restClient;
     }
 }

@@ -13,6 +13,6 @@ public abstract class EsOperationExecutor {
 
     abstract boolean condition(Class<?> targetInterface, Method method, Object[] args);
 
-    abstract Object operate(RestHighLevelClient client, Class<?> targetInterface, RequestOptions requestOption, Method method,
+    abstract Object operate(Class<?> targetInterface, RequestOptions requestOption, Method method,
                             Object[] args, boolean visitParent, boolean statementLogOut);
 }

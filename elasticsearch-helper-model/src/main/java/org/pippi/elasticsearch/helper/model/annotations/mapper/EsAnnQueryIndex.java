@@ -58,4 +58,6 @@ public @interface EsAnnQueryIndex {
      * function_score相关配置
      */
     FuncScore funcScore() default @FuncScore;
+
+    String clientKey() default "primary";
 }

@@ -59,7 +59,7 @@ public class AnnotationBeanQueryExecutor extends EsOperationExecutor{
     }
 
     @Override
-    public Object operate(RestHighLevelClient client, Class<?> targetInterface, RequestOptions requestOption,
+    public Object operate(Class<?> targetInterface, RequestOptions requestOption,
                           Method method, Object[] args, boolean visitParent, boolean statementLogOut) {
         Object param = args[0];
         AbstractEsSession<?> session = EsQueryEngine.execute(param, visitParent);
@@ -70,6 +70,7 @@ public class AnnotationBeanQueryExecutor extends EsOperationExecutor{
             if (statementLogOut) {
                 log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), session.getSource().toString());
             }
+            RestHighLevelClient client = session.getClient();
             resp = client.search(request, requestOption);
         } catch (IOException e) {
             throw new EsHelperQueryException("EsSearchExecute I/O exception, cause:", e);

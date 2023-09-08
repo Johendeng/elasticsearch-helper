@@ -29,6 +29,9 @@ public class EsQueryIndexBean {
 
 	private FuncScoreBean funcScoreBean;
 
+
+	private String clientKey;
+
 	public EsQueryIndexBean() {
 	}
 
@@ -116,5 +119,13 @@ public class EsQueryIndexBean {
 
 	public void setFuncScoreBean(FuncScoreBean funcScoreBean) {
 		this.funcScoreBean = funcScoreBean;
+	}
+
+	public String getClientKey() {
+		return clientKey;
+	}
+
+	public void setClientKey(String clientKey) {
+		this.clientKey = clientKey;
 	}
 }

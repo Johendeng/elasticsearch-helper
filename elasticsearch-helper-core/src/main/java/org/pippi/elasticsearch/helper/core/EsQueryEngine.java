@@ -42,7 +42,6 @@ public class EsQueryEngine {
         return session;
     }
 
-
     private static void loadEsExcDesBean(AbstractEsSession session, List<EsQueryFieldBean> queryDesList) {
         for (EsQueryFieldBean queryDes : queryDesList) {
             String queryKey = queryDes.getQueryType();

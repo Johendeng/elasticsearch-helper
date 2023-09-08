@@ -60,8 +60,7 @@ public class AnnotationMethodQueryExecutor extends EsOperationExecutor{
     }
 
     @Override
-    Object operate(RestHighLevelClient client,
-                   Class<?> targetInterface,
+    Object operate(Class<?> targetInterface,
                    RequestOptions requestOption,
                    Method method,
                    Object[] args,
@@ -75,6 +74,7 @@ public class AnnotationMethodQueryExecutor extends EsOperationExecutor{
             if (statementLogOut) {
                 log.info("{} # {} execute-es-query-json is\n{}", targetInterface.getSimpleName(), method.getName(), session.getSource().toString());
             }
+            RestHighLevelClient client = session.getClient();
             resp = client.search(request, requestOption);
         } catch (IOException e) {
             throw new EsHelperQueryException("EsSearchExecute I/O exception, cause:", e);

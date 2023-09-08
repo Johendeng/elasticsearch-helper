@@ -79,6 +79,7 @@ public class QueryAnnParser {
         boolean traceScore = ann.traceScore();
         int backSize = ann.size();
         EsQueryIndexBean indexBean = new EsQueryIndexBean(index, model, fetchFields, excludeFields, minScore, traceScore);
+        indexBean.setClientKey(ann.clientKey());
         indexBean.setSize(backSize);
         if (Objects.nonNull(highLightAnn)) {
             indexBean.setHighLight(HighLightBean.phrase(highLightAnn));

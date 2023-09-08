@@ -28,8 +28,6 @@ public class EsOperationProxy<T> implements InvocationHandler {
 
     private boolean visitQueryBeanParent = true;
 
-    private RestHighLevelClient client;
-
     private boolean enableLogOutEsQueryJson = EsHelperConfiguration.statementLogOut;
 
     private RequestOptions requestOption = RequestOptions.DEFAULT;
@@ -39,30 +37,26 @@ public class EsOperationProxy<T> implements InvocationHandler {
         EXECUTORS.add(AnnotationMethodQueryExecutor.executor());
     }
 
-    public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client) {
+    public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent) {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
-        this.client = client;
     }
 
-    public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, RequestOptions requestOption) {
+    public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RequestOptions requestOption) {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
-        this.client = client;
         this.requestOption = requestOption;
     }
 
-    public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, boolean enableLogOutEsQueryJson) {
+    public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent, boolean enableLogOutEsQueryJson) {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
-        this.client = client;
         this.enableLogOutEsQueryJson = enableLogOutEsQueryJson;
     }
 
-    public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RestHighLevelClient client, RequestOptions requestOption, boolean enableLogOutEsQueryJson) {
+    public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent, RequestOptions requestOption, boolean enableLogOutEsQueryJson) {
         this.targetInterface = targetInterface;
         this.visitQueryBeanParent = visitQueryBeanParent;
-        this.client = client;
         this.requestOption = requestOption;
         this.enableLogOutEsQueryJson = enableLogOutEsQueryJson;
     }
@@ -71,7 +65,7 @@ public class EsOperationProxy<T> implements InvocationHandler {
     public Object invoke(Object proxy, Method method, Object[] args) {
         for (EsOperationExecutor executor : EXECUTORS) {
             if (executor.condition(targetInterface, method, args)) {
-                return executor.operate(client, targetInterface, requestOption, method, args, visitQueryBeanParent, enableLogOutEsQueryJson);
+                return executor.operate(targetInterface, requestOption, method, args, visitQueryBeanParent, enableLogOutEsQueryJson);
             }
         }
         throw new EsHelperConfigException("un-match any es-operate-executor");
@@ -98,13 +92,12 @@ public class EsOperationProxy<T> implements InvocationHandler {
      */
     public static Object build(Class<?> targetInterfaceClazz,
                                boolean visitParent,
-                               RestHighLevelClient client,
                                RequestOptions requestOption,
                                boolean enableLogOut) {
         return Proxy.newProxyInstance(
                 targetInterfaceClazz.getClassLoader(),
                 new Class[]{targetInterfaceClazz},
-                new EsOperationProxy(targetInterfaceClazz, visitParent, client, requestOption, enableLogOut)
+                new EsOperationProxy(targetInterfaceClazz, visitParent, requestOption, enableLogOut)
         );
     }
 
@@ -113,23 +106,22 @@ public class EsOperationProxy<T> implements InvocationHandler {
      */
     public static Object build(Class<?> targetInterfaceClazz,
                                boolean visitParent,
-                               RestHighLevelClient client,
                                RequestOptions requestOption) {
         return Proxy.newProxyInstance(
                 targetInterfaceClazz.getClassLoader(),
                 new Class[]{targetInterfaceClazz},
-                new EsOperationProxy(targetInterfaceClazz, visitParent, client, requestOption)
+                new EsOperationProxy(targetInterfaceClazz, visitParent, requestOption)
         );
     }
 
     /**
      * 构建查询代理对象, 默认 visitParent: true, enableLogOut: true
      */
-    public static Object build(Class<?> targetInterfaceClazz, RestHighLevelClient client) {
-        return build(targetInterfaceClazz, true, client, RequestOptions.DEFAULT,true);
+    public static Object build(Class<?> targetInterfaceClazz) {
+        return build(targetInterfaceClazz, true, RequestOptions.DEFAULT, true);
     }
 
-    public static Object build(Class<?> targetInterfaceClazz, RestHighLevelClient client, RequestOptions requestOption) {
-        return build(targetInterfaceClazz, true, client, requestOption, true);
+    public static Object build(Class<?> targetInterfaceClazz, RequestOptions requestOption) {
+        return build(targetInterfaceClazz, true, requestOption, true);
     }
 }
