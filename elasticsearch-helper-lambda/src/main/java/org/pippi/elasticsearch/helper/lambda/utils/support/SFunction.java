@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.lambda.utils;
+package org.pippi.elasticsearch.helper.lambda.utils.support;
 
 import java.io.Serializable;
 import java.util.function.Function;

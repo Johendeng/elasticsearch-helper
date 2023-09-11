@@ -1,8 +1,6 @@
 package org.pippi.elasticsearch.helper.model.annotations.meta;
 
 
-
-import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
 import org.pippi.elasticsearch.helper.model.enums.EsMeta;
 
 import java.lang.annotation.*;
@@ -23,10 +21,6 @@ public @interface EsField {
     String name() default "";
 
     EsMeta type() default EsMeta.TEXT;
-
-    String keyword() default "keyword";
-
-    String typeStringify() default "";
 
     String analyzer() default "";
 

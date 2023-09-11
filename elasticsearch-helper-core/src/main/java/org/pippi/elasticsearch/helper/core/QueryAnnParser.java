@@ -100,7 +100,7 @@ public class QueryAnnParser {
      */
     public List<EsQueryFieldBean> read(Object val, boolean visitParent) {
         Class<?> clazz = val.getClass();
-        List<Field> fieldList = this.getFields(clazz, visitParent);
+        List<Field> fieldList = ReflectionUtils.getFields(clazz, visitParent);
         List<EsQueryFieldBean> queryDesList = Lists.newArrayListWithCapacity(fieldList.size());
         for (Field field : fieldList) {
             Set<Annotation> annotationSet = Arrays.stream(field.getAnnotations())
@@ -173,24 +173,6 @@ public class QueryAnnParser {
             return false;
         }
         return conditionHandle.test(arg);
-    }
-
-
-    private List<Field> getFields(Class<?> clazz, boolean visitParent) {
-        if (visitParent) {
-            return getFields(clazz, Lists.newArrayList());
-        }
-        Field[] fieldArr = clazz.getDeclaredFields();
-        return Lists.newArrayList(fieldArr);
-    }
-
-    private List<Field> getFields(Class<?> clazz, List<Field> callBackList) {
-        Field[] fieldArr = clazz.getDeclaredFields();
-        callBackList.addAll(Arrays.asList(fieldArr));
-        if (!(clazz = clazz.getSuperclass()).equals(Object.class)) {
-            getFields(clazz, callBackList);
-        }
-        return callBackList;
     }
 
     private List<EsQueryFieldBean> mapFieldAnn(Field field, Object viewObj, Set<Annotation> annotationSet) {

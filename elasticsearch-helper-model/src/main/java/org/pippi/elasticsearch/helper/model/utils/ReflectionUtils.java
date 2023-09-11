@@ -1,8 +1,10 @@
 package org.pippi.elasticsearch.helper.model.utils;
 
 import com.google.common.collect.Lists;
+import org.pippi.elasticsearch.helper.model.utils.support.SetAccessibleAction;
 
 import java.lang.reflect.*;
+import java.security.AccessController;
 import java.util.*;
 
 /**
@@ -142,5 +144,33 @@ public class ReflectionUtils {
             }
         }
         return newInstance(clazz);
+    }
+
+    public static List<Field> getFields(Class<?> clazz, boolean visitParent) {
+        if (visitParent) {
+            return getFields(clazz, Lists.newArrayList());
+        }
+        Field[] fieldArr = clazz.getDeclaredFields();
+        return Lists.newArrayList(fieldArr);
+    }
+
+    private static List<Field> getFields(Class<?> clazz, List<Field> callBackList) {
+        Field[] fieldArr = clazz.getDeclaredFields();
+        callBackList.addAll(Arrays.asList(fieldArr));
+        if (!(clazz = clazz.getSuperclass()).equals(Object.class)) {
+            getFields(clazz, callBackList);
+        }
+        return callBackList;
+    }
+
+    /**
+     * 设置可访问对象的可访问权限为 true
+     *
+     * @param object 可访问的对象
+     * @param <T>    类型
+     * @return 返回设置后的对象
+     */
+    public static <T extends AccessibleObject> T setAccessible(T object) {
+        return AccessController.doPrivileged(new SetAccessibleAction<>(object));
     }
 }

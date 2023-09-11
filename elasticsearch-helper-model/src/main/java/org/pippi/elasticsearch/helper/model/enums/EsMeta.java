@@ -79,18 +79,18 @@ public enum EsMeta {
         return clazz;
     }
 
-    private static final Map<String, Class<?>> META_CLAZZ_MAP = new HashMap<>();
+    private static final Map<String, EsMeta> META_CLAZZ_MAP = new HashMap<>();
 
     static {
         Arrays.stream(EsMeta.values()).forEach( en ->
-            META_CLAZZ_MAP.put(en.getType().toLowerCase(Locale.ROOT), en.getClazz())
+            META_CLAZZ_MAP.put(en.getType().toLowerCase(Locale.ROOT), en)
         );
     }
 
-    public static Class<?> getEsMetaJavaClazz(String type) {
-        Class<?> clazz = META_CLAZZ_MAP.get(type.toLowerCase(Locale.ROOT));
+    public static EsMeta getEsMetaJavaClazz(String type) {
+        EsMeta clazz = META_CLAZZ_MAP.get(type.toLowerCase(Locale.ROOT));
         if (Objects.isNull(clazz)) {
-            return Object.class;
+            return EsMeta.KEYWORD;
         }
         return clazz;
     }

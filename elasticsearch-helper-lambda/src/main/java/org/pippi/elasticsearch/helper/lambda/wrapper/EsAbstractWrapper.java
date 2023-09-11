@@ -103,6 +103,7 @@ public abstract class EsAbstractWrapper<T extends EsEntity, F, Children extends 
             final Children instance = instance();
             List<EsQueryFieldBean<?>> queryDes = instance.queryDesList;
             EsQueryFieldBean nestQueryDes = EsQueryFieldBean.newInstance(Nested.class, super.currentConnector, null);
+            queryDes.forEach(des -> des.setField(path + "." + des.getField()));
             nestQueryDes.setNestedQueryDesList(queryDes);
             NestedQueryBean nestedQueryBean = new NestedQueryBean();
             nestedQueryBean.setPath(path);
