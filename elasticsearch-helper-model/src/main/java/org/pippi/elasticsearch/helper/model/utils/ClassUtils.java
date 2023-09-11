@@ -234,7 +234,7 @@ public class ClassUtils {
     private static ClassLoader[] getClassLoaders(ClassLoader classLoader) {
         return new ClassLoader[]{
                 classLoader,
-                Resources.getDefaultClassLoader(),
+//                Resources.getDefaultClassLoader(),
                 Thread.currentThread().getContextClassLoader(),
                 ClassUtils.class.getClassLoader(),
                 systemClassLoader};
