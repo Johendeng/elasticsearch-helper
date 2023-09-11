@@ -90,11 +90,11 @@ public class EsOperationProxy<T> implements InvocationHandler {
     /**
      * 构建查询代理对象
      */
-    public static Object build(Class<?> targetInterfaceClazz,
+    public static <T> T build(Class<T> targetInterfaceClazz,
                                boolean visitParent,
                                RequestOptions requestOption,
                                boolean enableLogOut) {
-        return Proxy.newProxyInstance(
+        return (T) Proxy.newProxyInstance(
                 targetInterfaceClazz.getClassLoader(),
                 new Class[]{targetInterfaceClazz},
                 new EsOperationProxy(targetInterfaceClazz, visitParent, requestOption, enableLogOut)
@@ -104,10 +104,10 @@ public class EsOperationProxy<T> implements InvocationHandler {
     /**
      * 构建查询代理对象
      */
-    public static Object build(Class<?> targetInterfaceClazz,
+    public static <T> T build(Class<T> targetInterfaceClazz,
                                boolean visitParent,
                                RequestOptions requestOption) {
-        return Proxy.newProxyInstance(
+        return (T) Proxy.newProxyInstance(
                 targetInterfaceClazz.getClassLoader(),
                 new Class[]{targetInterfaceClazz},
                 new EsOperationProxy(targetInterfaceClazz, visitParent, requestOption)
@@ -117,11 +117,11 @@ public class EsOperationProxy<T> implements InvocationHandler {
     /**
      * 构建查询代理对象, 默认 visitParent: true, enableLogOut: true
      */
-    public static Object build(Class<?> targetInterfaceClazz) {
+    public static <T> T build(Class<T> targetInterfaceClazz) {
         return build(targetInterfaceClazz, true, RequestOptions.DEFAULT, true);
     }
 
-    public static Object build(Class<?> targetInterfaceClazz, RequestOptions requestOption) {
+    public static <T> T build(Class<T> targetInterfaceClazz, RequestOptions requestOption) {
         return build(targetInterfaceClazz, true, requestOption, true);
     }
 }

@@ -6,4 +6,4 @@
  * @author JohenDeng
  * @date 2023/8/28
  **/
-package org.pippi.elasticsearch.helper.core.cud;
+package org.pippi.elasticsearch.helper.core.wrapper;

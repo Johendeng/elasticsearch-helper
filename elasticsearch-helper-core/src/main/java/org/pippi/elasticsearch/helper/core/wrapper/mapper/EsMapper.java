@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.lambda.mapper;
+package org.pippi.elasticsearch.helper.core.wrapper.mapper;
 
 /**
  *

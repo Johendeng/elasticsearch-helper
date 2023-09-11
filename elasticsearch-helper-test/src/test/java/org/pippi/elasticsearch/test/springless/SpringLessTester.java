@@ -29,7 +29,7 @@ public class SpringLessTester {
         param.setFirstname("Fulton");
         param.setLastnames(new String[]{"Holt"});
 
-        EsHandleMapper esHandleMapper = (EsHandleMapper) EsOperationProxy.build(EsHandleMapper.class, true, RequestOptions.DEFAULT, true);
+        EsHandleMapper esHandleMapper = EsOperationProxy.build(EsHandleMapper.class);
         BaseResp<AccountEntity> res = esHandleMapper.termQuery(param);
         System.out.println(SerializerUtils.parseObjToJsonPretty(res));
         res.getRecords().forEach(data -> {

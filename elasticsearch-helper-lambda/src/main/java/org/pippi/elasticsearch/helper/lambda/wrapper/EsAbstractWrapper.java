@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper;
 
 import org.apache.lucene.search.join.ScoreMode;
+import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Bool;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.INested;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Query;

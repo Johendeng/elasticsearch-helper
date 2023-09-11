@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.cud;
+package org.pippi.elasticsearch.helper.core.wrapper;
 
 /**
  * @author JohenDeng

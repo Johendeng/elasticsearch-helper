@@ -15,6 +15,8 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsIndex {
 
+    String value();
+
     // same as value
     String name();
 
@@ -22,5 +24,5 @@ public @interface EsIndex {
 
     int replicas() default 1;
 
-
+    String clientKey() default "primary";
 }

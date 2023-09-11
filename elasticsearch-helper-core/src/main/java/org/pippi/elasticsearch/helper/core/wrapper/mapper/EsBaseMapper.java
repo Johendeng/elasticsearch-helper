@@ -1,6 +1,7 @@
-package org.pippi.elasticsearch.helper.lambda.mapper;
+package org.pippi.elasticsearch.helper.core.wrapper.mapper;
 
-import org.pippi.elasticsearch.helper.lambda.wrapper.EsWrapper;
+
+import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.param.EsPage;
 

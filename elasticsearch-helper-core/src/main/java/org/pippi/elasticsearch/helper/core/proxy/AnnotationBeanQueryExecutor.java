@@ -11,7 +11,7 @@ import org.pippi.elasticsearch.helper.core.hook.RequestHook;
 import org.pippi.elasticsearch.helper.core.hook.ResponseHook;
 import org.pippi.elasticsearch.helper.core.reader.EsResponseReader;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
-import org.pippi.elasticsearch.helper.lambda.mapper.EsBaseMapper;
+import org.pippi.elasticsearch.helper.core.wrapper.mapper.EsBaseMapper;
 import org.pippi.elasticsearch.helper.model.annotations.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.model.annotations.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
@@ -20,9 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**

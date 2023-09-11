@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>io.github.johendeng</groupId>
-            <artifactId>elasticsearch-helper-model</artifactId>
+            <artifactId>elasticsearch-helper-core</artifactId>
         </dependency>
     </dependencies>
 

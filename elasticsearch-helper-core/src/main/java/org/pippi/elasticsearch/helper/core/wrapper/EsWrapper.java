@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.lambda.wrapper;
+package org.pippi.elasticsearch.helper.core.wrapper;
 
 import com.google.common.collect.Lists;
 import org.elasticsearch.index.query.QueryBuilder;

@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.cud;
+package org.pippi.elasticsearch.helper.core.wrapper;
 
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.client.RequestOptions;
