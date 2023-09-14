@@ -21,4 +21,6 @@ public interface UserMapper extends EsBaseMapper<UserEntity> {
 
     @EsAnnQueryIndex(index = "user")
     List<UserEntity> selectByNested(@Nested(path = "detail_info") UserEntity.DetailInfo param);
+
+
 }

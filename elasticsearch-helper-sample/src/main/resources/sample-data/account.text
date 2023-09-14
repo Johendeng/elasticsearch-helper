@@ -1,0 +1,63 @@
+-put /account
+
+{
+  "settings": {
+    "number_of_shards": 3,
+    "number_of_replicas": 2
+  },
+  "mappings": {
+    "properties": {
+      "account_number": {
+        "type": "integer"
+      },
+      "balance": {
+        "type": "integer"
+      },
+      "firstname": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "ignore_above": 256,
+            "type": "keyword"
+          }
+        }
+      },
+      "lastname": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "ignore_above": 256,
+            "type": "keyword"
+          }
+        }
+      },
+      "age": {
+        "type": "integer"
+      },
+      "gender": {
+        "type": "keyword"
+      },
+      "address": {
+        "type": "text"
+      },
+      "employer": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "ignore_above": 256,
+            "type": "keyword"
+          }
+        }
+      },
+      "email": {
+        "type": "text"
+      },
+      "city": {
+        "type": "keyword"
+      },
+      "state": {
+        "type": "keyword"
+      }
+    }
+  }
+}
