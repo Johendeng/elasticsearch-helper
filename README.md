@@ -17,7 +17,7 @@
  
 ```
 ### 结构：
-![Image text](https://gitee.com/JohenTeng/elasticsearch-helper/raw/develop/.doc/image/es-helper.png)
+![Image text](https://gitee.com/JohenTeng/elasticsearch-helper/raw/master/.doc/image/es-helper.png)
 ```
 EsQueryEngine: 接受查询对象，生成es查询对象，该对象需要使用 @EsQueryIndex 描述对象，
                使用 org/pippi/elasticsearch/helper/core/beans/annotation/query/module 下的注解描述属性：
