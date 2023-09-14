@@ -7,17 +7,17 @@ import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Lte;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryConf;
 
 /**
  * @author JohenDeng
  * @date 2023/9/1
  **/
 @EsQueryHandle(Lte.class)
-public class LteQueryHandler extends AbstractQueryHandler<RangeQueryBean> {
+public class LteQueryHandler extends AbstractQueryHandler<RangeQueryConf> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<RangeQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<RangeQueryConf> queryDes, AbstractEsSession searchHelper) {
         final RangeQueryBuilder rangeQuery = QueryBuilders.rangeQuery(queryDes.getField());
         rangeQuery.lte(queryDes.getValue());
         return rangeQuery;

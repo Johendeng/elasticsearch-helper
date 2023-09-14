@@ -22,7 +22,7 @@ public class EsPage<T> implements EsComplexParam {
     @Nullable
     private LinkedHashMap<String, SortOrder> orderMap;
 
-    private List<T> data;
+    private List<T> records;
 
     public int getExclude() {
         return Math.max((current - 1), 0) * pageSize;
@@ -52,5 +52,13 @@ public class EsPage<T> implements EsComplexParam {
     public void setOrderMap(@Nullable LinkedHashMap<String, SortOrder> orderMap) {
         this.orderMap = orderMap;
     }
-    
+
+
+    public void setRecords(List<T> records) {
+        this.records = records;
+    }
+
+    public List<T> getRecords() {
+        return records;
+    }
 }

@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
+import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
 import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.model.bean.base.FuncScoreBean;
 import org.pippi.elasticsearch.helper.model.bean.base.HighLightBean;
@@ -16,6 +17,7 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.base.Query;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.ScriptQuery;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.SourceOrder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.UserQuery;
+import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.enums.QueryModel;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
@@ -324,5 +326,23 @@ public class QueryAnnParser {
         } catch (Exception e) {
             throw new EsHelperConfigException("annotation analysis Error, cause:", e);
         }
+    }
+
+
+    public EsQueryIndexBean parseIndexAnn(String clazzName, EsIndex indexAnn) {
+        String indexName = clazzName;
+        if (EsHelperConfiguration.mapUnderscoreToCamelCase) {
+            indexName = EsBeanFieldTransUtils.camelify(indexName);
+        }
+        String clientKey = "primary";
+        if (indexAnn != null) {
+            clientKey = indexAnn.clientKey();
+            if (StringUtils.isNotBlank(indexAnn.value())) {
+                indexName = indexAnn.value();
+            } else if (StringUtils.isNotBlank(indexAnn.name())) {
+                indexName = indexAnn.name();
+            }
+        }
+        return new EsQueryIndexBean(indexName, QueryModel.BOOL, clientKey);
     }
 }

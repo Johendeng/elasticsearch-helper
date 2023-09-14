@@ -50,6 +50,9 @@ public class IndexMetaCache {
             return indexMeta;
         }
         EsIndex indexAnn = eClazz.getAnnotation(EsIndex.class);
+        if (indexAnn == null) {
+            return null;
+        }
         String indexName = IndexMetaCache.getIndexName(indexAnn, eClazz);
         Map<String, Object> remoteMapping = IndexMetaCache.getRemoteMappingDefine(indexName, indexAnn.clientKey());
         indexMeta = IndexMeta.parse(indexName, eClazz, remoteMapping);

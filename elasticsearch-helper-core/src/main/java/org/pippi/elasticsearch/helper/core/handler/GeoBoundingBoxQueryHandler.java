@@ -7,7 +7,7 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandl
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.GeoBoundingBox;
-import org.pippi.elasticsearch.helper.model.bean.query.GeoBoundingBoxQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.GeoBoundingBoxQueryConf;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
@@ -18,10 +18,10 @@ import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
  * @date 2022/5/12
  */
 @EsQueryHandle(GeoBoundingBox.class)
-public class GeoBoundingBoxQueryHandler extends AbstractQueryHandler<GeoBoundingBoxQueryBean> {
+public class GeoBoundingBoxQueryHandler extends AbstractQueryHandler<GeoBoundingBoxQueryConf> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<GeoBoundingBoxQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<GeoBoundingBoxQueryConf> queryDes, AbstractEsSession searchHelper) {
         GeoBoundingBoxQueryBuilder geoBoundingBoxQuery = QueryBuilders.geoBoundingBoxQuery(queryDes.getField());
         Object queryValue = queryDes.getValue();
         if (!(queryValue instanceof GeoBoundingBoxParam)) {

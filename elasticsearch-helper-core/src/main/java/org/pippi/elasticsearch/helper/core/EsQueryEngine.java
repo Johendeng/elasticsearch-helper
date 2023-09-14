@@ -1,5 +1,7 @@
 package org.pippi.elasticsearch.helper.core;
 
+import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
+import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandler;
@@ -39,6 +41,14 @@ public class EsQueryEngine {
         Annotation[][] annArr = method.getParameterAnnotations();
         List<EsQueryFieldBean> queryDesList = translator.read(params, args, annArr);
         loadEsExcDesBean(session, queryDesList);
+        return session;
+    }
+
+    public static <T extends EsEntity>AbstractEsSession<?> execute(EsWrapper<T> wrapper) {
+        AbstractEsSession session = AbstractEsSession.builder()
+                .config(wrapper.getIndexInfo())
+                .build();
+        loadEsExcDesBean(session, wrapper.getQueryDesList());
         return session;
     }
 

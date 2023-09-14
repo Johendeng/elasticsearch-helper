@@ -15,10 +15,10 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EsIndex {
 
-    String value();
+    String value() default "";
 
     // same as value
-    String name();
+    String name() default "";
 
     int shards() default 5;
 

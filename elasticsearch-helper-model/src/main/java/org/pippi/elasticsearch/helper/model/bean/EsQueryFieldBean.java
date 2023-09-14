@@ -26,7 +26,7 @@ import java.util.List;
  * @author     JohenTeng
  * @date      2021/8/9
  */
-public class EsQueryFieldBean<T extends QueryBean> implements Serializable {
+public class EsQueryFieldBean<T extends QueryConf> implements Serializable {
 
 	/**
 	 *  the field be queried

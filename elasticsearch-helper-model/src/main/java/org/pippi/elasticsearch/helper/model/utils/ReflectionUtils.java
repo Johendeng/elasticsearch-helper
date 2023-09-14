@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.model.utils;
 
 import com.google.common.collect.Lists;
+import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.utils.support.SetAccessibleAction;
 
 import java.lang.reflect.*;
@@ -172,5 +173,14 @@ public class ReflectionUtils {
      */
     public static <T extends AccessibleObject> T setAccessible(T object) {
         return AccessController.doPrivileged(new SetAccessibleAction<>(object));
+    }
+
+    public static ParameterizedType findTargetSuperParameterizedInterface(Class<?> relClazz, Class<?> target) {
+        Type[] allInterface = relClazz.getGenericInterfaces();
+        return (ParameterizedType) Arrays.stream(allInterface)
+                .filter(type -> type instanceof ParameterizedType)
+                .filter(type -> ((ParameterizedType) type).getRawType().equals(target))
+                .findFirst()
+                .orElse(null);
     }
 }

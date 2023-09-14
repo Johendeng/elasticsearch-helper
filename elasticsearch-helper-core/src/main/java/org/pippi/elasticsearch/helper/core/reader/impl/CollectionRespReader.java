@@ -74,4 +74,12 @@ public class CollectionRespReader implements ResponseReader<Collection<?>> {
                 .map(hit -> new EsEntity(hit.getScore(), hit.getId()))
                 .collect(Collectors.toList());
     }
+
+    public List<Map<String, Object>> readMap(SearchResponse resp) {
+        SearchHits hits = resp.getHits();
+        SearchHit[] hitArr = hits.getHits();
+        return Arrays.stream(hitArr)
+                .map(SearchHit::getSourceAsMap)
+                .collect(Collectors.toList());
+    }
 }

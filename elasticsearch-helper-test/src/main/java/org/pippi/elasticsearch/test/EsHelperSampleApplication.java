@@ -24,16 +24,6 @@ public class EsHelperSampleApplication {
 		));
 	}
 
-	@Bean
-	@EsClient(name = "client2", primary = false)
-	public RestHighLevelClient restHighLevelClient2(){
-		return new RestHighLevelClient(RestClient.builder(
-				new HttpHost("localhost", 9200),
-				new HttpHost("localhost", 9201),
-				new HttpHost("localhost", 9202)
-		));
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(EsHelperSampleApplication.class, args);
 	}

@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.MatchPhrasePrefix;
-import org.pippi.elasticsearch.helper.model.bean.query.MatchPhrasePrefixQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.MatchPhrasePrefixQueryConf;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
@@ -14,10 +14,10 @@ import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
  * @date      2021/9/28
  */
 @EsQueryHandle(MatchPhrasePrefix.class)
-public class MatchPhrasePrefixQueryHandler extends AbstractQueryHandler<MatchPhrasePrefixQueryBean> {
+public class MatchPhrasePrefixQueryHandler extends AbstractQueryHandler<MatchPhrasePrefixQueryConf> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<MatchPhrasePrefixQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<MatchPhrasePrefixQueryConf> queryDes, AbstractEsSession searchHelper) {
         MatchPhrasePrefixQueryBuilder matchPhrasePrefixQueryBuilder = QueryBuilders.matchPhrasePrefixQuery(
                 queryDes.getField(), queryDes.getValue()).boost(queryDes.getBoost());
         return matchPhrasePrefixQueryBuilder;

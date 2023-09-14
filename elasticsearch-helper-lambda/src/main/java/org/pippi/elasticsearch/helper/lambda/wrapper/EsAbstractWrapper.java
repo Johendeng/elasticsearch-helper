@@ -1,19 +1,18 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper;
 
 import org.apache.lucene.search.join.ScoreMode;
+import org.pippi.elasticsearch.helper.core.QueryAnnParser;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Bool;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.INested;
-import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Query;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Nested;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
-import org.pippi.elasticsearch.helper.model.bean.EsEntity;
+import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.SearchFunc;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.*;
+import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.model.bean.query.NestedQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.*;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
  * T 实体类
@@ -25,8 +24,8 @@ import java.util.function.Consumer;
  * @date 2023/9/1
  **/
 @SuppressWarnings({"unchecked"})
-public abstract class EsAbstractWrapper<T extends EsEntity, F, Children extends EsAbstractWrapper<T, F, Children>>
-        extends EsWrapper<T> implements Bool<Children>, INested<Children, Children>, Query<F, Children> {
+public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper<T, F, Children>>
+        extends EsWrapper<T> implements Bool<Children>, INested<EsWrapper<?> , Children>, SearchFunc<F, Children> {
 
     protected final Children typedThis = (Children) this;
 
@@ -59,6 +58,20 @@ public abstract class EsAbstractWrapper<T extends EsEntity, F, Children extends 
     }
 
     @Override
+    public Children size(int size) {
+        super.indexInfo.setSize(size);
+        return typedThis;
+    }
+
+    @Override
+    public Children config(int size, float minScore, boolean traceScore) {
+        super.indexInfo.setSize(size);
+        super.indexInfo.setMinScore(minScore);
+        super.indexInfo.setTraceScore(traceScore);
+        return typedThis;
+    }
+
+    @Override
     public Children must() {
         super.connector(EsConnector.MUST);
         return typedThis;
@@ -83,29 +96,28 @@ public abstract class EsAbstractWrapper<T extends EsEntity, F, Children extends 
     }
 
     @Override
-    public Children nested(boolean condition, String path, Consumer<Children> consumer) {
+    public Children nested(boolean condition, String path, EsWrapper<?>  consumer) {
         return nested(condition, path, ScoreMode.Total, false, consumer);
     }
 
     @Override
-    public Children nested(boolean condition, String path, ScoreMode scoreMode, Consumer<Children> consumer) {
+    public Children nested(boolean condition, String path, ScoreMode scoreMode, EsWrapper<?>  consumer) {
         return nested(condition, path, scoreMode, false, consumer);
     }
 
     @Override
-    public Children nested(boolean condition, String path, boolean ignoreUnmapped, Consumer<Children> consumer) {
+    public Children nested(boolean condition, String path, boolean ignoreUnmapped, EsWrapper<?>  consumer) {
         return nested(condition, path, ScoreMode.Total, ignoreUnmapped, consumer);
     }
 
     @Override
-    public Children nested(boolean condition, String path, ScoreMode scoreMode, boolean ignoreUnmapped, Consumer<Children> consumer) {
+    public Children nested(boolean condition, String path, ScoreMode scoreMode, boolean ignoreUnmapped, EsWrapper<?>  consumer) {
         return maybeDo(condition, () -> {
-            final Children instance = instance();
-            List<EsQueryFieldBean<?>> queryDes = instance.queryDesList;
+            List<EsQueryFieldBean> queryDes = consumer.getQueryDesList();
             EsQueryFieldBean nestQueryDes = EsQueryFieldBean.newInstance(Nested.class, super.currentConnector, null);
             queryDes.forEach(des -> des.setField(path + "." + des.getField()));
             nestQueryDes.setNestedQueryDesList(queryDes);
-            NestedQueryBean nestedQueryBean = new NestedQueryBean();
+            NestedQueryConf nestedQueryBean = new NestedQueryConf();
             nestedQueryBean.setPath(path);
             nestedQueryBean.setScoreMode(scoreMode);
             nestedQueryBean.setIgnoreUnmapped(ignoreUnmapped);
@@ -124,9 +136,78 @@ public abstract class EsAbstractWrapper<T extends EsEntity, F, Children extends 
         return maybeDo(condition, () -> {
             EsQueryFieldBean term = EsQueryFieldBean.newInstance(Term.class, super.currentConnector, fieldToString(field));
             term.setBoost(boost);
+            term.setValue(val);
+            term.setExtBean(new TermQueryConf());
             super.queryDesList.add(term);
         });
     }
+
+    @Override
+    public Children terms(boolean condition, F field, Object... val) {
+        return terms(condition, field, 1.0f, val);
+    }
+
+    @Override
+    public Children terms(boolean condition, F field, float boost, Object... val) {
+        return maybeDo(condition, ()-> {
+            EsQueryFieldBean terms = EsQueryFieldBean.newInstance(Terms.class, super.currentConnector, fieldToString(field));
+            terms.setBoost(boost);
+            terms.setValue(val);
+            terms.setExtBean(new TermsQueryConf());
+            super.queryDesList.add(terms);
+        });
+    }
+
+
+    @Override
+    public Children match(boolean condition, F field, Object val) {
+        return match(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children match(boolean condition, F field, Object val, float boost) {
+        return match(condition, field, val, boost,  MatchQueryConf.build());
+    }
+
+    @Override
+    public Children match(boolean condition, F field, Object val, float boost, MatchQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean match = EsQueryFieldBean.newInstance(Match.class, super.currentConnector, fieldToString(field));
+            match.setValue(val);
+            match.setExtBean(config);
+            match.setBoost(boost);
+            super.queryDesList.add(match);
+        });
+        return typedThis;
+    }
+
+
+    @Override
+    public Children fuzzy(boolean condition, F field, Object val) {
+        return fuzzy(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children fuzzy(boolean condition, F field, Object val, float boost) {
+        return fuzzy(condition, field, val, boost, FuzzyQueryConf.build());
+    }
+
+    @Override
+    public Children fuzzy(boolean condition, F field, Object val, float boost, FuzzyQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(Fuzzy.class, super.currentConnector, fieldToString(field));
+            conf.setValue(val);
+            conf.setExtBean(config);
+            conf.setBoost(boost);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+
+
+
+
 
     protected final String fieldToString(F field) {
         return fieldStringify(field);
@@ -140,7 +221,6 @@ public abstract class EsAbstractWrapper<T extends EsEntity, F, Children extends 
      * 子类返回一个自己的新对象
      */
     protected abstract Children instance();
-
 
     protected final Children maybeDo(boolean condition, DoSomething something) {
         if (condition) {
@@ -156,5 +236,12 @@ public abstract class EsAbstractWrapper<T extends EsEntity, F, Children extends 
     public interface DoSomething {
 
         void doIt();
+    }
+
+    protected void init() {
+        // todo
+        String indexName = this.getEntityClass().getSimpleName();
+        EsIndex indexAnn = this.getEntityClass().getAnnotation(EsIndex.class);
+        super.indexInfo = QueryAnnParser.instance().parseIndexAnn(indexName, indexAnn);
     }
 }

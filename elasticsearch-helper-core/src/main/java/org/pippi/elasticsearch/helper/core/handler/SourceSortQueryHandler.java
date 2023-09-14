@@ -10,7 +10,7 @@ import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.SourceOrder;
-import org.pippi.elasticsearch.helper.model.bean.query.SourceOrderQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.SourceOrderQueryConf;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.Objects;
@@ -25,12 +25,12 @@ import java.util.Objects;
  * @date 2021/12/9
  */
 @EsQueryHandle(SourceOrder.class)
-public class SourceSortQueryHandler extends AbstractQueryHandler<SourceOrderQueryBean>{
+public class SourceSortQueryHandler extends AbstractQueryHandler<SourceOrderQueryConf>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<SourceOrderQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<SourceOrderQueryConf> queryDes, AbstractEsSession searchHelper) {
         SearchSourceBuilder source = searchHelper.getSource();
-        SourceOrderQueryBean sourceOrderBean = queryDes.getExtBean();
+        SourceOrderQueryConf sourceOrderBean = queryDes.getExtBean();
         String script = sourceOrderBean.getScript();
         SortOrder sortOrder = sourceOrderBean.getSortOrder();
         ScriptSortBuilder.ScriptSortType sortType = sourceOrderBean.getSortType();

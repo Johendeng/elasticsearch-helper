@@ -8,11 +8,9 @@ import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
 import org.pippi.elasticsearch.helper.core.session.BoolEsSession;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
-import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Nested;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.model.bean.query.NestedQueryBean;
-import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
+import org.pippi.elasticsearch.helper.model.bean.query.NestedQueryConf;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 import java.util.List;
@@ -40,11 +38,11 @@ import java.util.List;
  * @date      2021/9/22
  */
 @EsQueryHandle(Nested.class)
-public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryBean> {
+public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryConf> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<NestedQueryBean> queryDes, AbstractEsSession searchHelper) {
-        NestedQueryBean extBean = queryDes.getExtBean();
+    public QueryBuilder handle(EsQueryFieldBean<NestedQueryConf> queryDes, AbstractEsSession searchHelper) {
+        NestedQueryConf extBean = queryDes.getExtBean();
         Object value = queryDes.getValue();
         List<EsQueryFieldBean> paramFieldBeans = null;
         if (value != null) {

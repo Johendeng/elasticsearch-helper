@@ -4,7 +4,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.functionscore.ScoreFunctionBuilder;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.ScoreFuncBuilder;
-import org.pippi.elasticsearch.helper.model.bean.QueryBean;
+import org.pippi.elasticsearch.helper.model.bean.QueryConf;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.session.FuncScoreEsSession;
@@ -21,7 +21,7 @@ import java.util.Objects;
  *
  * @param <T> mapping JavaBean
  **/
-public abstract class AbstractQueryHandler<T extends QueryBean> {
+public abstract class AbstractQueryHandler<T extends QueryConf> {
 
     AbstractQueryHandler(){}
 

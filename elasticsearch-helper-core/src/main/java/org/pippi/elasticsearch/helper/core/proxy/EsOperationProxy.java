@@ -35,6 +35,7 @@ public class EsOperationProxy<T> implements InvocationHandler {
     static {
         EXECUTORS.add(AnnotationBeanQueryExecutor.executor());
         EXECUTORS.add(AnnotationMethodQueryExecutor.executor());
+        EXECUTORS.add(LambdaQueryExecutor.executor());
     }
 
     public EsOperationProxy(Class<T> targetInterface, boolean visitQueryBeanParent) {

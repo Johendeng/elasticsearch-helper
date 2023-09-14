@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.model.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import java.io.Serializable;
 import java.util.List;
@@ -17,13 +18,10 @@ public class EsEntity implements Serializable {
      * es 索引默认存在的 _id 字段，如果未定义，es会为该字段分配 uuid，
      * 该字段作为 更新/删除 的定位字段
      */
-    @JsonIgnore
     private String docId;
 
-    @JsonIgnore
     private Float hitScore;
 
-    @JsonIgnore
     private Map<String, List<String>> highLightMap;
 
     public EsEntity() {

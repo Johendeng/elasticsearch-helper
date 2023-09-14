@@ -8,7 +8,7 @@ import org.elasticsearch.script.Script;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.ScriptQuery;
-import org.pippi.elasticsearch.helper.model.bean.query.ScriptQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.ScriptQueryConf;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
@@ -22,11 +22,11 @@ import java.util.Objects;
  * @date      2021/9/28
  */
 @EsQueryHandle(ScriptQuery.class)
-public class ScriptQueryHandler extends AbstractQueryHandler<ScriptQueryBean>{
+public class ScriptQueryHandler extends AbstractQueryHandler<ScriptQueryConf>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<ScriptQueryBean> queryDes, AbstractEsSession searchHelper) {
-        ScriptQueryBean extBean = queryDes.getExtBean();
+    public QueryBuilder handle(EsQueryFieldBean<ScriptQueryConf> queryDes, AbstractEsSession searchHelper) {
+        ScriptQueryConf extBean = queryDes.getExtBean();
         Map params = Maps.newHashMap();
         Script script = new Script(extBean.getScriptType(), extBean.getLang(), extBean.getIdOrCode(), params);
         ScriptQueryBuilder scriptQueryBuilder = QueryBuilders.scriptQuery(script).boost(queryDes.getBoost());

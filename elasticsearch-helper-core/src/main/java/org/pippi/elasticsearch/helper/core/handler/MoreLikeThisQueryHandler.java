@@ -8,7 +8,7 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandl
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.MoreLikeThis;
-import org.pippi.elasticsearch.helper.model.bean.query.MoreLikeThisQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.MoreLikeThisQueryConf;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
@@ -17,10 +17,10 @@ import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
  * @date      2021/9/28
  */
 @EsQueryHandle(MoreLikeThis.class)
-public class MoreLikeThisQueryHandler extends AbstractQueryHandler<MoreLikeThisQueryBean> {
+public class MoreLikeThisQueryHandler extends AbstractQueryHandler<MoreLikeThisQueryConf> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<MoreLikeThisQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<MoreLikeThisQueryConf> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
         String[] fields = queryDes.getExtBean().getFields();
         if (value.getClass().equals(MoreLikeThisParam.class)) {

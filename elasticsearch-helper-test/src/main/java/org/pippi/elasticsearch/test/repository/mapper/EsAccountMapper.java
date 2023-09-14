@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.test.repository.mapper;
 
+import org.pippi.elasticsearch.helper.core.wrapper.mapper.EsBaseMapper;
 import org.pippi.elasticsearch.helper.model.annotations.hook.UseRequestHook;
 import org.pippi.elasticsearch.helper.model.annotations.hook.UseResponseHook;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsMapper;
@@ -17,7 +18,7 @@ import java.util.List;
  * @date 2021/12/9
  */
 @EsMapper
-public interface EsAccountMapper {
+public interface EsAccountMapper extends EsBaseMapper<AccountEntity> {
 
 	/**
 	 * @param param simple es query

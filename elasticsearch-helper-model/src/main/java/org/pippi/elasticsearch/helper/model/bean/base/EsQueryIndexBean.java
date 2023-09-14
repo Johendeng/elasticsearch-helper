@@ -13,19 +13,19 @@ public class EsQueryIndexBean {
 
 	private String indexName;
 
-	private QueryModel esQueryModel;
+	private QueryModel esQueryModel = QueryModel.BOOL;
 
 	private String[] fetchFields;
 
 	private String[] excludeFields;
 
-	private float minScore;
+	private float minScore = 0.0f;
 
-	private boolean traceScore;
+	private boolean traceScore = true;
 
 	private HighLightBean highLight;
 
-	private int size;
+	private int size = 10;
 
 	private FuncScoreBean funcScoreBean;
 
@@ -33,6 +33,17 @@ public class EsQueryIndexBean {
 	private String clientKey;
 
 	public EsQueryIndexBean() {
+	}
+
+	public EsQueryIndexBean(String indexName, QueryModel esQueryModel) {
+		this.indexName = indexName;
+		this.esQueryModel = esQueryModel;
+	}
+
+	public EsQueryIndexBean(String indexName, QueryModel esQueryModel, String clientKey) {
+		this.indexName = indexName;
+		this.esQueryModel = esQueryModel;
+		this.clientKey = clientKey;
 	}
 
 	public EsQueryIndexBean(String indexName,

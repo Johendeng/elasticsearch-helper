@@ -4,6 +4,7 @@ import lombok.Data;
 import org.elasticsearch.common.geo.GeoPoint;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.EsAnnQueryIndex;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Gte;
+import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.param.EsComplexParam;
 
@@ -14,6 +15,7 @@ import java.io.Serializable;
  * @date 2023/9/4
  **/
 @Data
+@EsIndex("user")
 public class UserEntity extends EsEntity implements Serializable {
 
     private Integer accountNumber;

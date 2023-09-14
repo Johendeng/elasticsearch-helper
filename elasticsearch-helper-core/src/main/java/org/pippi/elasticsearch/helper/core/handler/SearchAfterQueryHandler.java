@@ -5,7 +5,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.SearchAfter;
-import org.pippi.elasticsearch.helper.model.bean.query.SearchAfterQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.SearchAfterQueryConf;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
@@ -15,11 +15,11 @@ import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
  * @date 2022/4/28
  */
 @EsQueryHandle(SearchAfter.class)
-public class SearchAfterQueryHandler extends AbstractQueryHandler<SearchAfterQueryBean> {
+public class SearchAfterQueryHandler extends AbstractQueryHandler<SearchAfterQueryConf> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<SearchAfterQueryBean> queryDes, AbstractEsSession searchHelper) {
-        SearchAfterQueryBean extBean = queryDes.getExtBean();
+    public QueryBuilder handle(EsQueryFieldBean<SearchAfterQueryConf> queryDes, AbstractEsSession searchHelper) {
+        SearchAfterQueryConf extBean = queryDes.getExtBean();
         String fieldName = queryDes.getField();
         Object value = queryDes.getValue();
         SearchSourceBuilder source = searchHelper.getSource();

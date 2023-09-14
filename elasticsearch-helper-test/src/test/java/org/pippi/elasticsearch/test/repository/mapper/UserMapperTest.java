@@ -3,6 +3,7 @@ package org.pippi.elasticsearch.test.repository.mapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.lambda.wrapper.Wrappers;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.repository.entity.UserEntity;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -35,4 +36,14 @@ public class UserMapperTest {
         List<UserEntity> res = userMapper.selectByNested(info);
         System.out.println(SerializerUtils.parseObjToJsonPretty(res));
     }
+
+    @Test
+    public void selectTest() {
+        UserEntity list = userMapper.selectOne(Wrappers.lambdaQuery(UserEntity.class)
+                        .config(1000, 0.0f, true)
+                        .nested("detail_info", Wrappers.lambdaQuery(UserEntity.DetailInfo.class)
+                                .term(UserEntity.DetailInfo::getAge, 28)));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+    }
+
 }

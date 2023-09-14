@@ -6,7 +6,7 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandl
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.GeoDistance;
-import org.pippi.elasticsearch.helper.model.bean.query.GeoDistanceQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.GeoDistanceQueryConf;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
@@ -17,16 +17,16 @@ import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
  * @date 2022/5/13
  */
 @EsQueryHandle(GeoDistance.class)
-public class GeoDistanceQueryHandler extends AbstractQueryHandler<GeoDistanceQueryBean> {
+public class GeoDistanceQueryHandler extends AbstractQueryHandler<GeoDistanceQueryConf> {
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<GeoDistanceQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<GeoDistanceQueryConf> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
-        if (!(value instanceof GeoDistanceQueryBean)) {
+        if (!(value instanceof GeoDistanceQueryConf)) {
             throw new EsHelperQueryException("GeoBoundingBoxQuery's param-type have to be GeoDistanceQueryBean");
         }
         GeoDistanceParam queryValue = (GeoDistanceParam) value;
-        GeoDistanceQueryBean extBean = queryDes.getExtBean();
+        GeoDistanceQueryConf extBean = queryDes.getExtBean();
         return QueryBuilders.geoDistanceQuery(queryDes.getField())
                 .point(queryValue.getCenterPoint())
                 .distance(queryValue.getDistance(), extBean.getUnit());

@@ -7,7 +7,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperSerializeException;
+import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,6 +53,12 @@ public class SerializerUtils {
 
     public static String parseObjToJson(Object obj) {
         try {
+            if (obj == null) {
+                return "null";
+            }
+            if (ReflectionUtils.isBaseType(obj.getClass())) {
+                return obj.toString();
+            }
             return _NORMAL_MAPPER.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
             throw new EsHelperSerializeException("Object normal trans to Json-String error, cause:", e);

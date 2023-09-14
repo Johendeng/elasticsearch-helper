@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range;
-import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
@@ -21,10 +21,10 @@ import java.util.Optional;
  * @date      2021/8/23
  */
 @EsQueryHandle(Range.class)
-public class RangeQueryHandler extends AbstractQueryHandler<RangeQueryBean>{
+public class RangeQueryHandler extends AbstractQueryHandler<RangeQueryConf>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<RangeQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<RangeQueryConf> queryDes, AbstractEsSession searchHelper) {
         if ( !(queryDes.getValue() instanceof RangeParam) ) {
             throw new EsHelperQueryException("@Range annotation query has to define your Field type be [RangeParam.class]");
         }
@@ -33,7 +33,7 @@ public class RangeQueryHandler extends AbstractQueryHandler<RangeQueryBean>{
             return null;
         }
         final RangeQueryBuilder rangeQuery = QueryBuilders.rangeQuery(queryDes.getField());
-        RangeQueryBean rangeBean = queryDes.getExtBean();
+        RangeQueryConf rangeBean = queryDes.getExtBean();
         switch (rangeBean.getTag()) {
             case Range.LE_GE:
                 Optional.ofNullable(rangeParam.getLeft()).ifPresent(rangeQuery::gte);

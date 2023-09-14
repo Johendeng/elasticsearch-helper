@@ -48,6 +48,7 @@ public class IndexMeta {
             String mapFieldName = EsHelperConfiguration.mapUnderscoreToCamelCase ? EsBeanFieldTransUtils.camelify(fieldName) : fieldName;
             EsField esField = field.getAnnotation(EsField.class);
             FieldMeta metaBean = new FieldMeta();
+            metaBean.setField(mapFieldName);
             if (esField != null) {
                 metaBean.setField(mapFieldName = StringUtils.isNotBlank(esField.name()) ? esField.name() : mapFieldName);
             }

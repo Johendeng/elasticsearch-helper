@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.WildcardQueryBuilder;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.WildCard;
-import org.pippi.elasticsearch.helper.model.bean.query.WildCardQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.WildCardQueryConf;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
 /**
@@ -16,10 +16,10 @@ import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
  * @date      2021/9/24
  */
 @EsQueryHandle(WildCard.class)
-public class WildCardQueryHandler extends AbstractQueryHandler<WildCardQueryBean>{
+public class WildCardQueryHandler extends AbstractQueryHandler<WildCardQueryConf>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<WildCardQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<WildCardQueryConf> queryDes, AbstractEsSession searchHelper) {
         String value = queryDes.getValue().toString();
         WildcardQueryBuilder queryBuilder = QueryBuilders.wildcardQuery(queryDes.getField(), value);
         queryBuilder.boost(queryDes.getBoost());

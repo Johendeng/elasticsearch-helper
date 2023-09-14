@@ -6,7 +6,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.param.GeoShapeParam;
-import org.pippi.elasticsearch.helper.model.bean.query.GeoShapeQueryBean;
+import org.pippi.elasticsearch.helper.model.bean.query.GeoShapeQueryConf;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperQueryException;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.model.annotations.mapper.query.GeoDisjoint;
@@ -24,10 +24,10 @@ import java.util.Objects;
  * @date 2022/5/14
  */
 @EsQueryHandle(value = {GeoShape.class, GeoDisjoint.class, GeoWithin.class, GeoIntersection.class})
-public class GeoShapeQueryHandler extends AbstractQueryHandler<GeoShapeQueryBean>{
+public class GeoShapeQueryHandler extends AbstractQueryHandler<GeoShapeQueryConf>{
 
     @Override
-    public QueryBuilder handle(EsQueryFieldBean<GeoShapeQueryBean> queryDes, AbstractEsSession searchHelper) {
+    public QueryBuilder handle(EsQueryFieldBean<GeoShapeQueryConf> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
         if (!(value instanceof GeoShapeParam)) {
             throw new EsHelperQueryException("GeoShapeQuery's param-type have to be GeoShapeParam");

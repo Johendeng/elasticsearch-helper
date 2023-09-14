@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.test.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.io.Serializable;
  * @author JohenTeng
  * @date 2021/12/6
  */
+@EsIndex("account")
 public class AccountEntity extends EsEntity implements Serializable {
 
 	@JsonProperty(value = "account_number")
