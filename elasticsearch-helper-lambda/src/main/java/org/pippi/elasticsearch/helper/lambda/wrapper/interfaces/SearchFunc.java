@@ -2,6 +2,8 @@ package org.pippi.elasticsearch.helper.lambda.wrapper.interfaces;
 
 import org.pippi.elasticsearch.helper.model.bean.query.FuzzyQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.MatchQueryConf;
+import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryConf;
+import org.pippi.elasticsearch.helper.model.bean.query.WildCardQueryConf;
 
 import java.io.Serializable;
 
@@ -11,8 +13,17 @@ import java.io.Serializable;
  **/
 public interface SearchFunc<F, Children> extends Serializable {
 
+    /**
+     * 控制召回文档数量
+     */
     Children size(int size);
 
+    /**
+     *
+     * @param size 控制召回文档数量
+     * @param minScore $ > minScore 的文档才会被召回
+     * @param traceScore 是否显示 召回文档 的分数
+     */
     Children config(int size, float minScore, boolean traceScore);
 
     /**
@@ -86,6 +97,167 @@ public interface SearchFunc<F, Children> extends Serializable {
     }
 
     Children fuzzy(boolean condition, F field, Object val, float boost, FuzzyQueryConf config);
+
+    /**
+     * wildCard 对字段模糊查询，跟 mysql like查询
+     * 原始 wildCard用法  val 需要自行 增加 [* or ?]
+     */
+    default Children wildCard(F field, Object val) {
+        return wildCard(true, field, val);
+    }
+
+    Children wildCard(boolean condition, F field, Object val);
+
+    default Children wildCard(F field, Object val, float boost) {
+        return wildCard(true, field, val, boost);
+    }
+
+    Children wildCard(boolean condition, F field, Object val, float boost);
+
+    default Children wildCard(F field, Object val, float boost, WildCardQueryConf conf) {
+        return wildCard(true, field, val, boost, conf);
+    }
+
+    Children wildCard(boolean condition, F field, Object val, float boost, WildCardQueryConf conf);
+
+    /**
+     * Range
+     * tag: 赋值为
+     * @see org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range#L_G
+     * 。。。 。。。
+     */
+    default Children range(String tag, F field, Object from, Object to) {
+        return range(true, tag, field, from, to);
+    }
+
+    /**
+     * Range
+     * tag: 赋值为
+     * @see org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range#L_G
+     * 。。。 。。。
+     */
+    Children range(boolean condition, String tag, F field, Object from, Object to);
+
+    /**
+     * Range
+     * tag: 赋值为
+     * @see org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range#L_G
+     * 。。。 。。。
+     */
+    default Children range(String tag, float boost, F field, Object from, Object to) {
+        return range(true, tag, boost, field, from, to);
+    }
+
+    /**
+     * Range
+     * tag: 赋值为
+     * @see org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range#L_G
+     * 。。。 。。。
+     */
+    Children range(boolean condition, String tag, float boost, F field, Object from, Object to);
+
+    /**
+     * Range
+     * tag: 赋值为
+     * @see org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range#L_G
+     * 。。。 。。。
+     */
+    default Children range(String tag, float boost, F field, Object from, Object to, RangeQueryConf config) {
+        return range(true, tag, boost, field, from, to, config);
+    }
+
+    /**
+     * Range
+     * tag: 赋值为
+     * @see org.pippi.elasticsearch.helper.model.annotations.mapper.query.Range#L_G
+     * 。。。 。。。
+     */
+    Children range(boolean condition, String tag, float boost, F field, Object from, Object to, RangeQueryConf config);
+
+    /**
+     * gt  大于
+     */
+    default Children gt(F field, Object val) {
+        return gt(true, field, val);
+    }
+
+    Children gt(boolean condition, F field, Object val);
+
+    default Children gt(F field, Object val, float boost) {
+        return gt(true, field, val, boost);
+    }
+
+    Children gt(boolean condition, F field, Object val, float boost);
+
+    default Children gt(F field, Object val, float boost, RangeQueryConf config) {
+        return gt(true, field, val, boost, config);
+    }
+
+    Children gt(boolean condition, F field, Object val, float boost, RangeQueryConf config);
+
+    /**
+     * lt 小于
+     */
+    default Children lt(F field, Object val) {
+        return lt(true, field, val);
+    }
+
+    Children lt(boolean condition, F field, Object val);
+
+    default Children lt(F field, Object val, float boost) {
+        return lt(true, field, val, boost);
+    }
+
+    Children lt(boolean condition, F field, Object val, float boost);
+
+    default Children lt(F field, Object val, float boost, RangeQueryConf config) {
+        return lt(true, field, val, boost, config);
+    }
+
+    Children lt(boolean condition, F field, Object val, float boost, RangeQueryConf config);
+
+    /**
+     * gte 大于等于
+     */
+    default Children gte(F field, Object val) {
+        return gte(true, field, val);
+    }
+
+    Children gte(boolean condition, F field, Object val);
+
+    default Children gte(F field, Object val, float boost) {
+        return gte(true, field, val, boost);
+    }
+
+    Children gte(boolean condition, F field, Object val, float boost);
+
+    default Children gte(F field, Object val, float boost, RangeQueryConf config) {
+        return gte(true, field, val, boost, config);
+    }
+
+    Children gte(boolean condition, F field, Object val, float boost, RangeQueryConf config);
+
+    /**
+     * lte 小于等于
+     */
+    default Children lte(F field, Object val) {
+        return lte(true, field, val);
+    }
+
+    Children lte(boolean condition, F field, Object val);
+
+    default Children lte(F field, Object val, float boost) {
+        return lte(true, field, val, boost);
+    }
+
+    Children lte(boolean condition, F field, Object val, float boost);
+
+    default Children lte(F field, Object val, float boost, RangeQueryConf config) {
+        return lte(true, field, val, boost, config);
+    }
+
+    Children lte(boolean condition, F field, Object val, float boost, RangeQueryConf config);
+
 
 
 

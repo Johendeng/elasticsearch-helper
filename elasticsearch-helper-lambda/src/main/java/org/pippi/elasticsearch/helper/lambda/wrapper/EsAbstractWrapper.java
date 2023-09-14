@@ -11,6 +11,7 @@ import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.bean.query.*;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
+import org.pippi.elasticsearch.helper.model.param.RangeParam;
 
 import java.util.List;
 
@@ -204,7 +205,138 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
         return typedThis;
     }
 
+    @Override
+    public Children wildCard(boolean condition, F field, Object val) {
+        return wildCard(condition, field, val, 1.0f);
+    }
 
+    @Override
+    public Children wildCard(boolean condition, F field, Object val, float boost) {
+        return wildCard(condition, field, val, boost, WildCardQueryConf.build());
+    }
+
+    @Override
+    public Children wildCard(boolean condition, F field, Object val, float boost, WildCardQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(WildCard.class, super.currentConnector, fieldToString(field));
+            conf.setValue(val);
+            conf.setExtBean(config);
+            conf.setBoost(boost);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children range(boolean condition, String tag, F field, Object from, Object to) {
+        return range(condition, tag, 1.0f, field, from, to);
+    }
+
+    @Override
+    public Children range(boolean condition, String tag, float boost, F field, Object from, Object to) {
+        return range(condition, tag, boost, field, from, to, RangeQueryConf.build());
+    }
+
+    @Override
+    public Children range(boolean condition, String tag, float boost, F field, Object from, Object to, RangeQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(Range.class, super.currentConnector, fieldToString(field));
+            RangeParam param = RangeParam.builder().left(from).right(to).build();
+            conf.setValue(param);
+            conf.setExtBean(config);
+            conf.setBoost(boost);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children gt(boolean condition, F field, Object val) {
+        return gt(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children gt(boolean condition, F field, Object val, float boost) {
+        return gt(condition, field, val, boost, RangeQueryConf.build());
+    }
+
+    @Override
+    public Children gt(boolean condition, F field, Object val, float boost, RangeQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(Gt.class, super.currentConnector, fieldToString(field));
+            conf.setValue(val);
+            conf.setExtBean(config);
+            conf.setBoost(boost);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children lt(boolean condition, F field, Object val) {
+        return lt(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children lt(boolean condition, F field, Object val, float boost) {
+        return lt(condition, field, val, boost, RangeQueryConf.build());
+    }
+
+    @Override
+    public Children lt(boolean condition, F field, Object val, float boost, RangeQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(Lt.class, super.currentConnector, fieldToString(field));
+            conf.setValue(val);
+            conf.setExtBean(config);
+            conf.setBoost(boost);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children gte(boolean condition, F field, Object val) {
+        return gte(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children gte(boolean condition, F field, Object val, float boost) {
+        return gte(condition, field, val, boost, RangeQueryConf.build());
+    }
+
+    @Override
+    public Children gte(boolean condition, F field, Object val, float boost, RangeQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(Gte.class, super.currentConnector, fieldToString(field));
+            conf.setValue(val);
+            conf.setExtBean(config);
+            conf.setBoost(boost);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children lte(boolean condition, F field, Object val) {
+        return lte(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children lte(boolean condition, F field, Object val, float boost) {
+        return lte(condition, field, val, boost, RangeQueryConf.build());
+    }
+
+    @Override
+    public Children lte(boolean condition, F field, Object val, float boost, RangeQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(Lte.class, super.currentConnector, fieldToString(field));
+            conf.setValue(val);
+            conf.setExtBean(config);
+            conf.setBoost(boost);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
 
 
 

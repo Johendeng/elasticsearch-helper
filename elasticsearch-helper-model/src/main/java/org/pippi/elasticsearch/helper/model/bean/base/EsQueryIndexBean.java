@@ -30,7 +30,7 @@ public class EsQueryIndexBean {
 	private FuncScoreBean funcScoreBean;
 
 
-	private String clientKey;
+	private String clientKey = "primary";
 
 	public EsQueryIndexBean() {
 	}
@@ -60,83 +60,93 @@ public class EsQueryIndexBean {
 		this.traceScore = traceScore;
 	}
 
-	public HighLightBean getHighLight() {
-		return highLight;
+	public EsQueryIndexBean setIndexName(String indexName) {
+		this.indexName = indexName;
+		return this;
 	}
 
-	public void setHighLight(HighLightBean highLight) {
+	public EsQueryIndexBean setEsQueryModel(QueryModel esQueryModel) {
+		this.esQueryModel = esQueryModel;
+		return this;
+	}
+
+	public EsQueryIndexBean setFetchFields(String[] fetchFields) {
+		this.fetchFields = fetchFields;
+		return this;
+	}
+
+	public EsQueryIndexBean setExcludeFields(String[] excludeFields) {
+		this.excludeFields = excludeFields;
+		return this;
+	}
+
+	public EsQueryIndexBean setMinScore(float minScore) {
+		this.minScore = minScore;
+		return this;
+	}
+
+	public EsQueryIndexBean setTraceScore(boolean traceScore) {
+		this.traceScore = traceScore;
+		return this;
+	}
+
+	public EsQueryIndexBean setHighLight(HighLightBean highLight) {
 		this.highLight = highLight;
+		return this;
+	}
+
+	public EsQueryIndexBean setSize(int size) {
+		this.size = size;
+		return this;
+	}
+
+	public EsQueryIndexBean setFuncScoreBean(FuncScoreBean funcScoreBean) {
+		this.funcScoreBean = funcScoreBean;
+		return this;
+	}
+
+	public EsQueryIndexBean setClientKey(String clientKey) {
+		this.clientKey = clientKey;
+		return this;
+	}
+
+	public HighLightBean getHighLight() {
+		return highLight;
 	}
 
 	public String getIndexName() {
 		return indexName;
 	}
 
-	public void setIndexName(String indexName) {
-		this.indexName = indexName;
-	}
-
 	public QueryModel getEsQueryModel() {
 		return esQueryModel;
-	}
-
-	public void setEsQueryModel(QueryModel esQueryModel) {
-		this.esQueryModel = esQueryModel;
 	}
 
 	public String[] getFetchFields() {
 		return fetchFields;
 	}
 
-	public void setFetchFields(String[] fetchFields) {
-		this.fetchFields = fetchFields;
-	}
-
 	public String[] getExcludeFields() {
 		return excludeFields;
-	}
-
-	public void setExcludeFields(String[] excludeFields) {
-		this.excludeFields = excludeFields;
 	}
 
 	public float getMinScore() {
 		return minScore;
 	}
 
-	public void setMinScore(float minScore) {
-		this.minScore = minScore;
-	}
-
 	public boolean getTraceScore() {
 		return traceScore;
-	}
-
-	public void setTraceScore(boolean traceScore) {
-		this.traceScore = traceScore;
 	}
 
 	public int getSize() {
 		return size;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
-	}
-
 	public FuncScoreBean getFuncScoreBean() {
 		return funcScoreBean;
 	}
 
-	public void setFuncScoreBean(FuncScoreBean funcScoreBean) {
-		this.funcScoreBean = funcScoreBean;
-	}
-
 	public String getClientKey() {
 		return clientKey;
-	}
-
-	public void setClientKey(String clientKey) {
-		this.clientKey = clientKey;
 	}
 }

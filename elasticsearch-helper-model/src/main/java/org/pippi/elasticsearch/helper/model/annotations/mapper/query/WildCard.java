@@ -25,5 +25,8 @@ public @interface WildCard {
 
     Base value()  default @Base;
 
+    /**
+     * 大小写不敏感，默认 false
+     */
     boolean caseInsensitive() default false;
 }

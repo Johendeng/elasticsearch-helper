@@ -2,6 +2,7 @@ package org.pippi.elasticsearch.helper.model.bean.query;
 
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.ZeroTermsQueryOption;
 import org.pippi.elasticsearch.helper.model.bean.QueryConf;
 import org.pippi.elasticsearch.helper.model.enums.FuzzinessEnum;
@@ -13,6 +14,10 @@ import org.pippi.elasticsearch.helper.model.enums.FuzzinessEnum;
  * @date      2021/9/24
  */
 public class MatchQueryConf extends QueryConf<MatchQueryBuilder> {
+
+    private Operator operator = Operator.OR;
+
+    private String minimumShouldMatch = null;
 
     private int prefixLength = 0;
 
@@ -38,6 +43,7 @@ public class MatchQueryConf extends QueryConf<MatchQueryBuilder> {
     @Override
     public void configQueryBuilder(MatchQueryBuilder match) {
         match.prefixLength(this.prefixLength)
+             .operator(this.operator)
              .maxExpansions(this.maxExpansions)
              .fuzzyTranspositions(this.fuzzyTranspositions)
              .lenient(this.lenient)
@@ -47,8 +53,28 @@ public class MatchQueryConf extends QueryConf<MatchQueryBuilder> {
         if (StringUtils.isNotBlank(analyzer)) {
             match.analyzer(analyzer);
         }
+        if (StringUtils.isNotBlank(minimumShouldMatch)) {
+            match.minimumShouldMatch(this.minimumShouldMatch);
+        }
     }
 
+    public Operator operator() {
+        return operator;
+    }
+
+    public MatchQueryConf setOperator(Operator operator) {
+        this.operator = operator;
+        return this;
+    }
+
+    public String minimumShouldMatch() {
+        return minimumShouldMatch;
+    }
+
+    public MatchQueryConf setMinimumShouldMatch(String minimumShouldMatch) {
+        this.minimumShouldMatch = minimumShouldMatch;
+        return this;
+    }
 
     public int getPrefixLength() {
         return prefixLength;

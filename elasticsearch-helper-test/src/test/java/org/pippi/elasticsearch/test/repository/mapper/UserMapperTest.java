@@ -39,10 +39,9 @@ public class UserMapperTest {
 
     @Test
     public void selectTest() {
-        UserEntity list = userMapper.selectOne(Wrappers.lambdaQuery(UserEntity.class)
-                        .config(1000, 0.0f, true)
+        List<UserEntity> list = userMapper.selectList(Wrappers.lambdaQuery(UserEntity.class)
                         .nested("detail_info", Wrappers.lambdaQuery(UserEntity.DetailInfo.class)
-                                .term(UserEntity.DetailInfo::getAge, 28)));
+                                .gte(UserEntity.DetailInfo::getAge, 20)));
         System.out.println(SerializerUtils.parseObjToJsonPretty(list));
     }
 

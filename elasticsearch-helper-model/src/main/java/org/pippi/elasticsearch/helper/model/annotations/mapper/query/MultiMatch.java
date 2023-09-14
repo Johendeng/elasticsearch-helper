@@ -78,5 +78,4 @@ public @interface MultiMatch {
     String minimumShouldMatch() default "";
 
     int slop() default 0;
-
 }

@@ -23,17 +23,21 @@ public class RangeQueryConf extends QueryConf<RangeQueryBuilder> {
         @link Range#F_T
       }
      */
-    private String tag;
+    private String tag = Range.L_G;
 
     private String format;
 
     private String relation;
 
-    private boolean includeLower;
+    private boolean includeLower = true;
 
-    private boolean includeUpper;
+    private boolean includeUpper = true;
 
-    private String timeZone;
+    private String timeZone = "+08:00";
+
+    public static RangeQueryConf build() {
+        return new RangeQueryConf();
+    }
 
     @Override
     public void configQueryBuilder(RangeQueryBuilder queryBuilder) {
@@ -48,51 +52,57 @@ public class RangeQueryConf extends QueryConf<RangeQueryBuilder> {
         }
     }
 
-    public String getTag() {
-        return tag;
+    public RangeQueryConf setTag(String tag) {
+        this.tag = tag;
+        return this;
     }
 
-    public void setTag(String tag) {
-        this.tag = tag;
+    public RangeQueryConf setFormat(String format) {
+        this.format = format;
+        return this;
+    }
+
+    public RangeQueryConf setRelation(String relation) {
+        this.relation = relation;
+        return this;
+    }
+
+    public RangeQueryConf setIncludeLower(boolean includeLower) {
+        this.includeLower = includeLower;
+        return this;
+    }
+
+    public RangeQueryConf setIncludeUpper(boolean includeUpper) {
+        this.includeUpper = includeUpper;
+        return this;
+    }
+
+    public RangeQueryConf setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+        return this;
+    }
+
+    public String getTag() {
+        return tag;
     }
 
     public String getFormat() {
         return format;
     }
 
-    public void setFormat(String format) {
-        this.format = format;
-    }
-
     public String getRelation() {
         return relation;
-    }
-
-    public void setRelation(String relation) {
-        this.relation = relation;
     }
 
     public boolean isIncludeLower() {
         return includeLower;
     }
 
-    public void setIncludeLower(boolean includeLower) {
-        this.includeLower = includeLower;
-    }
-
     public boolean isIncludeUpper() {
         return includeUpper;
     }
 
-    public void setIncludeUpper(boolean includeUpper) {
-        this.includeUpper = includeUpper;
-    }
-
     public String getTimeZone() {
         return timeZone;
-    }
-
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
     }
 }

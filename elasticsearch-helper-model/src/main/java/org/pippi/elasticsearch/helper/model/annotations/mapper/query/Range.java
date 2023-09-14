@@ -42,6 +42,9 @@ public @interface Range {
 
     String format() default "";
 
+    /**
+     * @see org.elasticsearch.common.geo.ShapeRelation
+     */
     String relation() default "";
 
     boolean includeLower() default true;
