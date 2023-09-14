@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper.query;
 
 import org.apache.commons.lang3.ArrayUtils;
-import org.pippi.elasticsearch.helper.lambda.utils.support.SFunction;
+import org.pippi.elasticsearch.helper.lambda.utils.support.EsFunction;
 import org.pippi.elasticsearch.helper.lambda.wrapper.EsAbstractLambdaWrapper;
 
 import java.util.Arrays;
@@ -11,10 +11,10 @@ import java.util.Arrays;
  * @date 2023/9/12
  **/
 public class EsLambdaQueryWrapper<T> extends EsAbstractLambdaWrapper<T, EsLambdaQueryWrapper<T>>
-        implements Query<EsLambdaQueryWrapper<T>, T, SFunction<T, ?>> {
+        implements Query<EsLambdaQueryWrapper<T>, T, EsFunction<T, ?>> {
 
     public EsLambdaQueryWrapper() {
-
+        init();
     }
 
     public EsLambdaQueryWrapper(T entity) {
@@ -34,7 +34,7 @@ public class EsLambdaQueryWrapper<T> extends EsAbstractLambdaWrapper<T, EsLambda
     }
 
     @Override
-    public EsLambdaQueryWrapper<T> fetch(SFunction<T, ?>... columns) {
+    public EsLambdaQueryWrapper<T> fetch(EsFunction<T, ?>... columns) {
         if (ArrayUtils.isNotEmpty(columns)) {
             String[] array = Arrays.stream(columns)
                     .map(this::fieldStringify)
@@ -45,7 +45,7 @@ public class EsLambdaQueryWrapper<T> extends EsAbstractLambdaWrapper<T, EsLambda
     }
 
     @Override
-    public EsLambdaQueryWrapper<T> exclude(SFunction<T, ?>... columns) {
+    public EsLambdaQueryWrapper<T> exclude(EsFunction<T, ?>... columns) {
         if (ArrayUtils.isNotEmpty(columns)) {
             String[] array = Arrays.stream(columns)
                     .map(this::fieldStringify)

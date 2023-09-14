@@ -1,4 +1,4 @@
-package com.example.elasticsearchhelpersample.service;
+package com.example.eshelper.service;
 
 /**
  * EsAccountService

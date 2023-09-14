@@ -1,4 +1,4 @@
-package com.example.elasticsearchhelpersample.repository.mapper;
+package com.example.eshelper.repository.mapper;
 
 
 /**

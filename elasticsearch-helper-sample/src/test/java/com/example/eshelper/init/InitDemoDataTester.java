@@ -1,4 +1,4 @@
-package com.example.elasticsearchhelpersample.init;
+package com.example.eshelper.init;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,7 +19,7 @@ import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
-import com.example.elasticsearchhelpersample.ElasticsearchHelperSampleApplication;
+import com.example.eshelper.ElasticsearchHelperSampleApplication;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 /**

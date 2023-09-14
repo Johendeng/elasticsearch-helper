@@ -7,8 +7,7 @@ import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
 import org.pippi.elasticsearch.helper.lambda.utils.LambdaUtils;
 import org.pippi.elasticsearch.helper.lambda.utils.PropNameUtils;
 import org.pippi.elasticsearch.helper.lambda.utils.support.LambdaMeta;
-import org.pippi.elasticsearch.helper.lambda.utils.support.SFunction;
-import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
+import org.pippi.elasticsearch.helper.lambda.utils.support.EsFunction;
 import org.pippi.elasticsearch.helper.model.enums.EsMeta;
 
 /**
@@ -16,10 +15,10 @@ import org.pippi.elasticsearch.helper.model.enums.EsMeta;
  * @date 2023/9/1
  **/
 public abstract class EsAbstractLambdaWrapper<T,  Children extends EsAbstractLambdaWrapper<T, Children>>
-        extends EsAbstractWrapper<T, SFunction<T, ?>, Children> {
+        extends EsAbstractWrapper<T, EsFunction<T, ?>, Children> {
 
     @Override
-    protected String fieldStringify(SFunction<T, ?> field) {
+    protected String fieldStringify(EsFunction<T, ?> field) {
         LambdaMeta fieldMeta = LambdaUtils.extract(field);
         String fieldName = PropNameUtils.methodToProperty(fieldMeta.getImplMethodName());
         IndexMeta indexMeta = IndexMetaCache.loadMetaIfAbsent(fieldMeta.getInstantiatedClass());

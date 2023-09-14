@@ -1,7 +1,7 @@
-package com.example.elasticsearchhelpersample.repository.impl;
+package com.example.eshelper.repository.impl;
 
 import org.springframework.stereotype.Repository;
-import com.example.elasticsearchhelpersample.repository.EsAccountRepository;
+import com.example.eshelper.repository.EsAccountRepository;
 
 /**
  * EsAccountRepositoryImpl

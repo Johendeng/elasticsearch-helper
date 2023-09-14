@@ -1,4 +1,4 @@
-package com.example.elasticsearchhelpersample.config;
+package com.example.eshelper.config;
 
 /**
  * HighLightKeys

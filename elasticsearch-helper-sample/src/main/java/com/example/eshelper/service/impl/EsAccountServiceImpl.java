@@ -1,7 +1,7 @@
-package com.example.elasticsearchhelpersample.service.impl;
+package com.example.eshelper.service.impl;
 
 import org.springframework.stereotype.Service;
-import com.example.elasticsearchhelpersample.service.EsAccountService;
+import com.example.eshelper.service.EsAccountService;
 
 /**
  * EsAccountServiceImpl

@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.helper.lambda.utils;
 
 import org.pippi.elasticsearch.helper.lambda.utils.support.LambdaMeta;
 import org.pippi.elasticsearch.helper.lambda.utils.support.ProxyLambdaMeta;
-import org.pippi.elasticsearch.helper.lambda.utils.support.SFunction;
+import org.pippi.elasticsearch.helper.lambda.utils.support.EsFunction;
 import org.pippi.elasticsearch.helper.lambda.utils.support.SerializedLambdaMeta;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperException;
 import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
@@ -26,7 +26,7 @@ public class LambdaUtils {
      * @param <T>  类型，被调用的 Function 对象的目标类型
      * @return 返回解析后的结果
      */
-    public static <T> LambdaMeta extract(SFunction<T, ?> func) {
+    public static <T> LambdaMeta extract(EsFunction<T, ?> func) {
         try {
             Method method = func.getClass().getDeclaredMethod("writeReplace");
             return new SerializedLambdaMeta((SerializedLambda) ReflectionUtils.setAccessible(method).invoke(func));

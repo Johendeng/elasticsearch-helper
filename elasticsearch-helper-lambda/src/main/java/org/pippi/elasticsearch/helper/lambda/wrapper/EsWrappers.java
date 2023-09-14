@@ -8,7 +8,7 @@ import org.pippi.elasticsearch.helper.model.bean.EsEntity;
  * @author JohenDeng
  * @date 2023/9/13
  **/
-public class Wrappers {
+public class EsWrappers {
 
     public static <T>EsLambdaQueryWrapper<T> lambdaQuery() {
         return new EsLambdaQueryWrapper<>();

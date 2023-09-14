@@ -16,8 +16,6 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
 import org.springframework.util.Assert;
 
-import javax.annotation.Resource;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -32,17 +30,33 @@ import java.util.function.Supplier;
 public class EsHelperAutoConfiguration implements ApplicationListener<ContextRefreshedEvent> {
 
     /**
+     * es-helper:
+     *   config:
+     *     ext-handler-packages: com.example.eshelper.handlers
+     *     log:
+     *       statement: true
+     *     process:
+     *       map-underscore-to-camel-case: true
+     *       field-strategy: not_null
+     *
+     * es-helper.config.ext-handler-packages=com.example.eshelper.handlers
+     * es-helper.config.log.statement=true
+     * es-helper.config.process.map-underscore-to-camel-case=true
+     * es-helper.config.process.field-strategy=not_null
+     */
+
+    /**
      * user define config, { System.getProperty(_EXT_DEFINE_QUERY_HANDLE_KEY) }
      * format : es.helper.ext.handles=com.***.loc1,com.***.loc2
      * just the package loc, but it's also support define a explicit path like：com.XXX.xxx.TestQueryHandle
      */
-    public static final String _EXT_DEFINE_QUERY_HANDLE_PROPERTY_PROP = "es.helper.ext.handle.packages";
+    public static final String _EXT_DEFINE_QUERY_HANDLE_PROPERTY_PROP = "es-helper.config.ext-handler-packages";
 
-    public static final String _ENABLE_LOG_OUT_PROPERTIES_PROP = "es.helper.queryLogOut.enable";
+    public static final String _ENABLE_LOG_OUT_STATEMENT_PROP = "es-helper.config.log.statement";
 
-    public static final String _MAP_UNDERSCORE_TO_CAMEL_CASE_PROP = "es.helper.configuration.map-underscore-to-camel-case";
+    public static final String _MAP_UNDERSCORE_TO_CAMEL_CASE_PROP = "es-helper.config.process.map-underscore-to-camel-case";
 
-    public static final String _UPDATE_STRATEGY_PROP = "es.helper.configuration.field-strategy";
+    public static final String _UPDATE_STRATEGY_PROP = "es-helper.config.process.field-strategy";
 
     private static final String HIGH_LIGHT_DEFAULT_KEY = "default";
 
@@ -81,7 +95,7 @@ public class EsHelperAutoConfiguration implements ApplicationListener<ContextRef
         Environment env = applicationContext.getEnvironment();
         Optional.ofNullable(env.getProperty(_EXT_DEFINE_QUERY_HANDLE_PROPERTY_PROP))
                 .ifPresent(EsHelperConfiguration::setExtDefineQueryHandlerProperty);
-        Optional.ofNullable(env.getProperty(_ENABLE_LOG_OUT_PROPERTIES_PROP, Boolean.class))
+        Optional.ofNullable(env.getProperty(_ENABLE_LOG_OUT_STATEMENT_PROP, Boolean.class))
                 .ifPresent(EsHelperConfiguration::setStatementLogOut);
         Optional.ofNullable(env.getProperty(_MAP_UNDERSCORE_TO_CAMEL_CASE_PROP, Boolean.class))
                 .ifPresent(EsHelperConfiguration::setMapUnderscoreToCamelCase);

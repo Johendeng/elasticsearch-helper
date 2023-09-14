@@ -10,5 +10,5 @@ import java.util.function.Function;
  * @since 2018-05-12
  */
 @FunctionalInterface
-public interface SFunction<T, R> extends Function<T, R>, Serializable {
+public interface EsFunction<T, R> extends Function<T, R>, Serializable {
 }

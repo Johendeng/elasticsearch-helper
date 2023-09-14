@@ -1,4 +1,4 @@
-package com.example.elasticsearchhelpersample.repository;
+package com.example.eshelper.repository;
 
 /**
  * EsAccountRepository

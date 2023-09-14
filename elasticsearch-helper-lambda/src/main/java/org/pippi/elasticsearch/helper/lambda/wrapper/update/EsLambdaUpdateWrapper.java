@@ -5,7 +5,7 @@ import org.pippi.elasticsearch.helper.core.meta.IndexMetaCache;
 import org.pippi.elasticsearch.helper.lambda.utils.LambdaUtils;
 import org.pippi.elasticsearch.helper.lambda.utils.PropNameUtils;
 import org.pippi.elasticsearch.helper.lambda.utils.support.LambdaMeta;
-import org.pippi.elasticsearch.helper.lambda.utils.support.SFunction;
+import org.pippi.elasticsearch.helper.lambda.utils.support.EsFunction;
 import org.pippi.elasticsearch.helper.lambda.wrapper.EsAbstractLambdaWrapper;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 
@@ -14,7 +14,7 @@ import org.pippi.elasticsearch.helper.model.bean.EsEntity;
  * @date 2023/9/13
  **/
 public class EsLambdaUpdateWrapper <T extends EsEntity> extends EsAbstractLambdaWrapper<T, EsLambdaUpdateWrapper<T>>
-        implements  Update<EsLambdaUpdateWrapper<T>, SFunction<T, ?>>  {
+        implements  Update<EsLambdaUpdateWrapper<T>, EsFunction<T, ?>>  {
 
     @Override
     protected EsLambdaUpdateWrapper<T> instance() {
@@ -22,7 +22,7 @@ public class EsLambdaUpdateWrapper <T extends EsEntity> extends EsAbstractLambda
     }
 
     @Override
-    public EsLambdaUpdateWrapper<T> set(boolean condition, SFunction<T, ?> column, Object val) {
+    public EsLambdaUpdateWrapper<T> set(boolean condition, EsFunction<T, ?> column, Object val) {
         maybeDo(condition, ()-> {
             String columnStr = super.fieldStringify(column);
             super.updateMap.put(columnStr, val);
@@ -31,7 +31,7 @@ public class EsLambdaUpdateWrapper <T extends EsEntity> extends EsAbstractLambda
     }
 
     @Override
-    protected String fieldStringify(SFunction<T, ?> field) {
+    protected String fieldStringify(EsFunction<T, ?> field) {
         LambdaMeta fieldMeta = LambdaUtils.extract(field);
         String fieldName = PropNameUtils.methodToProperty(fieldMeta.getImplMethodName());
         IndexMeta indexMeta = IndexMetaCache.loadMetaIfAbsent(fieldMeta.getInstantiatedClass());

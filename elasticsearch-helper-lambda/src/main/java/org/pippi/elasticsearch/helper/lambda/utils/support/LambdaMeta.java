@@ -3,6 +3,7 @@ package org.pippi.elasticsearch.helper.lambda.utils.support;
 /**
  * @author JohenDeng
  * @date 2023/9/11
+ * copy from mybatis-plus
  **/
 public interface LambdaMeta {
 

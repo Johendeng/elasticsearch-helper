@@ -10,6 +10,7 @@ import java.lang.reflect.Proxy;
 /**
  * @author JohenDeng
  * @date 2023/9/11
+ * copy from mybatis-plus
  **/
 public class ProxyLambdaMeta implements LambdaMeta{
 

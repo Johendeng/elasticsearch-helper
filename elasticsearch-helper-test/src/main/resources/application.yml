@@ -1,9 +1,9 @@
 
-es:
-  helper:
-    queryLogOut:
-      enable: true
-#    ext:
-#      handle-packages:
-    configuration:
+es-helper:
+  config:
+#    ext-handler-packages: com.example.eshelper.handlers
+    log:
+      statement: true
+    process:
       map-underscore-to-camel-case: true
+      field-strategy: not_null

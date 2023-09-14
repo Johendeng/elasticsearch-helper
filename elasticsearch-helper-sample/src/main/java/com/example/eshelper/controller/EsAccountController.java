@@ -1,4 +1,4 @@
-package com.example.elasticsearchhelpersample.controller;
+package com.example.eshelper.controller;
 
 import org.springframework.stereotype.Controller;
 
