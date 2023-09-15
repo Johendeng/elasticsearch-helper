@@ -14,7 +14,7 @@ import org.pippi.elasticsearch.helper.model.bean.EsEntity;
  * @date 2023/9/13
  **/
 public class EsLambdaUpdateWrapper <T extends EsEntity> extends EsAbstractLambdaWrapper<T, EsLambdaUpdateWrapper<T>>
-        implements  Update<EsLambdaUpdateWrapper<T>, EsFunction<T, ?>>  {
+        implements Update<EsLambdaUpdateWrapper<T>, EsFunction<T, ?>>  {
 
     @Override
     protected EsLambdaUpdateWrapper<T> instance() {

@@ -56,7 +56,7 @@ import java.util.concurrent.TimeUnit;
  **/
 public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
 
-    private static final Logger log = LoggerFactory.getLogger("Es-base-mapper");
+    private final Logger log;
 
     private final String index;
 
@@ -68,12 +68,13 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
 
     private final boolean statementLogOut;
 
-    public EsBaseMapperImpl(String index, Class<T> clazz, RestHighLevelClient client, RequestOptions reqOpt, boolean statementLogOut) {
+    public EsBaseMapperImpl(String index, Class<T> clazz, RestHighLevelClient client, RequestOptions reqOpt, boolean statementLogOut, Logger log) {
         this.index = index;
         this.clazz = clazz;
         this.client = client;
         this.reqOpt = reqOpt;
         this.statementLogOut = statementLogOut;
+        this.log = log;
     }
 
     @Override

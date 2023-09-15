@@ -48,7 +48,7 @@ public class LambdaQueryExecutor extends EsOperationExecutor {
         EsIndex indexAnn = entityClazz.getAnnotation(EsIndex.class);
         EsQueryIndexBean indexBean = QueryAnnParser.instance().parseIndexAnn(entityClazz.getSimpleName(), indexAnn);
         EsBaseMapper<?> mapper = new EsBaseMapperImpl(indexBean.getIndexName(), entityClazz,
-                EsRestClientFactory.getClient(indexBean.getClientKey()), requestOption, statementLogOut);
+                EsRestClientFactory.getClient(indexBean.getClientKey()), requestOption, statementLogOut, log);
         return ReflectionUtils.methodInvoke(mapper, method, args);
     }
 }
