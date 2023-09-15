@@ -5,15 +5,13 @@
     <parent>
         <groupId>io.github.johendeng</groupId>
         <artifactId>elasticsearch-helper</artifactId>
-        <version>2.0.0-Es7x-RELEASE</version>
+        <version>${elasticsearch-helper.version}</version>
     </parent>
 
     <name>elasticsearch-helper-core</name>
-    <description>code code</description>
-
-    <groupId>io.github.johendeng</groupId>
     <artifactId>elasticsearch-helper-core</artifactId>
-    <version>2.0.0-Es7x-RELEASE</version>
+    <description>code code</description>
+    <version>${elasticsearch-helper.version}</version>
     <modelVersion>4.0.0</modelVersion>
 
     <licenses>

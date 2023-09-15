@@ -10,7 +10,7 @@
     <name>elasticsearch-helper</name>
     <description>build ElasticSearch-query by Java annotation, simplify code struct</description>
     <url>https://github.com/Johendeng/elasticsearch-helper</url>
-    <version>2.0.0-Es7x-RELEASE</version>
+    <version>${elasticsearch-helper.version}</version>
 
     <licenses>
         <license>
@@ -73,10 +73,11 @@
                 <version>${elasticsearch-helper.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.pippi.elasticsearch.helper</groupId>
+                <groupId>io.github.johendeng</groupId>
                 <artifactId>elasticsearch-helper-lambda</artifactId>
                 <version>${elasticsearch-helper.version}</version>
             </dependency>
+            <!--     third part     -->
             <dependency>
                 <groupId>org.elasticsearch.client</groupId>
                 <artifactId>elasticsearch-rest-high-level-client</artifactId>
@@ -174,7 +175,31 @@
                     </compilerArgs>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>1.1.0</version>
+                <configuration>
+                    <updatePomFile>true</updatePomFile>
+                    <flattenMode>resolveCiFriendliesOnly</flattenMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

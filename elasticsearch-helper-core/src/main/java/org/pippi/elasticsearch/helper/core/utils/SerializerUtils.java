@@ -31,6 +31,7 @@ public class SerializerUtils {
     private static ObjectMapper initDefaultMapper() {
         return new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
             .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
     }
 

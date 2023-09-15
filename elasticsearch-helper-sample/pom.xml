@@ -6,7 +6,7 @@
 
     <groupId>io.github.johendeng</groupId>
     <artifactId>elasticsearch-helper-sample</artifactId>
-    <version>2.0.0-Es7x-RELEASE</version>
+    <version>${elasticsearch-helper.version}</version>
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>

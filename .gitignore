@@ -51,3 +51,6 @@ build/
 .settings
 .springBeans
 .sts4-cache
+
+### package ###
+.flattened-pom.xml

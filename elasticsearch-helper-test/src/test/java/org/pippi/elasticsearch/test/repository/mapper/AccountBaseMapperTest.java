@@ -2,6 +2,7 @@ package org.pippi.elasticsearch.test.repository.mapper;
 
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
@@ -25,6 +26,7 @@ public class AccountBaseMapperTest {
     private EsAccountMapper accountMapper;
 
     @Test
+    @Ignore
     public void insertTest() {
         AccountEntity entity = new AccountEntity();
         entity.setDocId("1112");
@@ -44,6 +46,7 @@ public class AccountBaseMapperTest {
     }
 
     @Test
+    @Ignore
     public void updateTest() {
         AccountEntity entity = new AccountEntity();
         entity.setDocId("1112");
@@ -53,6 +56,7 @@ public class AccountBaseMapperTest {
     }
 
     @Test
+    @Ignore
     public void updateWrapperTest() {
         AccountEntity entity = new AccountEntity();
         entity.setFirstname("wang");

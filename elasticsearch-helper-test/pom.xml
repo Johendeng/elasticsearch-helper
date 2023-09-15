@@ -5,12 +5,12 @@
     <parent>
         <artifactId>elasticsearch-helper</artifactId>
         <groupId>io.github.johendeng</groupId>
-        <version>2.0.0-Es7x-RELEASE</version>
+        <version>${elasticsearch-helper.version}</version>
     </parent>
 
     <artifactId>elasticsearch-helper-test</artifactId>
     <description> 全测试用例 </description>
-    <version>2.0.0-Es7x-RELEASE</version>
+    <version>${elasticsearch-helper.version}</version>
     <modelVersion>4.0.0</modelVersion>
 
     <properties>

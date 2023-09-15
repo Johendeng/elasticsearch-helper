@@ -6,7 +6,7 @@
     <parent>
         <groupId>io.github.johendeng</groupId>
         <artifactId>elasticsearch-helper</artifactId>
-        <version>2.0.0-Es7x-RELEASE</version>
+        <version>${elasticsearch-helper.version}</version>
     </parent>
 
     <name>elasticsearch-helper-boot-starter</name>
@@ -14,7 +14,7 @@
     <description>elasticsearch-helper boot starter</description>
 
     <artifactId>elasticsearch-helper-boot-starter</artifactId>
-    <version>2.0.0-Es7x-RELEASE</version>
+    <version>${elasticsearch-helper.version}</version>
 
     <licenses>
         <license>
@@ -63,7 +63,7 @@
             <artifactId>elasticsearch-helper-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.pippi.elasticsearch.helper</groupId>
+            <groupId>io.github.johendeng</groupId>
             <artifactId>elasticsearch-helper-lambda</artifactId>
         </dependency>
         <dependency>

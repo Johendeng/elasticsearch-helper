@@ -6,11 +6,11 @@
     <parent>
         <groupId>io.github.johendeng</groupId>
         <artifactId>elasticsearch-helper</artifactId>
-        <version>2.0.0-Es7x-RELEASE</version>
+        <version>${elasticsearch-helper.version}</version>
     </parent>
 
-    <groupId>org.pippi.elasticsearch.helper</groupId>
     <artifactId>elasticsearch-helper-lambda</artifactId>
+    <version>${elasticsearch-helper.version}</version>
 
     <dependencies>
         <dependency>
