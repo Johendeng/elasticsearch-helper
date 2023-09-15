@@ -28,8 +28,6 @@ public class IndexMetaCache {
 
     private static final Map<Class<?>, IndexMeta> INDEX_META_MAP = new ConcurrentHashMap<>();
 
-    private IndexMetaCache globalIndexMetaCache;
-
     public static IndexMeta getMetaInfo(Class<? extends EsEntity> eClazz) {
         IndexMeta indexMeta = INDEX_META_MAP.get(eClazz);
         if (indexMeta == null) {
