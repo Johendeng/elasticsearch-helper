@@ -18,6 +18,7 @@ import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -95,6 +96,12 @@ public abstract class AbstractEsSession<T extends QueryBuilder> {
 		this.currentQueryBuilderList.add(queryCell);
 		return this;
 	}
+
+	public AbstractEsSession chain(Collection<QueryBuilder> queryCells) {
+		this.currentQueryBuilderList.addAll(queryCells);
+		return this;
+	}
+
 	/**
 	 *  定义查询构造对象 是boolQuery, dis-max 等
 	 */

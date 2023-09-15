@@ -17,6 +17,7 @@ import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.elasticsearch.index.reindex.DeleteByQueryRequest;
@@ -66,7 +67,6 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
     private final RequestOptions reqOpt;
 
     private final boolean statementLogOut;
-
 
     public EsBaseMapperImpl(String index, Class<T> clazz, RestHighLevelClient client, RequestOptions reqOpt, boolean statementLogOut) {
         this.index = index;

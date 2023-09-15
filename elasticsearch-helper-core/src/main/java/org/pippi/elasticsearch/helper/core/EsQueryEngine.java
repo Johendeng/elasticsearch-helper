@@ -1,11 +1,14 @@
 package org.pippi.elasticsearch.helper.core;
 
+import org.elasticsearch.index.query.QueryBuilder;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.bean.base.EsQueryIndexBean;
 import org.pippi.elasticsearch.helper.core.handler.AbstractQueryHandler;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
+import org.pippi.elasticsearch.helper.model.enums.EsConnector;
+import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -49,6 +52,12 @@ public class EsQueryEngine {
                 .config(wrapper.getIndexInfo())
                 .build();
         loadEsExcDesBean(session, wrapper.getQueryDesList());
+        Map<EsConnector, LinkedList<QueryBuilder>> freeQueries = wrapper.freeQueries();
+        freeQueries.forEach((connector, currentQueries) -> {
+            if (CollectionUtils.isNotEmpty(currentQueries)) {
+                session.changeLogicConnector(connector).chain(currentQueries);
+            }
+        });
         return session;
     }
 

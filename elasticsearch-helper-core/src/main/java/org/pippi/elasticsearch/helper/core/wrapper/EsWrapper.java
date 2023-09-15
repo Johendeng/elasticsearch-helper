@@ -15,6 +15,7 @@ import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.enums.QueryModel;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,6 +37,9 @@ public abstract class EsWrapper<T> {
 
     protected EsQueryIndexBean indexInfo;
 
+    protected Map<EsConnector, LinkedList<QueryBuilder>> freeQueries = Maps.newHashMap();
+
+
     protected void connector(EsConnector currentConnector) {
         this.currentConnector = currentConnector;
     }
@@ -50,5 +54,9 @@ public abstract class EsWrapper<T> {
 
     public Map<String, Object> updateMap() {
         return updateMap;
+    }
+
+    public Map<EsConnector, LinkedList<QueryBuilder>> freeQueries() {
+        return freeQueries;
     }
 }

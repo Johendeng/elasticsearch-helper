@@ -1,6 +1,8 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper;
 
+import com.google.common.collect.Lists;
 import org.apache.lucene.search.join.ScoreMode;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Bool;
@@ -13,6 +15,7 @@ import org.pippi.elasticsearch.helper.model.bean.query.*;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -69,6 +72,16 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
         super.indexInfo.setSize(size);
         super.indexInfo.setMinScore(minScore);
         super.indexInfo.setTraceScore(traceScore);
+        return typedThis;
+    }
+
+    @Override
+    public Children chain(boolean condition, QueryBuilder queryBuilder) {
+        maybeDo(condition, () -> {
+            LinkedList<QueryBuilder> builderList = freeQueries.getOrDefault(super.currentConnector, Lists.newLinkedList());
+            builderList.add(queryBuilder);
+            freeQueries.put(super.currentConnector, builderList);
+        });
         return typedThis;
     }
 

@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper.interfaces;
 
+import org.elasticsearch.index.query.QueryBuilder;
 import org.pippi.elasticsearch.helper.model.bean.query.FuzzyQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.MatchQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryConf;
@@ -25,6 +26,15 @@ public interface SearchFunc<F, Children> extends Serializable {
      * @param traceScore 是否显示 召回文档 的分数
      */
     Children config(int size, float minScore, boolean traceScore);
+
+    /**
+     * free append
+     */
+    default Children chain(QueryBuilder queryBuilder) {
+        return chain(true, queryBuilder);
+    }
+
+    Children chain(boolean condition, QueryBuilder queryBuilder);
 
     /**
      * term

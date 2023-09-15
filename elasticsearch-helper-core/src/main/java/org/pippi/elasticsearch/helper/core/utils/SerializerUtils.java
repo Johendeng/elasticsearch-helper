@@ -31,7 +31,8 @@ public class SerializerUtils {
     private static ObjectMapper initDefaultMapper() {
         return new ObjectMapper()
             .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-            .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
+            // A反序列化成B，A的部分属性B中没有 不报错
+            .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS)
             .setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
     }
 
