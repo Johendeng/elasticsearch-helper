@@ -12,9 +12,9 @@ import org.pippi.elasticsearch.helper.model.bean.QueryConf;
  */
 public class ScriptQueryConf extends QueryConf<ScriptQueryBuilder> {
 
-    ScriptType scriptType;
+    ScriptType scriptType = ScriptType.INLINE;
 
-    String lang;
+    String lang = "painless";
 
     /**
      * define the script-ID (script-type is store) OR the script-code (script-type is inline)
@@ -25,42 +25,52 @@ public class ScriptQueryConf extends QueryConf<ScriptQueryBuilder> {
      * Dose script has params
      * return
      */
-    boolean hasParams;
+    boolean hasParams ;
+
+    public static ScriptQueryConf build() {
+        return new ScriptQueryConf();
+    }
 
     @Override
     public void configQueryBuilder(ScriptQueryBuilder queryBuilder) {
 
     }
 
-    public ScriptType getScriptType() {
-        return scriptType;
+    public ScriptQueryConf setScriptType(ScriptType scriptType) {
+        this.scriptType = scriptType;
+        return this;
     }
 
-    public void setScriptType(ScriptType scriptType) {
-        this.scriptType = scriptType;
+    public ScriptQueryConf setLang(String lang) {
+        this.lang = lang;
+        return this;
+    }
+
+    public ScriptQueryConf setIdOrCode(String idOrCode) {
+        this.idOrCode = idOrCode;
+        return this;
+    }
+
+    public ScriptQueryConf setHasParams(boolean hasParams) {
+        this.hasParams = hasParams;
+        return this;
+    }
+
+    public ScriptType getScriptType() {
+        return scriptType;
     }
 
     public String getLang() {
         return lang;
     }
 
-    public void setLang(String lang) {
-        this.lang = lang;
-    }
 
     public String getIdOrCode() {
         return idOrCode;
-    }
-
-    public void setIdOrCode(String idOrCode) {
-        this.idOrCode = idOrCode;
     }
 
     public boolean isHasParams() {
         return hasParams;
     }
 
-    public void setHasParams(boolean hasParams) {
-        this.hasParams = hasParams;
-    }
 }

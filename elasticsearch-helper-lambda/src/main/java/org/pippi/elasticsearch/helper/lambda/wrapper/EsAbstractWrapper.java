@@ -3,6 +3,7 @@ package org.pippi.elasticsearch.helper.lambda.wrapper;
 import com.google.common.collect.Lists;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Bool;
@@ -14,9 +15,11 @@ import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.bean.query.*;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
+import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * T 实体类
@@ -351,8 +354,56 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
         return typedThis;
     }
 
+    @Override
+    public Children script(boolean condition, String idOrCode) {
+        return script(condition, ScriptType.INLINE, "painless", idOrCode);
+    }
 
+    @Override
+    public Children script(boolean condition, String idOrCode, Map<String, Object> param) {
+        return script(condition, ScriptType.INLINE, "painless", idOrCode, param);
+    }
 
+    @Override
+    public Children script(boolean condition, ScriptType type, String idOrCode) {
+        return script(condition, type, "painless", idOrCode);
+    }
+
+    @Override
+    public Children script(boolean condition, ScriptType type, String idOrCode, Map<String, Object> param) {
+        return script(condition, type, "painless", idOrCode, param);
+    }
+
+    @Override
+    public Children script(boolean condition, String lang, String idOrCode) {
+        return script(condition, ScriptType.INLINE, lang, idOrCode);
+    }
+
+    @Override
+    public Children script(boolean condition, String lang, String idOrCode, Map<String, Object> param) {
+        return script(condition, ScriptType.INLINE, lang, idOrCode, param);
+    }
+
+    @Override
+    public Children script(boolean condition, ScriptType type, String lang, String idOrCode) {
+        return script(condition, type, lang, idOrCode, null);
+    }
+
+    @Override
+    public Children script(boolean condition, ScriptType type, String lang, String idOrCode, Map<String, Object> param) {
+        maybeDo(condition, () -> {
+            ScriptQueryConf config = ScriptQueryConf.build()
+                    .setScriptType(type)
+                    .setLang(lang)
+                    .setHasParams(CollectionUtils.isNotEmpty(param))
+                    .setIdOrCode(idOrCode);
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(ScriptQuery.class, super.currentConnector, null);
+            conf.setValue(param);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
 
     protected final String fieldToString(F field) {
         return fieldStringify(field);

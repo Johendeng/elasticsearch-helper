@@ -1,12 +1,14 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper.interfaces;
 
 import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.model.bean.query.FuzzyQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.MatchQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.WildCardQueryConf;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * @author JohenDeng
@@ -267,6 +269,56 @@ public interface SearchFunc<F, Children> extends Serializable {
     }
 
     Children lte(boolean condition, F field, Object val, float boost, RangeQueryConf config);
+
+    /**
+     * script
+     */
+    default Children script(String idOrCode) {
+        return script(true, idOrCode);
+    }
+
+    Children script(boolean condition, String idOrCode);
+
+    default Children script(String idOrCode, Map<String, Object> param) {
+        return script(true, idOrCode, param);
+    }
+
+    Children script(boolean condition, String idOrCode, Map<String, Object> param);
+
+    default Children script(ScriptType type, String idOrCode) {
+        return script(true, type, idOrCode);
+    }
+
+    Children script(boolean condition, ScriptType type, String idOrCode);
+
+    default Children script(ScriptType type, String idOrCode, Map<String, Object> param) {
+        return script(true, type, idOrCode, param);
+    }
+
+    Children script(boolean condition, ScriptType type, String idOrCode, Map<String, Object> param);
+
+    default Children script(String lang, String idOrCode) {
+        return script(true, lang, idOrCode);
+    }
+
+    Children script(boolean condition, String lang, String idOrCode);
+
+    default Children script(String lang, String idOrCode, Map<String, Object> param) {
+        return script(true,  lang, idOrCode, param);
+    }
+    Children script(boolean condition, String lang, String idOrCode, Map<String, Object> param);
+
+    default Children script(ScriptType type, String lang, String idOrCode) {
+        return script(true, type, lang, idOrCode);
+    }
+
+    Children script(boolean condition, ScriptType type, String lang, String idOrCode);
+
+    default Children script(ScriptType type, String lang, String idOrCode, Map<String, Object> param) {
+        return script(true, type, lang, idOrCode, param);
+    }
+
+    Children script(boolean condition, ScriptType type, String lang, String idOrCode, Map<String, Object> param);
 
 
 
