@@ -6,6 +6,7 @@ import org.pippi.elasticsearch.helper.model.bean.query.FuzzyQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.MatchQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryConf;
 import org.pippi.elasticsearch.helper.model.bean.query.WildCardQueryConf;
+import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -320,7 +321,16 @@ public interface SearchFunc<F, Children> extends Serializable {
 
     Children script(boolean condition, ScriptType type, String lang, String idOrCode, Map<String, Object> param);
 
-
+    /**
+     * geo_bounding_box 盒模型）找出落在指定矩形框中的坐标点，用于可视化范围筛选,
+     * 例如：整个屏幕范围内的数据筛选（左上角坐标点和右下角坐标点）
+     *
+     */
+//    default Children geoBoundingBox(F field, GeoBoundingBoxParam<?> val) {
+//        return geoBoundingBox(true, field, val);
+//    }
+//
+//    Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val);
 
 
     // todo ...
