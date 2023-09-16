@@ -128,207 +128,233 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return type;
     }
 
-    public void setType(MultiMatchQueryBuilder.Type type) {
+    public QueryStringConf setType(MultiMatchQueryBuilder.Type type) {
         this.type = type;
+        return this;
     }
 
     public String getDefaultField() {
         return defaultField;
     }
 
-    public void setDefaultField(String defaultField) {
+    public QueryStringConf setDefaultField(String defaultField) {
         this.defaultField = defaultField;
+        return this;
     }
 
     public String getField() {
         return field;
     }
 
-    public void setField(String field) {
+    public QueryStringConf setField(String field) {
         this.field = field;
+        return this;
     }
 
     public String getFieldAndBoost() {
         return fieldAndBoost;
     }
 
-    public void setFieldAndBoost(String fieldAndBoost) {
+    public QueryStringConf setFieldAndBoost(String fieldAndBoost) {
         this.fieldAndBoost = fieldAndBoost;
+        return this;
     }
 
     public String[] getFieldAndBoosts() {
         return fieldAndBoosts;
     }
 
-    public void setFieldAndBoosts(String[] fieldAndBoosts) {
+    public QueryStringConf setFieldAndBoosts(String[] fieldAndBoosts) {
         this.fieldAndBoosts = fieldAndBoosts;
+        return this;
     }
 
     public String getAnalyzer() {
         return analyzer;
     }
 
-    public void setAnalyzer(String analyzer) {
+    public QueryStringConf setAnalyzer(String analyzer) {
         this.analyzer = analyzer;
+        return this;
     }
 
     public Operator getDefaultOperator() {
         return defaultOperator;
     }
 
-    public void setDefaultOperator(Operator defaultOperator) {
+    public QueryStringConf setDefaultOperator(Operator defaultOperator) {
         this.defaultOperator = defaultOperator;
+        return this;
     }
 
     public FuzzinessEnum getFuzziness() {
         return fuzziness;
     }
 
-    public void setFuzziness(FuzzinessEnum fuzziness) {
+    public QueryStringConf setFuzziness(FuzzinessEnum fuzziness) {
         this.fuzziness = fuzziness;
+        return this;
     }
 
     public Integer getFuzzyMaxExpansions() {
         return fuzzyMaxExpansions;
     }
 
-    public void setFuzzyMaxExpansions(Integer fuzzyMaxExpansions) {
+    public QueryStringConf setFuzzyMaxExpansions(Integer fuzzyMaxExpansions) {
         this.fuzzyMaxExpansions = fuzzyMaxExpansions;
+        return this;
     }
 
     public Integer getFuzzyPrefixLength() {
         return fuzzyPrefixLength;
     }
 
-    public void setFuzzyPrefixLength(Integer fuzzyPrefixLength) {
+    public QueryStringConf setFuzzyPrefixLength(Integer fuzzyPrefixLength) {
         this.fuzzyPrefixLength = fuzzyPrefixLength;
+        return this;
     }
 
     public String getFuzzyRewrite() {
         return fuzzyRewrite;
     }
 
-    public void setFuzzyRewrite(String fuzzyRewrite) {
+    public QueryStringConf setFuzzyRewrite(String fuzzyRewrite) {
         this.fuzzyRewrite = fuzzyRewrite;
+        return this;
     }
 
     public Boolean getFuzzyTranspositions() {
         return fuzzyTranspositions;
     }
 
-    public void setFuzzyTranspositions(Boolean fuzzyTranspositions) {
+    public QueryStringConf setFuzzyTranspositions(Boolean fuzzyTranspositions) {
         this.fuzzyTranspositions = fuzzyTranspositions;
+        return this;
     }
 
     public Boolean getAnalyzeWildcard() {
         return analyzeWildcard;
     }
 
-    public void setAnalyzeWildcard(Boolean analyzeWildcard) {
+    public QueryStringConf setAnalyzeWildcard(Boolean analyzeWildcard) {
         this.analyzeWildcard = analyzeWildcard;
+        return this;
     }
 
     public Boolean getAutoGenerateSynonymsPhraseQuery() {
         return autoGenerateSynonymsPhraseQuery;
     }
 
-    public void setAutoGenerateSynonymsPhraseQuery(Boolean autoGenerateSynonymsPhraseQuery) {
+    public QueryStringConf setAutoGenerateSynonymsPhraseQuery(Boolean autoGenerateSynonymsPhraseQuery) {
         this.autoGenerateSynonymsPhraseQuery = autoGenerateSynonymsPhraseQuery;
+        return this;
     }
 
     public Boolean getAllowLeadingWildcard() {
         return allowLeadingWildcard;
     }
 
-    public void setAllowLeadingWildcard(Boolean allowLeadingWildcard) {
+    public QueryStringConf setAllowLeadingWildcard(Boolean allowLeadingWildcard) {
         this.allowLeadingWildcard = allowLeadingWildcard;
+        return this;
     }
 
     public Boolean getEnablePositionIncrements() {
         return enablePositionIncrements;
     }
 
-    public void setEnablePositionIncrements(Boolean enablePositionIncrements) {
+    public QueryStringConf setEnablePositionIncrements(Boolean enablePositionIncrements) {
         this.enablePositionIncrements = enablePositionIncrements;
+        return this;
     }
 
     public Boolean getEscape() {
         return escape;
     }
 
-    public void setEscape(Boolean escape) {
+    public QueryStringConf setEscape(Boolean escape) {
         this.escape = escape;
+        return this;
     }
 
     public Boolean getLenient() {
         return lenient;
     }
 
-    public void setLenient(Boolean lenient) {
+    public QueryStringConf setLenient(Boolean lenient) {
         this.lenient = lenient;
+        return this;
     }
 
     public Integer getPhraseSlop() {
         return phraseSlop;
     }
 
-    public void setPhraseSlop(Integer phraseSlop) {
+    public QueryStringConf setPhraseSlop(Integer phraseSlop) {
         this.phraseSlop = phraseSlop;
+        return this;
     }
 
     public Integer getMaxDeterminizedStates() {
         return maxDeterminizedStates;
     }
 
-    public void setMaxDeterminizedStates(Integer maxDeterminizedStates) {
+    public QueryStringConf setMaxDeterminizedStates(Integer maxDeterminizedStates) {
         this.maxDeterminizedStates = maxDeterminizedStates;
+        return this;
     }
 
     public String getQuoteAnalyzer() {
         return quoteAnalyzer;
     }
 
-    public void setQuoteAnalyzer(String quoteAnalyzer) {
+    public QueryStringConf setQuoteAnalyzer(String quoteAnalyzer) {
         this.quoteAnalyzer = quoteAnalyzer;
+        return this;
     }
 
     public String getQuoteFieldSuffix() {
         return quoteFieldSuffix;
     }
 
-    public void setQuoteFieldSuffix(String quoteFieldSuffix) {
+    public QueryStringConf setQuoteFieldSuffix(String quoteFieldSuffix) {
         this.quoteFieldSuffix = quoteFieldSuffix;
+        return this;
     }
 
     public Float getTieBreaker() {
         return tieBreaker;
     }
 
-    public void setTieBreaker(Float tieBreaker) {
+    public QueryStringConf setTieBreaker(Float tieBreaker) {
         this.tieBreaker = tieBreaker;
+        return this;
     }
 
     public String getTimeZone() {
         return timeZone;
     }
 
-    public void setTimeZone(String timeZone) {
+    public QueryStringConf setTimeZone(String timeZone) {
         this.timeZone = timeZone;
+        return this;
     }
 
     public String getMinimumShouldMatch() {
         return minimumShouldMatch;
     }
 
-    public void setMinimumShouldMatch(String minimumShouldMatch) {
+    public QueryStringConf setMinimumShouldMatch(String minimumShouldMatch) {
         this.minimumShouldMatch = minimumShouldMatch;
+        return this;
     }
 
     public Float getBoost() {
         return boost;
     }
 
-    public void setBoost(Float boost) {
+    public QueryStringConf setBoost(Float boost) {
         this.boost = boost;
+        return this;
     }
 }
