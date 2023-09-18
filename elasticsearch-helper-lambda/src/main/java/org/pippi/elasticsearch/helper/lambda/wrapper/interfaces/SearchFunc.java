@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper.interfaces;
 
+import org.elasticsearch.index.query.GeoValidationMethod;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.model.bean.query.FuzzyQueryConf;
@@ -326,13 +327,24 @@ public interface SearchFunc<F, Children> extends Serializable {
      * 例如：整个屏幕范围内的数据筛选（左上角坐标点和右下角坐标点）
      *
      */
-//    default Children geoBoundingBox(F field, GeoBoundingBoxParam<?> val) {
-//        return geoBoundingBox(true, field, val);
-//    }
-//
-//    Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val);
+    default Children geoBoundingBox(F field, GeoBoundingBoxParam<?> val) {
+        return geoBoundingBox(true, field, val);
+    }
+
+    Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val);
 
 
+    default Children geoBoundingBox(F field, GeoBoundingBoxParam<?> val, float boost) {
+        return geoBoundingBox(true, field, val, boost);
+    }
+
+    Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val, float boost);
+
+    default Children geoBoundingBox(F field, GeoBoundingBoxParam<?> val, GeoValidationMethod geoValidationMethod, float boost) {
+        return geoBoundingBox(true, field, val, boost);
+    }
+
+    Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val, GeoValidationMethod geoValidationMethod, float boost);
     // todo ...
 
 

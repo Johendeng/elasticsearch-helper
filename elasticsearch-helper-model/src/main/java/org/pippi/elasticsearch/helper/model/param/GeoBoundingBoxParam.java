@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.model.param;
 
 import org.elasticsearch.common.geo.GeoPoint;
+import org.elasticsearch.geometry.utils.Geohash;
 
 
 import java.io.Serializable;
@@ -21,6 +22,43 @@ public class GeoBoundingBoxParam<T extends GeoBoundingBoxParam.BoundingBoxParam>
 
     public void setParam(T param) {
         this.param = param;
+    }
+
+    public static GeoBoundingBoxParam<CornerPoints> cornerPoints(double top, double left, double bottom, double right) {
+        CornerPoints points = new CornerPoints();
+        points.setTop(top);
+        points.setLeft(left);
+        points.setBottom(bottom);
+        points.setRight(right);
+        GeoBoundingBoxParam<CornerPoints> param = new GeoBoundingBoxParam<>();
+        param.setParam(points);
+        return param;
+    }
+
+    public static GeoBoundingBoxParam<GeoHash> geoHash(String geoHash) {
+        GeoBoundingBoxParam<GeoHash> param = new GeoBoundingBoxParam<>();
+        GeoHash hash = new GeoHash();
+        hash.setGeoHash(geoHash);
+        param.setParam(hash);
+        return param;
+    }
+
+    public static GeoBoundingBoxParam<GeoPoints> geoHash(GeoPoint topLeft, GeoPoint bottomRight) {
+        GeoBoundingBoxParam<GeoPoints> param = new GeoBoundingBoxParam<>();
+        GeoPoints points = new GeoPoints();
+        param.setParam(points);
+        points.setTopLeft(topLeft);
+        points.setBottomRight(bottomRight);
+        return param;
+    }
+
+    public static GeoBoundingBoxParam<CornerGeoHash> geoHash(String topLeft, String bottomRight) {
+        GeoBoundingBoxParam<CornerGeoHash> param = new GeoBoundingBoxParam<>();
+        CornerGeoHash points = new CornerGeoHash();
+        param.setParam(points);
+        points.setTopLeft(topLeft);
+        points.setBottomRight(bottomRight);
+        return param;
     }
 
     public static class CornerPoints extends BoundingBoxParam {
