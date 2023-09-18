@@ -5,6 +5,7 @@ import org.elasticsearch.index.query.GeoValidationMethod;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.model.bean.query.*;
+import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
 import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
 import org.pippi.elasticsearch.helper.model.param.GeometryParam;
 import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
@@ -504,8 +505,69 @@ public interface SearchFunc<F, Children> extends Serializable {
     }
     Children moreLikeThis(boolean condition, MoreLikeThisQueryConf config, MoreLikeThisParam val, float boost, F... fields);
 
+    /**
+     * multi_match
+     */
+    default Children multiMatch(Object val, F... fields) {
+        return multiMatch(true, val, fields);
+    }
+    Children multiMatch(boolean condition, Object val, F... fields);
+
+    default Children multiMatch(Object val, float boost, F... fields) {
+        return multiMatch(true, val, boost, fields);
+    }
+    Children multiMatch(boolean condition, Object val, float boost, F... fields);
+
+    default Children multiMatch(MultiMatchQueryConf config, Object val, F... fields) {
+        return multiMatch(true, config, val, fields);
+    }
+    Children multiMatch(boolean condition, MultiMatchQueryConf config, Object val, F... fields);
+
+    default Children multiMatch(MultiMatchQueryConf config, Object val, float boost, F... fields) {
+        return multiMatch(true, config, val, boost, fields);
+    }
+    Children multiMatch(boolean condition, MultiMatchQueryConf config, Object val, float boost, F... fields);
 
 
+    default Children multiMatch(Object val, Map<F, Float> fields) {
+        return multiMatch(true, val, fields);
+    }
+    Children multiMatch(boolean condition, Object val, Map<F, Float> fields);
+
+    default Children multiMatch(MultiMatchQueryConf config, Object val, Map<F, Float> fields) {
+        return multiMatch(true, config, val, fields);
+    }
+    Children multiMatch(boolean condition, MultiMatchQueryConf config, Object val, Map<F, Float> fields);
+
+    /**
+     * query_string
+     */
+    Children queryString(boolean condition, String val, F... fields);
+
+    default Children queryString(Object val, float boost, F... fields) {
+        return queryString(true, val, boost, fields);
+    }
+    Children queryString(boolean condition, Object val, float boost, F... fields);
+
+    default Children queryString(QueryStringConf config, Object val, F... fields) {
+        return queryString(true, config, val, fields);
+    }
+    Children queryString(boolean condition, QueryStringConf config, Object val, F... fields);
+
+    default Children queryString(QueryStringConf config, Object val, float boost, F... fields) {
+        return queryString(true, config, val, boost, fields);
+    }
+    Children queryString(boolean condition, QueryStringConf config, Object val, float boost, F... fields);
+
+    default Children queryString(Object val, Map<F, Float> fields) {
+        return queryString(true, val, fields);
+    }
+    Children queryString(boolean condition, Object val, Map<F, Float> fields);
+
+    default Children queryString(QueryStringConf config, Object val, Map<F, Float> fields) {
+        return queryString(true, config, val, fields);
+    }
+    Children queryString(boolean condition, QueryStringConf config, Object val, Map<F, Float> fields);
     // todo ...
 
 

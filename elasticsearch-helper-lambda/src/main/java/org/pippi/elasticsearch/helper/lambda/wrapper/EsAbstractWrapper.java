@@ -27,6 +27,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * T 实体类
@@ -636,6 +638,88 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
             config.setFields(fieldStrArr);
             EsQueryFieldBean conf = EsQueryFieldBean.newInstance(MoreLikeThis.class, super.currentConnector, null);
             conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children multiMatch(boolean condition, Object val, F... fields) {
+        return multiMatch(condition, val, 1.0f, fields);
+    }
+
+    @Override
+    public Children multiMatch(boolean condition, Object val, float boost, F... fields) {
+        return multiMatch(condition, MultiMatchQueryConf.build(), val, boost, fields);
+    }
+
+    @Override
+    public Children multiMatch(boolean condition, MultiMatchQueryConf config, Object val, F... fields) {
+        return multiMatch(condition, config, val, 1.0f, fields);
+    }
+
+    @Override
+    public Children multiMatch(boolean condition, MultiMatchQueryConf config, Object val, float boost, F... fields) {
+        Map<F, Float> fieldMap = Arrays.stream(fields)
+                .collect(Collectors.toMap(f -> f, f -> boost));
+        return multiMatch(condition, config, val, fieldMap);
+    }
+
+    @Override
+    public Children multiMatch(boolean condition, Object val, Map<F, Float> fields) {
+        return multiMatch(condition, MultiMatchQueryConf.build(), val, fields);
+    }
+
+    @Override
+    public Children multiMatch(boolean condition, MultiMatchQueryConf config, Object val, Map<F, Float> fields) {
+        maybeDo(condition && CollectionUtils.isNotEmpty(fields) , () -> {
+            Map<String, Float> fieldStringifyMap = fields.entrySet().stream()
+                    .collect(Collectors.toMap(e -> this.fieldToString(e.getKey()), Map.Entry::getValue));
+            config.setFieldAndBoostMap(fieldStringifyMap);
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(MultiMatch.class, super.currentConnector, null);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children queryString(boolean condition, String val, F... fields) {
+        return queryString(condition, val, 1.0f, fields);
+    }
+
+    @Override
+    public Children queryString(boolean condition, Object val, float boost, F... fields) {
+        return queryString(condition, QueryStringConf.build(), val, boost, fields);
+    }
+
+    @Override
+    public Children queryString(boolean condition, QueryStringConf config, Object val, F... fields) {
+        return queryString(condition, config, val, 1.0f, fields);
+    }
+
+    @Override
+    public Children queryString(boolean condition, QueryStringConf config, Object val, float boost, F... fields) {
+        Map<F, Float> fieldMap = Arrays.stream(fields)
+                .collect(Collectors.toMap(f -> f, f -> boost));
+        return queryString(condition, config, val, fieldMap);
+    }
+
+    @Override
+    public Children queryString(boolean condition, Object val, Map<F, Float> fields) {
+        return queryString(condition, QueryStringConf.build(), val, fields);
+    }
+
+    @Override
+    public Children queryString(boolean condition, QueryStringConf config, Object val, Map<F, Float> fields) {
+        maybeDo(condition && CollectionUtils.isNotEmpty(fields) , () -> {
+            Map<String, Float> fieldStringifyMap = fields.entrySet().stream()
+                    .collect(Collectors.toMap(e -> this.fieldToString(e.getKey()), Map.Entry::getValue));
+            config.setFieldAndBoostMap(fieldStringifyMap);
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(QueryString.class, super.currentConnector, null);
             conf.setValue(val);
             conf.setExtBean(config);
             super.queryDesList.add(conf);

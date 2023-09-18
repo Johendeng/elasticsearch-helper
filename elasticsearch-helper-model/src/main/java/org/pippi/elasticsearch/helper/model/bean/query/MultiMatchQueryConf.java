@@ -8,6 +8,7 @@ import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.ZeroTermsQueryOption;
 import org.pippi.elasticsearch.helper.model.bean.QueryConf;
 import org.pippi.elasticsearch.helper.model.enums.FuzzinessEnum;
+import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 
 
 import java.util.Map;
@@ -23,22 +24,35 @@ public class MultiMatchQueryConf extends QueryConf<MultiMatchQueryBuilder> {
     private static final String MIDDLE = ":";
 
     private String[] fields;
-    private MultiMatchQueryBuilder.Type type;
-    private ZeroTermsQueryOption zeroTermsQuery;
+
     /**
      *  filed1:1.0,field2:2.0
      */
     private String[] boostFields;
-    private boolean autoGenerateSynonymsPhraseQuery;
-    private FuzzinessEnum fuzziness;
-    private boolean fuzzyTranspositions;
-    private boolean lenient;
-    private int prefixLength;
-    private int maxExpansions;
+
+    private MultiMatchQueryBuilder.Type type = MultiMatchQueryBuilder.Type.BEST_FIELDS;
+
+    private ZeroTermsQueryOption zeroTermsQuery = ZeroTermsQueryOption.NONE;
+
+    private boolean autoGenerateSynonymsPhraseQuery = true;
+    private FuzzinessEnum fuzziness = FuzzinessEnum.AUTO;
+    private boolean fuzzyTranspositions = true;
+    private boolean lenient = false;
+    private int prefixLength = 0;
+    private int maxExpansions = 50;
     private String analyzer;
-    private Operator operator;
+    private Operator operator = Operator.OR;
     private String minimumShouldMatch;
-    private int slop;
+    private int slop = 0;
+
+    /**
+     * for lambda
+     */
+    private Map<String, Float> fieldAndBoostMap;
+
+    public static MultiMatchQueryConf build() {
+        return new MultiMatchQueryConf();
+    }
 
     @Override
     public void configQueryBuilder(MultiMatchQueryBuilder queryBuilder) {
@@ -67,6 +81,9 @@ public class MultiMatchQueryConf extends QueryConf<MultiMatchQueryBuilder> {
                 filedBoostMap.put(key, val);
             }
             queryBuilder.fields(filedBoostMap);
+        }
+        if (CollectionUtils.isNotEmpty(fieldAndBoostMap)) {
+            queryBuilder.fields(fieldAndBoostMap);
         }
     }
 
@@ -193,6 +210,15 @@ public class MultiMatchQueryConf extends QueryConf<MultiMatchQueryBuilder> {
 
     public MultiMatchQueryConf setSlop(int slop) {
         this.slop = slop;
+        return this;
+    }
+
+    public Map<String, Float> fieldAndBoostMap() {
+        return fieldAndBoostMap;
+    }
+
+    public MultiMatchQueryConf setFieldAndBoostMap(Map<String, Float> fieldAndBoostMap) {
+        this.fieldAndBoostMap = fieldAndBoostMap;
         return this;
     }
 }

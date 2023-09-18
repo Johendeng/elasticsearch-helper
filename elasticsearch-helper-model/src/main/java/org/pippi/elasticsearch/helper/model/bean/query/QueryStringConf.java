@@ -22,9 +22,7 @@ import java.util.Map;
  */
 public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
 
-    private transient static final String _SP = ":";
-
-    private MultiMatchQueryBuilder.Type type;
+    private static final String _SP = ":";
 
     private String defaultField;
 
@@ -34,47 +32,59 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
 
     private String[] fieldAndBoosts;
 
+    /**
+     * for lambda
+     */
+    private Map<String, Float> fieldAndBoostMap;
+
+    private MultiMatchQueryBuilder.Type type = MultiMatchQueryBuilder.Type.BEST_FIELDS;
+
     private String analyzer;
 
-    private Operator defaultOperator;
+    private Operator defaultOperator = Operator.OR;
 
-    private FuzzinessEnum fuzziness;
+    private FuzzinessEnum fuzziness = FuzzinessEnum.AUTO;
 
-    private Integer fuzzyMaxExpansions;
+    private Integer fuzzyMaxExpansions = 50;
 
-    private Integer fuzzyPrefixLength;
+    private Integer fuzzyPrefixLength = 0;
 
     private String fuzzyRewrite;
 
-    private Boolean fuzzyTranspositions;
+    private Boolean fuzzyTranspositions = true;
 
-    private Boolean analyzeWildcard;
+    private Boolean analyzeWildcard = false;
 
-    private Boolean autoGenerateSynonymsPhraseQuery;
+    private Boolean allowLeadingWildcard = true;
 
-    private Boolean allowLeadingWildcard;
+    private Boolean autoGenerateSynonymsPhraseQuery = true;
 
-    private Boolean enablePositionIncrements;
 
-    private Boolean escape;
+    private Boolean enablePositionIncrements = true;
 
-    private Boolean lenient;
+    private Boolean escape = false;
 
-    private Integer phraseSlop;
+    private Boolean lenient = false;
 
-    private Integer maxDeterminizedStates;
+    private Integer phraseSlop = 0;
+
+    private Integer maxDeterminizedStates = 10000;
 
     private String quoteAnalyzer;
 
     private String quoteFieldSuffix;
 
-    private Float tieBreaker;
+    private Float tieBreaker = 0.0f;
 
-    private String timeZone;
+    private String timeZone = "+08:00";
 
     private String minimumShouldMatch;
 
-    private Float boost;
+    private Float boost = 1.0f;
+
+    public static QueryStringConf build() {
+        return new QueryStringConf();
+    }
 
     @Override
     public void configQueryBuilder(QueryStringQueryBuilder queryBuilder) {
@@ -124,7 +134,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         CommonUtils.optional(this.boost).ifPresent(queryBuilder::boost);
     }
 
-    public MultiMatchQueryBuilder.Type getType() {
+    public MultiMatchQueryBuilder.Type type() {
         return type;
     }
 
@@ -133,7 +143,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getDefaultField() {
+    public String defaultField() {
         return defaultField;
     }
 
@@ -142,7 +152,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getField() {
+    public String field() {
         return field;
     }
 
@@ -151,7 +161,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getFieldAndBoost() {
+    public String fieldAndBoost() {
         return fieldAndBoost;
     }
 
@@ -160,7 +170,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String[] getFieldAndBoosts() {
+    public String[] fieldAndBoosts() {
         return fieldAndBoosts;
     }
 
@@ -169,7 +179,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getAnalyzer() {
+    public String analyzer() {
         return analyzer;
     }
 
@@ -178,7 +188,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Operator getDefaultOperator() {
+    public Operator defaultOperator() {
         return defaultOperator;
     }
 
@@ -187,7 +197,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public FuzzinessEnum getFuzziness() {
+    public FuzzinessEnum fuzziness() {
         return fuzziness;
     }
 
@@ -196,7 +206,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Integer getFuzzyMaxExpansions() {
+    public Integer fuzzyMaxExpansions() {
         return fuzzyMaxExpansions;
     }
 
@@ -205,7 +215,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Integer getFuzzyPrefixLength() {
+    public Integer fuzzyPrefixLength() {
         return fuzzyPrefixLength;
     }
 
@@ -214,7 +224,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getFuzzyRewrite() {
+    public String fuzzyRewrite() {
         return fuzzyRewrite;
     }
 
@@ -223,7 +233,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Boolean getFuzzyTranspositions() {
+    public Boolean fuzzyTranspositions() {
         return fuzzyTranspositions;
     }
 
@@ -232,7 +242,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Boolean getAnalyzeWildcard() {
+    public Boolean analyzeWildcard() {
         return analyzeWildcard;
     }
 
@@ -241,7 +251,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Boolean getAutoGenerateSynonymsPhraseQuery() {
+    public Boolean autoGenerateSynonymsPhraseQuery() {
         return autoGenerateSynonymsPhraseQuery;
     }
 
@@ -250,7 +260,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Boolean getAllowLeadingWildcard() {
+    public Boolean allowLeadingWildcard() {
         return allowLeadingWildcard;
     }
 
@@ -259,7 +269,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Boolean getEnablePositionIncrements() {
+    public Boolean enablePositionIncrements() {
         return enablePositionIncrements;
     }
 
@@ -268,7 +278,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Boolean getEscape() {
+    public Boolean escape() {
         return escape;
     }
 
@@ -277,7 +287,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Boolean getLenient() {
+    public Boolean lenient() {
         return lenient;
     }
 
@@ -286,7 +296,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Integer getPhraseSlop() {
+    public Integer phraseSlop() {
         return phraseSlop;
     }
 
@@ -295,7 +305,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Integer getMaxDeterminizedStates() {
+    public Integer maxDeterminizedStates() {
         return maxDeterminizedStates;
     }
 
@@ -304,7 +314,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getQuoteAnalyzer() {
+    public String quoteAnalyzer() {
         return quoteAnalyzer;
     }
 
@@ -313,7 +323,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getQuoteFieldSuffix() {
+    public String quoteFieldSuffix() {
         return quoteFieldSuffix;
     }
 
@@ -322,7 +332,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Float getTieBreaker() {
+    public Float tieBreaker() {
         return tieBreaker;
     }
 
@@ -331,7 +341,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getTimeZone() {
+    public String timeZone() {
         return timeZone;
     }
 
@@ -340,7 +350,7 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public String getMinimumShouldMatch() {
+    public String minimumShouldMatch() {
         return minimumShouldMatch;
     }
 
@@ -349,12 +359,21 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
         return this;
     }
 
-    public Float getBoost() {
+    public Float boost() {
         return boost;
     }
 
     public QueryStringConf setBoost(Float boost) {
         this.boost = boost;
+        return this;
+    }
+
+    public Map<String, Float> fieldAndBoostMap() {
+        return fieldAndBoostMap;
+    }
+
+    public QueryStringConf setFieldAndBoostMap(Map<String, Float> fieldAndBoostMap) {
+        this.fieldAndBoostMap = fieldAndBoostMap;
         return this;
     }
 }
