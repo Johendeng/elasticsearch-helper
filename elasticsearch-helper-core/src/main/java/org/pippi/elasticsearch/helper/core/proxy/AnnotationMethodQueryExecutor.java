@@ -28,6 +28,7 @@ import java.util.Arrays;
  * @author JohenDeng
  * @date 2023/9/1
  **/
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class AnnotationMethodQueryExecutor extends EsOperationExecutor{
 
     private static final AnnotationMethodQueryExecutor INSTANCE = new AnnotationMethodQueryExecutor();

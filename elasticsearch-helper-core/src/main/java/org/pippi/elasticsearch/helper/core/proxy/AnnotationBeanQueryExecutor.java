@@ -27,7 +27,7 @@ import java.util.Objects;
  * @author JohenDeng
  * @date 2023/8/30
  **/
-@SuppressWarnings("all")
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class AnnotationBeanQueryExecutor extends EsOperationExecutor{
 
     private static final AnnotationBeanQueryExecutor INSTANCE = new AnnotationBeanQueryExecutor();

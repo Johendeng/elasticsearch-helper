@@ -21,6 +21,7 @@ import java.util.Set;
  * @author JohenDeng
  * @date 2023/9/12
  **/
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class LambdaQueryExecutor extends EsOperationExecutor {
 
     private static final Logger log = LoggerFactory.getLogger("LAMBDA-QUERY-EXECUTOR");

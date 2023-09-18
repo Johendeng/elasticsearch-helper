@@ -64,7 +64,7 @@ public class NestedQueryHandler extends AbstractQueryHandler<NestedQueryConf> {
             AbstractQueryHandler queryHandle = QueryHandlerFactory.getTargetHandleInstance(queryKey);
             queryHandle.execute(queryDesCell, session);
         }
-        QueryBuilder queryBUilder = session.getQueryBuilder().boost(queryDes.getBoost());
+        QueryBuilder queryBUilder = session.getQueryBuilder();
         return QueryBuilders.nestedQuery(extBean.getPath(), queryBUilder, extBean.getScoreMode());
      }
 }

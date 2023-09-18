@@ -21,27 +21,27 @@ import java.util.Objects;
  *
  * @param <T> mapping JavaBean
  **/
+@SuppressWarnings({"rawtypes","unchecked"})
 public abstract class AbstractQueryHandler<T extends QueryConf> {
 
     AbstractQueryHandler(){}
 
     /**
      *  execute param-explain
-     * @param queryDes
-     * @param searchHelper
      * return
      */
-    public final AbstractEsSession execute(EsQueryFieldBean<T> queryDes, AbstractEsSession searchHelper){
-        searchHelper.changeLogicConnector(queryDes.getLogicConnector());
+    public final AbstractEsSession execute(EsQueryFieldBean<T> queryDes, AbstractEsSession session){
+        session.changeLogicConnector(queryDes.getLogicConnector());
         handleExtBean(queryDes);
-        QueryBuilder queryBuilder = handle(queryDes, searchHelper);
+        QueryBuilder queryBuilder = handle(queryDes, session);
         if (Objects.nonNull(queryBuilder)) {
-            searchHelper.chain(queryBuilder);
+            queryBuilder.boost(queryDes.getBoost());
+            session.chain(queryBuilder);
             queryDes.getExtBean().configQueryBuilder(queryBuilder);
             this.handleExtConfig(queryDes, queryBuilder);
         }
-        this.handleFuncScoreQuery(queryDes, searchHelper);
-        return searchHelper;
+        this.handleFuncScoreQuery(queryDes, session);
+        return session;
     }
 
     /**

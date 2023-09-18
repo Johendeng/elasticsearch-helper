@@ -19,8 +19,6 @@ public class SpanTermQueryHandler extends AbstractQueryHandler<SpanTermQueryConf
 
     @Override
     public QueryBuilder handle(EsQueryFieldBean<SpanTermQueryConf> queryDes, AbstractEsSession searchHelper) {
-        SpanTermQueryBuilder spanTermQueryBuilder = new SpanTermQueryBuilder(queryDes.getField(), queryDes.getValue());
-        spanTermQueryBuilder.boost(queryDes.getBoost());
-        return spanTermQueryBuilder;
+        return new SpanTermQueryBuilder(queryDes.getField(), queryDes.getValue());
     }
 }

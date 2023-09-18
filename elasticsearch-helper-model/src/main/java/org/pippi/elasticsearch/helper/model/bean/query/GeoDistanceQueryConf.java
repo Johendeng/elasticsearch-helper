@@ -16,11 +16,15 @@ public class GeoDistanceQueryConf extends QueryConf<GeoDistanceQueryBuilder> {
 
     private DistanceUnit unit;
 
-    private GeoDistance geoDistance;
+    private GeoDistance geoDistance = GeoDistance.ARC;
 
-    private GeoValidationMethod geoValidationMethod;
+    private GeoValidationMethod geoValidationMethod = GeoValidationMethod.STRICT;
 
-    private Boolean ignoreUnmapped;
+    private Boolean ignoreUnmapped = false;
+
+    public static GeoDistanceQueryConf build(DistanceUnit unit) {
+        return new GeoDistanceQueryConf().setUnit(unit);
+    }
 
     @Override
     public void configQueryBuilder(GeoDistanceQueryBuilder queryBuilder) {
@@ -29,35 +33,39 @@ public class GeoDistanceQueryConf extends QueryConf<GeoDistanceQueryBuilder> {
                 .setValidationMethod(this.geoValidationMethod);
     }
 
-    public DistanceUnit getUnit() {
+    public DistanceUnit unit() {
         return unit;
     }
 
-    public void setUnit(DistanceUnit unit) {
+    public GeoDistanceQueryConf setUnit(DistanceUnit unit) {
         this.unit = unit;
+        return this;
     }
 
-    public GeoDistance getGeoDistance() {
+    public GeoDistance geoDistance() {
         return geoDistance;
     }
 
-    public void setGeoDistance(GeoDistance geoDistance) {
+    public GeoDistanceQueryConf setGeoDistance(GeoDistance geoDistance) {
         this.geoDistance = geoDistance;
+        return this;
     }
 
-    public GeoValidationMethod getGeoValidationMethod() {
+    public GeoValidationMethod geoValidationMethod() {
         return geoValidationMethod;
     }
 
-    public void setGeoValidationMethod(GeoValidationMethod geoValidationMethod) {
+    public GeoDistanceQueryConf setGeoValidationMethod(GeoValidationMethod geoValidationMethod) {
         this.geoValidationMethod = geoValidationMethod;
+        return this;
     }
 
-    public Boolean getIgnoreUnmapped() {
+    public Boolean ignoreUnmapped() {
         return ignoreUnmapped;
     }
 
-    public void setIgnoreUnmapped(Boolean ignoreUnmapped) {
+    public GeoDistanceQueryConf setIgnoreUnmapped(Boolean ignoreUnmapped) {
         this.ignoreUnmapped = ignoreUnmapped;
+        return this;
     }
 }

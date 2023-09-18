@@ -25,9 +25,45 @@ public class GeoShapeQueryConf extends QueryConf<GeoShapeQueryBuilder> {
 
     private SpatialStrategy strategy;
 
+
+    public static GeoShapeQueryConf build(ShapeRelation relation) {
+        return new GeoShapeQueryConf(relation);
+    }
+
+    public static GeoShapeQueryConf build(ShapeRelation relation, SpatialStrategy strategy) {
+        return new GeoShapeQueryConf(relation, strategy);
+    }
+
+    public GeoShapeQueryConf(ShapeRelation relation) {
+        this.relation = relation;
+    }
+
+    public GeoShapeQueryConf(ShapeRelation relation, SpatialStrategy strategy) {
+        this.relation = relation;
+        this.strategy = strategy;
+    }
+
     @Override
     public void configQueryBuilder(GeoShapeQueryBuilder queryBuilder) {
         CommonUtils.optional(this.relation).ifPresent(queryBuilder::relation);
         CommonUtils.optional(this.strategy).ifPresent(queryBuilder::strategy);
+    }
+
+    public ShapeRelation relation() {
+        return relation;
+    }
+
+    public GeoShapeQueryConf setRelation(ShapeRelation relation) {
+        this.relation = relation;
+        return this;
+    }
+
+    public SpatialStrategy strategy() {
+        return strategy;
+    }
+
+    public GeoShapeQueryConf setStrategy(SpatialStrategy strategy) {
+        this.strategy = strategy;
+        return this;
     }
 }

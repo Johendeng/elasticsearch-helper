@@ -28,5 +28,4 @@ public @interface MatchPhrasePrefix {
     String analyzer() default "";
 
     ZeroTermsQueryOption zeroTermsQuery() default ZeroTermsQueryOption.NONE;
-
 }

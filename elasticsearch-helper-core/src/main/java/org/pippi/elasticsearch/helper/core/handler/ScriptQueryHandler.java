@@ -29,7 +29,7 @@ public class ScriptQueryHandler extends AbstractQueryHandler<ScriptQueryConf>{
         ScriptQueryConf extBean = queryDes.getExtBean();
         Map params = Maps.newHashMap();
         Script script = new Script(extBean.getScriptType(), extBean.getLang(), extBean.getIdOrCode(), params);
-        ScriptQueryBuilder scriptQueryBuilder = QueryBuilders.scriptQuery(script).boost(queryDes.getBoost());
+        ScriptQueryBuilder scriptQueryBuilder = QueryBuilders.scriptQuery(script);
         if (queryDes.getExtBean().isHasParams()) {
             if (queryDes.getValue() instanceof Map && Objects.nonNull(queryDes.getValue())) {
                 params.putAll((Map) queryDes.getValue());

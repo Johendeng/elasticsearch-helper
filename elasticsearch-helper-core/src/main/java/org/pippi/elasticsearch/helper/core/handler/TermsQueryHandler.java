@@ -24,8 +24,6 @@ public class TermsQueryHandler extends AbstractQueryHandler<TermsQueryConf> {
     @Override
     public QueryBuilder handle(EsQueryFieldBean<TermsQueryConf> queryDes, AbstractEsSession searchHelper) {
         Collection value = ReflectionUtils.transArrayOrCollection(queryDes.getValue());
-        TermsQueryBuilder queryBuilder = QueryBuilders.termsQuery(queryDes.getField(), value)
-                .boost(queryDes.getBoost());
-        return queryBuilder;
+        return QueryBuilders.termsQuery(queryDes.getField(), value);
     }
 }

@@ -2,11 +2,11 @@ package org.pippi.elasticsearch.helper.core.handler;
 
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
-import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
-import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
-import org.pippi.elasticsearch.helper.model.bean.query.TermQueryConf;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.base.EsQueryHandle;
+import org.pippi.elasticsearch.helper.model.annotations.mapper.query.Term;
+import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
+import org.pippi.elasticsearch.helper.model.bean.query.TermQueryConf;
 
 /**
  * TermQueryHandle
@@ -32,9 +32,7 @@ public class TermQueryHandler extends AbstractQueryHandler<TermQueryConf> {
      */
     @Override
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsSession searchHelper) {
-        QueryBuilder termQueryBuilder = QueryBuilders.termQuery(queryDes.getField(), queryDes.getValue());
-        termQueryBuilder.boost(queryDes.getBoost());
-        return termQueryBuilder;
+        return QueryBuilders.termQuery(queryDes.getField(), queryDes.getValue());
     }
 
 }

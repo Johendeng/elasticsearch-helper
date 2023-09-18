@@ -2,7 +2,9 @@ package org.pippi.elasticsearch.helper.core.wrapper.impl;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.IndicesRequest;
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -47,11 +49,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * @author JohenDeng
  * @date 2023/9/12
  **/
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
 
     private final Logger log;
@@ -93,13 +97,7 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
     @Override
     public BulkResponse insertBatch(Collection<T> dataList) {
         BulkRequest bulkReq = new BulkRequest(index);
-        dataList.forEach(bean -> {
-            Map<String, Object> map = EsBeanFieldTransUtils.toMap(bean);
-            IndexRequest currentInsertReq = new IndexRequest(index);
-            currentInsertReq.id(bean.getDocId());
-            currentInsertReq.source(SerializerUtils.parseObjToJson(map), XContentType.JSON);
-            bulkReq.add(currentInsertReq);
-        });
+        this.appendBulkReq(dataList, bulkReq::add);
         try {
             return client.bulk(bulkReq, reqOpt);
         } catch (IOException e) {
@@ -113,17 +111,21 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
         int finalRefreshSize = refreshSize == 0 ? 100 : refreshSize;
         builder.setBulkActions(finalRefreshSize);
         try (BulkProcessor process = builder.build()){
-            dataList.forEach(bean -> {
-                Map<String, Object> map = EsBeanFieldTransUtils.toMap(bean);
-                IndexRequest currentInsertReq = new IndexRequest(index);
-                currentInsertReq.id(bean.getDocId());
-                currentInsertReq.source(SerializerUtils.parseObjToJson(map), XContentType.JSON);
-                process.add(currentInsertReq);
-            });
+            this.appendBulkReq(dataList, process::add);
             process.awaitClose(waitTime, unit);
         } catch (InterruptedException e) {
             throw ExceptionUtils.mpe("exc insert-batch-async-bulk interrupt-error", e);
         }
+    }
+
+    private void appendBulkReq (Collection<T> dataList, Consumer<DocWriteRequest> appender) {
+        dataList.forEach(bean -> {
+            Map<String, Object> map = EsBeanFieldTransUtils.toMap(bean);
+            IndexRequest currentInsertReq = new IndexRequest(index);
+            currentInsertReq.id(bean.getDocId());
+            currentInsertReq.source(SerializerUtils.parseObjToJson(map), XContentType.JSON);
+            appender.accept(currentInsertReq);
+        });
     }
 
     @Override

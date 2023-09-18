@@ -70,115 +70,129 @@ public class MultiMatchQueryConf extends QueryConf<MultiMatchQueryBuilder> {
         }
     }
 
-    public String[] getFields() {
+    public String[] fields() {
         return fields;
     }
 
-    public void setFields(String[] fields) {
+    public MultiMatchQueryConf setFields(String[] fields) {
         this.fields = fields;
+        return this;
     }
 
-    public MultiMatchQueryBuilder.Type getType() {
+    public MultiMatchQueryBuilder.Type type() {
         return type;
     }
 
-    public void setType(MultiMatchQueryBuilder.Type type) {
+    public MultiMatchQueryConf setType(MultiMatchQueryBuilder.Type type) {
         this.type = type;
+        return this;
     }
 
-    public ZeroTermsQueryOption getZeroTermsQuery() {
+    public ZeroTermsQueryOption zeroTermsQuery() {
         return zeroTermsQuery;
     }
 
-    public void setZeroTermsQuery(ZeroTermsQueryOption zeroTermsQuery) {
+    public MultiMatchQueryConf setZeroTermsQuery(ZeroTermsQueryOption zeroTermsQuery) {
         this.zeroTermsQuery = zeroTermsQuery;
+        return this;
     }
 
-    public String[] getBoostFields() {
+    public String[] boostFields() {
         return boostFields;
     }
 
-    public void setBoostFields(String[] boostFields) {
+    public MultiMatchQueryConf setBoostFields(String[] boostFields) {
         this.boostFields = boostFields;
+        return this;
     }
 
-    public boolean isAutoGenerateSynonymsPhraseQuery() {
+    public boolean autoGenerateSynonymsPhraseQuery() {
         return autoGenerateSynonymsPhraseQuery;
     }
 
-    public void setAutoGenerateSynonymsPhraseQuery(boolean autoGenerateSynonymsPhraseQuery) {
+    public MultiMatchQueryConf setAutoGenerateSynonymsPhraseQuery(boolean autoGenerateSynonymsPhraseQuery) {
         this.autoGenerateSynonymsPhraseQuery = autoGenerateSynonymsPhraseQuery;
+        return this;
     }
 
-    public FuzzinessEnum getFuzziness() {
+    public FuzzinessEnum fuzziness() {
         return fuzziness;
     }
 
-    public void setFuzziness(FuzzinessEnum fuzziness) {
+    public MultiMatchQueryConf setFuzziness(FuzzinessEnum fuzziness) {
         this.fuzziness = fuzziness;
+        return this;
     }
 
-    public boolean isFuzzyTranspositions() {
+    public boolean fuzzyTranspositions() {
         return fuzzyTranspositions;
     }
 
-    public void setFuzzyTranspositions(boolean fuzzyTranspositions) {
+    public MultiMatchQueryConf setFuzzyTranspositions(boolean fuzzyTranspositions) {
         this.fuzzyTranspositions = fuzzyTranspositions;
+        return this;
     }
 
-    public boolean isLenient() {
+    public boolean lenient() {
         return lenient;
     }
 
-    public void setLenient(boolean lenient) {
+    public MultiMatchQueryConf setLenient(boolean lenient) {
         this.lenient = lenient;
+        return this;
     }
 
-    public int getPrefixLength() {
+    public int prefixLength() {
         return prefixLength;
     }
 
-    public void setPrefixLength(int prefixLength) {
+    public MultiMatchQueryConf setPrefixLength(int prefixLength) {
         this.prefixLength = prefixLength;
+        return this;
     }
 
-    public int getMaxExpansions() {
+    public int maxExpansions() {
         return maxExpansions;
     }
 
-    public void setMaxExpansions(int maxExpansions) {
+    public MultiMatchQueryConf setMaxExpansions(int maxExpansions) {
         this.maxExpansions = maxExpansions;
+        return this;
     }
 
-    public String getAnalyzer() {
+    public String analyzer() {
         return analyzer;
     }
 
-    public void setAnalyzer(String analyzer) {
+    public MultiMatchQueryConf setAnalyzer(String analyzer) {
         this.analyzer = analyzer;
+        return this;
     }
 
-    public Operator getOperator() {
+    public Operator operator() {
         return operator;
     }
 
-    public void setOperator(Operator operator) {
+    public MultiMatchQueryConf setOperator(Operator operator) {
         this.operator = operator;
+        return this;
     }
 
-    public String getMinimumShouldMatch() {
+    public String minimumShouldMatch() {
         return minimumShouldMatch;
     }
 
-    public void setMinimumShouldMatch(String minimumShouldMatch) {
+    public MultiMatchQueryConf setMinimumShouldMatch(String minimumShouldMatch) {
         this.minimumShouldMatch = minimumShouldMatch;
+        return this;
     }
 
-    public int getSlop() {
+    public int slop() {
         return slop;
     }
 
-    public void setSlop(int slop) {
+    public MultiMatchQueryConf setSlop(int slop) {
         this.slop = slop;
+        return this;
     }
 }

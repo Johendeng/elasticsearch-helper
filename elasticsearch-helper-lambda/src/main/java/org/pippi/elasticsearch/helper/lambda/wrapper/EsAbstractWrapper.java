@@ -2,6 +2,7 @@ package org.pippi.elasticsearch.helper.lambda.wrapper;
 
 import com.google.common.collect.Lists;
 import org.apache.lucene.search.join.ScoreMode;
+import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
@@ -14,9 +15,13 @@ import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.bean.query.*;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
+import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
+import org.pippi.elasticsearch.helper.model.param.GeometryParam;
+import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
 import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +35,7 @@ import java.util.Map;
  * @author JohenDeng
  * @date 2023/9/1
  **/
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper<T, F, Children>>
         extends EsWrapper<T> implements Bool<Children>, INested<EsWrapper<?> , Children>, SearchFunc<F, Children> {
 
@@ -404,6 +409,219 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
         });
         return typedThis;
     }
+
+
+    @Override
+    public Children geoDistance(boolean condition, F field, GeoDistanceParam val, DistanceUnit unit) {
+        return geoDistance(condition, field, val, unit, 1.0f);
+    }
+
+    @Override
+    public Children geoDistance(boolean condition, F field, GeoDistanceParam val, DistanceUnit unit, float boost) {
+        return geoDistance(condition, field, val, unit, boost, GeoDistanceQueryConf.build(unit));
+    }
+
+    @Override
+    public Children geoDistance(boolean condition, F field, GeoDistanceParam val, DistanceUnit unit, GeoDistanceQueryConf config) {
+        return geoDistance(condition, field, val, unit, 1.0f, config);
+    }
+
+    @Override
+    public Children geoDistance(boolean condition, F field, GeoDistanceParam val, DistanceUnit unit, float boost, GeoDistanceQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(GeoDistance.class, super.currentConnector, fieldToString(field));
+            conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children geoPolygon(boolean condition, F field, GeometryParam val) {
+        return geoPolygon(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children geoPolygon(boolean condition, F field, GeometryParam val, float boost) {
+        return geoPolygon(condition, field, val, boost, GeoPolygonQueryConf.build());
+    }
+
+    @Override
+    public Children geoPolygon(boolean condition, F field, GeometryParam val, GeoPolygonQueryConf config) {
+        return geoPolygon(condition, field, val, 1.0f, config);
+    }
+
+    @Override
+    public Children geoPolygon(boolean condition, F field, GeometryParam val, float boost, GeoPolygonQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(GeoPolygon.class, super.currentConnector, fieldToString(field));
+            conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children geoPolygon(boolean condition, F field, String val) {
+        return geoPolygon(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children geoPolygon(boolean condition, F field, String val, float boost) {
+        return geoPolygon(condition, field, val, boost, GeoPolygonQueryConf.build());
+    }
+
+    @Override
+    public Children geoPolygon(boolean condition, F field, String val, GeoPolygonQueryConf config) {
+        return geoPolygon(condition, field, val, 1.0f, config);
+    }
+
+    @Override
+    public Children geoPolygon(boolean condition, F field, String val, float boost, GeoPolygonQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(GeoPolygon.class, super.currentConnector, fieldToString(field));
+            conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children geoShape(boolean condition, F field, GeometryParam val, GeoShapeQueryConf config) {
+        return geoShape(condition, field, val, 1.0f, config);
+    }
+
+    @Override
+    public Children geoShape(boolean condition, F field, GeometryParam val, float boost, GeoShapeQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(GeoShape.class, super.currentConnector, fieldToString(field));
+            conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children geoShape(boolean condition, F field, String val, GeoShapeQueryConf config) {
+        return geoShape(condition, field, val, 1.0f, config);
+    }
+
+    @Override
+    public Children geoShape(boolean condition, F field, String val, float boost, GeoShapeQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(GeoShape.class, super.currentConnector, fieldToString(field));
+            conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children matchPhrasePrefix(boolean condition, F field, Object val) {
+        return matchPhrasePrefix(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children matchPhrasePrefix(boolean condition, F field, Object val, float boost) {
+        return matchPhrasePrefix(condition, field, val, boost, MatchPhrasePrefixQueryConf.build());
+    }
+
+    @Override
+    public Children matchPhrasePrefix(boolean condition, F field, Object val, MatchPhrasePrefixQueryConf config) {
+        return matchPhrasePrefix(condition, field, val, 1.0f, config);
+    }
+
+    @Override
+    public Children matchPhrasePrefix(boolean condition, F field, Object val, float boost, MatchPhrasePrefixQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(MatchPhrasePrefix.class, super.currentConnector, fieldToString(field));
+            conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children matchPhrase(boolean condition, F field, Object val) {
+        return matchPhrase(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children matchPhrase(boolean condition, F field, Object val, float boost) {
+        return matchPhrase(condition, field, val, boost, MatchPhraseQueryConf.build());
+    }
+
+    @Override
+    public Children matchPhrase(boolean condition, F field, Object val, MatchPhraseQueryConf config) {
+        return matchPhrase(condition, field, val, 1.0f, config);
+    }
+
+    @Override
+    public Children matchPhrase(boolean condition, F field, Object val, float boost, MatchPhraseQueryConf config) {
+        maybeDo(condition, () -> {
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(MatchPhrase.class, super.currentConnector, fieldToString(field));
+            conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children moreLikeThis(boolean condition, MoreLikeThisParam val) {
+        return moreLikeThis(condition, val, 1.0f);
+    }
+
+    @Override
+    public Children moreLikeThis(boolean condition, MoreLikeThisParam val, float boost) {
+        return moreLikeThis(condition, val, boost, (F) null);
+    }
+
+    @Override
+    public Children moreLikeThis(boolean condition, MoreLikeThisParam val, F... fields) {
+        return moreLikeThis(condition, val, 1.0f, fields);
+    }
+
+    @Override
+    public Children moreLikeThis(boolean condition, MoreLikeThisParam val, float boost, F... fields) {
+        return moreLikeThis(condition, MoreLikeThisQueryConf.build(), val, 1.0f, fields);
+    }
+
+    @Override
+    public Children moreLikeThis(boolean condition, MoreLikeThisQueryConf config, MoreLikeThisParam val, float boost, F... fields) {
+        String[] fieldStrArr;
+        if (fields != null && fields.length > 0) {
+            fieldStrArr = Arrays.stream(fields).map(this::fieldStringify).toArray(String[]::new);
+        } else {
+            fieldStrArr = null;
+        }
+        maybeDo(condition, () -> {
+            config.setFields(fieldStrArr);
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(MoreLikeThis.class, super.currentConnector, null);
+            conf.setBoost(boost);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    /**
+     * ==================================================================================================================
+     */
 
     protected final String fieldToString(F field) {
         return fieldStringify(field);

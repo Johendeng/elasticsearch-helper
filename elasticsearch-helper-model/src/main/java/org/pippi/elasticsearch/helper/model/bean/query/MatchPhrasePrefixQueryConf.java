@@ -13,13 +13,17 @@ import org.pippi.elasticsearch.helper.model.bean.QueryConf;
  */
 public class MatchPhrasePrefixQueryConf extends QueryConf<MatchPhrasePrefixQueryBuilder> {
 
-    private int slop;
+    private int slop = 0;
 
-    private int maxExpansions;
+    private int maxExpansions = 50;
 
     private String analyzer;
 
-    private ZeroTermsQueryOption zeroTermsQuery;
+    private ZeroTermsQueryOption zeroTermsQuery = ZeroTermsQueryOption.NONE;
+
+    public static MatchPhrasePrefixQueryConf build() {
+        return new MatchPhrasePrefixQueryConf();
+    }
 
     @Override
     public void configQueryBuilder(MatchPhrasePrefixQueryBuilder queryBuilder) {
@@ -29,5 +33,41 @@ public class MatchPhrasePrefixQueryConf extends QueryConf<MatchPhrasePrefixQuery
         if (StringUtils.isNotBlank(analyzer)) {
             queryBuilder.analyzer(analyzer);
         }
+    }
+
+    public int slop() {
+        return slop;
+    }
+
+    public MatchPhrasePrefixQueryConf setSlop(int slop) {
+        this.slop = slop;
+        return this;
+    }
+
+    public int maxExpansions() {
+        return maxExpansions;
+    }
+
+    public MatchPhrasePrefixQueryConf setMaxExpansions(int maxExpansions) {
+        this.maxExpansions = maxExpansions;
+        return this;
+    }
+
+    public String analyzer() {
+        return analyzer;
+    }
+
+    public MatchPhrasePrefixQueryConf setAnalyzer(String analyzer) {
+        this.analyzer = analyzer;
+        return this;
+    }
+
+    public ZeroTermsQueryOption zeroTermsQuery() {
+        return zeroTermsQuery;
+    }
+
+    public MatchPhrasePrefixQueryConf setZeroTermsQuery(ZeroTermsQueryOption zeroTermsQuery) {
+        this.zeroTermsQuery = zeroTermsQuery;
+        return this;
     }
 }

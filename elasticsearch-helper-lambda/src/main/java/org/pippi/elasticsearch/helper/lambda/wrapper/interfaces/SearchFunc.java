@@ -1,12 +1,12 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper.interfaces;
 
+import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
-import org.pippi.elasticsearch.helper.model.bean.query.FuzzyQueryConf;
-import org.pippi.elasticsearch.helper.model.bean.query.MatchQueryConf;
-import org.pippi.elasticsearch.helper.model.bean.query.RangeQueryConf;
-import org.pippi.elasticsearch.helper.model.bean.query.WildCardQueryConf;
-import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
+import org.pippi.elasticsearch.helper.model.bean.query.*;
+import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
+import org.pippi.elasticsearch.helper.model.param.GeometryParam;
+import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -331,6 +331,166 @@ public interface SearchFunc<F, Children> extends Serializable {
 //    }
 //
 //    Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val);
+
+
+    /**
+     * geo_distance
+     */
+
+    default Children geoDistance(F field, GeoDistanceParam val, DistanceUnit unit) {
+        return geoDistance(true, field, val, unit);
+    }
+    Children geoDistance(boolean condition, F field, GeoDistanceParam val, DistanceUnit unit);
+
+    default Children geoDistance(F field, GeoDistanceParam val, DistanceUnit unit, float boost) {
+        return geoDistance(true, field, val, unit, boost);
+    }
+    Children geoDistance(boolean condition, F field, GeoDistanceParam val, DistanceUnit unit, float boost);
+
+    default Children geoDistance(F field, GeoDistanceParam val, DistanceUnit unit, GeoDistanceQueryConf config) {
+        return geoDistance(true, field, val, unit, config);
+    }
+    Children geoDistance(boolean condition, F field, GeoDistanceParam val, DistanceUnit unit, GeoDistanceQueryConf config);
+
+    default Children geoDistance(F field, GeoDistanceParam val, DistanceUnit unit, float boost, GeoDistanceQueryConf config) {
+        return geoDistance(true, field, val, unit, boost, config);
+    }
+    Children geoDistance(boolean condition, F field, GeoDistanceParam val, DistanceUnit unit, float boost, GeoDistanceQueryConf config);
+
+    /**
+     * geo_polygon
+     */
+    default Children geoPolygon(F field, GeometryParam val) {
+        return geoPolygon(true, field, val);
+    }
+    Children geoPolygon(boolean condition, F field, GeometryParam val);
+    default Children geoPolygon(F field, GeometryParam val, float boost) {
+        return geoPolygon(true, field, val, boost);
+    }
+    Children geoPolygon(boolean condition, F field, GeometryParam val, float boost);
+    default Children geoPolygon(F field, GeometryParam val, GeoPolygonQueryConf config) {
+        return geoPolygon(true, field, val, config);
+    }
+    Children geoPolygon(boolean condition, F field, GeometryParam val, GeoPolygonQueryConf config);
+    default Children geoPolygon(F field, GeometryParam val, float boost, GeoPolygonQueryConf config) {
+        return geoPolygon(true, field, val, boost, config);
+    }
+    Children geoPolygon(boolean condition, F field, GeometryParam val, float boost, GeoPolygonQueryConf config);
+
+    default Children geoPolygon(F field, String val) {
+        return geoPolygon(true, field, val);
+    }
+    Children geoPolygon(boolean condition, F field, String val);
+    default Children geoPolygon(F field, String val, float boost) {
+        return geoPolygon(true, field, val, boost);
+    }
+    Children geoPolygon(boolean condition, F field, String val, float boost);
+    default Children geoPolygon(F field, String val, GeoPolygonQueryConf config) {
+        return geoPolygon(true, field, val, config);
+    }
+    Children geoPolygon(boolean condition, F field, String val, GeoPolygonQueryConf config);
+    default Children geoPolygon(F field, String val, float boost, GeoPolygonQueryConf config) {
+        return geoPolygon(true, field, val, boost, config);
+    }
+    Children geoPolygon(boolean condition, F field, String val, float boost, GeoPolygonQueryConf config);
+
+    /**
+     * geo_shape
+     */
+    default Children geoShape(F field, GeometryParam val, GeoShapeQueryConf config) {
+        return geoShape(true, field, val, config);
+    }
+    Children geoShape(boolean condition, F field, GeometryParam val, GeoShapeQueryConf config);
+
+    default Children geoShape(F field, GeometryParam val, float boost, GeoShapeQueryConf config) {
+        return geoShape(true, field, val, boost, config);
+    }
+    Children geoShape(boolean condition, F field, GeometryParam val, float boost, GeoShapeQueryConf config);
+
+    default Children geoShape(F field, String val, GeoShapeQueryConf config) {
+        return geoShape(true, field, val, config);
+    }
+    Children geoShape(boolean condition, F field, String val, GeoShapeQueryConf config);
+
+    default Children geoShape(F field, String val, float boost, GeoShapeQueryConf config) {
+        return geoShape(true, field, val, boost, config);
+    }
+    Children geoShape(boolean condition, F field, String val, float boost, GeoShapeQueryConf config);
+
+    /**
+     * match_phrase_prefix
+     */
+    default Children matchPhrasePrefix(F field, Object val) {
+        return matchPhrasePrefix(true, field, val);
+    }
+    Children matchPhrasePrefix(boolean condition, F field, Object val);
+
+    default Children matchPhrasePrefix(F field, Object val, float boost) {
+        return matchPhrasePrefix(true, field, val, boost);
+    }
+    Children matchPhrasePrefix(boolean condition, F field, Object val, float boost);
+
+    default Children matchPhrasePrefix(F field, Object val, MatchPhrasePrefixQueryConf config) {
+        return matchPhrasePrefix(true, field, val, config);
+    }
+    Children matchPhrasePrefix(boolean condition, F field, Object val, MatchPhrasePrefixQueryConf config);
+
+    default Children matchPhrasePrefix(F field, Object val, float boost, MatchPhrasePrefixQueryConf config) {
+        return matchPhrasePrefix(true, field, val, boost, config);
+    }
+    Children matchPhrasePrefix(boolean condition, F field, Object val, float boost, MatchPhrasePrefixQueryConf config);
+
+    /**
+     * match_phrase
+     */
+    default Children matchPhrase(F field, Object val) {
+        return matchPhrase(true, field, val);
+    }
+    Children matchPhrase(boolean condition, F field, Object val);
+
+    default Children matchPhrase(F field, Object val, float boost) {
+        return matchPhrase(true, field, val, boost);
+    }
+    Children matchPhrase(boolean condition, F field, Object val, float boost);
+
+    default Children matchPhrase(F field, Object val, MatchPhraseQueryConf config) {
+        return matchPhrase(true, field, val, config);
+    }
+    Children matchPhrase(boolean condition, F field, Object val, MatchPhraseQueryConf config);
+
+    default Children matchPhrase(F field, Object val, float boost, MatchPhraseQueryConf config) {
+        return matchPhrase(true, field, val, boost, config);
+    }
+    Children matchPhrase(boolean condition, F field, Object val, float boost, MatchPhraseQueryConf config);
+
+    /**
+     * more_like_this
+     */
+    default Children moreLikeThis(MoreLikeThisParam val) {
+        return moreLikeThis(true, val);
+    }
+    Children moreLikeThis(boolean condition, MoreLikeThisParam val);
+
+    default Children moreLikeThis(MoreLikeThisParam val, float boost) {
+        return moreLikeThis(true, val, boost);
+    }
+    Children moreLikeThis(boolean condition, MoreLikeThisParam val, float boost);
+
+    default Children moreLikeThis(MoreLikeThisParam val, F... fields) {
+        return moreLikeThis(true, val, fields);
+    }
+    Children moreLikeThis(boolean condition, MoreLikeThisParam val, F... fields);
+
+    default Children moreLikeThis(MoreLikeThisParam val, float boost, F... fields) {
+        return moreLikeThis(true, val, boost, fields);
+    }
+    Children moreLikeThis(boolean condition, MoreLikeThisParam val, float boost, F... fields);
+
+    default Children moreLikeThis(MoreLikeThisQueryConf config, MoreLikeThisParam val, float boost, F... fields) {
+        return moreLikeThis(true, config, val, boost, fields);
+    }
+    Children moreLikeThis(boolean condition, MoreLikeThisQueryConf config, MoreLikeThisParam val, float boost, F... fields);
+
 
 
     // todo ...

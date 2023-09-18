@@ -22,7 +22,7 @@ public class MoreLikeThisQueryHandler extends AbstractQueryHandler<MoreLikeThisQ
     @Override
     public QueryBuilder handle(EsQueryFieldBean<MoreLikeThisQueryConf> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
-        String[] fields = queryDes.getExtBean().getFields();
+        String[] fields = queryDes.getExtBean().fields();
         if (value.getClass().equals(MoreLikeThisParam.class)) {
             MoreLikeThisParam params = (MoreLikeThisParam) value;
             MoreLikeThisQueryBuilder moreLikeThisQueryBuilder = null;

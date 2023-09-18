@@ -13,11 +13,15 @@ import org.pippi.elasticsearch.helper.model.bean.QueryConf;
  */
 public class MatchPhraseQueryConf extends QueryConf<MatchPhraseQueryBuilder> {
 
-    private int slop;
+    private int slop = 0;
 
-    private ZeroTermsQueryOption zeroTermsQuery;
+    private ZeroTermsQueryOption zeroTermsQuery = ZeroTermsQueryOption.NONE;
 
     private String analyzer;
+
+    public static MatchPhraseQueryConf build() {
+        return new MatchPhraseQueryConf();
+    }
 
     @Override
     public void configQueryBuilder(MatchPhraseQueryBuilder queryBuilder) {
@@ -27,4 +31,30 @@ public class MatchPhraseQueryConf extends QueryConf<MatchPhraseQueryBuilder> {
         }
     }
 
+    public int slop() {
+        return slop;
+    }
+
+    public MatchPhraseQueryConf setSlop(int slop) {
+        this.slop = slop;
+        return this;
+    }
+
+    public ZeroTermsQueryOption zeroTermsQuery() {
+        return zeroTermsQuery;
+    }
+
+    public MatchPhraseQueryConf setZeroTermsQuery(ZeroTermsQueryOption zeroTermsQuery) {
+        this.zeroTermsQuery = zeroTermsQuery;
+        return this;
+    }
+
+    public String analyzer() {
+        return analyzer;
+    }
+
+    public MatchPhraseQueryConf setAnalyzer(String analyzer) {
+        this.analyzer = analyzer;
+        return this;
+    }
 }

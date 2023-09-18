@@ -21,8 +21,6 @@ public class WildCardQueryHandler extends AbstractQueryHandler<WildCardQueryConf
     @Override
     public QueryBuilder handle(EsQueryFieldBean<WildCardQueryConf> queryDes, AbstractEsSession searchHelper) {
         String value = queryDes.getValue().toString();
-        WildcardQueryBuilder queryBuilder = QueryBuilders.wildcardQuery(queryDes.getField(), value);
-        queryBuilder.boost(queryDes.getBoost());
-        return queryBuilder;
+        return QueryBuilders.wildcardQuery(queryDes.getField(), value);
     }
 }

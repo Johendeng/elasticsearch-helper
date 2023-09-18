@@ -22,13 +22,13 @@ public class GeoDistanceQueryHandler extends AbstractQueryHandler<GeoDistanceQue
     @Override
     public QueryBuilder handle(EsQueryFieldBean<GeoDistanceQueryConf> queryDes, AbstractEsSession searchHelper) {
         Object value = queryDes.getValue();
-        if (!(value instanceof GeoDistanceQueryConf)) {
-            throw new EsHelperQueryException("GeoBoundingBoxQuery's param-type have to be GeoDistanceQueryBean");
+        if (!(value instanceof GeoDistanceParam)) {
+            throw new EsHelperQueryException("GeoBoundingBoxQuery's param-type have to be GeoDistanceParam");
         }
         GeoDistanceParam queryValue = (GeoDistanceParam) value;
         GeoDistanceQueryConf extBean = queryDes.getExtBean();
         return QueryBuilders.geoDistanceQuery(queryDes.getField())
                 .point(queryValue.getCenterPoint())
-                .distance(queryValue.getDistance(), extBean.getUnit());
+                .distance(queryValue.getDistance(), extBean.unit());
     }
 }
