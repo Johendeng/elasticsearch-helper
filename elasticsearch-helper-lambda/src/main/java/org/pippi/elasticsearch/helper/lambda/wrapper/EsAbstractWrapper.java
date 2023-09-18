@@ -6,6 +6,7 @@ import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.GeoValidationMethod;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
+import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Bool;
@@ -720,6 +721,34 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
                     .collect(Collectors.toMap(e -> this.fieldToString(e.getKey()), Map.Entry::getValue));
             config.setFieldAndBoostMap(fieldStringifyMap);
             EsQueryFieldBean conf = EsQueryFieldBean.newInstance(QueryString.class, super.currentConnector, null);
+            conf.setValue(val);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children searchAfter(boolean condition, F field, Object val) {
+        return searchAfter(condition, field, val, 10);
+    }
+
+    @Override
+    public Children searchAfter(boolean condition, F field, Object val, SortOrder order) {
+        return searchAfter(condition, field, val, order, 10);
+    }
+
+    @Override
+    public Children searchAfter(boolean condition, F field, Object val, int size) {
+        return searchAfter(condition, field, val, SortOrder.ASC, size);
+    }
+
+    @Override
+    public Children searchAfter(boolean condition, F field, Object val, SortOrder order, int size) {
+        maybeDo(condition, () -> {
+            SearchAfterQueryConf config = SearchAfterQueryConf.build();
+            config.setOrder(order).setSize(size);
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(SearchAfter.class, super.currentConnector, fieldToString(field));
             conf.setValue(val);
             conf.setExtBean(config);
             super.queryDesList.add(conf);

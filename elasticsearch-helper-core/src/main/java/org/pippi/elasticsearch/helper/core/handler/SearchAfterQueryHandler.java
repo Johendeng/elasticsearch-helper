@@ -23,8 +23,8 @@ public class SearchAfterQueryHandler extends AbstractQueryHandler<SearchAfterQue
         String fieldName = queryDes.getField();
         Object value = queryDes.getValue();
         SearchSourceBuilder source = searchHelper.getSource();
-        source.sort(fieldName, extBean.getOrder()).searchAfter(new Object[]{value});
-        source.size(extBean.getSize());
+        source.sort(fieldName, extBean.order()).searchAfter(new Object[]{value});
+        source.size(extBean.size());
         return null;
     }
 }

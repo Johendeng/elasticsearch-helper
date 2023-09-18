@@ -12,28 +12,34 @@ import org.pippi.elasticsearch.helper.model.bean.QueryConf;
  */
 public class SearchAfterQueryConf extends QueryConf {
 
-    private SortOrder order;
+    private SortOrder order = SortOrder.ASC;
 
-    private Integer size;
+    private Integer size = 10;
+
+    public static SearchAfterQueryConf build() {
+        return new SearchAfterQueryConf();
+    }
 
     @Override
     public void configQueryBuilder(QueryBuilder queryBuilder) {
 
     }
 
-    public SortOrder getOrder() {
+    public SortOrder order() {
         return order;
     }
 
-    public void setOrder(SortOrder order) {
+    public SearchAfterQueryConf setOrder(SortOrder order) {
         this.order = order;
+        return this;
     }
 
-    public Integer getSize() {
+    public Integer size() {
         return size;
     }
 
-    public void setSize(Integer size) {
+    public SearchAfterQueryConf setSize(Integer size) {
         this.size = size;
+        return this;
     }
 }

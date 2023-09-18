@@ -4,6 +4,7 @@ import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.GeoValidationMethod;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
+import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.model.bean.query.*;
 import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
 import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
@@ -17,6 +18,7 @@ import java.util.Map;
  * @author JohenDeng
  * @date 2023/8/31
  **/
+@SuppressWarnings("all")
 public interface SearchFunc<F, Children> extends Serializable {
 
     /**
@@ -568,8 +570,30 @@ public interface SearchFunc<F, Children> extends Serializable {
         return queryString(true, config, val, fields);
     }
     Children queryString(boolean condition, QueryStringConf config, Object val, Map<F, Float> fields);
+
+    /**
+     * search_after 深度分页
+     */
+    default Children searchAfter(F field, Object val) {
+        return searchAfter(true, field, val);
+    }
+    Children searchAfter(boolean condition, F field, Object val);
+
+    default Children searchAfter(F field, Object val, SortOrder order) {
+        return searchAfter(true, field, val, order);
+    }
+    Children searchAfter(boolean condition, F field, Object val, SortOrder order);
+
+    default Children searchAfter(F field, Object val, int size) {
+        return searchAfter(true, field, val, size);
+    }
+    Children searchAfter(boolean condition, F field, Object val, int size);
+
+    default Children searchAfter(F field, Object val, SortOrder order, int size) {
+        return searchAfter(true, field, val, order, size);
+    }
+    Children searchAfter(boolean condition, F field, Object val, SortOrder order, int size);
+
+
     // todo ...
-
-
-
 }
