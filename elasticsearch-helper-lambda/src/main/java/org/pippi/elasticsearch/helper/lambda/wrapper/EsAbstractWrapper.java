@@ -6,6 +6,7 @@ import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.GeoValidationMethod;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
@@ -85,6 +86,12 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
         super.indexInfo.setSize(size);
         super.indexInfo.setMinScore(minScore);
         super.indexInfo.setTraceScore(traceScore);
+        return typedThis;
+    }
+
+    @Override
+    public Children highLight(boolean condition, HighlightBuilder builder) {
+        super.highlightBuilderList().add(builder);
         return typedThis;
     }
 

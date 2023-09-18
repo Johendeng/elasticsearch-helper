@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
 import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
@@ -35,6 +36,8 @@ public abstract class EsWrapper<T> {
 
     protected List<EsQueryFieldBean> queryDesList = Lists.newArrayList();
 
+    protected List<HighlightBuilder> highlightBuilderList = Lists.newArrayList();
+
     protected EsQueryIndexBean indexInfo;
 
     protected Map<EsConnector, LinkedList<QueryBuilder>> freeQueries = Maps.newHashMap();
@@ -58,5 +61,9 @@ public abstract class EsWrapper<T> {
 
     public Map<EsConnector, LinkedList<QueryBuilder>> freeQueries() {
         return freeQueries;
+    }
+
+    public List<HighlightBuilder> highlightBuilderList() {
+        return highlightBuilderList;
     }
 }

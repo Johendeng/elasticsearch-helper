@@ -4,6 +4,7 @@ import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.GeoValidationMethod;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.model.bean.query.*;
 import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
@@ -33,6 +34,12 @@ public interface SearchFunc<F, Children> extends Serializable {
      * @param traceScore 是否显示 召回文档 的分数
      */
     Children config(int size, float minScore, boolean traceScore);
+
+    default Children highLight(HighlightBuilder builder) {
+        return highLight(true, builder);
+    }
+
+    Children highLight(boolean condition, HighlightBuilder builder);
 
     /**
      * free append

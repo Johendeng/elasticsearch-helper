@@ -51,6 +51,11 @@ public class EsQueryEngine {
         AbstractEsSession session = AbstractEsSession.builder()
                 .config(wrapper.getIndexInfo())
                 .build();
+        if (CollectionUtils.isNotEmpty(wrapper.highlightBuilderList())) {
+            wrapper.highlightBuilderList().forEach(highlight -> {
+                session.getSource().highlighter(highlight);
+            });
+        }
         loadEsExcDesBean(session, wrapper.getQueryDesList());
         Map<EsConnector, LinkedList<QueryBuilder>> freeQueries = wrapper.freeQueries();
         freeQueries.forEach((connector, currentQueries) -> {
