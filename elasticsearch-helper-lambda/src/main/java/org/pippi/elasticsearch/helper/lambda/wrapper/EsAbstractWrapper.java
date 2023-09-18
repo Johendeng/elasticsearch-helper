@@ -3,6 +3,7 @@ package org.pippi.elasticsearch.helper.lambda.wrapper;
 import com.google.common.collect.Lists;
 import org.apache.lucene.search.join.ScoreMode;
 import org.elasticsearch.common.unit.DistanceUnit;
+import org.elasticsearch.index.query.GeoValidationMethod;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
@@ -18,6 +19,7 @@ import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
 import org.pippi.elasticsearch.helper.model.param.GeometryParam;
 import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
+import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
 import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 
@@ -404,6 +406,28 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
                     .setIdOrCode(idOrCode);
             EsQueryFieldBean conf = EsQueryFieldBean.newInstance(ScriptQuery.class, super.currentConnector, null);
             conf.setValue(param);
+            conf.setExtBean(config);
+            super.queryDesList.add(conf);
+        });
+        return typedThis;
+    }
+
+    @Override
+    public Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val) {
+        return geoBoundingBox(condition, field, val, 1.0f);
+    }
+
+    @Override
+    public Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val, float boost) {
+        return geoBoundingBox(condition, field, val, GeoValidationMethod.STRICT, boost);
+    }
+
+    @Override
+    public Children geoBoundingBox(boolean condition, F field, GeoBoundingBoxParam<?> val, GeoValidationMethod geoValidationMethod, float boost) {
+        maybeDo(true, () -> {
+            GeoBoundingBoxQueryConf config = GeoBoundingBoxQueryConf.build().setGeoValidationMethod(geoValidationMethod);
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(GeoBoundingBox.class, super.currentConnector, fieldToString(field));
+            conf.setValue(val);
             conf.setExtBean(config);
             super.queryDesList.add(conf);
         });
