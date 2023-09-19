@@ -1,5 +1,9 @@
 package org.pippi.elasticsearch.helper.model.resp;
 
+import org.apache.commons.lang3.StringUtils;
+import org.pippi.elasticsearch.helper.model.constant.Common;
+import org.pippi.elasticsearch.helper.model.utils.Assert;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.LinkedHashMap;
@@ -60,6 +64,22 @@ public class AggRes implements Serializable {
         }
     }
 
+    /**
+     *  source.aggregation(AggregationBuilders.range("_age_range").field("age")
+     *          .addRange("r1", 10, 20)
+     *          .addRange("r2",20, 30)
+     *          .subAggregation(AggregationBuilders.count("_count").field("_id")));
+     *
+     * for example path = "$._age_range.r1._count"
+     */
+    public AggRes fetchByPath(String path) {
+        Assert.isTrue(StringUtils.isNotBlank(path) && path.startsWith(Common.PATH_HEAD), "error path ex: $._age_range.r1._count");
+        String[] pathKey = path.substring(2).split("\\"+Common.SP);
+        for (String key : pathKey) {
+            this.buckets.get(key);
+        }
+        return null;
+    }
 
     public String getKey() {
         return key;
