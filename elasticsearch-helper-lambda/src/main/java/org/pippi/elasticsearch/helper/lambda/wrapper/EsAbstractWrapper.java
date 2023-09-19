@@ -18,18 +18,13 @@ import org.pippi.elasticsearch.helper.model.annotations.meta.EsIndex;
 import org.pippi.elasticsearch.helper.model.bean.EsQueryFieldBean;
 import org.pippi.elasticsearch.helper.model.bean.query.*;
 import org.pippi.elasticsearch.helper.model.enums.EsConnector;
-import org.pippi.elasticsearch.helper.model.param.GeoDistanceParam;
-import org.pippi.elasticsearch.helper.model.param.GeometryParam;
-import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
-import org.pippi.elasticsearch.helper.model.param.GeoBoundingBoxParam;
-import org.pippi.elasticsearch.helper.model.param.RangeParam;
+import org.pippi.elasticsearch.helper.model.param.*;
 import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**

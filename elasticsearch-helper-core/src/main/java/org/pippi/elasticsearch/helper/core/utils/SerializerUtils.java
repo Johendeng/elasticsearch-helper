@@ -69,7 +69,7 @@ public class SerializerUtils {
 
     public static String parseObjToJsonPretty(Object obj) {
         try {
-            return _NORMAL_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+            return _UN_MATCH_NULL_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
         } catch (JsonProcessingException e) {
             throw new EsHelperSerializeException("Object normal trans to Json-String error, cause:", e);
         }
