@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.core.reader;
 
 import org.elasticsearch.action.search.SearchResponse;
+import org.pippi.elasticsearch.helper.core.reader.impl.AggResRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.BaseRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.CollectionRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.OriginalRespReader;
@@ -26,6 +27,7 @@ public class EsResponseReader {
         BaseRespReader.reader().register();
         CollectionRespReader.reader().register();
         OriginalRespReader.reader().register();
+        AggResRespReader.reader().register();
     }
 
     public static Object readResp(Method method, SearchResponse originalResp) {

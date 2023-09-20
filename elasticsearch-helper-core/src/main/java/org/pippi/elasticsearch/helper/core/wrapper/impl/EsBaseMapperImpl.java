@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.DocWriteResponse;
-import org.elasticsearch.action.IndicesRequest;
 import org.elasticsearch.action.bulk.BulkProcessor;
 import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkResponse;
@@ -26,6 +25,7 @@ import org.elasticsearch.index.reindex.UpdateByQueryRequest;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.pippi.elasticsearch.helper.core.EsQueryEngine;
+import org.pippi.elasticsearch.helper.core.reader.impl.AggResRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.CollectionRespReader;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
@@ -38,6 +38,7 @@ import org.pippi.elasticsearch.helper.model.enums.Operation;
 import org.pippi.elasticsearch.helper.model.enums.QueryModel;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperException;
 import org.pippi.elasticsearch.helper.model.param.EsPage;
+import org.pippi.elasticsearch.helper.model.resp.AggRes;
 import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 import org.pippi.elasticsearch.helper.model.utils.ExceptionUtils;
 import org.slf4j.Logger;
@@ -55,7 +56,7 @@ import java.util.function.Consumer;
  * @author JohenDeng
  * @date 2023/9/12
  **/
-@SuppressWarnings({"rawtypes", "unchecked"})
+@SuppressWarnings({"rawtypes"})
 public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
 
     private final Logger log;
@@ -343,6 +344,31 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
             return page;
         } catch (IOException e) {
             throw ExceptionUtils.mpe("exc selectList io-error", e);
+        }
+    }
+
+    @Override
+    public AggRes selectAgg(EsWrapper<T> queryEsWrapper) {
+        AbstractEsSession<?> session = EsQueryEngine.execute(queryEsWrapper);
+        try {
+            SearchRequest searchReq = session.getRequest();
+            this.reqLogOut(searchReq.source().toString(), "selectAgg");
+            SearchResponse resp = client.search(searchReq, reqOpt);
+            return AggResRespReader.reader().read(clazz, resp);
+        } catch (IOException e) {
+            throw ExceptionUtils.mpe("exc selectAgg io-error", e);
+        }
+    }
+
+    @Override
+    public SearchResponse selectOrgResp(EsWrapper<T> queryEsWrapper) {
+        AbstractEsSession<?> session = EsQueryEngine.execute(queryEsWrapper);
+        try {
+            SearchRequest searchReq = session.getRequest();
+            this.reqLogOut(searchReq.source().toString(), "selectOrgResp");
+            return client.search(searchReq, reqOpt);
+        } catch (IOException e) {
+            throw ExceptionUtils.mpe("exc selectOrgResp io-error", e);
         }
     }
 

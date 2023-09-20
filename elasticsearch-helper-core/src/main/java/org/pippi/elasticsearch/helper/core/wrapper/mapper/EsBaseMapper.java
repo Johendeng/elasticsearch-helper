@@ -2,10 +2,12 @@ package org.pippi.elasticsearch.helper.core.wrapper.mapper;
 
 
 import org.elasticsearch.action.bulk.BulkResponse;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.reindex.BulkByScrollResponse;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.param.EsPage;
+import org.pippi.elasticsearch.helper.model.resp.AggRes;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -53,4 +55,8 @@ public interface EsBaseMapper<T extends EsEntity> extends EsMapper<T> {
     <E extends EsPage<T>> E selectPage(E page, EsWrapper<T> queryEsWrapper);
 
     <E extends EsPage<Map<String, Object>>> E selectMapsPage(E page, EsWrapper<T> queryEsWrapper);
+
+    AggRes selectAgg(EsWrapper<T> queryEsWrapper);
+
+    SearchResponse selectOrgResp(EsWrapper<T> queryEsWrapper);
 }

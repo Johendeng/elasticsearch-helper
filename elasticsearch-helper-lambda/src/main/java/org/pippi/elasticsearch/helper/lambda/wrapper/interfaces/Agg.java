@@ -11,11 +11,15 @@ import org.elasticsearch.search.aggregations.AggregationBuilder;
  **/
 public interface Agg <F, Children> {
 
+    default Children agg(AggregationBuilder aggregationBuilder) {
+        return agg(true, aggregationBuilder);
+    }
+
     /**
      * 原始聚合
+     *
+     * 聚合得api 就用原始的api 拼接
+     *
      */
-    Children agg(AggregationBuilder aggregationBuilder);
-
-
-
+    Children agg(boolean condition, AggregationBuilder aggregationBuilder);
 }

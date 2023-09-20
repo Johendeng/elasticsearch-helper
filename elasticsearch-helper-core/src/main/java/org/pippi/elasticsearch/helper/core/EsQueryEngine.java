@@ -56,6 +56,11 @@ public class EsQueryEngine {
                 session.getSource().highlighter(highlight);
             });
         }
+        if (CollectionUtils.isNotEmpty(wrapper.aggList())) {
+            wrapper.aggList().forEach(agg -> {
+                session.getSource().aggregation(agg);
+            });
+        }
         loadEsExcDesBean(session, wrapper.getQueryDesList());
         Map<EsConnector, LinkedList<QueryBuilder>> freeQueries = wrapper.freeQueries();
         freeQueries.forEach((connector, currentQueries) -> {

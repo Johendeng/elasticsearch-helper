@@ -74,11 +74,21 @@ public class AggRes implements Serializable {
      */
     public AggRes fetchByPath(String path) {
         Assert.isTrue(StringUtils.isNotBlank(path) && path.startsWith(Common.PATH_HEAD), "error path ex: $._age_range.r1._count");
-        String[] pathKey = path.substring(2).split("\\"+Common.SP);
-        for (String key : pathKey) {
-            this.buckets.get(key);
+        String[] pathKey = path.substring(2).split("\\" + Common.SP);
+        return getBucket(pathKey, 0, this);
+    }
+
+    private AggRes getBucket(String[] pathKey, int index, AggRes aggRes) {
+        if (aggRes == null) {
+            return null;
         }
-        return null;
+        int endIndex = pathKey.length - 1;
+        AggRes nextAggRes = aggRes.buckets.get(pathKey[index]);
+        if (endIndex > index && nextAggRes != null) {
+            return getBucket(pathKey, ++ index, nextAggRes);
+        } else {
+            return nextAggRes;
+        }
     }
 
     public String getKey() {

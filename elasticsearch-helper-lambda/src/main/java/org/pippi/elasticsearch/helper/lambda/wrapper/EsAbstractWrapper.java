@@ -6,10 +6,12 @@ import org.elasticsearch.common.unit.DistanceUnit;
 import org.elasticsearch.index.query.GeoValidationMethod;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.script.ScriptType;
+import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.pippi.elasticsearch.helper.core.QueryAnnParser;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
+import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Agg;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.Bool;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.INested;
 import org.pippi.elasticsearch.helper.lambda.wrapper.interfaces.SearchFunc;
@@ -38,7 +40,7 @@ import java.util.stream.Collectors;
  **/
 @SuppressWarnings({"unchecked", "rawtypes"})
 public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper<T, F, Children>>
-        extends EsWrapper<T> implements Bool<Children>, INested<EsWrapper<?> , Children>, SearchFunc<F, Children> {
+        extends EsWrapper<T> implements Bool<Children>, INested<EsWrapper<?> , Children>, SearchFunc<F, Children>, Agg<F, Children> {
 
     protected final Children typedThis = (Children) this;
 
@@ -97,6 +99,12 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
             builderList.add(queryBuilder);
             freeQueries.put(super.currentConnector, builderList);
         });
+        return typedThis;
+    }
+
+    @Override
+    public Children agg(boolean condition, AggregationBuilder aggregationBuilder) {
+        maybeDo(condition, () -> super.aggList.add(aggregationBuilder));
         return typedThis;
     }
 
