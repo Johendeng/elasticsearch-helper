@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author JohenDeng
@@ -35,9 +36,17 @@ public class AccountLambdaQueryTest {
     }
 
     @Test
-    public void selectCountTest() {
-        Long count = accountMapper.selectCount(EsWrappers.lambdaQuery(AccountEntity.class)
-                .queryString("Street", AccountEntity::getAddress));
-        System.out.println(count);
+    public void queryStringTest() {
+        List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
+                .queryString("857 OR Castleton", AccountEntity::getAddress, AccountEntity::getEmail, AccountEntity::getCity));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
     }
+
+    @Test
+    public void multiMatchTest() {
+        List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
+                .multiMatch("Nogal", AccountEntity::getCity));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+    }
+
 }

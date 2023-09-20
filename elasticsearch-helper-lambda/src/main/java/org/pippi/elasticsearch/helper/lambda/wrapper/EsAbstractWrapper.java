@@ -688,6 +688,7 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
         maybeDo(condition && CollectionUtils.isNotEmpty(fields) , () -> {
             Map<String, Float> fieldStringifyMap = fields.entrySet().stream()
                     .collect(Collectors.toMap(e -> this.fieldToString(e.getKey()), Map.Entry::getValue));
+            config.setFields(fieldStringifyMap.keySet().toArray(new String[0]));
             config.setFieldAndBoostMap(fieldStringifyMap);
             EsQueryFieldBean conf = EsQueryFieldBean.newInstance(MultiMatch.class, super.currentConnector, null);
             conf.setValue(val);
