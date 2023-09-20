@@ -8,6 +8,7 @@ import org.elasticsearch.index.query.Operator;
 import org.elasticsearch.index.query.QueryStringQueryBuilder;
 import org.pippi.elasticsearch.helper.model.enums.FuzzinessEnum;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperConfigException;
+import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 import org.pippi.elasticsearch.helper.model.utils.CommonUtils;
 import org.pippi.elasticsearch.helper.model.bean.QueryConf;
 
@@ -106,6 +107,9 @@ public class QueryStringConf extends QueryConf<QueryStringQueryBuilder> {
                     throw new EsHelperConfigException("@QueryString's fieldAndBoosts parse Error.", e);
                 }
             });
+            queryBuilder.fields(fieldAndBoostMap);
+        }
+        if (CollectionUtils.isNotEmpty(fieldAndBoostMap)) {
             queryBuilder.fields(fieldAndBoostMap);
         }
         CommonUtils.optional(this.type).ifPresent(queryBuilder::type);

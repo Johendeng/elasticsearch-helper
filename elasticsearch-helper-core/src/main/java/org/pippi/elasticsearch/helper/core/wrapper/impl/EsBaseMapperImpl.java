@@ -276,7 +276,9 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
     @Override
     public Long selectCount(EsWrapper<T> queryEsWrapper) {
         AbstractEsSession<?> session = EsQueryEngine.execute(queryEsWrapper);
-        session.getSource().trackTotalHits(true).from(0).size(0);
+        session.getSource().trackTotalHits(true)
+                .from(0)
+                .size(0);
         try {
             SearchRequest searchReq = session.getRequest();
             this.reqLogOut(searchReq.source().toString(), "selectCount");

@@ -37,8 +37,7 @@ public class AccountLambdaQueryTest {
     @Test
     public void selectCountTest() {
         Long count = accountMapper.selectCount(EsWrappers.lambdaQuery(AccountEntity.class)
-                .queryString("Nogal", AccountEntity::getCity));
+                .queryString("Street AND Tabor", AccountEntity::getAddress));
         System.out.println(count);
-
     }
 }
