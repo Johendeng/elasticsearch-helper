@@ -22,7 +22,7 @@ import java.util.List;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
-public class EsAccountMapperTest {
+public class EsAccountBeanAnnQueryTest {
 
 	@Resource
 	private EsAccountMapper esAccountMapper;

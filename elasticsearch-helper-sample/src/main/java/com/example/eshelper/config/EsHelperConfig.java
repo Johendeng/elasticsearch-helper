@@ -5,6 +5,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.pippi.elasticsearch.helper.spring.EsClient;
 import org.pippi.elasticsearch.helper.spring.EsHelperCustomerConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +22,13 @@ public class EsHelperConfig implements EsHelperCustomerConfig {
 
 
     @Bean
-    public RestHighLevelClient restHighLevelClient(){
-        return new RestHighLevelClient(RestClient.builder(new HttpHost("localhost", 9200)));
+    @EsClient(name = "client1", primary = true)
+    public RestHighLevelClient restHighLevelClient1(){
+        return new RestHighLevelClient(RestClient.builder(
+                new HttpHost("localhost", 9200),
+                new HttpHost("localhost", 9201),
+                new HttpHost("localhost", 9202)
+        ));
     }
 
     @Override

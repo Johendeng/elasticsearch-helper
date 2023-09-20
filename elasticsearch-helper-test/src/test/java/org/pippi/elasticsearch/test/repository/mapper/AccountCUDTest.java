@@ -6,6 +6,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.lambda.wrapper.EsWrappers;
 import org.pippi.elasticsearch.helper.lambda.wrapper.query.EsLambdaQueryWrapper;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
@@ -20,7 +21,7 @@ import javax.annotation.Resource;
  **/
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
-public class AccountBaseMapperTest {
+public class AccountCUDTest {
 
     @Resource
     private EsAccountMapper accountMapper;
@@ -29,16 +30,16 @@ public class AccountBaseMapperTest {
     @Ignore
     public void insertTest() {
         AccountEntity entity = new AccountEntity();
-        entity.setDocId("1112");
-        entity.setAccountNumber(1112);
-        entity.setCity("beijing");
+        entity.setDocId("1113");
+        entity.setAccountNumber(1113);
+        entity.setCity("Nogal");
         entity.setAddress("fengyang");
-        entity.setAge(32);
-        entity.setBalance(2213);
-        entity.setEmail("54566874@qq.com");
-        entity.setFirstname("wang");
-        entity.setLastname("wu");
-        entity.setEmployer("lisi");
+        entity.setAge(14);
+        entity.setBalance(1145);
+        entity.setEmail("555887@qq.com");
+        entity.setFirstname("da");
+        entity.setLastname("ssm");
+        entity.setEmployer("mk");
         entity.setState("NN");
         entity.setGender("F");
         int insert = accountMapper.insert(entity);
@@ -65,5 +66,18 @@ public class AccountBaseMapperTest {
         System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
     }
 
+    @Test
+    @Ignore
+    public void deleteByIdTest() {
+        int i = accountMapper.deleteById(1112);
+        Assert.assertTrue(i == 1);
+    }
 
+    @Test
+    @Ignore
+    public void deleteByQueryTest() {
+        BulkByScrollResponse resp = accountMapper.delete(EsWrappers.lambdaQuery(AccountEntity.class)
+                .term(AccountEntity::getAccountNumber, 1112));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+    }
 }

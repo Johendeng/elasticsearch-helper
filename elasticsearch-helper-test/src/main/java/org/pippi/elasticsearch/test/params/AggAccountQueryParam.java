@@ -34,7 +34,7 @@ public class AggAccountQueryParam extends HookQuery<AggAccountQueryParam, Accoun
     @Override
     protected void configRequestHook(AbstractEsSession holder) {
         SearchSourceBuilder source = holder.getSource();
-        holder.chain(QueryBuilders.termQuery("city.keyword", this.city));
+        holder.chain(QueryBuilders.termQuery("city", this.city));
         source.aggregation(
             AggregationBuilders.terms("_age").field("age").subAggregation(
                 AggregationBuilders.count("_age_count").field("age"))

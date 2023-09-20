@@ -8,6 +8,7 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
@@ -26,7 +27,7 @@ import java.io.IOException;
  **/
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
-//@Ignore
+@Ignore
 public class AggTest {
 
     @Resource

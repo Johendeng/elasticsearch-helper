@@ -25,6 +25,9 @@ public class IndexMappingReader {
 
     public static String readTextKeyWordSymbol(Map<String, Object> prop) {
         Object fieldObj = prop.get(TEXT_FIELD_KEY);
+        if (fieldObj == null) {
+            return null;
+        }
         Map<String, LinkedHashMap> fieldMap = (Map<String, LinkedHashMap>) fieldObj;
         return fieldMap.entrySet().stream()
                 .filter(e -> e.getValue().get(TYPE_KEY).equals(EsMeta.KEYWORD.getType()))
