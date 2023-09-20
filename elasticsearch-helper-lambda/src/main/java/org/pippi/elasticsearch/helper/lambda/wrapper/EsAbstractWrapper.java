@@ -23,10 +23,7 @@ import org.pippi.elasticsearch.helper.model.enums.EsConnector;
 import org.pippi.elasticsearch.helper.model.param.*;
 import org.pippi.elasticsearch.helper.model.utils.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -641,7 +638,10 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
     public Children moreLikeThis(boolean condition, MoreLikeThisQueryConf config, MoreLikeThisParam val, float boost, F... fields) {
         String[] fieldStrArr;
         if (fields != null && fields.length > 0) {
-            fieldStrArr = Arrays.stream(fields).map(this::fieldStringify).toArray(String[]::new);
+            fieldStrArr = Arrays.stream(fields)
+                    .filter(Objects::nonNull)
+                    .map(this::fieldStringify)
+                    .toArray(String[]::new);
         } else {
             fieldStrArr = null;
         }

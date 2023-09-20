@@ -1,10 +1,12 @@
 package org.pippi.elasticsearch.test.repository.mapper;
 
+import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.lambda.wrapper.EsWrappers;
+import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.model.resp.AggRes;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
@@ -46,6 +48,19 @@ public class AccountLambdaQueryTest {
     public void multiMatchTest() {
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
                 .multiMatch("Nogal", AccountEntity::getCity));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+    }
+
+    @Test
+    public void moreLikeThisTest() {
+        MoreLikeThisParam param = new MoreLikeThisParam();
+        param.setTexts(new String[]{"a"});
+        MoreLikeThisQueryBuilder.Item item = new MoreLikeThisQueryBuilder.Item("user", "2");
+        item.fields("comment");
+
+        param.setItems(new MoreLikeThisQueryBuilder.Item[]{item});
+        List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
+                .moreLikeThis(param, AccountEntity::getAddress));
         System.out.println(SerializerUtils.parseObjToJsonPretty(list));
     }
 
