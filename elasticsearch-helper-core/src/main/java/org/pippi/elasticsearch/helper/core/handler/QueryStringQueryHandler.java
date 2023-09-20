@@ -9,6 +9,8 @@ import org.pippi.elasticsearch.helper.model.annotations.mapper.query.QueryString
 import org.pippi.elasticsearch.helper.model.bean.query.QueryStringConf;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 
+import java.util.Objects;
+
 /**
  * query all field contains 'queryString' 's docs
  *
@@ -21,7 +23,9 @@ public class QueryStringQueryHandler extends AbstractQueryHandler<QueryStringCon
     @Override
     public QueryBuilder handle(EsQueryFieldBean queryDes, AbstractEsSession searchHelper) {
         QueryStringQueryBuilder queryBuilder = QueryBuilders.queryStringQuery(queryDes.getValue().toString());
-        queryBuilder.field(queryDes.getField());
+        if (Objects.nonNull(queryDes.getField())) {
+            queryBuilder.field(queryDes.getField());
+        }
         return queryBuilder;
     }
 }

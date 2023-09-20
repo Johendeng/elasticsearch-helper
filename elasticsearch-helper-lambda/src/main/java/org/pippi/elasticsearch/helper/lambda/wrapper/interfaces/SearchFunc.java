@@ -553,9 +553,14 @@ public interface SearchFunc<F, Children> extends Serializable {
      */
     Children queryString(boolean condition, String val, F... fields);
 
+    default Children queryString(String val, F... fields) {
+        return queryString(true, val, fields);
+    }
+
     default Children queryString(Object val, float boost, F... fields) {
         return queryString(true, val, boost, fields);
     }
+
     Children queryString(boolean condition, Object val, float boost, F... fields);
 
     default Children queryString(QueryStringConf config, Object val, F... fields) {

@@ -33,4 +33,12 @@ public class AccountLambdaQueryTest {
                         .subAggregation(AggregationBuilders.count("_person_count").field("city"))));
         System.out.println(SerializerUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._city_distribution")));
     }
+
+    @Test
+    public void selectCountTest() {
+        Long count = accountMapper.selectCount(EsWrappers.lambdaQuery(AccountEntity.class)
+                .queryString("Nogal", AccountEntity::getCity));
+        System.out.println(count);
+
+    }
 }
