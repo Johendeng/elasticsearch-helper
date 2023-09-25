@@ -34,7 +34,7 @@ public class AccountLambdaQueryTest {
                 .term(AccountEntity::getGender, "F")
                 .agg(AggregationBuilders.terms("_city_distribution").field("city").size(1000)
                         .subAggregation(AggregationBuilders.count("_person_count").field("city"))));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._city_distribution")));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._city_distribution.Nogal")));
     }
 
     @Test
