@@ -1,6 +1,5 @@
 package org.pippi.elasticsearch.test.repository.mapper;
 
-import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -48,6 +47,13 @@ public class AccountLambdaQueryTest {
     public void matchTest() {
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
                 .match(AccountEntity::getFirstname, "Dena"));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+    }
+
+    @Test
+    public void wildCardTest() {
+        List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class).filter()
+                .wildCard(AccountEntity::getFirstname, "*ure*"));
         System.out.println(SerializerUtils.parseObjToJsonPretty(list));
     }
 

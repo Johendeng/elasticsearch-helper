@@ -251,7 +251,7 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
     @Override
     public Children wildCard(boolean condition, F field, Object val, float boost, WildCardQueryConf config) {
         maybeDo(condition, () -> {
-            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(WildCard.class, super.currentConnector, fieldToString(field));
+            EsQueryFieldBean conf = EsQueryFieldBean.newInstance(WildCard.class, super.currentConnector, fieldToString(field, true));
             conf.setValue(val);
             conf.setExtBean(config);
             conf.setBoost(boost);
