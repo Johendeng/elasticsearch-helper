@@ -2,6 +2,8 @@ package org.pippi.elasticsearch.helper.model.param;
 
 import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
 
+import javax.annotation.Nullable;
+
 /**
  * MoreLikeThisParam
  *
@@ -10,8 +12,10 @@ import org.elasticsearch.index.query.MoreLikeThisQueryBuilder;
  */
 public class MoreLikeThisParam implements EsComplexParam {
 
+    @Nullable
     private MoreLikeThisQueryBuilder.Item[] items;
 
+    @Nullable
     private String[] texts;
 
     public MoreLikeThisParam() {

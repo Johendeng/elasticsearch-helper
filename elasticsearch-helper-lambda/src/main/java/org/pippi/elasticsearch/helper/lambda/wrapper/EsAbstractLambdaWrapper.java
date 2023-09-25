@@ -18,11 +18,11 @@ public abstract class EsAbstractLambdaWrapper<T,  Children extends EsAbstractLam
         extends EsAbstractWrapper<T, EsFunction<T, ?>, Children> {
 
     @Override
-    protected String fieldStringify(EsFunction<T, ?> field) {
+    protected String fieldStringify(EsFunction<T, ?> field, boolean visitExt) {
         LambdaMeta fieldMeta = LambdaUtils.extract(field);
         String fieldName = PropNameUtils.methodToProperty(fieldMeta.getImplMethodName());
         IndexMeta indexMeta = IndexMetaCache.loadMetaIfAbsent(fieldMeta.getInstantiatedClass());
-        if (indexMeta != null) {
+        if (visitExt && indexMeta != null) {
             IndexMeta.FieldMeta fieldMetaBean = indexMeta.getFieldMetaMap().get(fieldName);
             return fieldMetaBean.getType().equals(EsMeta.TEXT) && StringUtils.isNotBlank(fieldMetaBean.getExtension()) ?
                     fieldMetaBean.getField() + "." + fieldMetaBean.getExtension() : fieldMetaBean.getField();

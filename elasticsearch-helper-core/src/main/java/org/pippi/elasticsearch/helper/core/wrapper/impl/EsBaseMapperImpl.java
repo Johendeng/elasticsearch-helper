@@ -311,7 +311,7 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
             SearchResponse resp = client.search(searchReq, reqOpt);
             return CollectionRespReader.reader().readMap(resp);
         } catch (IOException e) {
-            throw ExceptionUtils.mpe("exc selectList io-error", e);
+            throw ExceptionUtils.mpe("exc selectMaps io-error", e);
         }
     }
 
@@ -328,7 +328,7 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
             page.setRecords(data);
             return page;
         } catch (IOException e) {
-            throw ExceptionUtils.mpe("exc selectList io-error", e);
+            throw ExceptionUtils.mpe("exc selectPage io-error", e);
         }
     }
 
@@ -345,7 +345,7 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
             page.setRecords(data);
             return page;
         } catch (IOException e) {
-            throw ExceptionUtils.mpe("exc selectList io-error", e);
+            throw ExceptionUtils.mpe("exc selectMapsPage io-error", e);
         }
     }
 

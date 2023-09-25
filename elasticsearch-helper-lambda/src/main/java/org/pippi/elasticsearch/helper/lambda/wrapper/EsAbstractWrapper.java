@@ -168,7 +168,7 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
     @Override
     public Children term(boolean condition, F field, Object val, float boost) {
         return maybeDo(condition, () -> {
-            EsQueryFieldBean term = EsQueryFieldBean.newInstance(Term.class, super.currentConnector, fieldToString(field));
+            EsQueryFieldBean term = EsQueryFieldBean.newInstance(Term.class, super.currentConnector, fieldToString(field, true));
             term.setBoost(boost);
             term.setValue(val);
             term.setExtBean(new TermQueryConf());
@@ -184,7 +184,7 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
     @Override
     public Children terms(boolean condition, F field, float boost, Object... val) {
         return maybeDo(condition, ()-> {
-            EsQueryFieldBean terms = EsQueryFieldBean.newInstance(Terms.class, super.currentConnector, fieldToString(field));
+            EsQueryFieldBean terms = EsQueryFieldBean.newInstance(Terms.class, super.currentConnector, fieldToString(field, true));
             terms.setBoost(boost);
             terms.setValue(val);
             terms.setExtBean(new TermsQueryConf());
@@ -770,12 +770,19 @@ public abstract class EsAbstractWrapper<T, F, Children extends EsAbstractWrapper
     /**
      * ==================================================================================================================
      */
-
     protected final String fieldToString(F field) {
-        return fieldStringify(field);
+        return fieldStringify(field, false);
+    }
+
+    protected final String fieldToString(F field, boolean visiteExt) {
+        return fieldStringify(field, visiteExt);
     }
 
     protected String fieldStringify(F field) {
+        return fieldStringify(field, false);
+    }
+
+    protected String fieldStringify(F field, boolean visitExt) {
         return (String) field;
     }
 

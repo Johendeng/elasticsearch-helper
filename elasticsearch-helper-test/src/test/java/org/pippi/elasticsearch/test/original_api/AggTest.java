@@ -58,6 +58,8 @@ public class AggTest {
                 .addRange("r2",20, 30)
                 .subAggregation(AggregationBuilders.count("_count").field("_id")));
 
+        source.aggregation(AggregationBuilders.terms("_gender").field("gender.keyword")
+                                .subAggregation(AggregationBuilders.percentileRanks("_age", new double[]{10, 20}).field("age")));
 
         SearchResponse resp = client.search(req, RequestOptions.DEFAULT);
         AggRes aggRes = AggResponseVisitor.run(resp.getAggregations());

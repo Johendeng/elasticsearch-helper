@@ -30,7 +30,13 @@ public class MoreLikeThisQueryHandler extends AbstractQueryHandler<MoreLikeThisQ
                 throw new EsHelperQueryException("likeTexts/fields can't be empty");
             }
             if (ArrayUtils.isEmpty(fields)) {
-                moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(params.getTexts(), params.getItems());
+                if (ArrayUtils.isNotEmpty(params.getTexts()) && ArrayUtils.isNotEmpty(params.getItems())) {
+                    moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(params.getTexts(), params.getItems());
+                } else if (ArrayUtils.isNotEmpty(params.getTexts()) && ArrayUtils.isEmpty(params.getItems())) {
+                    moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(params.getTexts());
+                } else if (ArrayUtils.isNotEmpty(params.getItems()) && ArrayUtils.isEmpty(params.getTexts())) {
+                    moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(params.getItems());
+                }
             } else {
                 moreLikeThisQueryBuilder = QueryBuilders.moreLikeThisQuery(fields, params.getTexts(), params.getItems());
             }

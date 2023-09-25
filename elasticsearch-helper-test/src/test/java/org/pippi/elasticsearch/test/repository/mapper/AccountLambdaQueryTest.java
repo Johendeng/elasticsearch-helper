@@ -38,6 +38,20 @@ public class AccountLambdaQueryTest {
     }
 
     @Test
+    public void termTest() {
+        List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
+                .term(AccountEntity::getFirstname, "Dena"));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+    }
+
+    @Test
+    public void matchTest() {
+        List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
+                .match(AccountEntity::getFirstname, "Dena"));
+        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+    }
+
+    @Test
     public void queryStringTest() {
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
                 .queryString("857 OR Castleton", AccountEntity::getAddress, AccountEntity::getEmail, AccountEntity::getCity));
@@ -54,13 +68,12 @@ public class AccountLambdaQueryTest {
     @Test
     public void moreLikeThisTest() {
         MoreLikeThisParam param = new MoreLikeThisParam();
-        param.setTexts(new String[]{"a"});
-        MoreLikeThisQueryBuilder.Item item = new MoreLikeThisQueryBuilder.Item("user", "2");
-        item.fields("comment");
-
-        param.setItems(new MoreLikeThisQueryBuilder.Item[]{item});
+        param.setTexts(new String[]{"Olson"});
+//        MoreLikeThisQueryBuilder.Item item = new MoreLikeThisQueryBuilder.Item(null, "102");
+//        item.fields("email");
+//        param.setItems(new MoreLikeThisQueryBuilder.Item[]{item});
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
-                .moreLikeThis(param, AccountEntity::getAddress));
+                .moreLikeThis(param, AccountEntity::getLastname, AccountEntity::getFirstname));
         System.out.println(SerializerUtils.parseObjToJsonPretty(list));
     }
 
