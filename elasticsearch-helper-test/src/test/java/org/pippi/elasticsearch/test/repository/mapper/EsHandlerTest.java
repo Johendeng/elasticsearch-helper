@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.model.param.EsPage;
 import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;

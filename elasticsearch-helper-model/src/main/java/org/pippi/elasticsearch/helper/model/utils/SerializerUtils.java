@@ -1,4 +1,4 @@
-package org.pippi.elasticsearch.helper.core.utils;
+package org.pippi.elasticsearch.helper.model.utils;
 
 import java.text.SimpleDateFormat;
 
@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperSerializeException;
-import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

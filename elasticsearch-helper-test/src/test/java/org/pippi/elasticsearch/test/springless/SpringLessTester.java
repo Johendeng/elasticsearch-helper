@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.pippi.elasticsearch.helper.core.EsRestClientFactory;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
 import org.pippi.elasticsearch.helper.core.proxy.EsOperationProxy;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.model.resp.BaseResp;
 import org.pippi.elasticsearch.test.params.TermQueryParam;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;

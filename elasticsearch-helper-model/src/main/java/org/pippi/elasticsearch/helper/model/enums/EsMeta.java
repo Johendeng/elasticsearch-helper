@@ -1,6 +1,9 @@
 package org.pippi.elasticsearch.helper.model.enums;
 
 
+import org.apache.lucene.spatial3d.geom.GeoShape;
+import org.elasticsearch.common.geo.GeoPoint;
+
 import java.util.*;
 
 /**
@@ -46,7 +49,7 @@ public enum EsMeta {
     OBJECT("object",202, Object.class),
 
     NESTED("nested",203, Object.class),
-    GEO_POINT("geo_point",204, Object.class),
+    GEO_POINT("geo_point",204, GeoPoint.class),
 
     GEO_SHAPE("geo_shape",205, Object.class),
 

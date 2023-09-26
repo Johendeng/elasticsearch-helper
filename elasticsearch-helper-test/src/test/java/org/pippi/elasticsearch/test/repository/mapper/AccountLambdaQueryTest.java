@@ -3,17 +3,19 @@ package org.pippi.elasticsearch.test.repository.mapper;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.lambda.wrapper.EsWrappers;
 import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.model.resp.AggRes;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
+import org.pippi.elasticsearch.test.repository.entity.Movies;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author JohenDeng
@@ -26,6 +28,8 @@ public class AccountLambdaQueryTest {
     @Resource
     private EsAccountMapper accountMapper;
 
+    @Resource
+    private EsMoviesMapper moviesMapper;
 
     @Test
     public void aggTest() {
@@ -74,13 +78,19 @@ public class AccountLambdaQueryTest {
     @Test
     public void moreLikeThisTest() {
         MoreLikeThisParam param = new MoreLikeThisParam();
-        param.setTexts(new String[]{"Olson"});
-//        MoreLikeThisQueryBuilder.Item item = new MoreLikeThisQueryBuilder.Item(null, "102");
-//        item.fields("email");
-//        param.setItems(new MoreLikeThisQueryBuilder.Item[]{item});
+        param.setTexts(new String[]{"bezal.com"});
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
-                .moreLikeThis(param, AccountEntity::getLastname, AccountEntity::getFirstname));
+                .moreLikeThis(param, AccountEntity::getEmail));
         System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+    }
+
+    @Test
+    public void movieTermTest() {
+
+        List<Movies> movies = moviesMapper.selectList(EsWrappers.lambdaQuery(Movies.class)
+                .term(Movies::getId, 36915));
+
+        System.out.println(SerializerUtils.parseObjToJsonPretty(movies));
     }
 
 }

@@ -29,7 +29,7 @@ import org.pippi.elasticsearch.helper.core.reader.impl.AggResRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.CollectionRespReader;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.core.wrapper.mapper.EsBaseMapper;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;

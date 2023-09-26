@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper.query;
 
 import org.junit.Test;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.lambda.entity.AccountEntity;
 
 /**

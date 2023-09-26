@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
 import org.pippi.elasticsearch.helper.lambda.wrapper.EsWrappers;
 import org.pippi.elasticsearch.helper.lambda.wrapper.query.EsLambdaQueryWrapper;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;

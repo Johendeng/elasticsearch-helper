@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.test.repository.mapper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.params.AggAccountQueryParam;
 import org.pippi.elasticsearch.test.params.SimpleAccountQueryParam;

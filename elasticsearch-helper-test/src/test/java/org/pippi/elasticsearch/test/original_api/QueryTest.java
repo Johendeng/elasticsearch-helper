@@ -8,16 +8,16 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.core.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * @author JohenDeng
@@ -25,7 +25,7 @@ import java.io.IOException;
  **/
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = EsHelperSampleApplication.class)
-@Ignore
+//@Ignore
 public class QueryTest {
 
     @Resource
@@ -59,7 +59,25 @@ public class QueryTest {
 
         SearchResponse search = client.search(req, RequestOptions.DEFAULT);
         System.out.println(SerializerUtils.parseObjToJsonPretty(search.getHits()));
+    }
+
+    @Test
+    public void MovieTermQuery() {
+        SearchRequest req = new SearchRequest();
+        SearchSourceBuilder source = new SearchSourceBuilder();
+        BoolQueryBuilder bool = QueryBuilders.boolQuery();
+        source.query(bool);
+        req.source(source);
+        bool.must(QueryBuilders.termQuery("id", 36915));
+
 
     }
 
+    @Test
+    public void timeFormatTest() {
+
+        String timeStr = "1996-05-16T16:00:00.000Z";
+
+        System.out.println(SerializerUtils.jsonToBean(timeStr, Date.class));
+    }
 }

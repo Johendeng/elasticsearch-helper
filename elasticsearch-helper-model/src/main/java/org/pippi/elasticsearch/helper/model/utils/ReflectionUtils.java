@@ -27,6 +27,9 @@ public class ReflectionUtils {
             || type.equals(Byte.class)    || type.equals(Character.class);
     }
 
+
+
+
     /**
      *  initialize target-class
      * @param clazz target-class， must have no-args public constructor
