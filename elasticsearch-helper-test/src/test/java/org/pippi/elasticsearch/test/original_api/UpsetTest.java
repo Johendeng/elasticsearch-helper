@@ -14,7 +14,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.model.exception.EsHelperException;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
@@ -54,10 +54,10 @@ public class UpsetTest {
 
         Map<String, Object> map = EsBeanFieldTransUtils.toMap(entity);
         IndexRequest req = new IndexRequest("account");
-        req.source(SerializerUtils.parseObjToJson(map), XContentType.JSON);
+        req.source(JacksonUtils.parseObjToJson(map), XContentType.JSON);
         try {
             IndexResponse resp = client.index(req, RequestOptions.DEFAULT);
-            System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+            System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
         } catch (IOException e) {
             throw new EsHelperException(e);
         }
@@ -72,10 +72,10 @@ public class UpsetTest {
         up.id("1");
         HashMap<Object, Object> map = Maps.newHashMap();
         map.put("firstname", "deng555");
-        System.out.println(SerializerUtils.parseObjToJson(map));
-        up.doc(SerializerUtils.parseObjToJson(map), XContentType.JSON);
+        System.out.println(JacksonUtils.parseObjToJson(map));
+        up.doc(JacksonUtils.parseObjToJson(map), XContentType.JSON);
         UpdateResponse update = client.update(up, RequestOptions.DEFAULT);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(update));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(update));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class UpsetTest {
         DeleteRequest req = new DeleteRequest("account");
         req.id("1");
         DeleteResponse delete = client.delete(req, RequestOptions.DEFAULT);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(delete));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(delete));
     }
 
 }

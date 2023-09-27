@@ -22,15 +22,15 @@ public enum UpdateStragegy {
         this.symbol = symbol;
     }
 
-    public static boolean isGolbalNotNull() {
+    public static boolean isGlobalNotNull() {
         return StringUtils.equals(EsHelperConfiguration.globalUpdateStrategy, NOT_NULL.symbol);
     }
 
-    public static boolean isGolbalNotBlank() {
+    public static boolean isGlobalNotBlank() {
         return StringUtils.equals(EsHelperConfiguration.globalUpdateStrategy, NOT_BLANK.symbol);
     }
 
-    public static boolean isGolbalAny() {
+    public static boolean isGlobalAny() {
         return StringUtils.equals(EsHelperConfiguration.globalUpdateStrategy, ANY.symbol);
     }
 }

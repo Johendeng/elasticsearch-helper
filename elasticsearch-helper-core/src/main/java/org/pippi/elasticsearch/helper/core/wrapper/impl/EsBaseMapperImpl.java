@@ -29,7 +29,7 @@ import org.pippi.elasticsearch.helper.core.reader.impl.AggResRespReader;
 import org.pippi.elasticsearch.helper.core.reader.impl.CollectionRespReader;
 import org.pippi.elasticsearch.helper.core.session.AbstractEsSession;
 import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.core.wrapper.EsWrapper;
 import org.pippi.elasticsearch.helper.core.wrapper.mapper.EsBaseMapper;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
@@ -85,7 +85,7 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
         Map<String, Object> map = EsBeanFieldTransUtils.toMap(entity);
         IndexRequest req = new IndexRequest(index);
         req.id(entity.getDocId());
-        req.source(SerializerUtils.parseObjToJson(map), XContentType.JSON);
+        req.source(JacksonUtils.parseObjToJson(map), XContentType.JSON);
         try {
             this.reqLogOut(req.toString(), "insert");
             IndexResponse resp = client.index(req, reqOpt);
@@ -124,7 +124,7 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
             Map<String, Object> map = EsBeanFieldTransUtils.toMap(bean);
             IndexRequest currentInsertReq = new IndexRequest(index);
             currentInsertReq.id(bean.getDocId());
-            currentInsertReq.source(SerializerUtils.parseObjToJson(map), XContentType.JSON);
+            currentInsertReq.source(JacksonUtils.parseObjToJson(map), XContentType.JSON);
             appender.accept(currentInsertReq);
         });
     }
@@ -183,7 +183,7 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
             UpdateRequest upReq = new UpdateRequest();
             upReq.index(index);
             upReq.id(entity.getDocId());
-            upReq.doc(SerializerUtils.parseObjToJson(updateMap), XContentType.JSON);
+            upReq.doc(JacksonUtils.parseObjToJson(updateMap), XContentType.JSON);
             this.reqLogOut(upReq.toString(), "updateById");
             UpdateResponse resp = client.update(upReq, reqOpt);
             return this.readDocWriteResp(resp, Operation.UPDATE);
@@ -388,7 +388,7 @@ public class EsBaseMapperImpl<T extends EsEntity> implements EsBaseMapper<T> {
 
     private String buildUpdateScript(Map<String, Object> updateMap) {
         StringJoiner joiner = new StringJoiner(";");
-        updateMap.forEach((key, value) -> joiner.add("ctx._source['" + key + "']='" + SerializerUtils.parseObjToJson(value) + "'"));
+        updateMap.forEach((key, value) -> joiner.add("ctx._source['" + key + "']='" + JacksonUtils.parseObjToJson(value) + "'"));
         return joiner.toString();
     }
 

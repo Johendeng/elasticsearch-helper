@@ -27,7 +27,7 @@ public abstract class EsAbstractLambdaWrapper<T,  Children extends EsAbstractLam
             return fieldMetaBean.getType().equals(EsMeta.TEXT) && StringUtils.isNotBlank(fieldMetaBean.getExtension()) ?
                     fieldMetaBean.getField() + "." + fieldMetaBean.getExtension() : fieldMetaBean.getField();
         } else {
-            return EsBeanFieldTransUtils.camelify(fieldName);
+            return EsBeanFieldTransUtils.tryToLowerUnderscore(fieldName);
         }
     }
 }

@@ -11,7 +11,7 @@ import org.junit.Assert;
 import org.pippi.elasticsearch.helper.core.EsRestClientFactory;
 import org.pippi.elasticsearch.helper.core.QueryHandlerFactory;
 import org.pippi.elasticsearch.helper.core.proxy.EsOperationProxy;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.model.resp.BaseResp;
 import org.pippi.elasticsearch.test.params.TermQueryParam;
 import org.pippi.elasticsearch.test.repository.entity.AccountEntity;
@@ -36,7 +36,7 @@ public class SpringLessTester {
 
     public static void viewMapping() {
         Map<String, Object> mapping = getRemoteMappingDefine("account", "primary");
-        System.out.println(SerializerUtils.parseObjToJsonPretty(
+        System.out.println(JacksonUtils.parseObjToJsonPretty(
                 mapping
         ));
     }
@@ -49,7 +49,7 @@ public class SpringLessTester {
 
         EsHandleMapper esHandleMapper = EsOperationProxy.build(EsHandleMapper.class);
         BaseResp<AccountEntity> res = esHandleMapper.termQuery(param);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(res));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(res));
         res.getRecords().forEach(data -> {
             Assert.assertEquals(data.getGender(), "F");
         });

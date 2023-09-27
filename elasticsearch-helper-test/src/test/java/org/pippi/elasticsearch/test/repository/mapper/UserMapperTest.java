@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.test.repository.mapper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.lambda.wrapper.EsWrappers;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.repository.entity.UserEntity;
@@ -26,7 +26,7 @@ public class UserMapperTest {
 
     @Test
     public void testByAccount() {
-        System.out.println(SerializerUtils.parseObjToJsonPretty(userMapper.selectByAccount(1)));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(userMapper.selectByAccount(1)));
     }
 
     @Test
@@ -34,7 +34,7 @@ public class UserMapperTest {
         UserEntity.DetailInfo info = new UserEntity.DetailInfo();
         info.setAge(20);
         List<UserEntity> res = userMapper.selectByNested(info);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(res));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(res));
     }
 
     @Test
@@ -46,9 +46,9 @@ public class UserMapperTest {
         UserEntity userEntity = userMapper.selectOne(EsWrappers.lambdaQuery(UserEntity.class)
                 .term(UserEntity::getAccountNumber, 1));
 
-        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(list));
 
-        System.out.println(SerializerUtils.parseObjToJsonPretty(userEntity));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(userEntity));
     }
 
 }

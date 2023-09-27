@@ -3,7 +3,7 @@ package org.pippi.elasticsearch.test.repository.mapper;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.lambda.wrapper.EsWrappers;
 import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.model.resp.AggRes;
@@ -15,7 +15,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author JohenDeng
@@ -37,42 +36,42 @@ public class AccountLambdaQueryTest {
                 .term(AccountEntity::getGender, "F")
                 .agg(AggregationBuilders.terms("_city_distribution").field("city").size(1000)
                         .subAggregation(AggregationBuilders.count("_person_count").field("city"))));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._city_distribution.Nogal")));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._city_distribution.Nogal")));
     }
 
     @Test
     public void termTest() {
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
                 .term(AccountEntity::getFirstname, "Dena"));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(list));
     }
 
     @Test
     public void matchTest() {
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
                 .match(AccountEntity::getFirstname, "Dena"));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(list));
     }
 
     @Test
     public void wildCardTest() {
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class).filter()
                 .wildCard(AccountEntity::getFirstname, "*ure*"));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(list));
     }
 
     @Test
     public void queryStringTest() {
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
                 .queryString("857 OR Castleton", AccountEntity::getAddress, AccountEntity::getEmail, AccountEntity::getCity));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(list));
     }
 
     @Test
     public void multiMatchTest() {
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
                 .multiMatch("Nogal", AccountEntity::getCity));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(list));
     }
 
     @Test
@@ -81,16 +80,16 @@ public class AccountLambdaQueryTest {
         param.setTexts(new String[]{"bezal.com"});
         List<AccountEntity> list = accountMapper.selectList(EsWrappers.lambdaQuery(AccountEntity.class)
                 .moreLikeThis(param, AccountEntity::getEmail));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(list));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(list));
     }
 
     @Test
     public void movieTermTest() {
-
-        List<Movies> movies = moviesMapper.selectList(EsWrappers.lambdaQuery(Movies.class)
+        Movies movies = moviesMapper.selectOne(EsWrappers.lambdaQuery(Movies.class)
                 .term(Movies::getId, 36915));
-
-        System.out.println(SerializerUtils.parseObjToJsonPretty(movies));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(movies));
+        System.out.println(movies.getSpokenLanguages().get(0).getName());
+        System.out.println(movies.getSpokenLanguages().get(0).getIso_639_1_s());
     }
 
 }

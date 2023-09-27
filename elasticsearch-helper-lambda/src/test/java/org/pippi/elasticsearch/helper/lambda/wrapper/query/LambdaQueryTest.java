@@ -1,7 +1,7 @@
 package org.pippi.elasticsearch.helper.lambda.wrapper.query;
 
 import org.junit.Test;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.lambda.entity.AccountEntity;
 
 /**
@@ -15,7 +15,7 @@ public class LambdaQueryTest extends BaseTest {
         EsLambdaQueryWrapper<AccountEntity> wrapper = new EsLambdaQueryWrapper<>(AccountEntity.class);
         wrapper.term(AccountEntity::getAccountNumber, 11)
                 .must().term(AccountEntity::getCity, "test");
-        System.out.println(SerializerUtils.parseObjToJsonPretty(wrapper));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(wrapper));
     }
 
 

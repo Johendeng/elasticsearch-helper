@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.model.param.EsPage;
 import org.pippi.elasticsearch.helper.model.param.MoreLikeThisParam;
 import org.pippi.elasticsearch.helper.model.param.RangeParam;
@@ -48,7 +48,7 @@ public class EsHandlerTest {
         param.setLastnames(new String[]{"Bates", "Olson", "Campbell"});
         BaseResp<AccountEntity> res = esHandleMapper.termQuery(param);
         log.info("res size:{}", res.getRecords().size());
-        log.info("data: {}", SerializerUtils.parseObjToJson(res));
+        log.info("data: {}", JacksonUtils.parseObjToJson(res));
         res.getRecords().forEach(data -> {
             Assert.assertEquals(data.getGender(), "F");
         });
@@ -59,7 +59,7 @@ public class EsHandlerTest {
         FuzzyQueryParam param = new FuzzyQueryParam();
         param.setAddress("Strete");
         BaseResp<AccountEntity> resp = esHandleMapper.fuzzyQuery(param);
-        log.info("data: {}", SerializerUtils.parseObjToJson(resp));
+        log.info("data: {}", JacksonUtils.parseObjToJson(resp));
         resp.getRecords().forEach(data -> {
             Assert.assertTrue(data.getAddress().contains("Street"));
         });
@@ -70,7 +70,7 @@ public class EsHandlerTest {
         MatchQueryParam param = new MatchQueryParam();
         param.setAddress("857 Tabor");
         BaseResp<AccountEntity> resp = esHandleMapper.matchQuery(param);
-        System.out.println(SerializerUtils.parseObjToJson(resp));
+        System.out.println(JacksonUtils.parseObjToJson(resp));
     }
 
     @Test
@@ -78,7 +78,7 @@ public class EsHandlerTest {
         MatchPhraseQueryParam param = new MatchPhraseQueryParam();
         param.setAddress("857 Tabor");
         BaseResp<AccountEntity> resp = esHandleMapper.matchPhraseQuery(param);
-        System.out.println(SerializerUtils.parseObjToJson(resp));
+        System.out.println(JacksonUtils.parseObjToJson(resp));
     }
 
     @Test
@@ -86,7 +86,7 @@ public class EsHandlerTest {
         MatchPhrasePrefixQueryParam param = new MatchPhrasePrefixQueryParam();
         param.setAddress("438 Street");
         BaseResp<AccountEntity> resp = esHandleMapper.matchPhrasePrefixQuery(param);
-        System.out.println(SerializerUtils.parseObjToJson(resp));
+        System.out.println(JacksonUtils.parseObjToJson(resp));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class EsHandlerTest {
         likeParam.setTexts(new String[]{"Morgan", "Street"});
         param.setAddress(likeParam);
         BaseResp<AccountEntity> resp = esHandleMapper.moreLikeThisQuery(param);
-        System.out.println(SerializerUtils.parseObjToJson(resp));
+        System.out.println(JacksonUtils.parseObjToJson(resp));
     }
 
     @Test
@@ -104,7 +104,7 @@ public class EsHandlerTest {
         MultiMatchQueryParam param = new MultiMatchQueryParam();
         param.setQueryText("live in Jacksonburg and 25 year's old");
         BaseResp<AccountEntity> resp = esHandleMapper.multiMatchQuery(param);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -126,7 +126,7 @@ public class EsHandlerTest {
         param.setPage(esPage);
 
         BaseResp<AccountEntity> resp = esHandleMapper.pageAndRangeQuery(param);
-        System.out.println(SerializerUtils.parseObjToJson(resp));
+        System.out.println(JacksonUtils.parseObjToJson(resp));
     }
 
     @Test
@@ -134,7 +134,7 @@ public class EsHandlerTest {
         QueryStringQueryParam param = new QueryStringQueryParam();
         param.setQueryText("Street AND age:>30");
         BaseResp<AccountEntity> resp = esHandleMapper.queryStringQuery(param);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -150,7 +150,7 @@ public class EsHandlerTest {
             Assert.assertTrue(record.getAge() % 2 == 0);
             Assert.assertTrue(record.getFirstname().startsWith("B"));
         });
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -159,13 +159,13 @@ public class EsHandlerTest {
         param.setGender("F");
         param.setId("-1");
         BaseResp<AccountEntity> resp = esHandleMapper.searchAfterQuery(param);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
 
         SearchAfterQueryParam param2 = new SearchAfterQueryParam();
         param2.setGender("F");
         param2.setId(String.valueOf(resp.getRecords().get(resp.getRecords().size() - 1).getDocId()));
         BaseResp<AccountEntity> resp2 = esHandleMapper.searchAfterQuery(param2);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp2));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp2));
     }
 
     // 暂时无该用例对应数据集，暂时忽略
@@ -182,7 +182,7 @@ public class EsHandlerTest {
         nestedQueryParam.setAddress("street");
 
         BaseResp<AccountEntity> resp = esHandleMapper.nestedQuery(nestedQueryParam);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -190,7 +190,7 @@ public class EsHandlerTest {
         SourceOrderQueryParam param = new SourceOrderQueryParam();
         param.setQueryText("123");
         BaseResp<AccountEntity> resp = esHandleMapper.sourceOrderQuery(param);
-        System.out.println(SerializerUtils.parseObjToJson(resp));
+        System.out.println(JacksonUtils.parseObjToJson(resp));
     }
 
     @Test
@@ -198,7 +198,7 @@ public class EsHandlerTest {
         SpanTermQueryParam param = new SpanTermQueryParam();
         param.setAddress("875");
         BaseResp<AccountEntity> resp = esHandleMapper.spanTermQuery(param);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -206,7 +206,7 @@ public class EsHandlerTest {
         WildCardQueryParam param = new WildCardQueryParam();
         param.setAddress("87*");
         BaseResp<AccountEntity> resp = esHandleMapper.wildCardQuery(param);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -215,7 +215,7 @@ public class EsHandlerTest {
         gaussDecayParam.setBalance(5000);
         gaussDecayParam.setLastname("son");
         BaseResp<AccountEntity> resp = esHandleMapper.functionGaussDecayQuery(gaussDecayParam);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -224,7 +224,7 @@ public class EsHandlerTest {
         expBean.setBalance(5000);
         expBean.setLastname("son");
         BaseResp<AccountEntity> resp = esHandleMapper.functionExpDecayQuery(expBean);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -233,7 +233,7 @@ public class EsHandlerTest {
         linerParam.setBalance(5000);
         linerParam.setLastname("son");
         BaseResp<AccountEntity> resp = esHandleMapper.functionLinerDecayQuery(linerParam);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -242,7 +242,7 @@ public class EsHandlerTest {
         ranScoreParam.setAddress("Street");
         ranScoreParam.setSeed("12");
         BaseResp<AccountEntity> resp = esHandleMapper.functionRanScoreQuery(ranScoreParam);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -250,7 +250,7 @@ public class EsHandlerTest {
         FieldValueParam fieldValParam = new FieldValueParam();
         fieldValParam.setCity("Har");
         BaseResp<AccountEntity> resp = esHandleMapper.functionFieldValueQuery(fieldValParam);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -262,12 +262,12 @@ public class EsHandlerTest {
         scriptParam.setScriptMapParam(scriptMap);
 
         BaseResp<AccountEntity> resp = esHandleMapper.functionScriptQuery(scriptParam);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
     public void testMethodAnnQuery() {
         List<AccountEntity> elinor = esHandleMapper.methodQueryTest(36, "Elinor", "Virginia");
-        System.out.println(SerializerUtils.parseObjToJsonPretty(elinor));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(elinor));
     }
 }

@@ -59,7 +59,7 @@ public class IndexMetaCache {
     }
 
     private static String getIndexName(EsIndex indexAnn, Class<?> eClazz) {
-        String indexName = EsHelperConfiguration.mapUnderscoreToCamelCase ? EsBeanFieldTransUtils.camelify(eClazz.getSimpleName())
+        String indexName = EsHelperConfiguration.mapUnderscoreToCamelCase ? EsBeanFieldTransUtils.tryToLowerUnderscore(eClazz.getSimpleName())
                 : eClazz.getSimpleName();
         if (indexAnn != null) {
             if (StringUtils.isNotBlank(indexAnn.value())) {

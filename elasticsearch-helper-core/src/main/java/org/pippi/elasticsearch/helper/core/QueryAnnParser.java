@@ -287,7 +287,7 @@ public class QueryAnnParser {
                 Base ann = (Base) baseMethod.invoke(targetAnn);
                 EsConnector esConnector = ann.connect();
                 queryDes.setLogicConnector(esConnector);
-                String column = EsBeanFieldTransUtils.camelify(orgFieldName);
+                String column = EsBeanFieldTransUtils.tryToLowerUnderscore(orgFieldName);
                 if (StringUtils.isNotBlank(ann.value())) {
                     column = ann.value();
                 } else if (StringUtils.isNotBlank(ann.name())) {
@@ -332,7 +332,7 @@ public class QueryAnnParser {
     public EsQueryIndexBean parseIndexAnn(String clazzName, EsIndex indexAnn) {
         String indexName = clazzName;
         if (EsHelperConfiguration.mapUnderscoreToCamelCase) {
-            indexName = EsBeanFieldTransUtils.camelify(indexName);
+            indexName = EsBeanFieldTransUtils.tryToLowerUnderscore(indexName);
         }
         String clientKey = "primary";
         if (indexAnn != null) {

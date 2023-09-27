@@ -10,7 +10,7 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -42,7 +42,7 @@ public class QueryTest {
         bool.must(QueryBuilders.termQuery("firstname.keyword", "Dale"));
 
         SearchResponse search = client.search(req, RequestOptions.DEFAULT);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(search));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(search));
     }
 
 
@@ -58,7 +58,7 @@ public class QueryTest {
                 ScoreMode.Total));
 
         SearchResponse search = client.search(req, RequestOptions.DEFAULT);
-        System.out.println(SerializerUtils.parseObjToJsonPretty(search.getHits()));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(search.getHits()));
     }
 
     @Test
@@ -78,6 +78,6 @@ public class QueryTest {
 
         String timeStr = "1996-05-16T16:00:00.000Z";
 
-        System.out.println(SerializerUtils.jsonToBean(timeStr, Date.class));
+        System.out.println(JacksonUtils.jsonToBean(timeStr, Date.class));
     }
 }

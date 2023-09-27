@@ -1,5 +1,6 @@
 package org.pippi.elasticsearch.helper.model.utils;
 
+import com.google.common.base.CaseFormat;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -56,5 +57,19 @@ public class CommonUtils {
      */
     public static <T>void optionalIfPresent(T obj, Consumer<T> consumer) {
         CommonUtils.optional(obj).ifPresent(consumer);
+    }
+
+    public static String toLowerUnderscore(String name) {
+        if (name == null) {
+            return "";
+        }
+        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, name);
+    }
+
+    public static String toLowerCamel(String name) {
+        if (name == null) {
+            return "";
+        }
+        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, name);
     }
 }

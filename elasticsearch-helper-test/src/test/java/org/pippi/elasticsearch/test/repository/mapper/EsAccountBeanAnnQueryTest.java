@@ -2,7 +2,7 @@ package org.pippi.elasticsearch.test.repository.mapper;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
 import org.pippi.elasticsearch.test.params.AggAccountQueryParam;
 import org.pippi.elasticsearch.test.params.SimpleAccountQueryParam;
@@ -34,7 +34,7 @@ public class EsAccountBeanAnnQueryTest {
 		param.setAddress("River Street");
 		param.setFuzzyField("Bates");
 		List<AccountEntity> resp = esAccountMapper.queryByParam(param);
-		System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+		System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
 	}
 
 	@Test
@@ -42,7 +42,7 @@ public class EsAccountBeanAnnQueryTest {
 		AggAccountQueryParam param = new AggAccountQueryParam();
 		param.setCity("Nogal");
 		AccountAggResult res = esAccountMapper.aggByParam(param);
-		System.out.println(SerializerUtils.parseObjToJson(res));
+		System.out.println(JacksonUtils.parseObjToJson(res));
 	}
 
 	@Test
@@ -50,6 +50,6 @@ public class EsAccountBeanAnnQueryTest {
 		AggAccountQueryParam param = new AggAccountQueryParam();
 		param.setCity("Limestone");
 		AccountAggResult res = esAccountMapper.aggByParamAnn(param);
-		System.out.println(SerializerUtils.parseObjToJson(res));
+		System.out.println(JacksonUtils.parseObjToJson(res));
 	}
 }

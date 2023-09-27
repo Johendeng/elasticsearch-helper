@@ -6,6 +6,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.pippi.elasticsearch.helper.model.annotations.meta.EsField;
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -20,14 +21,15 @@ import java.util.function.Function;
  **/
 public class ValTypeTransUtils {
 
-    private static final String UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS Z";
-
+    private static final String UTC = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
     public static Object trans(Object val, Field field) {
         Class<?> clazz = field.getType();
         String str = val.toString();
         if (clazz.equals(String.class)) {
             return str;
+        } else if (clazz.equals(BigDecimal.class)) {
+            return checkAndTrans(val, BigDecimal.class, BigDecimal::new);
         } else if (clazz.equals(Integer.class)) {
             return checkAndTrans(val, Integer.class, Integer::parseInt);
         } else if (clazz.equals(Boolean.class)) {
@@ -52,7 +54,7 @@ public class ValTypeTransUtils {
             try {
                 return ft.parse(str);
             } catch (ParseException e) {
-                ExceptionUtils.mpe("Date type cast error, target:%s", e, str);
+                throw ExceptionUtils.mpe("Date type cast error, target:%s", e, str);
             }
         } else if (clazz.equals(LocalDateTime.class)) {
             if (val.getClass().equals(Long.class)) {
@@ -61,9 +63,8 @@ public class ValTypeTransUtils {
             DateTimeFormatter ft = DateTimeFormat.forPattern(getDatePattern(field));
             return ft.parseLocalDateTime(str);
         } else {
-            return SerializerUtils.jsonToBean(SerializerUtils.parseObjToJson(val), clazz);
+            return JacksonUtils.jsonToBeans(JacksonUtils.parseObjToJson(val), new JacksonUtils.EsHelperTypeReference(field));
         }
-        return null;
     }
 
     private static String getDatePattern(Field field) {

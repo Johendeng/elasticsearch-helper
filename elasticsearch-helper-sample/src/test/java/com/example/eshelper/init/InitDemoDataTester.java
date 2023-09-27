@@ -15,7 +15,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ResourceUtils;
@@ -50,7 +50,7 @@ public class InitDemoDataTester {
 			String ld = iterator.next();
 			if (index % 2 == 1) {
 				Map<String, Map<String, String>> stringMapMap =
-					SerializerUtils.jsonToBeans(ld, new TypeReference<Map<String, Map<String, String>>>() {
+					JacksonUtils.jsonToBeans(ld, new TypeReference<Map<String, Map<String, String>>>() {
 					});
 				id = stringMapMap.get("index").get("_id");
 			}

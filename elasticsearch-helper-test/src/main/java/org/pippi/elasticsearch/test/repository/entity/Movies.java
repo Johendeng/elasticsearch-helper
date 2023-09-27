@@ -77,6 +77,7 @@ public class Movies extends EsEntity {
 
     private List<ProductionCompanies> productionCompanies;
 
+    @EsField(format = "yyyy-MM-dd")
     private Date releaseDate;
 
     private Float voteAverage;
@@ -185,11 +186,11 @@ public class Movies extends EsEntity {
     public static class ProductionCountries {
 
         @EsField(name = "iso_3166_1")
-        private String iso_3166_1;
+        private String iso_3166_1_s;
 
         private String name;
 
-        private GeoPoint location;
+        private String location;
     }
 
     @Setter
@@ -199,7 +200,7 @@ public class Movies extends EsEntity {
         private String name;
 
         @EsField(name = "iso_639_1")
-        private String iso_639_1;
+        private String iso_639_1_s;
     }
 
     @Setter

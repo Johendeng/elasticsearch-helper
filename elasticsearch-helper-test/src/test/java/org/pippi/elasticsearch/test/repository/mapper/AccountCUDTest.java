@@ -5,7 +5,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.lambda.wrapper.EsWrappers;
 import org.pippi.elasticsearch.helper.lambda.wrapper.query.EsLambdaQueryWrapper;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
@@ -63,7 +63,7 @@ public class AccountCUDTest {
         entity.setFirstname("wang");
         BulkByScrollResponse resp = accountMapper.update(entity, new EsLambdaQueryWrapper<>(AccountEntity.class)
                 .term(AccountEntity::getAccountNumber, "1112"));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 
     @Test
@@ -78,6 +78,6 @@ public class AccountCUDTest {
     public void deleteByQueryTest() {
         BulkByScrollResponse resp = accountMapper.delete(EsWrappers.lambdaQuery(AccountEntity.class)
                 .term(AccountEntity::getAccountNumber, 1112));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(resp));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(resp));
     }
 }

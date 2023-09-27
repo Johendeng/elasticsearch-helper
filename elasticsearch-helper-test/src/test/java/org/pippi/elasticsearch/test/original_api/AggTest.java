@@ -11,7 +11,7 @@ import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.model.resp.AggRes;
 import org.pippi.elasticsearch.helper.model.utils.AggResponseVisitor;
 import org.pippi.elasticsearch.test.EsHelperSampleApplication;
@@ -63,9 +63,9 @@ public class AggTest {
 
         SearchResponse resp = client.search(req, RequestOptions.DEFAULT);
         AggRes aggRes = AggResponseVisitor.run(resp.getAggregations());
-        System.out.println(SerializerUtils.parseObjToJsonPretty(aggRes));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._age_range.r1._count")));
-        System.out.println(SerializerUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._age_range")));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(aggRes));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._age_range.r1._count")));
+        System.out.println(JacksonUtils.parseObjToJsonPretty(aggRes.fetchByPath("$._age_range")));
         System.out.println(aggRes.fetchByPath("$._age_range.r2._count").getCount());
     }
 }

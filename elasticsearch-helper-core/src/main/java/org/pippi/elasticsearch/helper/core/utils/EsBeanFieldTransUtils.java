@@ -1,13 +1,13 @@
 package org.pippi.elasticsearch.helper.core.utils;
 
-import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.model.annotations.meta.EsField;
 import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
 import org.pippi.elasticsearch.helper.model.enums.UpdateStragegy;
+import org.pippi.elasticsearch.helper.model.utils.CommonUtils;
 import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
-import org.pippi.elasticsearch.helper.model.utils.SerializerUtils;
+import org.pippi.elasticsearch.helper.model.utils.JacksonUtils;
 import org.pippi.elasticsearch.helper.model.utils.ValTypeTransUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,13 +21,14 @@ import java.util.Map;
  * @date 2023/8/29
  **/
 public class EsBeanFieldTransUtils {
-    private final Logger log = LoggerFactory.getLogger("RESP-BEAN-MAPPER");
+    private static final Logger log = LoggerFactory.getLogger("RESP-BEAN-MAPPER");
 
     public static  <R> R toBean(Class<R> paramClazz, Map<String, Object> hitMap) {
+        log.debug("exec Map to Bean, target class: {}, map data: {}", paramClazz.getName(), JacksonUtils.parseObjToJson(hitMap));
         Field[] fields = paramClazz.getDeclaredFields();
         R bean = ReflectionUtils.newInstance(paramClazz);
         for (Field field : fields) {
-            String fieldName = getOrgFieldName(field);
+            String fieldName = getEsIndexOrgFieldName(field);
             Object val = hitMap.get(fieldName);
             if (val != null) {
                 val = ValTypeTransUtils.trans(val, field);
@@ -41,10 +42,10 @@ public class EsBeanFieldTransUtils {
         Field[] fields = bean.getClass().getDeclaredFields();
         Map<String, Object> res = new HashMap<>();
         for (Field field : fields) {
-            String key = getOrgFieldName(field);
+            String key = getEsIndexOrgFieldName(field);
             Object val = ReflectionUtils.getFieldValueQuietly(field, bean);
             if (val != null && !ReflectionUtils.isBaseType(val.getClass())) {
-                val = SerializerUtils.parseObjToJson(val);
+                val = JacksonUtils.parseObjToJson(val);
             }
             res.put(key, val);
         }
@@ -55,26 +56,26 @@ public class EsBeanFieldTransUtils {
         Field[] fields = bean.getClass().getDeclaredFields();
         Map<String, Object> res = new HashMap<>();
         for (Field field : fields) {
-            String key = getOrgFieldName(field);
+            String key = getEsIndexOrgFieldName(field);
             Object val = ReflectionUtils.getFieldValueQuietly(field, bean);
             if (val != null && !ReflectionUtils.isBaseType(val.getClass())) {
-                val = SerializerUtils.parseObjToJson(val);
+                val = JacksonUtils.parseObjToJson(val);
             }
-            if (UpdateStragegy.isGolbalNotNull() && val != null) {
+            if (UpdateStragegy.isGlobalNotNull() && val != null) {
                 res.put(key, val);
-            } else if(UpdateStragegy.isGolbalNotBlank()
+            } else if(UpdateStragegy.isGlobalNotBlank()
                     && val != null
                     && ReflectionUtils.isBaseType(val.getClass())
                     && StringUtils.isNotBlank(val.toString())) {
                 res.put(key, val);
-            } else if (UpdateStragegy.isGolbalAny()) {
+            } else if (UpdateStragegy.isGlobalAny()) {
                 res.put(key, val);
             }
         }
         return res;
     }
 
-    private static String getOrgFieldName(Field field) {
+    private static String getEsIndexOrgFieldName(Field field) {
         EsField fieldAnn = field.getAnnotation(EsField.class);
         if (fieldAnn != null) {
             String name = fieldAnn.name();
@@ -82,13 +83,13 @@ public class EsBeanFieldTransUtils {
                 return name;
             }
         }
-        return camelify(field.getName());
+        return tryToLowerUnderscore(field.getName());
     }
 
-    public static String camelify(String fileName) {
+    public static String tryToLowerUnderscore(String fileName) {
         if (!EsHelperConfiguration.mapUnderscoreToCamelCase) {
             return fileName;
         }
-        return CaseFormat.LOWER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, fileName);
+        return CommonUtils.toLowerUnderscore(fileName);
     }
 }

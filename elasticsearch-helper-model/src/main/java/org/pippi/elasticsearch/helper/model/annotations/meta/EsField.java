@@ -1,6 +1,7 @@
 package org.pippi.elasticsearch.helper.model.annotations.meta;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.pippi.elasticsearch.helper.model.enums.EsMeta;
 
 import java.lang.annotation.*;

@@ -27,7 +27,12 @@ public class ReflectionUtils {
             || type.equals(Byte.class)    || type.equals(Character.class);
     }
 
-
+    /**
+     * 判断一个类 是 jdk自带的类 而非当前系统定义的类
+     */
+    public static boolean isJDKClazz(Class<?> clazz) {
+        return clazz != null && clazz.getClassLoader() == null;
+    }
 
 
     /**
@@ -186,4 +191,5 @@ public class ReflectionUtils {
                 .findFirst()
                 .orElse(null);
     }
+
 }

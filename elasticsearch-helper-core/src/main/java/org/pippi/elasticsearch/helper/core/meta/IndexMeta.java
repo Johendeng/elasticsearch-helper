@@ -5,16 +5,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.pippi.elasticsearch.helper.core.utils.EsBeanFieldTransUtils;
 import org.pippi.elasticsearch.helper.core.utils.IndexMappingReader;
 import org.pippi.elasticsearch.helper.model.annotations.meta.EsField;
-import org.pippi.elasticsearch.helper.model.bean.EsEntity;
 import org.pippi.elasticsearch.helper.model.config.EsHelperConfiguration;
 import org.pippi.elasticsearch.helper.model.enums.EsMeta;
 import org.pippi.elasticsearch.helper.model.utils.ReflectionUtils;
 
 import java.lang.reflect.Field;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -45,7 +42,7 @@ public class IndexMeta {
         Map<String, Object> properties = (Map<String, Object>) remoteMapping.getOrDefault("properties", Maps.newLinkedHashMap());
         for (Field field : fieldList) {
             String fieldName = field.getName();
-            String mapFieldName = EsHelperConfiguration.mapUnderscoreToCamelCase ? EsBeanFieldTransUtils.camelify(fieldName) : fieldName;
+            String mapFieldName = EsHelperConfiguration.mapUnderscoreToCamelCase ? EsBeanFieldTransUtils.tryToLowerUnderscore(fieldName) : fieldName;
             EsField esField = field.getAnnotation(EsField.class);
             FieldMeta metaBean = new FieldMeta();
             metaBean.setField(mapFieldName);
