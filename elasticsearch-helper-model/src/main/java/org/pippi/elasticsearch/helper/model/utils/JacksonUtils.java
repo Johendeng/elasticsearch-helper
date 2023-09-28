@@ -22,6 +22,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * @author    JohenTeng
@@ -169,21 +170,24 @@ public class JacksonUtils {
     }
 
     @SuppressWarnings("all")
-    public static class EsHelperTypeReference extends TypeReference {
+    public static class EsHelperTypeReference<T> extends TypeReference<T> {
 
-        private Type type;
+//        private Type type;
 
-        public EsHelperTypeReference(Field field) {
-            if (field.getGenericType() instanceof ParameterizedType) {
-                this.type = field.getGenericType();
-            } else {
-                this.type = field.getType();
-            }
+        public EsHelperTypeReference() {
         }
 
-        @Override
-        public Type getType() {
-            return this.type;
-        }
+//        public EsHelperTypeReference(Field field) {
+//            if (field.getGenericType() instanceof ParameterizedType) {
+//                this.type = field.getGenericType();
+//            } else {
+//                this.type = field.getType();
+//            }
+//        }
+//
+//        @Override
+//        public Type getType() {
+//            return this.type;
+//        }
     }
 }

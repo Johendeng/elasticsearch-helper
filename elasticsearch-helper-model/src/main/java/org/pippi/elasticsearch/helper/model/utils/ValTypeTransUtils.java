@@ -1,11 +1,14 @@
 package org.pippi.elasticsearch.helper.model.utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.pippi.elasticsearch.helper.model.annotations.meta.EsField;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +16,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -63,7 +67,20 @@ public class ValTypeTransUtils {
             DateTimeFormatter ft = DateTimeFormat.forPattern(getDatePattern(field));
             return ft.parseLocalDateTime(str);
         } else {
-            return JacksonUtils.jsonToBeans(JacksonUtils.parseObjToJson(val), new JacksonUtils.EsHelperTypeReference(field));
+            try {
+                Type type;
+                if (field.getGenericType() instanceof ParameterizedType) {
+                    type = field.getGenericType();
+                } else {
+                    type = field.getType();
+                }
+                JacksonUtils.EsHelperTypeReference<List> typeReference = ReflectionUtils.newInstance(JacksonUtils.EsHelperTypeReference.class);
+                Field typeField = TypeReference.class.getDeclaredField("_type");
+                ReflectionUtils.setFieldValue(typeReference, typeField, type, false);
+                return JacksonUtils.jsonToBeans(JacksonUtils.parseObjToJson(val), typeReference);
+            } catch (NoSuchFieldException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
