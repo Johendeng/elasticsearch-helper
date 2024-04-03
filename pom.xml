@@ -31,7 +31,7 @@
     <modules>
         <module>elasticsearch-helper-core</module>
         <module>elasticsearch-helper-model</module>
-        <module>elasticsearch-helper-boot-starter</module>
+        <module>elasticsearch-helper-starter</module>
         <module>elasticsearch-helper-test</module>
         <module>elasticsearch-helper-lambda</module>
     </modules>

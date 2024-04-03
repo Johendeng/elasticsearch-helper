@@ -13,7 +13,7 @@
     <modelVersion>4.0.0</modelVersion>
     <description>elasticsearch-helper boot starter</description>
 
-    <artifactId>elasticsearch-helper-boot-starter</artifactId>
+    <artifactId>elasticsearch-helper-starter</artifactId>
     <version>${elasticsearch-helper.version}</version>
 
     <licenses>
