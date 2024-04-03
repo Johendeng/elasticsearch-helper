@@ -34,6 +34,7 @@
         <module>elasticsearch-helper-starter</module>
         <module>elasticsearch-helper-test</module>
         <module>elasticsearch-helper-lambda</module>
+        <module>elasticsearch-helper-boot-starter</module>
     </modules>
 
     <properties>

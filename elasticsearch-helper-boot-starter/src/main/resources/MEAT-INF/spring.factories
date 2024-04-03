@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.pippi.elasticsearch.helper.spring.EsHelperAutoConfiguration
+org.springframework.context.annotation.ComponentScan=org.pippi.elasticsearch.helper.spring

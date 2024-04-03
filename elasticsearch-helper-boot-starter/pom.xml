@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.github.johendeng</groupId>
+        <artifactId>elasticsearch-helper</artifactId>
+        <version>${elasticsearch-helper.version}</version>
+    </parent>
+
+    <groupId>org.pippi.elasticsearch.helper</groupId>
+    <artifactId>elasticsearch-helper-boot-starter</artifactId>
+    <version>${elasticsearch-helper.version}</version>
+
+
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>JohenTeng</name>
+            <email>1078481395@qq.com</email>
+            <url>https://github.com/Johendeng/elasticsearch-helper</url>
+        </developer>
+    </developers>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.github.johendeng</groupId>
+            <artifactId>elasticsearch-helper-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.johendeng</groupId>
+            <artifactId>elasticsearch-helper-lambda</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.johendeng</groupId>
+            <artifactId>elasticsearch-helper-model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.github.johendeng</groupId>
+            <artifactId>elasticsearch-helper-starter</artifactId>
+        </dependency>
+    </dependencies>
+
+</project>
