@@ -9,9 +9,9 @@
         <version>${elasticsearch-helper.version}</version>
     </parent>
 
-    <name>elasticsearch-helper-boot-starter</name>
+    <name>elasticsearch-helper-starter</name>
     <modelVersion>4.0.0</modelVersion>
-    <description>elasticsearch-helper boot starter</description>
+    <description>elasticsearch-helper starter</description>
 
     <artifactId>elasticsearch-helper-starter</artifactId>
     <version>${elasticsearch-helper.version}</version>

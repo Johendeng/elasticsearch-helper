@@ -64,7 +64,7 @@
             </dependency>
             <dependency>
                 <groupId>io.github.johendeng</groupId>
-                <artifactId>elasticsearch-helper-boot-starter</artifactId>
+                <artifactId>elasticsearch-helper-starter</artifactId>
                 <version>${elasticsearch-helper.version}</version>
             </dependency>
             <dependency>
